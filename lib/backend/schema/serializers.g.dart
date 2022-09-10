@@ -8,6 +8,7 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(IndustriesRecord.serializer)
+      ..add(InterestsRecord.serializer)
       ..add(OccupationsRecord.serializer)
       ..add(PhotoStruct.serializer)
       ..add(UserProfilesRecord.serializer)

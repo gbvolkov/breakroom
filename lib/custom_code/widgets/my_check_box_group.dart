@@ -15,9 +15,9 @@ class MyCheckBoxGroup extends StatefulWidget {
       {Key? key,
       this.width,
       this.height,
-      required this.buttonLabels,
-      required this.buttonValues,
-      required this.horizontal,
+      this.buttonLabels,
+      this.buttonValues,
+      this.horizontal,
       this.buttonWidth,
       this.buttonHeight,
       this.defaultSelected})

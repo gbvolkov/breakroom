@@ -25,7 +25,7 @@ String stringifyList(
 }
 
 int getAge(DateTime? birthday) {
-  return (birthday ?? DateTime.now()).difference(DateTime.now()).inDays ~/ 365;
+  return (DateTime.now()).difference(birthday ?? DateTime.now()).inDays ~/ 365;
 }
 
 String getFullName(

@@ -1,49 +1,53 @@
-import '../components/dialog_signup_complete_widget.dart';
-import '../create_profile_view/create_profile_view_widget.dart';
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
 import '../welcome_view/welcome_view_widget.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SignUpViewWidget extends StatefulWidget {
-  const SignUpViewWidget({Key? key}) : super(key: key);
+  const SignUpViewWidget({
+    Key? key,
+    this.email,
+  }) : super(key: key);
+
+  final String? email;
 
   @override
   _SignUpViewWidgetState createState() => _SignUpViewWidgetState();
 }
 
 class _SignUpViewWidgetState extends State<SignUpViewWidget> {
-  TextEditingController? textController1;
+  TextEditingController? confirmPasswordTextFieldController;
 
-  List<String>? checkboxGroupValues;
+  late bool confirmPasswordTextFieldVisibility;
+
+  TextEditingController? passwordTextFieldController;
+
+  late bool passwordTextFieldVisibility;
+
+  TextEditingController? emailTextFieldController;
+
+  List<String>? cbIsAgreedValues;
   PageController? signUpPageViewController;
-  TextEditingController? pinCodeController;
-
-  TextEditingController? textController2;
-
-  late bool passwordVisibility1;
-
-  TextEditingController? textController3;
-
-  late bool passwordVisibility2;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    pinCodeController = TextEditingController();
-    textController1 = TextEditingController(text: 'example@email.com');
-    textController2 = TextEditingController(text: 'example@email.com');
-    passwordVisibility1 = false;
-    textController3 = TextEditingController(text: 'Cooper');
-    passwordVisibility2 = false;
+    confirmPasswordTextFieldController = TextEditingController(text: 'Cooper');
+    confirmPasswordTextFieldVisibility = false;
+    passwordTextFieldController =
+        TextEditingController(text: 'example@email.com');
+    passwordTextFieldVisibility = false;
+    emailTextFieldController = TextEditingController(text: 'example@email.com');
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -65,7 +69,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if (textController2!.text == null || textController2!.text == '') {
+            if (passwordTextFieldController!.text == null ||
+                passwordTextFieldController!.text == '') {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -151,9 +156,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
                                   child: TextFormField(
-                                    controller: textController1,
+                                    controller: emailTextFieldController,
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController1',
+                                      'emailTextFieldController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -206,20 +211,21 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
-                                      suffixIcon:
-                                          textController1!.text.isNotEmpty
-                                              ? InkWell(
-                                                  onTap: () async {
-                                                    textController1?.clear();
-                                                    setState(() {});
-                                                  },
-                                                  child: Icon(
-                                                    Icons.clear,
-                                                    color: Color(0xFF757575),
-                                                    size: 22,
-                                                  ),
-                                                )
-                                              : null,
+                                      suffixIcon: emailTextFieldController!
+                                              .text.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () async {
+                                                emailTextFieldController
+                                                    ?.clear();
+                                                setState(() {});
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                color: Color(0xFF757575),
+                                                size: 22,
+                                              ),
+                                            )
+                                          : null,
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
@@ -235,14 +241,14 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FlutterFlowCheckboxGroup(
                                           initiallySelected:
-                                              checkboxGroupValues ??= [
-                                            'I agree with Privacy and Policy'
+                                              cbIsAgreedValues ??= [
+                                            'I agree with Privacy Policy'
                                           ],
                                           options: [
-                                            'I agree with Privacy and Policy'
+                                            'I agree with Privacy Policy'
                                           ].toList(),
                                           onChanged: (val) => setState(
-                                              () => checkboxGroupValues = val),
+                                              () => cbIsAgreedValues = val),
                                           activeColor:
                                               FlutterFlowTheme.of(context)
                                                   .alternate,
@@ -273,178 +279,28 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           0, 0, 0, 32),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          await signUpPageViewController
-                                              ?.nextPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.ease,
-                                          );
-                                        },
-                                        text: 'Next',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 48),
-                                    child: Text(
-                                      'Verification code',
-                                      style: FlutterFlowTheme.of(context)
-                                          .title1
-                                          .override(
-                                            fontFamily: 'Poppins',
-                                            fontSize: 32,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 64),
-                                    child: Text(
-                                      'We’ve sent a 4-digit code to example@email.com. Enter it \nto reset your password.',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                  ),
-                                ),
-                                PinCodeTextField(
-                                  appContext: context,
-                                  length: 4,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .title1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  enableActiveFill: true,
-                                  autoFocus: true,
-                                  showCursor: true,
-                                  cursorColor:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  obscureText: false,
-                                  pinTheme: PinTheme(
-                                    fieldHeight: 60,
-                                    fieldWidth: 60,
-                                    borderWidth: 2,
-                                    borderRadius: BorderRadius.circular(12),
-                                    shape: PinCodeFieldShape.box,
-                                    activeColor: FlutterFlowTheme.of(context)
-                                        .backgroundLine,
-                                    inactiveColor: FlutterFlowTheme.of(context)
-                                        .backgroundLine,
-                                    selectedColor: Color(0xFFFFE1F0),
-                                    activeFillColor:
-                                        FlutterFlowTheme.of(context)
-                                            .backgroundLine,
-                                    inactiveFillColor:
-                                        FlutterFlowTheme.of(context)
-                                            .backgroundLine,
-                                    selectedFillColor: Color(0xFFFFE1F0),
-                                  ),
-                                  controller: pinCodeController,
-                                  onChanged: (_) => {},
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        FFButtonWidget(
-                                          onPressed: () {
-                                            print('Button pressed ...');
-                                          },
-                                          text: 'Resend code in 30s',
-                                          options: FFButtonOptions(
-                                            width: 180,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText2
-                                                    .override(
-                                                      fontFamily: 'Roboto',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
+                                          if (!cbIsAgreedValues!.contains(
+                                              'I agree with Privacy Policy')) {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text('No allowed'),
+                                                  content: Text(
+                                                      'Please agree with Privacy Policy'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Ok'),
                                                     ),
-                                            borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            return;
+                                          }
                                           await signUpPageViewController
                                               ?.nextPage(
                                             duration:
@@ -525,9 +381,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
                                   child: TextFormField(
-                                    controller: textController2,
+                                    controller: passwordTextFieldController,
                                     autofocus: true,
-                                    obscureText: !passwordVisibility1,
+                                    obscureText: !passwordTextFieldVisibility,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .subtitle2,
@@ -577,13 +433,13 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       fillColor: Color(0xFFEFEFEF),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
-                                          () => passwordVisibility1 =
-                                              !passwordVisibility1,
+                                          () => passwordTextFieldVisibility =
+                                              !passwordTextFieldVisibility,
                                         ),
                                         focusNode:
                                             FocusNode(skipTraversal: true),
                                         child: Icon(
-                                          passwordVisibility1
+                                          passwordTextFieldVisibility
                                               ? Icons.visibility_outlined
                                               : Icons.visibility_off_outlined,
                                           color: Color(0xFF757575),
@@ -611,9 +467,11 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 8),
                                   child: TextFormField(
-                                    controller: textController3,
+                                    controller:
+                                        confirmPasswordTextFieldController,
                                     autofocus: true,
-                                    obscureText: !passwordVisibility2,
+                                    obscureText:
+                                        !confirmPasswordTextFieldVisibility,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .subtitle2,
@@ -663,13 +521,13 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       fillColor: Color(0xFFEFEFEF),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
-                                          () => passwordVisibility2 =
-                                              !passwordVisibility2,
+                                          () => confirmPasswordTextFieldVisibility =
+                                              !confirmPasswordTextFieldVisibility,
                                         ),
                                         focusNode:
                                             FocusNode(skipTraversal: true),
                                         child: Icon(
-                                          passwordVisibility2
+                                          confirmPasswordTextFieldVisibility
                                               ? Icons.visibility_outlined
                                               : Icons.visibility_off_outlined,
                                           color: Color(0xFF757575),
@@ -697,24 +555,67 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           0, 0, 0, 32),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child:
-                                                    DialogSignupCompleteWidget(),
-                                              );
-                                            },
+                                          if (passwordTextFieldController
+                                                  ?.text !=
+                                              confirmPasswordTextFieldController
+                                                  ?.text) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Passwords don\'t match!',
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
+
+                                          final user =
+                                              await createAccountWithEmail(
+                                            context,
+                                            emailTextFieldController!.text,
+                                            passwordTextFieldController!.text,
                                           );
+                                          if (user == null) {
+                                            return;
+                                          }
+
+                                          await sendEmailVerification();
+
+                                          final userProfilesCreateData = {
+                                            ...createUserProfilesRecordData(
+                                              user: currentUserReference,
+                                              firstName: '',
+                                              lastName: '',
+                                              birthDay: getCurrentTimestamp,
+                                              industry: '',
+                                              occupation: '',
+                                              bio: '',
+                                              gender: '',
+                                              genderPreference: '',
+                                              intention: '',
+                                              childfreeStatus: '',
+                                              religion: '',
+                                              education: '',
+                                              bodyType: '',
+                                              height: 170,
+                                              weight: 65,
+                                              workoutStatus: '',
+                                              drinkingStatus: '',
+                                              smokingStatus: '',
+                                              spiritualStatus: '',
+                                            ),
+                                            'interests': [''],
+                                            'lookingFor': [''],
+                                          };
+                                          await UserProfilesRecord.collection
+                                              .doc()
+                                              .set(userProfilesCreateData);
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CreateProfileViewWidget(),
+                                              builder: (context) => NavBarPage(
+                                                  initialPage: 'ProfileView'),
                                             ),
                                           );
                                         },

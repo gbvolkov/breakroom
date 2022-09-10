@@ -1,10 +1,12 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../forgot_password_view/forgot_password_view_widget.dart';
-import '../sign_up_email_view/sign_up_email_view_widget.dart';
+import '../main.dart';
+import '../sign_up_view/sign_up_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
@@ -352,12 +354,14 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                               emailTextFieldController!.text,
                                               passwordTextFieldController!
                                                   .text)) {
-                                            await signInPageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.ease,
+                                            final user = await signInWithEmail(
+                                              context,
+                                              emailTextFieldController!.text,
+                                              passwordTextFieldController!.text,
                                             );
+                                            if (user == null) {
+                                              return;
+                                            }
                                           } else {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -383,6 +387,14 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                             );
                                             return;
                                           }
+
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => NavBarPage(
+                                                  initialPage: 'ProfileView'),
+                                            ),
+                                          );
                                         },
                                         text: 'Log in',
                                         options: FFButtonOptions(
@@ -434,7 +446,11 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    SignUpEmailViewWidget(),
+                                                    SignUpViewWidget(
+                                                  email:
+                                                      emailTextFieldController!
+                                                          .text,
+                                                ),
                                               ),
                                             );
                                           },

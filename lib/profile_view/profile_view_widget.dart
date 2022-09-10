@@ -203,20 +203,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        valueOrDefault<String>(
-                                          '${valueOrDefault<String>(
-                                            columnUserProfilesRecord!.firstName,
-                                            'Unset',
-                                          )}, ${valueOrDefault<String>(
-                                            functions
-                                                .getAge(
-                                                    columnUserProfilesRecord!
-                                                        .birthDay)
-                                                .toString(),
-                                            '0',
-                                          )}',
+                                        '${valueOrDefault<String>(
+                                          columnUserProfilesRecord!.firstName,
                                           'Unset',
-                                        ),
+                                        )}, ${functions.getAge(columnUserProfilesRecord!.birthDay).toString()}',
                                         style:
                                             FlutterFlowTheme.of(context).title1,
                                       ),
@@ -266,7 +256,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    EditProfileViewWidget(),
+                                                    EditProfileViewWidget(
+                                                  userProfile:
+                                                      columnUserProfilesRecord,
+                                                ),
                                               ),
                                             );
                                           },
@@ -493,161 +486,52 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                           child: Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                            child: Wrap(
-                              spacing: 8,
-                              runSpacing: 8,
-                              alignment: WrapAlignment.start,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              direction: Axis.horizontal,
-                              runAlignment: WrapAlignment.start,
-                              verticalDirection: VerticalDirection.down,
-                              clipBehavior: Clip.none,
-                              children: [
-                                FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Gamer',
-                                  options: FFButtonOptions(
-                                    height: 32,
-                                    color: FlutterFlowTheme.of(context)
-                                        .backgroundGrey,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontWeight: FontWeight.normal,
+                            child: Builder(
+                              builder: (context) {
+                                final interests = columnUserProfilesRecord!
+                                    .interests!
+                                    .toList();
+                                return Wrap(
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  direction: Axis.horizontal,
+                                  runAlignment: WrapAlignment.start,
+                                  verticalDirection: VerticalDirection.down,
+                                  clipBehavior: Clip.none,
+                                  children: List.generate(interests.length,
+                                      (interestsIndex) {
+                                    final interestsItem =
+                                        interests[interestsIndex];
+                                    return FFButtonWidget(
+                                      onPressed: () {
+                                        print('Button pressed ...');
+                                      },
+                                      text: 'Gamer',
+                                      options: FFButtonOptions(
+                                        height: 32,
+                                        color: FlutterFlowTheme.of(context)
+                                            .backgroundGrey,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
                                         ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Soccer',
-                                  options: FFButtonOptions(
-                                    height: 32,
-                                    color: FlutterFlowTheme.of(context)
-                                        .backgroundGrey,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Climbing',
-                                  options: FFButtonOptions(
-                                    height: 32,
-                                    color: FlutterFlowTheme.of(context)
-                                        .backgroundGrey,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Fishing',
-                                  options: FFButtonOptions(
-                                    height: 32,
-                                    color: FlutterFlowTheme.of(context)
-                                        .backgroundGrey,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Photography',
-                                  options: FFButtonOptions(
-                                    height: 32,
-                                    color: FlutterFlowTheme.of(context)
-                                        .backgroundGrey,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
-                                  },
-                                  text: 'Comedy',
-                                  options: FFButtonOptions(
-                                    height: 32,
-                                    color: FlutterFlowTheme.of(context)
-                                        .backgroundGrey,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ],
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    );
+                                  }),
+                                );
+                              },
                             ),
                           ),
                         ),

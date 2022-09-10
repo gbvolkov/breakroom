@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../components/dialog_signup_complete_widget.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -17,25 +18,24 @@ class CreateProfileViewWidget extends StatefulWidget {
 }
 
 class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
-  TextEditingController? textController1;
+  TextEditingController? txtBioController;
 
-  TextEditingController? textController2;
+  TextEditingController? txtFirstNameController;
+
+  TextEditingController? txtSecondNameController;
 
   DateTime? datePicked;
-  String? dropDownValue1;
-  String? dropDownValue2;
-
-  TextEditingController? textController3;
-
+  String? ddIndustryValue;
+  String? ddOccupationValue;
   PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController(text: 'Jane');
-    textController2 = TextEditingController(text: 'Cooper');
-    textController3 = TextEditingController(text: 'Cooper');
+    txtBioController = TextEditingController();
+    txtFirstNameController = TextEditingController();
+    txtSecondNameController = TextEditingController();
   }
 
   @override
@@ -56,7 +56,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if (textController1!.text == null || textController1!.text == '') {
+            if (txtFirstNameController!.text == null ||
+                txtFirstNameController!.text == '') {
               return;
             }
 
@@ -134,7 +135,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                 child: TextFormField(
-                                  controller: textController1,
+                                  controller: txtFirstNameController,
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -210,7 +211,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                 child: TextFormField(
-                                  controller: textController2,
+                                  controller: txtSecondNameController,
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
@@ -355,30 +356,58 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
-                                  child: FlutterFlowDropDown(
-                                    initialOption: dropDownValue1 ??=
-                                        'Medicine',
-                                    options: ['Medicine'],
-                                    onChanged: (val) =>
-                                        setState(() => dropDownValue1 = val),
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                    hintText: 'Please select...',
-                                    fillColor: Color(0xFFEFEFEF),
-                                    elevation: 2,
-                                    borderColor: Colors.transparent,
-                                    borderWidth: 0,
-                                    borderRadius: 0,
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        12, 4, 12, 4),
-                                    hidesUnderline: true,
+                                  child: FutureBuilder<List<IndustriesRecord>>(
+                                    future: queryIndustriesRecordOnce(
+                                      queryBuilder: (industriesRecord) =>
+                                          industriesRecord.orderBy('industry'),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<IndustriesRecord>
+                                          ddIndustryIndustriesRecordList =
+                                          snapshot.data!;
+                                      return FlutterFlowDropDown(
+                                        options: ddIndustryIndustriesRecordList
+                                            .map((e) => e.industry!)
+                                            .toList()
+                                            .toList(),
+                                        onChanged: (val) => setState(
+                                            () => ddIndustryValue = val),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                        hintText: 'Please select...',
+                                        fillColor: Color(0xFFEFEFEF),
+                                        elevation: 2,
+                                        borderColor: Colors.transparent,
+                                        borderWidth: 0,
+                                        borderRadius: 0,
+                                        margin: EdgeInsetsDirectional.fromSTEB(
+                                            12, 4, 12, 4),
+                                        hidesUnderline: true,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -399,29 +428,58 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
-                                  child: FlutterFlowDropDown(
-                                    initialOption: dropDownValue2 ??= 'Surgeon',
-                                    options: ['Surgeon'],
-                                    onChanged: (val) =>
-                                        setState(() => dropDownValue2 = val),
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                        ),
-                                    hintText: 'Please select...',
-                                    fillColor: Color(0xFFEFEFEF),
-                                    elevation: 2,
-                                    borderColor: Colors.transparent,
-                                    borderWidth: 0,
-                                    borderRadius: 0,
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        12, 4, 12, 4),
-                                    hidesUnderline: true,
+                                  child: FutureBuilder<List<OccupationsRecord>>(
+                                    future: queryOccupationsRecordOnce(
+                                      queryBuilder: (occupationsRecord) =>
+                                          occupationsRecord
+                                              .where('industry',
+                                                  isEqualTo: ddIndustryValue)
+                                              .orderBy('occupation'),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<OccupationsRecord>
+                                          ddOccupationOccupationsRecordList =
+                                          snapshot.data!;
+                                      return FlutterFlowDropDown(
+                                        options: ['Surgeon'],
+                                        onChanged: (val) => setState(
+                                            () => ddOccupationValue = val),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                        hintText: 'Please select...',
+                                        fillColor: Color(0xFFEFEFEF),
+                                        elevation: 2,
+                                        borderColor: Colors.transparent,
+                                        borderWidth: 0,
+                                        borderRadius: 0,
+                                        margin: EdgeInsetsDirectional.fromSTEB(
+                                            12, 4, 12, 4),
+                                        hidesUnderline: true,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -438,7 +496,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               TextFormField(
-                                controller: textController3,
+                                controller: txtBioController,
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(

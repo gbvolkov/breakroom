@@ -1,14 +1,22 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditInterestsViewWidget extends StatefulWidget {
-  const EditInterestsViewWidget({Key? key}) : super(key: key);
+  const EditInterestsViewWidget({
+    Key? key,
+    this.userProfile,
+  }) : super(key: key);
+
+  final UserProfilesRecord? userProfile;
 
   @override
   _EditInterestsViewWidgetState createState() =>
@@ -92,52 +100,70 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                           verticalDirection: VerticalDirection.down,
                           clipBehavior: Clip.none,
                           children: [
-                            FlutterFlowChoiceChips(
-                              initiallySelected: choiceChipsValues != null
-                                  ? choiceChipsValues
-                                  : ['Karaoke', 'Sport'],
-                              options: [
-                                ChipData('Blogging'),
-                                ChipData('Photography'),
-                                ChipData('Food'),
-                                ChipData('Sport'),
-                                ChipData('Karaoke'),
-                                ChipData('Traveling'),
-                                ChipData('Cooking'),
-                                ChipData('Walking'),
-                                ChipData('Running')
-                              ],
-                              onChanged: (val) =>
-                                  setState(() => choiceChipsValues = val),
-                              selectedChipStyle: ChipStyle(
-                                backgroundColor:
-                                    FlutterFlowTheme.of(context).alternate,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.white,
-                                    ),
-                                iconColor: Colors.white,
-                                iconSize: 18,
-                                elevation: 4,
+                            FutureBuilder<List<InterestsRecord>>(
+                              future: queryInterestsRecordOnce(
+                                queryBuilder: (interestsRecord) =>
+                                    interestsRecord.orderBy('interest'),
                               ),
-                              unselectedChipStyle: ChipStyle(
-                                backgroundColor: Colors.white,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .bodyText2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: Color(0xFF323B45),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
                                     ),
-                                iconColor: Color(0xFF323B45),
-                                iconSize: 18,
-                                elevation: 4,
-                              ),
-                              chipSpacing: 20,
-                              multiselect: true,
-                              initialized: choiceChipsValues != null,
-                              alignment: WrapAlignment.start,
+                                  );
+                                }
+                                List<InterestsRecord>
+                                    choiceChipsInterestsRecordList =
+                                    snapshot.data!;
+                                return FlutterFlowChoiceChips(
+                                  initiallySelected: choiceChipsValues != null
+                                      ? choiceChipsValues
+                                      : [],
+                                  options: choiceChipsInterestsRecordList
+                                      .map((e) => e.interest!)
+                                      .toList()
+                                      .map((label) => ChipData(label))
+                                      .toList(),
+                                  onChanged: (val) =>
+                                      setState(() => choiceChipsValues = val),
+                                  selectedChipStyle: ChipStyle(
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: Colors.white,
+                                        ),
+                                    iconColor: Colors.white,
+                                    iconSize: 18,
+                                    elevation: 4,
+                                  ),
+                                  unselectedChipStyle: ChipStyle(
+                                    backgroundColor: Colors.white,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: Color(0xFF323B45),
+                                        ),
+                                    iconColor: Color(0xFF323B45),
+                                    iconSize: 18,
+                                    elevation: 4,
+                                  ),
+                                  chipSpacing: 20,
+                                  multiselect: true,
+                                  initialized: choiceChipsValues != null,
+                                  alignment: WrapAlignment.start,
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -156,6 +182,11 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              final userProfilesUpdateData = {
+                                'interests': choiceChipsValues,
+                              };
+                              await widget.userProfile!.reference
+                                  .update(userProfilesUpdateData);
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
