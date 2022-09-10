@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -125,7 +124,7 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                                 return FlutterFlowChoiceChips(
                                   initiallySelected: choiceChipsValues != null
                                       ? choiceChipsValues
-                                      : [],
+                                      : widget.userProfile!.interests!.toList(),
                                   options: choiceChipsInterestsRecordList
                                       .map((e) => e.interest!)
                                       .toList()
@@ -187,12 +186,7 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                               };
                               await widget.userProfile!.reference
                                   .update(userProfilesUpdateData);
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditProfileViewWidget(),
-                                ),
-                              );
+                              Navigator.pop(context);
                             },
                             text: 'Save',
                             options: FFButtonOptions(

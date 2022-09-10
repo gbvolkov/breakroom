@@ -508,7 +508,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       onPressed: () {
                                         print('Button pressed ...');
                                       },
-                                      text: 'Gamer',
+                                      text: interestsItem,
                                       options: FFButtonOptions(
                                         height: 32,
                                         color: FlutterFlowTheme.of(context)

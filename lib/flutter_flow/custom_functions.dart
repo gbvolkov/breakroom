@@ -18,7 +18,8 @@ String stringifyList(
   if (list.isEmpty) {
     return "";
   }
-  maxItems = maxItems ?? 3;
+  maxItems = maxItems ?? list.length;
+  maxItems = (maxItems <= list.length) ? maxItems : list.length;
   String? res = list.sublist(0, maxItems).join(', ');
   if (list.length > maxItems) res += '...';
   return res;
