@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>207242520990-6uq9i72rqmao02lprl81grl3biqb216j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.207242520990-6uq9i72rqmao02lprl81grl3biqb216j</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>207242520990-k1chtvjdvr40bc81uudicipdp56c242d.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCGa189ibbYv_GlfmMckfYlsHOEc5RRDSE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>207242520990</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.boji.breakroom</string>
+	<key>PROJECT_ID</key>
+	<string>breakroom-7465c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>breakroom-7465c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:207242520990:ios:266a8ce32438462bf90e8f</string>
+</dict>
+</plist>
