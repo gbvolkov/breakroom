@@ -25,8 +25,8 @@ class MyCheckBoxGroup extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final List<String> buttonLabels;
-  final List<String> buttonValues;
+  final List<String>? buttonLabels;
+  final List<String>? buttonValues;
   final double? buttonWidth;
   final double? buttonHeight;
   final bool? horizontal;
@@ -51,8 +51,8 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
   Widget build(BuildContext context) {
     return cb.CustomCheckBoxGroup(
       unSelectedColor: Theme.of(context).canvasColor,
-      buttonLables: widget.buttonLabels,
-      buttonValuesList: widget.buttonValues,
+      buttonLables: widget.buttonLabels ?? ['Option'],
+      buttonValuesList: widget.buttonValues ?? ['Option'],
       checkBoxButtonValues: (values) {
         print(values);
       },
