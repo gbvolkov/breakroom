@@ -67,6 +67,96 @@ class FFAppState {
   bool backArrowVisible = false;
 
   List<String> testOptions = ['Option1', 'Option2'];
+
+  List<String> maleFemaleList = ['Male', 'Female'];
+
+  List<String> statusList = ['Social status', 'Dating status'];
+
+  List<String> childrenOptionsList = [
+    'Don\'t want',
+    'Want someday',
+    'Have and want more',
+    'Have and do not want more'
+  ];
+
+  List<String> educationList = [
+    'High school',
+    'Associates',
+    'Bachelors',
+    'Graduate',
+    'PHD / Doctorate',
+    'Some college'
+  ];
+
+  List<String> religionList = [
+    'Agonistic',
+    'Atheist',
+    'Buddhist',
+    'Christian / Catholic',
+    'Jewish',
+    'Muslim',
+    'Spiritual not religious'
+  ];
+
+  List<String> bodyTypeList = ['Average', 'Fit', 'Curve', 'Slim', 'Chubby'];
+
+  List<String> interestList = [
+    'Blogging',
+    'Photography',
+    'Food',
+    'Sport',
+    'Karaoke',
+    'Traveling'
+  ];
+
+  List<String> lookingForList = ['Relationship', 'Date', 'Friendship'];
+
+  List<String> howOftenList = ['Active', 'Sometimes', 'Never'];
+
+  List<String> selectedValues = [
+    'gender',
+    'genderPreference',
+    'intention',
+    'childfreeStatus',
+    'religion',
+    'education',
+    'bodytype',
+    'workoutStatus',
+    'drinkingStatus',
+    'smokingStatus',
+    'spiritualStatus',
+    'listLookingFor'
+  ];
+
+  String profileContainerName = '';
+
+  List<String> industryList = [
+    'Retail',
+    'Medicine',
+    'IT',
+    'Sales',
+    'Government'
+  ];
+
+  List<String> occupationList = ['Surgeon', 'Front-end developer', 'Soldier'];
+
+  List<String> areYouSpiritualList = ['Spiritual', 'Agnostic', 'Atheist'];
+
+  List<String> workoutRegularityList = ['Never', 'Sometimes', 'Active'];
+
+  List<String> datingOrSocialRadio = ['Dating', 'Social'];
+
+  List<String> lookingForSelection = [];
+
+  List<String> interestedInList = ['Man', 'Woman', 'Everyone'];
+
+  double rangeSliderStart = 0.0;
+
+  double rangeSliderEnd = 0.0;
+
+  String filterName = 'Filter';
+
+  String advancedFilterName = '';
 }
 
 LatLng? _latLngFromString(String? val) {

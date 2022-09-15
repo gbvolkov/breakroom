@@ -48,3 +48,17 @@ bool isEmailAndPasswordValid(
   return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email) &&
       password.length > 6;
 }
+
+String getListValue(
+  List<String> options,
+  int? optionNo,
+) {
+  return options[optionNo ?? 0];
+}
+
+List<String> splitString(
+  String str,
+  String? separator,
+) {
+  return str.split(separator ?? '|');
+}

@@ -29,6 +29,7 @@ abstract class FlutterFlowTheme {
   late Color backgroundGrey;
   late Color noColor;
   late Color trueBlack;
+  late Color bottomSheetBackground;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -54,7 +55,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color tertiaryColor = const Color(0xFFEE8B60);
   late Color alternate = const Color(0xFFF95A82);
   late Color primaryBackground = const Color(0xFFFFFFFF);
-  late Color secondaryBackground = const Color(0xFFD4D3DE);
+  late Color secondaryBackground = const Color(0xFFF5F5F5);
   late Color primaryText = const Color(0xFF050A41);
   late Color secondaryText = const Color(0xFF6D768A);
 
@@ -70,6 +71,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color backgroundGrey = Color(0xFFF8F8F9);
   late Color noColor = Color(0x00FFFFFF);
   late Color trueBlack = Color(0xFF000000);
+  late Color bottomSheetBackground = Color(0x001E1E1E);
 }
 
 abstract class Typography {
@@ -98,8 +100,8 @@ class ThemeTypography extends Typography {
   TextStyle get title1 => GoogleFonts.getFont(
         'Roboto',
         color: theme.primaryText,
-        fontWeight: FontWeight.normal,
-        fontSize: 24,
+        fontWeight: FontWeight.bold,
+        fontSize: 32,
       );
   String get title2Family => 'Roboto';
   TextStyle get title2 => GoogleFonts.getFont(
@@ -125,7 +127,7 @@ class ThemeTypography extends Typography {
   String get subtitle2Family => 'Roboto';
   TextStyle get subtitle2 => GoogleFonts.getFont(
         'Roboto',
-        color: theme.secondaryText,
+        color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 16,
       );

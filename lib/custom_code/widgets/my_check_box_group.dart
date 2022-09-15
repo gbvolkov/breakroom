@@ -20,7 +20,9 @@ class MyCheckBoxGroup extends StatefulWidget {
       this.horizontal,
       this.buttonWidth,
       this.buttonHeight,
-      this.defaultSelected})
+      this.defaultSelected,
+      this.optionNo,
+      required this.onValue})
       : super(key: key);
 
   final double? width;
@@ -31,12 +33,25 @@ class MyCheckBoxGroup extends StatefulWidget {
   final double? buttonHeight;
   final bool? horizontal;
   final List<String>? defaultSelected;
+  final int? optionNo;
+  final Future<dynamic> Function() onValue;
 
   @override
   _MyCheckBoxGroupState createState() => _MyCheckBoxGroupState();
 }
 
 class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
+  late List<String> defaultValue;
+
+  @override
+  void initState() {
+    //String selValue = widget.defaultSelected ?? "";
+    defaultValue = widget.defaultSelected ?? [];
+    FFAppState().selectedValues[widget.optionNo ?? 0] = defaultValue.join('|');
+    FFAppState().lookingForSelection = defaultValue;
+    super.initState();
+  }
+
   //@override
   //Widget build(BuildContext context) {
   //  return NumberPicker(
@@ -46,15 +61,24 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
   //        onChanged: (value) => setState(() => _currentValue = value)
   //      );
   //  }
+  late List<Object?> selectedValues;
 
   @override
   Widget build(BuildContext context) {
-    return cb.CustomCheckBoxGroup(
+    selectedValues = widget.defaultSelected ?? [];
+
+    return cb.CustomCheckBoxGroup<String>(
       unSelectedColor: Theme.of(context).canvasColor,
       buttonLables: widget.buttonLabels ?? ['Option'],
       buttonValuesList: widget.buttonValues ?? ['Option'],
-      checkBoxButtonValues: (values) {
-        print(values);
+      checkBoxButtonValues: (List values) {
+        setState(() => {
+              FFAppState().selectedValues[widget.optionNo ?? 0] =
+                  values.join('|'),
+              FFAppState().lookingForSelection =
+                  values.map((e) => e.toString()).toList(),
+            });
+        widget.onValue();
       },
       defaultSelected: widget.defaultSelected,
       horizontal: widget.horizontal ?? true,
@@ -65,6 +89,13 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
       unSelectedBorderColor: Colors.transparent,
       padding: 5,
       enableShape: true,
+      radius: 15,
+      shapeRadius: 15,
+      buttonTextStyle: cb.ButtonTextStyle(
+          selectedColor: FlutterFlowTheme.of(context).primaryBackground,
+          unSelectedColor: FlutterFlowTheme.of(context).primaryText,
+          textStyle: TextStyle(
+              fontSize: FlutterFlowTheme.of(context).subtitle1.fontSize)),
     );
   }
 }

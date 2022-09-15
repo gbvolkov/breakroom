@@ -119,12 +119,12 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'HomeView': HomeViewWidget(),
       'ChatView': ChatViewWidget(),
+      'ProfileView': ProfileViewWidget(),
       'MatchesView': MatchesViewWidget(),
       'NotificationsView': NotificationsViewWidget(),
-      'ProfileView': ProfileViewWidget(),
-      'PageTest': PageTestWidget(),
+      'HomeView': HomeViewWidget(),
+      'PageViewTest': PageViewTestWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -144,18 +144,18 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_outlined,
-              size: 20,
-            ),
-            label: 'Home',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
               Icons.chat_rounded,
               size: 20,
             ),
             label: 'Chat',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outline,
+              size: 20,
+            ),
+            label: 'Profile',
             tooltip: '',
           ),
           BottomNavigationBarItem(
@@ -176,15 +176,15 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person_outline,
+              Icons.home_outlined,
               size: 20,
             ),
-            label: 'Profile',
+            label: 'Home',
             tooltip: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.threed_rotation_sharp,
+              Icons.texture,
               size: 24,
             ),
             label: 'Test',

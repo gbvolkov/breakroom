@@ -228,6 +228,7 @@ class _SignUpGender2ViewWidgetState extends State<SignUpGender2ViewWidget> {
                     buttonLabels: FFAppState().testOptions.toList(),
                     buttonValues: FFAppState().testOptions.toList(),
                     horizontal: true,
+                    onValue: () async {},
                   ),
                 ),
                 Align(

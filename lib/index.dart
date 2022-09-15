@@ -10,11 +10,11 @@ export 'matches_view/matches_view_widget.dart' show MatchesViewWidget;
 export 'notifications_view/notifications_view_widget.dart'
     show NotificationsViewWidget;
 export 'home_view/home_view_widget.dart' show HomeViewWidget;
-export 'edit_profile_view/edit_profile_view_widget.dart'
-    show EditProfileViewWidget;
 export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
 export 'edit_interests_view/edit_interests_view_widget.dart'
     show EditInterestsViewWidget;
+export 'edit_profile_view/edit_profile_view_widget.dart'
+    show EditProfileViewWidget;
 export 'edit_basics_view/edit_basics_view_widget.dart'
     show EditBasicsViewWidget;
 export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
@@ -48,8 +48,6 @@ export 'sign_up_interests8_view/sign_up_interests8_view_widget.dart'
     show SignUpInterests8ViewWidget;
 export 'sign_up_looking_for5_view/sign_up_looking_for5_view_widget.dart'
     show SignUpLookingFor5ViewWidget;
-export 'sign_up_height6_view/sign_up_height6_view_widget.dart'
-    show SignUpHeight6ViewWidget;
 export 'sign_in_view/sign_in_view_widget.dart' show SignInViewWidget;
 export 'welcome_view/welcome_view_widget.dart' show WelcomeViewWidget;
 export 'page_test/page_test_widget.dart' show PageTestWidget;
@@ -60,3 +58,8 @@ export 'forgot_password_view/forgot_password_view_widget.dart'
 export 'create_profile_view/create_profile_view_widget.dart'
     show CreateProfileViewWidget;
 export 'sign_up_view/sign_up_view_widget.dart' show SignUpViewWidget;
+export 'edit_profile_new_view/edit_profile_new_view_widget.dart'
+    show EditProfileNewViewWidget;
+export 'home_details_view/home_details_view_widget.dart'
+    show HomeDetailsViewWidget;
+export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;

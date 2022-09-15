@@ -14,30 +14,47 @@ class MyNumberPicker extends StatefulWidget {
       {Key? key,
       this.width,
       this.height,
-      required this.personHeight,
-      required this.updateCallback})
+      this.personHeight,
+      required this.onValueChanged})
       : super(key: key);
 
   final double? width;
   final double? height;
-  final int personHeight;
-  final Future<dynamic> Function() updateCallback;
+  final int? personHeight;
+  final Future<dynamic> Function() onValueChanged;
 
   @override
   _MyNumberPickerState createState() => _MyNumberPickerState();
 }
 
 class _MyNumberPickerState extends State<MyNumberPicker> {
-  int _currentValue = 170;
+  late int _currentValue;
+
+  @override
+  void initState() {
+    _currentValue = widget.personHeight ?? 170;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return np.NumberPicker(
-        value: _currentValue,
-        minValue: 150,
-        maxValue: 220,
-        onChanged: (value) => widget.updateCallback
-        //(value) => setState(() => _currentValue = value)
-        );
+      value: _currentValue,
+      minValue: 150,
+      maxValue: 220,
+      onChanged: (value) {
+        FFAppState().userHeight = value;
+        setState(() => _currentValue = value);
+        widget.onValueChanged();
+      }, //(value) => widget.updateCallback
+      itemCount: 5,
+      textStyle: TextStyle(
+          color: FlutterFlowTheme.of(context).secondaryBackground,
+          fontSize: FlutterFlowTheme.of(context).title2.fontSize),
+      selectedTextStyle: TextStyle(
+          color: FlutterFlowTheme.of(context).alternate,
+          //fontWeight: FontWeight.bold,
+          fontSize: FlutterFlowTheme.of(context).title1.fontSize),
+    );
   }
 }

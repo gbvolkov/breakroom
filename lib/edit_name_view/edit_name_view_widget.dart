@@ -85,11 +85,7 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
                         child: Text(
                           'Your name',
-                          style: FlutterFlowTheme.of(context).title1.override(
-                                fontFamily: 'Poppins',
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: FlutterFlowTheme.of(context).title1,
                         ),
                       ),
                     ),
@@ -99,12 +95,18 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                         child: Text(
                           'First name',
-                          style: FlutterFlowTheme.of(context).subtitle2,
+                          style: FlutterFlowTheme.of(context)
+                              .subtitle2
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: TextFormField(
                         controller: textController1,
                         autofocus: true,
@@ -164,7 +166,13 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                         child: Text(
                           'Last name',
-                          style: FlutterFlowTheme.of(context).subtitle2,
+                          style: FlutterFlowTheme.of(context)
+                              .subtitle2
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
                         ),
                       ),
                     ),
