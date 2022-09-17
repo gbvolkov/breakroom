@@ -2165,620 +2165,675 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           width: double.infinity,
                           height: double.infinity,
                           decoration: BoxDecoration(),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0, 1),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: Container(
-                                      width: 105,
-                                      child: Stack(
-                                        alignment: AlignmentDirectional(0, 1),
-                                        children: [
-                                          Align(
+                          child: StreamBuilder<List<UserProfilesRecord>>(
+                            stream: queryUserProfilesRecord(
+                              queryBuilder: (userProfilesRecord) =>
+                                  userProfilesRecord.where('user',
+                                      isEqualTo: currentUserReference),
+                              singleRecord: true,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: CircularProgressIndicator(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<UserProfilesRecord>
+                                  columnUserProfilesRecordList = snapshot.data!;
+                              // Return an empty Container when the document does not exist.
+                              if (snapshot.data!.isEmpty) {
+                                return Container();
+                              }
+                              final columnUserProfilesRecord =
+                                  columnUserProfilesRecordList.isNotEmpty
+                                      ? columnUserProfilesRecordList.first
+                                      : null;
+                              return SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 1),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 16),
+                                        child: Container(
+                                          width: 105,
+                                          child: Stack(
                                             alignment:
-                                                AlignmentDirectional(0, 0),
-                                            child: AuthUserStreamWidget(
-                                              child: Container(
-                                                width: 105,
-                                                height: 105,
-                                                clipBehavior: Clip.antiAlias,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Image.network(
-                                                  currentUserPhoto,
-                                                  fit: BoxFit.cover,
+                                                AlignmentDirectional(0, 1),
+                                            children: [
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional(0, 0),
+                                                child: AuthUserStreamWidget(
+                                                  child: Container(
+                                                    width: 105,
+                                                    height: 105,
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Image.network(
+                                                      currentUserPhoto,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                          FlutterFlowIconButton(
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 60,
-                                            icon: Icon(
-                                              Icons.photo_camera,
-                                              color: Color(0x80FFFFFF),
-                                              size: 30,
-                                            ),
-                                            onPressed: () async {
-                                              final selectedMedia =
-                                                  await selectMediaWithSourceBottomSheet(
-                                                context: context,
-                                                allowPhoto: true,
-                                              );
-                                              if (selectedMedia != null &&
-                                                  selectedMedia.every((m) =>
-                                                      validateFileFormat(
-                                                          m.storagePath,
-                                                          context))) {
-                                                showUploadMessage(
-                                                  context,
-                                                  'Uploading file...',
-                                                  showLoading: true,
-                                                );
-                                                final downloadUrls = (await Future
-                                                        .wait(selectedMedia.map(
-                                                            (m) async =>
-                                                                await uploadData(
-                                                                    m.storagePath,
-                                                                    m.bytes))))
-                                                    .where((u) => u != null)
-                                                    .map((u) => u!)
-                                                    .toList();
-                                                ScaffoldMessenger.of(context)
-                                                    .hideCurrentSnackBar();
-                                                if (downloadUrls.length ==
-                                                    selectedMedia.length) {
-                                                  setState(() =>
-                                                      uploadedFileUrl =
-                                                          downloadUrls.first);
-                                                  showUploadMessage(
-                                                    context,
-                                                    'Success!',
+                                              FlutterFlowIconButton(
+                                                borderRadius: 30,
+                                                borderWidth: 1,
+                                                buttonSize: 60,
+                                                icon: Icon(
+                                                  Icons.photo_camera,
+                                                  color: Color(0x80FFFFFF),
+                                                  size: 30,
+                                                ),
+                                                onPressed: () async {
+                                                  final selectedMedia =
+                                                      await selectMediaWithSourceBottomSheet(
+                                                    context: context,
+                                                    allowPhoto: true,
                                                   );
-                                                } else {
-                                                  showUploadMessage(
-                                                    context,
-                                                    'Failed to upload media',
-                                                  );
-                                                  return;
-                                                }
-                                              }
+                                                  if (selectedMedia != null &&
+                                                      selectedMedia.every((m) =>
+                                                          validateFileFormat(
+                                                              m.storagePath,
+                                                              context))) {
+                                                    showUploadMessage(
+                                                      context,
+                                                      'Uploading file...',
+                                                      showLoading: true,
+                                                    );
+                                                    final downloadUrls = (await Future
+                                                            .wait(selectedMedia
+                                                                .map((m) async =>
+                                                                    await uploadData(
+                                                                        m.storagePath,
+                                                                        m.bytes))))
+                                                        .where((u) => u != null)
+                                                        .map((u) => u!)
+                                                        .toList();
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .hideCurrentSnackBar();
+                                                    if (downloadUrls.length ==
+                                                        selectedMedia.length) {
+                                                      setState(() =>
+                                                          uploadedFileUrl =
+                                                              downloadUrls
+                                                                  .first);
+                                                      showUploadMessage(
+                                                        context,
+                                                        'Success!',
+                                                      );
+                                                    } else {
+                                                      showUploadMessage(
+                                                        context,
+                                                        'Failed to upload media',
+                                                      );
+                                                      return;
+                                                    }
+                                                  }
 
-                                              final usersUpdateData =
-                                                  createUsersRecordData(
-                                                photoUrl: uploadedFileUrl,
-                                              );
-                                              await currentUserReference!
-                                                  .update(usersUpdateData);
-                                            },
+                                                  final usersUpdateData =
+                                                      createUsersRecordData(
+                                                    photoUrl: uploadedFileUrl,
+                                                  );
+                                                  await currentUserReference!
+                                                      .update(usersUpdateData);
+                                                },
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Text(
-                                    'Name',
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        '${FFAppState().usrFirstName} ${FFAppState().usrLastName}',
+                                        'Name',
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                            .bodyText2,
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Name');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            '${FFAppState().usrFirstName} ${FFAppState().usrLastName}',
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                .profileContainerName = 'Name');
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Bio',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        txtBioController!.text,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Bio',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Bio');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            txtBioController!.text,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                .profileContainerName = 'Bio');
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Industry',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        FFAppState().usrIndustry,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Industry',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Industry');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            FFAppState().usrIndustry,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
+                                                'Industry');
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Occupation',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        FFAppState().usrOccupation,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Occupation',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            FFAppState().usrOccupation,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
                                                 'Occupation');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Date of birth',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        FFAppState().usrBDay!.toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Date of birth',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            FFAppState().usrBDay!.toString(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
                                                 'DateOfBirth');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Gender',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        FFAppState().usrGender,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Gender',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Gender');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            FFAppState().usrGender,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
+                                                'Gender');
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Preferences',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        FFAppState().usrGenderPreference,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Preferences',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            FFAppState().usrGenderPreference,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
                                                 'Preferences');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 0),
-                                    child: Text(
-                                      'Status',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
                                     ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
-                                      child: Text(
-                                        FFAppState().usrIntention,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          'Status',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2,
+                                        ),
                                       ),
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Text(
+                                            FFAppState().usrIntention,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
                                                 'ChooseYourStatus');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 8, 0, 4),
-                                        child: Text(
-                                          'Interests',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 8, 0, 4),
+                                            child: Text(
+                                              'Interests',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
                                                 'Interests');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Wrap(
-                                        spacing: 0,
-                                        runSpacing: 0,
-                                        alignment: WrapAlignment.start,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.start,
-                                        direction: Axis.horizontal,
-                                        runAlignment: WrapAlignment.start,
-                                        verticalDirection:
-                                            VerticalDirection.down,
-                                        clipBehavior: Clip.none,
-                                        children: [],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Divider(
-                                  thickness: 1,
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryText,
-                                ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 8, 0, 4),
-                                        child: Text(
-                                          'Basics',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                            scaffoldKey.currentState!
+                                                .openEndDrawer();
+                                          },
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
-                                      ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Basics');
-                                        await pageViewController?.nextPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
-                                        );
-                                      },
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Wrap(
+                                            spacing: 0,
+                                            runSpacing: 0,
+                                            alignment: WrapAlignment.start,
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.start,
+                                            direction: Axis.horizontal,
+                                            runAlignment: WrapAlignment.start,
+                                            verticalDirection:
+                                                VerticalDirection.down,
+                                            clipBehavior: Clip.none,
+                                            children: [],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Divider(
+                                      thickness: 1,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 8, 0, 4),
+                                            child: Text(
+                                              'Basics',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2,
+                                            ),
+                                          ),
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                    .profileContainerName =
+                                                'Basics');
+                                            await pageViewController?.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.ease,
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Wrap(
+                                            spacing: 0,
+                                            runSpacing: 0,
+                                            alignment: WrapAlignment.start,
+                                            crossAxisAlignment:
+                                                WrapCrossAlignment.start,
+                                            direction: Axis.horizontal,
+                                            runAlignment: WrapAlignment.start,
+                                            verticalDirection:
+                                                VerticalDirection.down,
+                                            clipBehavior: Clip.none,
+                                            children: [],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Expanded(
-                                      child: Wrap(
-                                        spacing: 0,
-                                        runSpacing: 0,
-                                        alignment: WrapAlignment.start,
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.start,
-                                        direction: Axis.horizontal,
-                                        runAlignment: WrapAlignment.start,
-                                        verticalDirection:
-                                            VerticalDirection.down,
-                                        clipBehavior: Clip.none,
-                                        children: [],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                              );
+                            },
                           ),
                         ),
                         Container(
@@ -2862,7 +2917,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         Text(
                                           functions.stringifyList(
                                               FFAppState()
-                                                  .lookingForSelection
+                                                  .usrLookingFor
                                                   .toList(),
                                               2),
                                           style: FlutterFlowTheme.of(context)
@@ -2953,7 +3008,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          '173 cm',
+                                          FFAppState().usrHeight.toString(),
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3042,11 +3097,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              8),
+                                          FFAppState().usrDrinkingStatus,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3135,11 +3186,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              9),
+                                          FFAppState().usrSmokingStatus,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3228,11 +3275,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              10),
+                                          FFAppState().usrSpiritualStatus,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3321,11 +3364,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              7),
+                                          FFAppState().usrWorkoutStatus,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3414,11 +3453,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              3),
+                                          FFAppState().usrChildfreeStatus,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3507,11 +3542,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              5),
+                                          FFAppState().usrEducation,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3600,11 +3631,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         Text(
-                                          functions.getListValue(
-                                              FFAppState()
-                                                  .selectedValues
-                                                  .toList(),
-                                              6),
+                                          FFAppState().usrBodyType,
                                           style: FlutterFlowTheme.of(context)
                                               .title3,
                                         ),
@@ -3653,31 +3680,22 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                             industry: ddIndustryValue,
                             occupation: ddOccupationValue,
                             bio: txtBioController!.text,
-                            gender: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 0),
-                            genderPreference: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 1),
-                            intention: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 2),
-                            childfreeStatus: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 3),
-                            religion: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 4),
-                            education: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 5),
-                            bodyType: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 6),
-                            workoutStatus: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 7),
-                            drinkingStatus: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 8),
-                            smokingStatus: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 9),
-                            spiritualStatus: functions.getListValue(
-                                FFAppState().selectedValues.toList(), 10),
+                            gender: FFAppState().usrGender,
+                            genderPreference: FFAppState().usrGenderPreference,
+                            intention: FFAppState().usrIntention,
+                            childfreeStatus: FFAppState().usrChildfreeStatus,
+                            religion: FFAppState().usrReligion,
+                            education: FFAppState().usrEducation,
+                            bodyType: FFAppState().usrBodyType,
+                            workoutStatus: FFAppState().usrWorkoutStatus,
+                            drinkingStatus: FFAppState().usrDrinkingStatus,
+                            smokingStatus: FFAppState().usrSmokingStatus,
+                            spiritualStatus: FFAppState().usrSpiritualStatus,
+                            height: FFAppState().usrHeight,
+                            weight: 80,
                           ),
-                          'interests': ccInterestsValues,
-                          'lookingFor': FFAppState().lookingForSelection,
+                          'interests': FFAppState().usrInterests,
+                          'lookingFor': FFAppState().usrLookingFor,
                         };
                         await widget.userProfile!.reference
                             .update(userProfilesUpdateData);

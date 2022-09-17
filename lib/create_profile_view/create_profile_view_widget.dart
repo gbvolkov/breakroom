@@ -7,7 +7,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../main.dart';
-import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -47,9 +46,6 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await actions.initializeUserProfileState(
-        widget.userProfile!,
-      );
       setState(() => FFAppState().usrFirstName = FFAppState().usrFirstName);
     });
 
