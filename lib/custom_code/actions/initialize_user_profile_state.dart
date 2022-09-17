@@ -23,7 +23,7 @@ Future initializeUserProfileState(UserProfilesRecord userProfile) async {
   FFAppState().usrWorkoutStatus = userProfile.workoutStatus ?? "";
   FFAppState().usrFirstName = userProfile.firstName ?? "";
   FFAppState().usrLastName = userProfile.lastName ?? "";
-  FFAppState().usrBDay = userProfile.birthDay;
+  FFAppState().usrBDay = userProfile.birthDay ?? DateTime.now();
   FFAppState().usrBio = userProfile.bio ?? "";
   FFAppState().usrIndustry = userProfile.industry ?? "";
   FFAppState().usrOccupation = userProfile.occupation ?? "";
