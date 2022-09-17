@@ -1,6 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../edit_profile_view/edit_profile_view_widget.dart';
+import '../edit_profile_new_view/edit_profile_new_view_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -296,7 +296,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                EditProfileViewWidget(),
+                                                EditProfileNewViewWidget(),
                                           ),
                                         );
                                       },

@@ -27,12 +27,22 @@ class MyNumberPicker extends StatefulWidget {
   _MyNumberPickerState createState() => _MyNumberPickerState();
 }
 
+int min(int a, int b) {
+  return (a < b) ? a : b;
+}
+
+int max(int a, int b) {
+  return (a > b) ? a : b;
+}
+
 class _MyNumberPickerState extends State<MyNumberPicker> {
   late int _currentValue;
 
   @override
   void initState() {
-    _currentValue = widget.personHeight ?? 170;
+    _currentValue = min(max(widget.personHeight ?? 170, 150), 220);
+    FFAppState().nmpPickedNumber = _currentValue;
+    FFAppState().userHeight = _currentValue;
     super.initState();
   }
 
@@ -44,6 +54,7 @@ class _MyNumberPickerState extends State<MyNumberPicker> {
       maxValue: 220,
       onChanged: (value) {
         FFAppState().userHeight = value;
+        FFAppState().nmpPickedNumber = value;
         setState(() => _currentValue = value);
         widget.onValueChanged();
       }, //(value) => widget.updateCallback

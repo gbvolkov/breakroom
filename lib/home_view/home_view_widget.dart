@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home_details_view/home_details_view_widget.dart';
+import '../introduction_view/introduction_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,12 +37,22 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'BreakRoom',
-                      style: FlutterFlowTheme.of(context).title1.override(
-                            fontFamily: 'Roboto',
-                            fontSize: 38,
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => IntroductionViewWidget(),
                           ),
+                        );
+                      },
+                      child: Text(
+                        'BreakRoom',
+                        style: FlutterFlowTheme.of(context).title1.override(
+                              fontFamily: 'Roboto',
+                              fontSize: 38,
+                            ),
+                      ),
                     ),
                     FlutterFlowIconButton(
                       borderColor: Colors.transparent,

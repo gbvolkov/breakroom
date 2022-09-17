@@ -21,7 +21,6 @@ class MyRadioButton extends StatefulWidget {
     this.buttonWidth,
     this.buttonHeight,
     this.defaultSelected,
-    this.optionNo,
     required this.onValue,
   }) : super(key: key);
 
@@ -33,7 +32,6 @@ class MyRadioButton extends StatefulWidget {
   final List<String>? buttonLabels;
   final List<String>? buttonValues;
   final String? defaultSelected;
-  final int? optionNo;
   final Future<dynamic> Function() onValue;
 
   @override
@@ -55,7 +53,7 @@ class _MyRadioButtonState extends State<MyRadioButton> {
         widget.buttonLabels?.add(defaultValue);
         widget.buttonValues!.add(defaultValue);
       }
-      FFAppState().selectedValues[widget.optionNo ?? 0] = defaultValue;
+      FFAppState().mrbSelectedValue = defaultValue;
     }
     super.initState();
 
@@ -85,10 +83,9 @@ class _MyRadioButtonState extends State<MyRadioButton> {
       buttonLables: widget.buttonLabels ?? ['Option'],
       buttonValues: widget.buttonValues ?? ['Option'],
       radioButtonValue: (value) {
-        setState(
-          () => FFAppState().selectedValues[widget.optionNo ?? 0] =
-              value.toString(),
-        );
+        setState(() => {
+              FFAppState().mrbSelectedValue = value.toString(),
+            });
         widget.onValue();
       },
       defaultSelected: defaultValue,

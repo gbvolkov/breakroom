@@ -61,25 +61,6 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
               ),
             ),
           ),
-          FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
-            icon: Icon(
-              Icons.fiber_new,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30,
-            ),
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CreateProfileViewWidget(),
-                ),
-              );
-            },
-          ),
         ],
         centerTitle: false,
         elevation: 0,
@@ -307,6 +288,30 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               BorderRadius.circular(8),
                                         ),
                                       ),
+                                    ),
+                                    FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 20,
+                                      borderWidth: 1,
+                                      buttonSize: 40,
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 20,
+                                      ),
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateProfileViewWidget(
+                                              userProfile:
+                                                  columnUserProfilesRecord,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),

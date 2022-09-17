@@ -46,7 +46,7 @@ bool isEmailAndPasswordValid(
   password = password.trim();
 
   return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email) &&
-      password.length > 6;
+      password.length > 5;
 }
 
 String getListValue(
@@ -61,4 +61,9 @@ List<String> splitString(
   String? separator,
 ) {
   return str.split(separator ?? '|');
+}
+
+String getSelectAllButtonTitle(bool isSelectAllVisible) {
+  // Add your function code here!
+  return (isSelectAllVisible ? "Select all" : "Clear all");
 }

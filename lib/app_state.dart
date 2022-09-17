@@ -131,11 +131,18 @@ class FFAppState {
   String profileContainerName = '';
 
   List<String> industryList = [
-    'Retail',
+    'Health',
+    'Agriculture',
+    'Environment',
+    'Consumer Tech',
     'Medicine',
-    'IT',
-    'Sales',
-    'Government'
+    'Legal',
+    'Education',
+    'Finance',
+    'Automotive',
+    'Int. Development',
+    'Property',
+    'Other'
   ];
 
   List<String> occupationList = ['Surgeon', 'Front-end developer', 'Soldier'];
@@ -157,6 +164,58 @@ class FFAppState {
   String filterName = 'Filter';
 
   String advancedFilterName = '';
+
+  List<String> currentIndustrySelection = [];
+
+  bool isSelectAllVisible = true;
+
+  int introductionPageNo = 1;
+
+  String mrbSelectedValue = '';
+
+  List<String> mcbSelectedValues = [];
+
+  String usrGender = '';
+
+  String usrGenderPreference = '';
+
+  String usrIntention = '';
+
+  String usrChildfreeStatus = '';
+
+  String usrReligion = '';
+
+  String usrEducation = '';
+
+  String usrBodyType = '';
+
+  List<String> usrLookingFor = [];
+
+  int nmpPickedNumber = 0;
+
+  int usrHeight = 0;
+
+  String usrWorkoutStatus = '';
+
+  String usrDrinkingStatus = '';
+
+  String usrSmokingStatus = '';
+
+  String usrSpiritualStatus = '';
+
+  String usrFirstName = '';
+
+  String usrLastName = '';
+
+  String usrIndustry = '';
+
+  String usrOccupation = '';
+
+  String usrBio = '';
+
+  List<String> usrInterests = [];
+
+  DateTime? usrBDay;
 }
 
 LatLng? _latLngFromString(String? val) {

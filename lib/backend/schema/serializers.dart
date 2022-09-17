@@ -5,6 +5,8 @@ import 'user_profiles_record.dart';
 import 'industries_record.dart';
 import 'occupations_record.dart';
 import 'interests_record.dart';
+import 'chats_record.dart';
+import 'chat_messages_record.dart';
 
 import 'index.dart';
 
@@ -20,6 +22,8 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   IndustriesRecord,
   OccupationsRecord,
   InterestsRecord,
+  ChatsRecord,
+  ChatMessagesRecord,
   PhotoStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()

@@ -9,10 +9,12 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,6 +49,14 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await actions.initializeUserProfileState(
+        widget.userProfile!,
+      );
+      setState(() => FFAppState().usrFirstName = FFAppState().usrFirstName);
+    });
+
     calBDaySelectedDay = DateTimeRange(
       start: DateTime.now().startOfDay,
       end: DateTime.now().endOfDay,
@@ -99,13 +109,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       endDrawer: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
+        width: MediaQuery.of(context).size.width,
         child: Drawer(
           elevation: 16,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Align(
                   alignment: AlignmentDirectional(-1, 0),
@@ -304,6 +314,44 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() => FFAppState().usrFirstName =
+                                      textController1!.text);
+                                  setState(() => FFAppState().usrLastName =
+                                      textController2!.text);
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -317,6 +365,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -385,6 +434,42 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() => FFAppState().usrBio =
+                                      txtBioController!.text);
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -398,6 +483,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -478,6 +564,42 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               },
                             ),
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() => FFAppState().usrIndustry =
+                                      ddIndustryValue!);
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -491,6 +613,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -574,6 +697,42 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               },
                             ),
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() => FFAppState().usrOccupation =
+                                      ddOccupationValue!);
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -587,6 +746,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -664,6 +824,42 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               inactiveDateStyle: TextStyle(),
                             ),
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() => FFAppState().usrBDay =
+                                      calBDaySelectedDay?.start);
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -677,6 +873,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -720,12 +917,45 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 horizontal: false,
                                 buttonWidth: 100.0,
                                 buttonHeight: 50.0,
-                                defaultSelected: widget.userProfile!.gender,
-                                optionNo: 0,
+                                defaultSelected: FFAppState().usrGender,
                                 onValue: () async {
-                                  setState(() => FFAppState().selectedValues =
-                                      FFAppState().selectedValues.toList());
+                                  setState(() => FFAppState().usrGender =
+                                      FFAppState().mrbSelectedValue);
                                 },
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
                           ),
@@ -742,6 +972,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -760,17 +991,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Gender preference',
-                                style: FlutterFlowTheme.of(context).subtitle2,
-                              ),
-                            ),
-                          ),
                           Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
@@ -786,12 +1006,46 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 buttonWidth: 100.0,
                                 buttonHeight: 50.0,
                                 defaultSelected:
-                                    widget.userProfile!.genderPreference,
-                                optionNo: 1,
+                                    FFAppState().usrGenderPreference,
                                 onValue: () async {
-                                  setState(() => FFAppState().selectedValues =
-                                      FFAppState().selectedValues.toList());
+                                  setState(() =>
+                                      FFAppState().usrGenderPreference =
+                                          FFAppState().mrbSelectedValue);
                                 },
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
                           ),
@@ -808,6 +1062,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -839,12 +1094,45 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 buttonValues: FFAppState().intentions.toList(),
                                 horizontal: true,
                                 buttonHeight: 50.0,
-                                defaultSelected: widget.userProfile!.intention,
-                                optionNo: 2,
+                                defaultSelected: FFAppState().usrIntention,
                                 onValue: () async {
-                                  setState(() => FFAppState().selectedValues =
-                                      FFAppState().selectedValues.toList());
+                                  setState(() => FFAppState().usrIntention =
+                                      FFAppState().mrbSelectedValue);
                                 },
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
                           ),
@@ -861,6 +1149,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -879,28 +1168,69 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            height: 200,
-                            child: custom_widgets.MyCheckBoxGroup(
+                          InkWell(
+                            onTap: () async {
+                              setState(() => FFAppState().usrLookingFor =
+                                  FFAppState().mcbSelectedValues.toList());
+                            },
+                            child: Container(
                               width: MediaQuery.of(context).size.width,
                               height: 200,
-                              buttonLabels:
-                                  FFAppState().lookingForList.toList(),
-                              buttonValues:
-                                  FFAppState().lookingForList.toList(),
-                              horizontal: true,
-                              buttonHeight: 50.0,
-                              defaultSelected:
-                                  widget.userProfile!.lookingFor!.toList(),
-                              optionNo: 11,
-                              onValue: () async {
-                                setState(() => FFAppState()
-                                        .lookingForSelection =
-                                    FFAppState().lookingForSelection.toList());
-                                setState(() => FFAppState().selectedValues =
-                                    FFAppState().selectedValues.toList());
-                              },
+                              child: custom_widgets.MyCheckBoxGroup(
+                                width: MediaQuery.of(context).size.width,
+                                height: 200,
+                                buttonLabels:
+                                    FFAppState().lookingForList.toList(),
+                                buttonValues:
+                                    FFAppState().lookingForList.toList(),
+                                horizontal: true,
+                                buttonHeight: 50.0,
+                                defaultSelected:
+                                    FFAppState().usrLookingFor.toList(),
+                                onValue: () async {
+                                  setState(() =>
+                                      FFAppState().lookingForSelection =
+                                          FFAppState()
+                                              .lookingForSelection
+                                              .toList());
+                                  setState(() => FFAppState().selectedValues =
+                                      FFAppState().selectedValues.toList());
+                                },
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
                             ),
                           ),
                         ],
@@ -947,53 +1277,119 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 verticalDirection: VerticalDirection.down,
                                 clipBehavior: Clip.none,
                                 children: [
-                                  FlutterFlowChoiceChips(
-                                    initiallySelected: ccInterestsValues != null
-                                        ? ccInterestsValues
-                                        : widget.userProfile!.interests!
-                                            .toList(),
-                                    options: FFAppState()
-                                        .interestList
-                                        .map((label) => ChipData(label))
-                                        .toList(),
-                                    onChanged: (val) =>
-                                        setState(() => ccInterestsValues = val),
-                                    selectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                  FutureBuilder<List<InterestsRecord>>(
+                                    future: queryInterestsRecordOnce(
+                                      queryBuilder: (interestsRecord) =>
+                                          interestsRecord.orderBy('interest'),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
                                           ),
-                                      iconColor: Colors.white,
-                                      iconSize: 18,
-                                      labelPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              8, 8, 8, 8),
-                                      elevation: 1,
-                                    ),
-                                    unselectedChipStyle: ChipStyle(
-                                      backgroundColor: Colors.white,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                      iconColor: Color(0xFF323B45),
-                                      iconSize: 18,
-                                      labelPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              8, 8, 8, 8),
-                                      elevation: 4,
-                                    ),
-                                    chipSpacing: 20,
-                                    rowSpacing: 8,
-                                    multiselect: true,
-                                    initialized: ccInterestsValues != null,
-                                    alignment: WrapAlignment.start,
+                                        );
+                                      }
+                                      List<InterestsRecord>
+                                          ccInterestsInterestsRecordList =
+                                          snapshot.data!;
+                                      return FlutterFlowChoiceChips(
+                                        initiallySelected:
+                                            ccInterestsValues != null
+                                                ? ccInterestsValues
+                                                : widget.userProfile!.interests!
+                                                    .toList(),
+                                        options: ccInterestsInterestsRecordList
+                                            .map((e) => e.interest!)
+                                            .toList()
+                                            .map((label) => ChipData(label))
+                                            .toList(),
+                                        onChanged: (val) => setState(
+                                            () => ccInterestsValues = val),
+                                        selectedChipStyle: ChipStyle(
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                          iconColor: Colors.white,
+                                          iconSize: 18,
+                                          labelPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8, 8, 8, 8),
+                                          elevation: 1,
+                                        ),
+                                        unselectedChipStyle: ChipStyle(
+                                          backgroundColor: Colors.white,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle1,
+                                          iconColor: Color(0xFF323B45),
+                                          iconSize: 18,
+                                          labelPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8, 8, 8, 8),
+                                          elevation: 4,
+                                        ),
+                                        chipSpacing: 20,
+                                        rowSpacing: 8,
+                                        multiselect: true,
+                                        initialized: ccInterestsValues != null,
+                                        alignment: WrapAlignment.start,
+                                      );
+                                    },
                                   ),
                                 ],
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  setState(() => FFAppState().usrInterests =
+                                      ccInterestsValues!.toList());
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                               ),
                             ),
                           ),
@@ -1010,7 +1406,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -1041,8 +1437,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   width: 75,
                                   height:
                                       MediaQuery.of(context).size.height * 0.33,
-                                  personHeight: 177,
-                                  onValueChanged: () async {},
+                                  personHeight: FFAppState().usrHeight,
+                                  onValueChanged: () async {
+                                    setState(() => FFAppState().usrHeight =
+                                        FFAppState().nmpPickedNumber);
+                                  },
                                 ),
                               ),
                               Padding(
@@ -1055,6 +1454,40 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -1066,7 +1499,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -1102,12 +1537,46 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
                                   defaultSelected:
-                                      widget.userProfile!.drinkingStatus,
-                                  optionNo: 8,
+                                      FFAppState().usrDrinkingStatus,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() =>
+                                        FFAppState().usrDrinkingStatus =
+                                            FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1123,7 +1592,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -1158,12 +1629,47 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
-                                  defaultSelected: 'Never',
-                                  optionNo: 8,
+                                  defaultSelected:
+                                      FFAppState().usrSmokingStatus,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() =>
+                                        FFAppState().usrSmokingStatus =
+                                            FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1179,7 +1685,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -1208,18 +1716,53 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.4,
                                   buttonLabels:
-                                      FFAppState().areYouSpiritualList.toList(),
+                                      FFAppState().howOftenList.toList(),
                                   buttonValues:
-                                      FFAppState().areYouSpiritualList.toList(),
+                                      FFAppState().howOftenList.toList(),
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
-                                  defaultSelected: 'Atheist',
-                                  optionNo: 8,
+                                  defaultSelected:
+                                      FFAppState().usrSpiritualStatus,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() =>
+                                        FFAppState().usrSpiritualStatus =
+                                            FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1235,7 +1778,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -1263,21 +1808,54 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   width: MediaQuery.of(context).size.width,
                                   height:
                                       MediaQuery.of(context).size.height * 0.4,
-                                  buttonLabels: FFAppState()
-                                      .workoutRegularityList
-                                      .toList(),
-                                  buttonValues: FFAppState()
-                                      .workoutRegularityList
-                                      .toList(),
+                                  buttonLabels:
+                                      FFAppState().howOftenList.toList(),
+                                  buttonValues:
+                                      FFAppState().howOftenList.toList(),
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
-                                  defaultSelected: 'Never',
-                                  optionNo: 8,
+                                  defaultSelected:
+                                      FFAppState().usrWorkoutStatus,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() =>
+                                        FFAppState().usrWorkoutStatus =
+                                            FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1293,7 +1871,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -1328,12 +1908,47 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
-                                  defaultSelected: 'Never',
-                                  optionNo: 8,
+                                  defaultSelected:
+                                      FFAppState().usrChildfreeStatus,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() =>
+                                        FFAppState().usrChildfreeStatus =
+                                            FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1349,7 +1964,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -1384,12 +2001,45 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
-                                  defaultSelected: 'Never',
-                                  optionNo: 8,
+                                  defaultSelected: FFAppState().usrEducation,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() => FFAppState().usrEducation =
+                                        FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1405,7 +2055,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.8,
                       decoration: BoxDecoration(),
-                      child: Stack(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
                             padding:
@@ -1440,12 +2091,45 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
-                                  defaultSelected: 'Never',
-                                  optionNo: 8,
+                                  defaultSelected: FFAppState().usrBodyType,
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() => FFAppState().usrBodyType =
+                                        FFAppState().mrbSelectedValue);
                                   },
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  if (scaffoldKey.currentState!.isDrawerOpen ||
+                                      scaffoldKey
+                                          .currentState!.isEndDrawerOpen) {
+                                    Navigator.pop(context);
+                                  }
+                                },
+                                text: 'Save',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
@@ -1454,47 +2138,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       ),
                     ),
                   ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-1, 0),
-                        child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              if (scaffoldKey.currentState!.isDrawerOpen ||
-                                  scaffoldKey.currentState!.isEndDrawerOpen) {
-                                Navigator.pop(context);
-                              }
-                            },
-                            text: 'Save',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 48,
-                              color: FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -1638,7 +2281,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        '${textController1!.text} ${textController2!.text}',
+                                        '${FFAppState().usrFirstName} ${FFAppState().usrLastName}',
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),
@@ -1736,7 +2379,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        ddIndustryValue!,
+                                        FFAppState().usrIndustry,
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),
@@ -1785,7 +2428,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        ddOccupationValue!,
+                                        FFAppState().usrOccupation,
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),
@@ -1835,8 +2478,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        dateTimeFormat(
-                                            'yMd', calBDaySelectedDay!.start),
+                                        FFAppState().usrBDay!.toString(),
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),
@@ -1886,11 +2528,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        functions.getListValue(
-                                            FFAppState()
-                                                .selectedValues
-                                                .toList(),
-                                            0),
+                                        FFAppState().usrGender,
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),
@@ -1939,11 +2577,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        functions.getListValue(
-                                            FFAppState()
-                                                .selectedValues
-                                                .toList(),
-                                            1),
+                                        FFAppState().usrGenderPreference,
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),
@@ -1993,11 +2627,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Text(
-                                        functions.getListValue(
-                                            FFAppState()
-                                                .selectedValues
-                                                .toList(),
-                                            2),
+                                        FFAppState().usrIntention,
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                       ),

@@ -8,7 +8,6 @@ import '../forgot_password_view/forgot_password_view_widget.dart';
 import '../main.dart';
 import '../sign_up_view/sign_up_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -350,41 +349,12 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                           0, 0, 0, 32),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          if (functions.isEmailAndPasswordValid(
-                                              emailTextFieldController!.text,
-                                              passwordTextFieldController!
-                                                  .text)) {
-                                            final user = await signInWithEmail(
-                                              context,
-                                              emailTextFieldController!.text,
-                                              passwordTextFieldController!.text,
-                                            );
-                                            if (user == null) {
-                                              return;
-                                            }
-                                          } else {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Incorrect email or password',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .systemError,
-                                                      ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    Color(0xFFFFC8C8),
-                                              ),
-                                            );
+                                          final user = await signInWithEmail(
+                                            context,
+                                            emailTextFieldController!.text,
+                                            passwordTextFieldController!.text,
+                                          );
+                                          if (user == null) {
                                             return;
                                           }
 

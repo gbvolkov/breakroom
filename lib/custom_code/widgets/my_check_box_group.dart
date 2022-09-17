@@ -21,7 +21,6 @@ class MyCheckBoxGroup extends StatefulWidget {
       this.buttonWidth,
       this.buttonHeight,
       this.defaultSelected,
-      this.optionNo,
       required this.onValue})
       : super(key: key);
 
@@ -33,7 +32,6 @@ class MyCheckBoxGroup extends StatefulWidget {
   final double? buttonHeight;
   final bool? horizontal;
   final List<String>? defaultSelected;
-  final int? optionNo;
   final Future<dynamic> Function() onValue;
 
   @override
@@ -47,8 +45,7 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
   void initState() {
     //String selValue = widget.defaultSelected ?? "";
     defaultValue = widget.defaultSelected ?? [];
-    FFAppState().selectedValues[widget.optionNo ?? 0] = defaultValue.join('|');
-    FFAppState().lookingForSelection = defaultValue;
+    FFAppState().mcbSelectedValues = defaultValue;
     super.initState();
   }
 
@@ -73,9 +70,7 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
       buttonValuesList: widget.buttonValues ?? ['Option'],
       checkBoxButtonValues: (List values) {
         setState(() => {
-              FFAppState().selectedValues[widget.optionNo ?? 0] =
-                  values.join('|'),
-              FFAppState().lookingForSelection =
+              FFAppState().mcbSelectedValues =
                   values.map((e) => e.toString()).toList(),
             });
         widget.onValue();
