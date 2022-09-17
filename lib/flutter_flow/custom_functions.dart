@@ -67,27 +67,3 @@ String getSelectAllButtonTitle(bool isSelectAllVisible) {
   // Add your function code here!
   return (isSelectAllVisible ? "Select all" : "Clear all");
 }
-
-DocumentReference initializeUserProfileVars(UserProfilesRecord userProfile) {
-  FFAppState().usrBodyType = userProfile.bodyType ?? "";
-  FFAppState().usrChildfreeStatus = userProfile.childfreeStatus ?? "";
-  FFAppState().usrDrinkingStatus = userProfile.drinkingStatus ?? "";
-  FFAppState().usrEducation = userProfile.education ?? "";
-  FFAppState().usrGender = userProfile.gender ?? "";
-  FFAppState().usrGenderPreference = userProfile.genderPreference ?? "";
-  FFAppState().usrHeight = userProfile.height ?? 170;
-  FFAppState().usrIntention = userProfile.intention ?? "";
-  FFAppState().usrLookingFor = userProfile.lookingFor?.asList() ?? [];
-  FFAppState().usrReligion = userProfile.religion ?? "";
-  FFAppState().usrSmokingStatus = userProfile.smokingStatus ?? "";
-  FFAppState().usrSpiritualStatus = userProfile.spiritualStatus ?? "";
-  FFAppState().usrWorkoutStatus = userProfile.workoutStatus ?? "";
-  FFAppState().usrFirstName = userProfile.firstName ?? "";
-  FFAppState().usrLastName = userProfile.lastName ?? "";
-  FFAppState().usrBDay = userProfile.birthDay ?? DateTime.now();
-  FFAppState().usrBio = userProfile.bio ?? "";
-  FFAppState().usrIndustry = userProfile.industry ?? "";
-  FFAppState().usrOccupation = userProfile.occupation ?? "";
-  FFAppState().usrInterests = userProfile.interests?.asList() ?? [];
-  return userProfile.reference;
-}
