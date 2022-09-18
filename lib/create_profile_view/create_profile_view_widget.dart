@@ -7,11 +7,11 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../main.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateProfileViewWidget extends StatefulWidget {
@@ -34,7 +34,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
 
   TextEditingController? txtSecondNameController;
 
-  DateTime? datePicked;
+  DateTime? userBDay;
   String? ddIndustryValue;
   String? ddOccupationValue;
   PageController? pageViewController;
@@ -74,7 +74,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if ((pageViewController?.page?.round() ?? 0) == 0) {
+            if ((pageViewController?.page?.round() ?? 0) == 1) {
               Navigator.pop(context);
             } else {
               await pageViewController?.previousPage(
@@ -311,10 +311,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 8),
                                       child: Text(
-                                        valueOrDefault<String>(
-                                          dateTimeFormat('d/M/y', datePicked),
-                                          '1/1/1975',
-                                        ),
+                                        dateTimeFormat(
+                                            'yMd', FFAppState().usrBDay),
                                         style: FlutterFlowTheme.of(context)
                                             .subtitle2
                                             .override(
@@ -338,15 +336,19 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       size: 22,
                                     ),
                                     onPressed: () async {
-                                      await DatePicker.showDatePicker(
+                                      userBDay = await actions.vvShowDatePicker(
                                         context,
-                                        showTitleActions: true,
-                                        onConfirm: (date) {
-                                          setState(() => datePicked = date);
-                                        },
-                                        currentTime: FFAppState().usrBDay!,
-                                        minTime: DateTime(0, 0, 0),
+                                        FFAppState().usrBDay,
+                                        'Birthday',
+                                        'Enter your birthday',
+                                        'Birthday',
                                       );
+                                      if (userBDay != null) {
+                                        setState(() =>
+                                            FFAppState().usrBDay = userBDay);
+                                      }
+
+                                      setState(() {});
                                     },
                                   ),
                                 ],
@@ -1572,7 +1574,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     ...createUserProfilesRecordData(
                                       firstName: txtFirstNameController!.text,
                                       lastName: txtSecondNameController!.text,
-                                      birthDay: datePicked,
+                                      birthDay: FFAppState().usrBDay,
                                       industry: ddIndustryValue,
                                       occupation: ddOccupationValue,
                                       bio: txtBioController!.text,

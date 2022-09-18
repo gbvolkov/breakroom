@@ -42,8 +42,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   String? ddOccupationValue;
   DateTimeRange? calBDaySelectedDay;
   List<String>? ccInterestsValues;
-  PageController? pageViewController;
+  DateTime? userBDay;
   String uploadedFileUrl = '';
+  PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -2222,7 +2223,10 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                       shape: BoxShape.circle,
                                                     ),
                                                     child: Image.network(
-                                                      currentUserPhoto,
+                                                      valueOrDefault<String>(
+                                                        currentUserPhoto,
+                                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                      ),
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
@@ -2234,7 +2238,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                 buttonSize: 60,
                                                 icon: Icon(
                                                   Icons.photo_camera,
-                                                  color: Color(0x80FFFFFF),
+                                                  color: Color(0x7F050A41),
                                                   size: 30,
                                                 ),
                                                 onPressed: () async {
@@ -2516,7 +2520,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           alignment:
                                               AlignmentDirectional(-1, 0),
                                           child: Text(
-                                            FFAppState().usrBDay!.toString(),
+                                            dateTimeFormat(
+                                                'yMd', FFAppState().usrBDay),
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle2,
                                           ),
@@ -2532,11 +2537,20 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             size: 16,
                                           ),
                                           onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'DateOfBirth');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
+                                            userBDay =
+                                                await actions.vvShowDatePicker(
+                                              context,
+                                              FFAppState().usrBDay,
+                                              'Birthday',
+                                              'Enter your birthday',
+                                              'Birthday',
+                                            );
+                                            if (userBDay != null) {
+                                              setState(() => FFAppState()
+                                                  .usrBDay = userBDay);
+                                            }
+
+                                            setState(() {});
                                           },
                                         ),
                                       ],
@@ -3911,7 +3925,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           ...createUserProfilesRecordData(
                             firstName: textController1!.text,
                             lastName: textController2!.text,
-                            birthDay: calBDaySelectedDay?.start,
+                            birthDay: FFAppState().usrBDay,
                             industry: ddIndustryValue,
                             occupation: ddOccupationValue,
                             bio: txtBioController!.text,

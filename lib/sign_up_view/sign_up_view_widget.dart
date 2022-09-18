@@ -49,7 +49,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
     confirmPasswordTextFieldVisibility = false;
     passwordTextFieldController = TextEditingController();
     passwordTextFieldVisibility = false;
-    emailTextFieldController = TextEditingController(text: 'example@email.com');
+    emailTextFieldController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -231,6 +231,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
                                 Row(
@@ -451,6 +452,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.visiblePassword,
                                   ),
                                 ),
                                 Align(
@@ -539,6 +541,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.visiblePassword,
                                   ),
                                 ),
                               ],

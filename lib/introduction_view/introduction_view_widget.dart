@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -486,21 +487,12 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
                               alignment: AlignmentDirectional(0, 0),
                               child: InkWell(
                                 onTap: () async {
-                                  await showDialog(
-                                    context: context,
-                                    builder: (alertDialogContext) {
-                                      return AlertDialog(
-                                        title: Text('Title'),
-                                        content: Text('Message'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.pop(
-                                                alertDialogContext),
-                                            child: Text(' '),
-                                          ),
-                                        ],
-                                      );
-                                    },
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          NavBarPage(initialPage: 'HomeView'),
+                                    ),
                                   );
                                 },
                                 child: Column(

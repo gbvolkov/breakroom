@@ -32,8 +32,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
   @override
   void initState() {
     super.initState();
-    emailTextFieldController = TextEditingController(text: 'example@email.com');
-    passwordTextFieldController = TextEditingController(text: 'Cooper');
+    emailTextFieldController = TextEditingController();
+    passwordTextFieldController = TextEditingController();
     passwordTextFieldVisibility = false;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -196,6 +196,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
                                 Align(
@@ -282,6 +283,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.visiblePassword,
                                   ),
                                 ),
                                 Row(

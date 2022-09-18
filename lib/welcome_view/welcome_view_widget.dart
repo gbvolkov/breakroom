@@ -36,8 +36,8 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                   alignment: AlignmentDirectional(-1, 0),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                    child: Image.network(
-                      'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80',
+                    child: Image.asset(
+                      'assets/images/WelcomeImage.png',
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.45,
                       fit: BoxFit.cover,

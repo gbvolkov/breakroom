@@ -173,9 +173,12 @@ class _ChatWidgetState extends State<ChatWidget> {
                     fontWeight: FontWeight.normal,
                     fontSize: 14,
                   ),
-                  emptyChatWidget: Image.asset(
-                    'assets/images/messagesEmpty@2x.png',
-                    width: MediaQuery.of(context).size.width * 0.76,
+                  emptyChatWidget: Center(
+                    child: Image.asset(
+                      'assets/images/SplashScreen.png',
+                      width: MediaQuery.of(context).size.width * 0.76,
+                      height: MediaQuery.of(context).size.height * 0.6,
+                    ),
                   ),
                 )
               : Center(

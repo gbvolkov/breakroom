@@ -148,7 +148,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 shape: BoxShape.circle,
                                               ),
                                               child: Image.network(
-                                                currentUserPhoto,
+                                                valueOrDefault<String>(
+                                                  currentUserPhoto,
+                                                  'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                ),
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -204,7 +207,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           buttonSize: 60,
                                           icon: Icon(
                                             Icons.camera_alt,
-                                            color: Color(0x80F5F5F5),
+                                            color: Color(0x7F050A41),
                                             size: 30,
                                           ),
                                           onPressed: () async {

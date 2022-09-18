@@ -907,8 +907,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FFButtonWidget(
-                                onPressed: () {
-                                  print('Button pressed ...');
+                                onPressed: () async {
+                                  await pageViewController?.previousPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
                                 },
                                 text: 'Save',
                                 options: FFButtonOptions(

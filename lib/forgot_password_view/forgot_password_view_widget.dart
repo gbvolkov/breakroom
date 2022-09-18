@@ -3,7 +3,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../sign_in_view/sign_in_view_widget.dart';
-import '../welcome_view/welcome_view_widget.dart';
+import '../sign_up_view/sign_up_view_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -40,7 +40,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
     newPassword2TextFieldController = TextEditingController(text: 'Cooper');
     newPassword2TextFieldVisibility = false;
     pinCodeController = TextEditingController();
-    textController1 = TextEditingController(text: 'example@email.com');
+    textController1 = TextEditingController();
   }
 
   @override
@@ -61,13 +61,8 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if (textController1!.text == null || textController1!.text == '') {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomeViewWidget(),
-                ),
-              );
+            if ((pageViewController?.page?.round() ?? 0) == 0) {
+              Navigator.pop(context);
             } else {
               await pageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
@@ -212,6 +207,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
                               ],
@@ -281,8 +277,14 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           ),
                                         ),
                                         FFButtonWidget(
-                                          onPressed: () {
-                                            print('Button pressed ...');
+                                          onPressed: () async {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SignUpViewWidget(),
+                                              ),
+                                            );
                                           },
                                           text: 'Sign up',
                                           options: FFButtonOptions(
@@ -299,9 +301,10 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
+                                            elevation: 0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 0,
                                             ),
                                             borderRadius:
                                                 BorderRadius.circular(8),

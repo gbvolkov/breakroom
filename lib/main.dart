@@ -106,7 +106,7 @@ class NavBarPage extends StatefulWidget {
 
 /// This is the private State class that goes with NavBarPage.
 class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'ProfileView';
+  String _currentPageName = 'HomeView';
   late Widget? _currentPage;
 
   @override
@@ -119,10 +119,10 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
+      'HomeView': HomeViewWidget(),
       'ProfileView': ProfileViewWidget(),
       'MatchesView': MatchesViewWidget(),
       'NotificationsView': NotificationsViewWidget(),
-      'HomeView': HomeViewWidget(),
       'AllChats': AllChatsWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
@@ -141,6 +141,14 @@ class _NavBarPageState extends State<NavBarPage> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_outlined,
+              size: 20,
+            ),
+            label: 'Home',
+            tooltip: '',
+          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_outline,
@@ -163,14 +171,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 20,
             ),
             label: 'Notifications',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_outlined,
-              size: 20,
-            ),
-            label: 'Home',
             tooltip: '',
           ),
           BottomNavigationBarItem(

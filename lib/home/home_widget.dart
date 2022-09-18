@@ -398,7 +398,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 builder: (context) =>
                                                     NavBarPage(
                                                         initialPage:
-                                                            'ProfileView'),
+                                                            'HomeView'),
                                               ),
                                               (r) => false,
                                             );
@@ -648,7 +648,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) => NavBarPage(
-                                                initialPage: 'ProfileView'),
+                                                initialPage: 'HomeView'),
                                           ),
                                           (r) => false,
                                         );
@@ -730,7 +730,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                                 builder: (context) =>
                                                     NavBarPage(
                                                         initialPage:
-                                                            'ProfileView'),
+                                                            'HomeView'),
                                               ),
                                               (r) => false,
                                             );

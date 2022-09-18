@@ -234,7 +234,10 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Image.network(
-                                      listViewUsersRecord.photoUrl!,
+                                      valueOrDefault<String>(
+                                        listViewUsersRecord.photoUrl,
+                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                      ),
                                     ),
                                   ),
                                 ),

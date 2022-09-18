@@ -1,5 +1,6 @@
 // Export pages
 export 'home/home_widget.dart' show HomeWidget;
+export 'splash_screen/splash_screen_widget.dart' show SplashScreenWidget;
 export 'phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
 export 'verify_s_m_s/verify_s_m_s_widget.dart' show VerifySMSWidget;
 export 'chat_view/chat_view_widget.dart' show ChatViewWidget;
