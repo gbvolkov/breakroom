@@ -1175,10 +1175,12 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         labelPadding:
                                             EdgeInsetsDirectional.fromSTEB(
                                                 16, 0, 16, 8),
-                                        elevation: 2,
+                                        elevation: 0,
                                       ),
                                       unselectedChipStyle: ChipStyle(
-                                        backgroundColor: Colors.white,
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
                                         textStyle: FlutterFlowTheme.of(context)
                                             .subtitle2,
                                         iconColor: Color(0xFF323B45),
@@ -1186,7 +1188,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         labelPadding:
                                             EdgeInsetsDirectional.fromSTEB(
                                                 16, 8, 16, 8),
-                                        elevation: 2,
+                                        elevation: 0,
                                       ),
                                       chipSpacing: 15,
                                       rowSpacing: 10,
@@ -1330,10 +1332,6 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Text(
-                            FFAppState().usrHeight.toString(),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          ),
                         ],
                       ),
                       Column(
@@ -1347,18 +1345,28 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               style: FlutterFlowTheme.of(context).title1,
                             ),
                           ),
-                          Container(
-                            width: 100,
-                            height: MediaQuery.of(context).size.height * 0.4,
-                            child: custom_widgets.MyNumberPicker(
-                              width: 100,
-                              height: MediaQuery.of(context).size.height * 0.4,
-                              personHeight: FFAppState().usrHeight,
-                              onValueChanged: () async {
-                                setState(() => FFAppState().usrHeight =
-                                    FFAppState().nmpPickedNumber);
-                              },
-                            ),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 80,
+                                height: 260,
+                                child: custom_widgets.MyNumberPicker(
+                                  width: 80,
+                                  height: 260,
+                                  personHeight: FFAppState().usrHeight,
+                                  onValueChanged: () async {
+                                    setState(() => FFAppState().usrHeight =
+                                        FFAppState().nmpPickedNumber);
+                                  },
+                                ),
+                              ),
+                              Text(
+                                'cm',
+                                style: FlutterFlowTheme.of(context).title3,
+                              ),
+                            ],
                           ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),

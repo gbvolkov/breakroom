@@ -185,6 +185,26 @@ class _$UserProfilesRecordSerializer
             specifiedType: const FullType(
                 BuiltList, const [const FullType(PhotoStruct)])));
     }
+    value = object.liked;
+    if (value != null) {
+      result
+        ..add('liked')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(
+                  DocumentReference, const [const FullType.nullable(Object)])
+            ])));
+    }
+    value = object.disliked;
+    if (value != null) {
+      result
+        ..add('disliked')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(BuiltList, const [
+              const FullType(
+                  DocumentReference, const [const FullType.nullable(Object)])
+            ])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -308,6 +328,20 @@ class _$UserProfilesRecordSerializer
                       BuiltList, const [const FullType(PhotoStruct)]))!
               as BuiltList<Object?>);
           break;
+        case 'liked':
+          result.liked.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(
+                    DocumentReference, const [const FullType.nullable(Object)])
+              ]))! as BuiltList<Object?>);
+          break;
+        case 'disliked':
+          result.disliked.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(
+                    DocumentReference, const [const FullType.nullable(Object)])
+              ]))! as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -369,6 +403,10 @@ class _$UserProfilesRecord extends UserProfilesRecord {
   @override
   final BuiltList<PhotoStruct>? photos;
   @override
+  final BuiltList<DocumentReference<Object?>>? liked;
+  @override
+  final BuiltList<DocumentReference<Object?>>? disliked;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UserProfilesRecord(
@@ -399,6 +437,8 @@ class _$UserProfilesRecord extends UserProfilesRecord {
       this.smokingStatus,
       this.spiritualStatus,
       this.photos,
+      this.liked,
+      this.disliked,
       this.ffRef})
       : super._();
 
@@ -438,6 +478,8 @@ class _$UserProfilesRecord extends UserProfilesRecord {
         smokingStatus == other.smokingStatus &&
         spiritualStatus == other.spiritualStatus &&
         photos == other.photos &&
+        liked == other.liked &&
+        disliked == other.disliked &&
         ffRef == other.ffRef;
   }
 
@@ -461,25 +503,25 @@ class _$UserProfilesRecord extends UserProfilesRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, user.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode),
-                                                                                occupation.hashCode),
-                                                                            bio.hashCode),
-                                                                        gender.hashCode),
-                                                                    genderPreference.hashCode),
-                                                                intention.hashCode),
-                                                            childfreeStatus.hashCode),
-                                                        religion.hashCode),
-                                                    education.hashCode),
-                                                bodyType.hashCode),
-                                            interests.hashCode),
-                                        lookingFor.hashCode),
-                                    height.hashCode),
-                                weight.hashCode),
-                            workoutStatus.hashCode),
-                        drinkingStatus.hashCode),
-                    smokingStatus.hashCode),
-                spiritualStatus.hashCode),
-            photos.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode),
+                                                                                gender.hashCode),
+                                                                            genderPreference.hashCode),
+                                                                        intention.hashCode),
+                                                                    childfreeStatus.hashCode),
+                                                                religion.hashCode),
+                                                            education.hashCode),
+                                                        bodyType.hashCode),
+                                                    interests.hashCode),
+                                                lookingFor.hashCode),
+                                            height.hashCode),
+                                        weight.hashCode),
+                                    workoutStatus.hashCode),
+                                drinkingStatus.hashCode),
+                            smokingStatus.hashCode),
+                        spiritualStatus.hashCode),
+                    photos.hashCode),
+                liked.hashCode),
+            disliked.hashCode),
         ffRef.hashCode));
   }
 
@@ -509,6 +551,8 @@ class _$UserProfilesRecord extends UserProfilesRecord {
           ..add('smokingStatus', smokingStatus)
           ..add('spiritualStatus', spiritualStatus)
           ..add('photos', photos)
+          ..add('liked', liked)
+          ..add('disliked', disliked)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -621,6 +665,18 @@ class UserProfilesRecordBuilder
       _$this._photos ??= new ListBuilder<PhotoStruct>();
   set photos(ListBuilder<PhotoStruct>? photos) => _$this._photos = photos;
 
+  ListBuilder<DocumentReference<Object?>>? _liked;
+  ListBuilder<DocumentReference<Object?>> get liked =>
+      _$this._liked ??= new ListBuilder<DocumentReference<Object?>>();
+  set liked(ListBuilder<DocumentReference<Object?>>? liked) =>
+      _$this._liked = liked;
+
+  ListBuilder<DocumentReference<Object?>>? _disliked;
+  ListBuilder<DocumentReference<Object?>> get disliked =>
+      _$this._disliked ??= new ListBuilder<DocumentReference<Object?>>();
+  set disliked(ListBuilder<DocumentReference<Object?>>? disliked) =>
+      _$this._disliked = disliked;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -655,6 +711,8 @@ class UserProfilesRecordBuilder
       _smokingStatus = $v.smokingStatus;
       _spiritualStatus = $v.spiritualStatus;
       _photos = $v.photos?.toBuilder();
+      _liked = $v.liked?.toBuilder();
+      _disliked = $v.disliked?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -703,6 +761,8 @@ class UserProfilesRecordBuilder
               smokingStatus: smokingStatus,
               spiritualStatus: spiritualStatus,
               photos: _photos?.build(),
+              liked: _liked?.build(),
+              disliked: _disliked?.build(),
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -714,6 +774,10 @@ class UserProfilesRecordBuilder
 
         _$failedField = 'photos';
         _photos?.build();
+        _$failedField = 'liked';
+        _liked?.build();
+        _$failedField = 'disliked';
+        _disliked?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'UserProfilesRecord', _$failedField, e.toString());

@@ -87,3 +87,28 @@ DateTime addYearsToDate(
   return fromDate
       .add(Duration(days: years.toInt() * 365 * (direction ?? 1).sign));
 }
+
+String isMatchedListValue(
+  String value,
+  List<String> list,
+) {
+  if (list.contains(value)) {
+    return value;
+  } else {
+    return "$value;";
+  }
+  // Add your function code here!
+}
+
+List<DocumentReference> concatUsersList(
+  List<DocumentReference>? list1,
+  List<DocumentReference>? list2,
+  DocumentReference user,
+) {
+  List<DocumentReference> result = [];
+  if (list1 != null) result += list1;
+  if (list2 != null) result += list2;
+  result.add(user);
+
+  return result;
+}

@@ -2202,7 +2202,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 16),
                                         child: Container(
-                                          width: 105,
+                                          width: 115,
+                                          height: 115,
                                           child: Stack(
                                             alignment:
                                                 AlignmentDirectional(0, 1),
@@ -2229,69 +2230,75 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                   ),
                                                 ),
                                               ),
-                                              FlutterFlowIconButton(
-                                                borderRadius: 30,
-                                                borderWidth: 1,
-                                                buttonSize: 60,
-                                                icon: Icon(
-                                                  Icons.photo_camera,
-                                                  color: Color(0x7F050A41),
-                                                  size: 30,
-                                                ),
-                                                onPressed: () async {
-                                                  final selectedMedia =
-                                                      await selectMediaWithSourceBottomSheet(
-                                                    context: context,
-                                                    allowPhoto: true,
-                                                  );
-                                                  if (selectedMedia != null &&
-                                                      selectedMedia.every((m) =>
-                                                          validateFileFormat(
-                                                              m.storagePath,
-                                                              context))) {
-                                                    showUploadMessage(
-                                                      context,
-                                                      'Uploading file...',
-                                                      showLoading: true,
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional(0, 1),
+                                                child: FlutterFlowIconButton(
+                                                  borderRadius: 30,
+                                                  borderWidth: 0,
+                                                  buttonSize: 36,
+                                                  icon: Icon(
+                                                    Icons.photo_camera,
+                                                    color: Color(0x7F050A41),
+                                                    size: 30,
+                                                  ),
+                                                  onPressed: () async {
+                                                    final selectedMedia =
+                                                        await selectMediaWithSourceBottomSheet(
+                                                      context: context,
+                                                      allowPhoto: true,
                                                     );
-                                                    final downloadUrls = (await Future
-                                                            .wait(selectedMedia
-                                                                .map((m) async =>
-                                                                    await uploadData(
-                                                                        m.storagePath,
-                                                                        m.bytes))))
-                                                        .where((u) => u != null)
-                                                        .map((u) => u!)
-                                                        .toList();
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .hideCurrentSnackBar();
-                                                    if (downloadUrls.length ==
-                                                        selectedMedia.length) {
-                                                      setState(() =>
-                                                          uploadedFileUrl =
-                                                              downloadUrls
-                                                                  .first);
+                                                    if (selectedMedia != null &&
+                                                        selectedMedia.every((m) =>
+                                                            validateFileFormat(
+                                                                m.storagePath,
+                                                                context))) {
                                                       showUploadMessage(
                                                         context,
-                                                        'Success!',
+                                                        'Uploading file...',
+                                                        showLoading: true,
                                                       );
-                                                    } else {
-                                                      showUploadMessage(
-                                                        context,
-                                                        'Failed to upload media',
-                                                      );
-                                                      return;
+                                                      final downloadUrls = (await Future
+                                                              .wait(selectedMedia
+                                                                  .map((m) async =>
+                                                                      await uploadData(
+                                                                          m.storagePath,
+                                                                          m.bytes))))
+                                                          .where((u) => u != null)
+                                                          .map((u) => u!)
+                                                          .toList();
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .hideCurrentSnackBar();
+                                                      if (downloadUrls.length ==
+                                                          selectedMedia
+                                                              .length) {
+                                                        setState(() =>
+                                                            uploadedFileUrl =
+                                                                downloadUrls
+                                                                    .first);
+                                                        showUploadMessage(
+                                                          context,
+                                                          'Success!',
+                                                        );
+                                                      } else {
+                                                        showUploadMessage(
+                                                          context,
+                                                          'Failed to upload media',
+                                                        );
+                                                        return;
+                                                      }
                                                     }
-                                                  }
 
-                                                  final usersUpdateData =
-                                                      createUsersRecordData(
-                                                    photoUrl: uploadedFileUrl,
-                                                  );
-                                                  await currentUserReference!
-                                                      .update(usersUpdateData);
-                                                },
+                                                    final usersUpdateData =
+                                                        createUsersRecordData(
+                                                      photoUrl: uploadedFileUrl,
+                                                    );
+                                                    await currentUserReference!
+                                                        .update(
+                                                            usersUpdateData);
+                                                  },
+                                                ),
                                               ),
                                             ],
                                           ),

@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../invite_user/invite_user_widget.dart';
+import '../page_test/page_test_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,14 +27,24 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: Text(
-          'All Chats',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Roboto',
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+        title: InkWell(
+          onTap: () async {
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PageTestWidget(),
               ),
+            );
+          },
+          child: Text(
+            'All Chats',
+            style: FlutterFlowTheme.of(context).bodyText1.override(
+                  fontFamily: 'Roboto',
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
         ),
         actions: [
           FlutterFlowIconButton(

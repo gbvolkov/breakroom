@@ -232,6 +232,8 @@ class FFAppState {
   double fltrAgeMin = 0.0;
 
   double fltrAgeMax = 0.0;
+
+  String swipeAction = '';
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -57,6 +57,10 @@ abstract class UserProfilesRecord
 
   BuiltList<PhotoStruct>? get photos;
 
+  BuiltList<DocumentReference>? get liked;
+
+  BuiltList<DocumentReference>? get disliked;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -82,7 +86,9 @@ abstract class UserProfilesRecord
     ..drinkingStatus = ''
     ..smokingStatus = ''
     ..spiritualStatus = ''
-    ..photos = ListBuilder();
+    ..photos = ListBuilder()
+    ..liked = ListBuilder()
+    ..disliked = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('user_profiles');
@@ -154,7 +160,9 @@ Map<String, dynamic> createUserProfilesRecordData({
         ..drinkingStatus = drinkingStatus
         ..smokingStatus = smokingStatus
         ..spiritualStatus = spiritualStatus
-        ..photos = null,
+        ..photos = null
+        ..liked = null
+        ..disliked = null,
     ),
   );
 
