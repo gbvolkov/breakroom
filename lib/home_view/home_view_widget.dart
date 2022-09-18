@@ -11,6 +11,7 @@ import '../home_details_view/home_details_view_widget.dart';
 import '../introduction_view/introduction_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -249,29 +250,14 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                           queryBuilder: (userProfilesRecord) =>
                               userProfilesRecord
                                   .where('intention',
-                                      isEqualTo: columnUserProfilesRecord!
-                                                  .intention !=
-                                              ''
-                                          ? columnUserProfilesRecord!.intention
+                                      isEqualTo: choiceChipsValue != ''
+                                          ? choiceChipsValue
                                           : null)
                                   .whereIn(
                                       'gender',
-                                      FFAppState().fltrLookingFor !=
-                                              ''
+                                      FFAppState().fltrLookingFor != ''
                                           ? FFAppState().fltrLookingFor
-                                          : null)
-                                  .where('birthDay',
-                                      isLessThanOrEqualTo:
-                                          functions.addYearsToDate(
-                                              getCurrentTimestamp,
-                                              FFAppState().fltrAgeMin,
-                                              -1))
-                                  .where('birthDay',
-                                      isGreaterThanOrEqualTo:
-                                          functions.addYearsToDate(
-                                              getCurrentTimestamp,
-                                              FFAppState().fltrAgeMax,
-                                              -1)),
+                                          : null),
                           limit: 30,
                         ),
                         builder: (context, snapshot) {
@@ -329,12 +315,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       },
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(24),
-                                        child: Image.network(
-                                          functions.getPhotosListValue(
-                                              swipeableStackUserProfilesRecord
-                                                  .photos!
-                                                  .toList(),
-                                              0)!,
+                                        child: CachedNetworkImage(
+                                          imageUrl: valueOrDefault<String>(
+                                            functions.getPhotosListValue(
+                                                swipeableStackUserProfilesRecord
+                                                    .photos!
+                                                    .toList(),
+                                                0),
+                                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                          ),
                                           width:
                                               MediaQuery.of(context).size.width,
                                           height: MediaQuery.of(context)
@@ -586,7 +575,11 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                   .fromSTEB(4,
                                                                       0, 0, 0),
                                                           child: Text(
-                                                            '1 / 3',
+                                                            swipeableStackUserProfilesRecord
+                                                                .photos!
+                                                                .toList()
+                                                                .length
+                                                                .toString(),
                                                             style: FlutterFlowTheme
                                                                     .of(context)
                                                                 .bodyText2
@@ -685,7 +678,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                             0,
                                                                             0),
                                                                 child: Text(
-                                                                  'Dating',
+                                                                  swipeableStackUserProfilesRecord
+                                                                      .intention!,
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyText2
@@ -732,7 +726,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     );
                                                   },
                                                   child: Text(
-                                                    'Ronald, 23',
+                                                    '${swipeableStackUserProfilesRecord.firstName}, ${functions.getAge(swipeableStackUserProfilesRecord.birthDay).toString()}',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .title2
@@ -751,7 +745,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 0, 0, 8),
                                                 child: Text(
-                                                  'Medicine, Surgeon',
+                                                  '${swipeableStackUserProfilesRecord.industry}, ${swipeableStackUserProfilesRecord.occupation}',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .subtitle1
@@ -767,7 +761,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                 ),
                                               ),
                                               Text(
-                                                'Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation',
+                                                swipeableStackUserProfilesRecord
+                                                    .bio!,
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText2

@@ -60,7 +60,11 @@ String? getPhotosListValue(
   List<PhotoStruct> options,
   int? optionNo,
 ) {
-  return options[optionNo ?? 0].image;
+  if (options.isNotEmpty) {
+    return options[optionNo ?? 0].image;
+  } else {
+    return null;
+  }
 }
 
 List<String> splitString(
