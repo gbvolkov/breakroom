@@ -13,19 +13,19 @@ class CustomRangeSlider extends StatefulWidget {
     Key? key,
     this.width,
     this.height,
-    this.minValue,
-    this.maxValue,
+    required this.minValue,
+    required this.maxValue,
     this.rangeStart,
+    this.rangeEnd,
     this.activeColor,
     this.inactiveColor,
-    this.rangeEnd,
     required this.onValueChanged,
   }) : super(key: key);
 
   final double? width;
   final double? height;
-  final double? minValue;
-  final double? maxValue;
+  final double minValue;
+  final double maxValue;
   final double? rangeStart;
   final double? rangeEnd;
   final Color? activeColor;

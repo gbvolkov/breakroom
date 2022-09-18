@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/dialog_signup_complete_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -424,17 +425,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 0, 0, 8),
                                               child: Text(
-                                                'Between ${formatNumber(
-                                                  FFAppState().fltrAgeMin,
-                                                  formatType: FormatType.custom,
-                                                  format: '###',
-                                                  locale: '',
-                                                )} and ${formatNumber(
-                                                  FFAppState().rangeSliderEnd,
-                                                  formatType: FormatType.custom,
-                                                  format: '###',
-                                                  locale: '',
-                                                )}',
+                                                'Between ${FFAppState().rangeSliderStart.toString()} and ${FFAppState().rangeSliderEnd.toString()}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle1,
@@ -450,6 +441,21 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             setState(() => FFAppState()
                                                     .fltrAgeMax =
                                                 FFAppState().rangeSliderEnd);
+                                            showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.of(context)
+                                                          .viewInsets,
+                                                  child:
+                                                      DialogSignupCompleteWidget(),
+                                                );
+                                              },
+                                            );
                                           },
                                           child: Container(
                                             width: MediaQuery.of(context)
@@ -555,6 +561,33 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   ),
                                 ),
                               ),
+                            ),
+                            Text(
+                              FFAppState().fltrAgeMin.toString(),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                            Text(
+                              FFAppState().fltrAgeMax.toString(),
+                              style: FlutterFlowTheme.of(context).bodyText1,
+                            ),
+                            Builder(
+                              builder: (context) {
+                                final lookingFor =
+                                    FFAppState().fltrLookingFor.toList();
+                                return Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: List.generate(lookingFor.length,
+                                      (lookingForIndex) {
+                                    final lookingForItem =
+                                        lookingFor[lookingForIndex];
+                                    return Text(
+                                      lookingForItem,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1,
+                                    );
+                                  }),
+                                );
+                              },
                             ),
                           ],
                         ),
