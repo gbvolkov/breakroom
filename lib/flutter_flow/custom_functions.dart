@@ -56,6 +56,13 @@ String getListValue(
   return options[optionNo ?? 0];
 }
 
+String? getPhotosListValue(
+  List<PhotoStruct> options,
+  int? optionNo,
+) {
+  return options[optionNo ?? 0].image;
+}
+
 List<String> splitString(
   String str,
   String? separator,
@@ -66,4 +73,13 @@ List<String> splitString(
 String getSelectAllButtonTitle(bool isSelectAllVisible) {
   // Add your function code here!
   return (isSelectAllVisible ? "Select all" : "Clear all");
+}
+
+DateTime addYearsToDate(
+  DateTime fromDate,
+  double years,
+  int? direction,
+) {
+  return fromDate
+      .add(Duration(days: years.toInt() * 365 * (direction ?? 1).sign));
 }

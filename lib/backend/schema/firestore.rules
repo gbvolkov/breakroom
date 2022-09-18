@@ -50,5 +50,17 @@ service cloud.firestore {
       allow write: if false;
       allow delete: if false;
     }
+
+    match /user_profiles/{parent}/fliters/{document} {
+      allow create: if false;
+      allow read: if false;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /{path=**}/fliters/{document} {
+      allow read: if false;
+    }
+
   }
 }

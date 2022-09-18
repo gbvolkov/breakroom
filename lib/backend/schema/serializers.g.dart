@@ -9,7 +9,11 @@ part of 'serializers.dart';
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ChatMessagesRecord.serializer)
       ..add(ChatsRecord.serializer)
+      ..add(DateRangeStruct.serializer)
+      ..add(DoubleRangeStruct.serializer)
+      ..add(FlitersRecord.serializer)
       ..add(IndustriesRecord.serializer)
+      ..add(IntRangeStruct.serializer)
       ..add(InterestsRecord.serializer)
       ..add(OccupationsRecord.serializer)
       ..add(PhotoStruct.serializer)
@@ -33,6 +37,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
                 DocumentReference, const [const FullType.nullable(Object)])
           ]),
           () => new ListBuilder<DocumentReference<Object?>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())

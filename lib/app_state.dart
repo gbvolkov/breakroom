@@ -216,6 +216,22 @@ class FFAppState {
   List<String> usrInterests = [];
 
   DateTime? usrBDay;
+
+  String fltrName = '';
+
+  List<String> fltrLookingFor = [];
+
+  LatLng? fltrLocation;
+
+  bool fltrAgeRangeExt = false;
+
+  double fltrDistance = 0.0;
+
+  List<String> fltrIndusrtries = [];
+
+  double fltrAgeMin = 0.0;
+
+  double fltrAgeMax = 0.0;
 }
 
 LatLng? _latLngFromString(String? val) {

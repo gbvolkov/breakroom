@@ -1,3 +1,5 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -6,20 +8,26 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../get_premium_view/get_premium_view_widget.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FiltersViewWidget extends StatefulWidget {
-  const FiltersViewWidget({Key? key}) : super(key: key);
+  const FiltersViewWidget({
+    Key? key,
+    this.filter,
+  }) : super(key: key);
+
+  final FlitersRecord? filter;
 
   @override
   _FiltersViewWidgetState createState() => _FiltersViewWidgetState();
 }
 
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
-  PageController? pageViewController;
-  String? choiceChipsValue;
+  List<String>? choiceChipsValues;
   bool? switchListTileValue;
+  PageController? pageViewController;
   double? sliderValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -136,17 +144,16 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   width: MediaQuery.of(context).size.width,
                                   height:
                                       MediaQuery.of(context).size.height * 0.45,
-                                  buttonLabels:
-                                      FFAppState().interestedInList.toList(),
-                                  buttonValues:
-                                      FFAppState().interestedInList.toList(),
+                                  buttonLabels: FFAppState().genders.toList(),
+                                  buttonValues: FFAppState().genders.toList(),
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,
                                   defaultSelected: 'Never',
                                   onValue: () async {
-                                    setState(() => FFAppState().selectedValues =
-                                        FFAppState().selectedValues.toList());
+                                    setState(() => FFAppState()
+                                        .fltrLookingFor
+                                        .add(FFAppState().mrbSelectedValue));
                                   },
                                 ),
                               ),
@@ -235,10 +242,12 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     FFAppState().industryList.toList(),
                                 horizontal: true,
                                 buttonHeight: 40.0,
-                                defaultSelected: FFAppState()
-                                    .currentIndustrySelection
-                                    .toList(),
-                                onValue: () async {},
+                                defaultSelected:
+                                    FFAppState().fltrIndusrtries.toList(),
+                                onValue: () async {
+                                  setState(() => FFAppState().fltrIndusrtries =
+                                      FFAppState().mcbSelectedValues.toList());
+                                },
                               ),
                             ),
                           ],
@@ -331,15 +340,15 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowChoiceChips(
-                                initiallySelected: choiceChipsValue != null
-                                    ? [choiceChipsValue!]
-                                    : ['Man'],
+                                initiallySelected: choiceChipsValues != null
+                                    ? choiceChipsValues
+                                    : FFAppState().fltrLookingFor,
                                 options: FFAppState()
                                     .interestedInList
                                     .map((label) => ChipData(label))
                                     .toList(),
-                                onChanged: (val) => setState(
-                                    () => choiceChipsValue = val?.first),
+                                onChanged: (val) =>
+                                    setState(() => choiceChipsValues = val),
                                 selectedChipStyle: ChipStyle(
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).alternate,
@@ -373,8 +382,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   elevation: 0,
                                 ),
                                 chipSpacing: 4,
-                                multiselect: false,
-                                initialized: choiceChipsValue != null,
+                                multiselect: true,
+                                initialized: choiceChipsValues != null,
                                 alignment: WrapAlignment.spaceEvenly,
                               ),
                             ),
@@ -415,7 +424,17 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 0, 0, 8),
                                               child: Text(
-                                                'Between ${FFAppState().rangeSliderStart.toString()} and ${FFAppState().rangeSliderEnd.toString()}',
+                                                'Between ${formatNumber(
+                                                  FFAppState().fltrAgeMin,
+                                                  formatType: FormatType.custom,
+                                                  format: '###',
+                                                  locale: '',
+                                                )} and ${formatNumber(
+                                                  FFAppState().rangeSliderEnd,
+                                                  formatType: FormatType.custom,
+                                                  format: '###',
+                                                  locale: '',
+                                                )}',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .subtitle1,
@@ -423,30 +442,44 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             ),
                                           ],
                                         ),
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 50,
-                                          child:
-                                              custom_widgets.CustomRangeSlider(
+                                        InkWell(
+                                          onTap: () async {
+                                            setState(() => FFAppState()
+                                                    .fltrAgeMin =
+                                                FFAppState().rangeSliderStart);
+                                            setState(() => FFAppState()
+                                                    .fltrAgeMax =
+                                                FFAppState().rangeSliderEnd);
+                                          },
+                                          child: Container(
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
                                             height: 50,
-                                            minValue: 18.0,
-                                            maxValue: 70.0,
-                                            rangeStart: 20.0,
-                                            rangeEnd: 50.0,
-                                            activeColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate,
-                                            inactiveColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                            onValueChanged: () async {
-                                              setState(() =>
-                                                  FFAppState().option = 1);
-                                            },
+                                            child: custom_widgets
+                                                .CustomRangeSlider(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 50,
+                                              minValue: 18.0,
+                                              maxValue: 70.0,
+                                              rangeStart: 20.0,
+                                              rangeEnd: 50.0,
+                                              activeColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              inactiveColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                              onValueChanged: () async {
+                                                setState(() =>
+                                                    FFAppState().fltrAgeMin =
+                                                        FFAppState()
+                                                            .option
+                                                            .toDouble());
+                                              },
+                                            ),
                                           ),
                                         ),
                                         Row(
@@ -463,7 +496,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             Expanded(
                                               child: SwitchListTile(
                                                 value: switchListTileValue ??=
-                                                    true,
+                                                    FFAppState()
+                                                        .fltrAgeRangeExt,
                                                 onChanged: (newValue) =>
                                                     setState(() =>
                                                         switchListTileValue =
@@ -664,7 +698,13 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       .subtitle1,
                                                 ),
                                                 Text(
-                                                  '70 km',
+                                                  formatNumber(
+                                                    sliderValue,
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  ),
                                                   maxLines: 2,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -685,7 +725,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             inactiveColor: Color(0xFFC0C0C0),
                                             min: 0,
                                             max: 100,
-                                            value: sliderValue ??= 20,
+                                            value: sliderValue ??=
+                                                FFAppState().fltrDistance,
                                             onChanged: (newValue) {
                                               setState(
                                                   () => sliderValue = newValue);
@@ -854,7 +895,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               alignment:
                                                   AlignmentDirectional(-1, 0),
                                               child: Text(
-                                                'Retail, Art, Trade',
+                                                functions.stringifyList(
+                                                    FFAppState()
+                                                        .fltrIndusrtries
+                                                        .toList(),
+                                                    2),
                                                 maxLines: 3,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -908,6 +953,23 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FFButtonWidget(
                                 onPressed: () async {
+                                  final flitersUpdateData = {
+                                    ...createFlitersRecordData(
+                                      ageRangeExt: FFAppState().fltrAgeRangeExt,
+                                      location: FFAppState().fltrLocation,
+                                      distance: FFAppState().fltrDistance,
+                                      filterName: currentUserEmail,
+                                      ageRange: createDoubleRangeStruct(
+                                        min: FFAppState().fltrAgeMin,
+                                        max: FFAppState().fltrAgeMax,
+                                        clearUnsetFields: false,
+                                      ),
+                                    ),
+                                    'lookingFor': FFAppState().fltrLookingFor,
+                                    'industries': FFAppState().fltrIndusrtries,
+                                  };
+                                  await widget.filter!.reference
+                                      .update(flitersUpdateData);
                                   await pageViewController?.previousPage(
                                     duration: Duration(milliseconds: 300),
                                     curve: Curves.ease,

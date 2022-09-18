@@ -52,6 +52,8 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
         FlutterFlowTheme.of(context).secondaryBackground;
     _currentRangeValues = RangeValues(
         widget.rangeStart ?? _minValue, widget.rangeEnd ?? _maxValue);
+    FFAppState().rangeSliderStart = _minValue;
+    FFAppState().rangeSliderEnd = _maxValue;
     super.initState();
   }
 

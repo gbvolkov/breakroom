@@ -9,6 +9,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../welcome_view/welcome_view_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -329,6 +330,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           0, 10, 0, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          await actions
+                                              .initializeUserProfileState(
+                                            columnUserProfilesRecord!,
+                                          );
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
