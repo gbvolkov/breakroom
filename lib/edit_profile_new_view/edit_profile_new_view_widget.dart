@@ -1188,11 +1188,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 defaultSelected:
                                     FFAppState().usrLookingFor.toList(),
                                 onValue: () async {
-                                  setState(() =>
-                                      FFAppState().lookingForSelection =
-                                          FFAppState()
-                                              .lookingForSelection
-                                              .toList());
+                                  setState(() => FFAppState().usrLookingFor =
+                                      FFAppState().mcbSelectedValues.toList());
                                   setState(() => FFAppState().selectedValues =
                                       FFAppState().selectedValues.toList());
                                 },
@@ -2746,18 +2743,67 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
-                                          child: Wrap(
-                                            spacing: 0,
-                                            runSpacing: 0,
-                                            alignment: WrapAlignment.start,
-                                            crossAxisAlignment:
-                                                WrapCrossAlignment.start,
-                                            direction: Axis.horizontal,
-                                            runAlignment: WrapAlignment.start,
-                                            verticalDirection:
-                                                VerticalDirection.down,
-                                            clipBehavior: Clip.none,
-                                            children: [],
+                                          child: Builder(
+                                            builder: (context) {
+                                              final interests = FFAppState()
+                                                  .usrInterests
+                                                  .toList();
+                                              return Wrap(
+                                                spacing: 8,
+                                                runSpacing: 8,
+                                                alignment: WrapAlignment.start,
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.start,
+                                                direction: Axis.horizontal,
+                                                runAlignment:
+                                                    WrapAlignment.start,
+                                                verticalDirection:
+                                                    VerticalDirection.down,
+                                                clipBehavior: Clip.none,
+                                                children: List.generate(
+                                                    interests.length,
+                                                    (interestsIndex) {
+                                                  final interestsItem =
+                                                      interests[interestsIndex];
+                                                  return FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text: interestsItem,
+                                                    options: FFButtonOptions(
+                                                      height: 32,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .backgroundGrey,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  );
+                                                }),
+                                              );
+                                            },
                                           ),
                                         ),
                                       ],
@@ -2811,21 +2857,199 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       ],
                                     ),
                                     Row(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Expanded(
-                                          child: Wrap(
-                                            spacing: 0,
-                                            runSpacing: 0,
-                                            alignment: WrapAlignment.start,
-                                            crossAxisAlignment:
-                                                WrapCrossAlignment.start,
-                                            direction: Axis.horizontal,
-                                            runAlignment: WrapAlignment.start,
-                                            verticalDirection:
-                                                VerticalDirection.down,
-                                            clipBehavior: Clip.none,
-                                            children: [],
+                                          child: Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 16),
+                                              child: Wrap(
+                                                spacing: 8,
+                                                runSpacing: 8,
+                                                alignment: WrapAlignment.start,
+                                                crossAxisAlignment:
+                                                    WrapCrossAlignment.start,
+                                                direction: Axis.horizontal,
+                                                runAlignment:
+                                                    WrapAlignment.start,
+                                                verticalDirection:
+                                                    VerticalDirection.down,
+                                                clipBehavior: Clip.none,
+                                                children: [
+                                                  FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text:
+                                                        '${FFAppState().usrHeight.toString()} sm',
+                                                    icon: Icon(
+                                                      Icons.height,
+                                                      size: 16,
+                                                    ),
+                                                    options: FFButtonOptions(
+                                                      height: 32,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .backgroundGrey,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                  FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text: FFAppState()
+                                                        .usrDrinkingStatus,
+                                                    icon: Icon(
+                                                      Icons.wine_bar_outlined,
+                                                      size: 16,
+                                                    ),
+                                                    options: FFButtonOptions(
+                                                      height: 32,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .backgroundGrey,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                  FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text: FFAppState()
+                                                        .usrSmokingStatus,
+                                                    icon: Icon(
+                                                      Icons.smoking_rooms,
+                                                      size: 16,
+                                                    ),
+                                                    options: FFButtonOptions(
+                                                      height: 32,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .backgroundGrey,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                  FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text:
+                                                        functions.stringifyList(
+                                                            FFAppState()
+                                                                .usrLookingFor
+                                                                .toList(),
+                                                            1),
+                                                    icon: Icon(
+                                                      Icons.search_outlined,
+                                                      size: 16,
+                                                    ),
+                                                    options: FFButtonOptions(
+                                                      height: 32,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .backgroundGrey,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -2857,10 +3081,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
+                                child: Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -2912,16 +3134,29 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          functions.stringifyList(
-                                              FFAppState()
-                                                  .usrLookingFor
-                                                  .toList(),
-                                              2),
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    32, 0, 0, 0),
+                                            child: Text(
+                                              functions.stringifyList(
+                                                  FFAppState()
+                                                      .usrLookingFor
+                                                      .toList(),
+                                                  2),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .title3
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 16,
+                                                      ),
+                                            ),
+                                          ),
                                         ),
                                         FlutterFlowIconButton(
                                           borderColor: Colors.transparent,

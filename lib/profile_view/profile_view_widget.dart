@@ -1,15 +1,16 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/firebase_storage/storage.dart';
 import '../components/menu_add_photo_widget.dart';
-import '../create_profile_view/create_profile_view_widget.dart';
 import '../edit_profile_new_view/edit_profile_new_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/upload_media.dart';
 import '../welcome_view/welcome_view_widget.dart';
-import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,6 +22,7 @@ class ProfileViewWidget extends StatefulWidget {
 }
 
 class _ProfileViewWidgetState extends State<ProfileViewWidget> {
+  String uploadedFileUrl = '';
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -42,25 +44,26 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
           ),
         ),
         actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-            child: InkWell(
-              onTap: () async {
-                await signOut();
-                await Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => WelcomeViewWidget(),
-                  ),
-                  (r) => false,
-                );
-              },
-              child: Icon(
-                Icons.settings_outlined,
-                color: FlutterFlowTheme.of(context).alternate,
-                size: 24,
-              ),
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            icon: Icon(
+              Icons.logout,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30,
             ),
+            onPressed: () async {
+              await signOut();
+              await Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WelcomeViewWidget(),
+                ),
+                (r) => false,
+              );
+            },
           ),
         ],
         centerTitle: false,
@@ -194,6 +197,74 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                             ),
                                           ),
                                         ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          borderWidth: 1,
+                                          buttonSize: 60,
+                                          icon: Icon(
+                                            Icons.camera_alt,
+                                            color: Color(0x80F5F5F5),
+                                            size: 30,
+                                          ),
+                                          onPressed: () async {
+                                            final selectedMedia =
+                                                await selectMediaWithSourceBottomSheet(
+                                              context: context,
+                                              allowPhoto: true,
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              textColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            );
+                                            if (selectedMedia != null &&
+                                                selectedMedia.every((m) =>
+                                                    validateFileFormat(
+                                                        m.storagePath,
+                                                        context))) {
+                                              showUploadMessage(
+                                                context,
+                                                'Uploading file...',
+                                                showLoading: true,
+                                              );
+                                              final downloadUrls = (await Future
+                                                      .wait(selectedMedia.map(
+                                                          (m) async =>
+                                                              await uploadData(
+                                                                  m.storagePath,
+                                                                  m.bytes))))
+                                                  .where((u) => u != null)
+                                                  .map((u) => u!)
+                                                  .toList();
+                                              ScaffoldMessenger.of(context)
+                                                  .hideCurrentSnackBar();
+                                              if (downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                                setState(() => uploadedFileUrl =
+                                                    downloadUrls.first);
+                                                showUploadMessage(
+                                                  context,
+                                                  'Success!',
+                                                );
+                                              } else {
+                                                showUploadMessage(
+                                                  context,
+                                                  'Failed to upload media',
+                                                );
+                                                return;
+                                              }
+                                            }
+
+                                            final usersUpdateData =
+                                                createUsersRecordData(
+                                              photoUrl: uploadedFileUrl,
+                                            );
+                                            await currentUserReference!
+                                                .update(usersUpdateData);
+                                          },
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -289,34 +360,6 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               BorderRadius.circular(8),
                                         ),
                                       ),
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 20,
-                                      borderWidth: 1,
-                                      buttonSize: 40,
-                                      icon: Icon(
-                                        Icons.add,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 20,
-                                      ),
-                                      onPressed: () async {
-                                        await actions
-                                            .initializeUserProfileState(
-                                          columnUserProfilesRecord!,
-                                        );
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CreateProfileViewWidget(
-                                              userProfile:
-                                                  columnUserProfilesRecord,
-                                            ),
-                                          ),
-                                        );
-                                      },
                                     ),
                                   ],
                                 ),
@@ -596,7 +639,9 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                 builder: (context) {
                                   return Padding(
                                     padding: MediaQuery.of(context).viewInsets,
-                                    child: MenuAddPhotoWidget(),
+                                    child: MenuAddPhotoWidget(
+                                      userProfile: columnUserProfilesRecord,
+                                    ),
                                   );
                                 },
                               );

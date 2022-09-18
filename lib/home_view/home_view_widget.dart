@@ -87,7 +87,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                 ? [choiceChipsValue!]
                                 : ['Dating'],
                             options: FFAppState()
-                                .datingOrSocialRadio
+                                .intentions
                                 .map((label) => ChipData(label))
                                 .toList(),
                             onChanged: (val) =>

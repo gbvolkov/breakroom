@@ -1,12 +1,13 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../create_profile_view/create_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import '../welcome_view/welcome_view_widget.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
 
   late bool passwordTextFieldVisibility;
 
+  UserProfilesRecord? userProfile;
+
   TextEditingController? emailTextFieldController;
 
   List<String>? cbIsAgreedValues;
@@ -42,10 +45,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
   @override
   void initState() {
     super.initState();
-    confirmPasswordTextFieldController = TextEditingController(text: 'Cooper');
+    confirmPasswordTextFieldController = TextEditingController();
     confirmPasswordTextFieldVisibility = false;
-    passwordTextFieldController =
-        TextEditingController(text: 'example@email.com');
+    passwordTextFieldController = TextEditingController();
     passwordTextFieldVisibility = false;
     emailTextFieldController = TextEditingController(text: 'example@email.com');
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
@@ -591,33 +593,47 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                               industry: '',
                                               occupation: '',
                                               bio: '',
-                                              gender: '',
-                                              genderPreference: '',
-                                              intention: '',
-                                              childfreeStatus: '',
-                                              religion: '',
-                                              education: '',
-                                              bodyType: '',
+                                              gender: 'Male',
+                                              genderPreference: 'Female',
+                                              intention: 'Social',
+                                              childfreeStatus: 'Don\'t want',
+                                              religion: 'Agnostic',
+                                              education: 'High school',
+                                              bodyType: 'Average',
                                               height: 170,
                                               weight: 65,
-                                              workoutStatus: '',
-                                              drinkingStatus: '',
-                                              smokingStatus: '',
-                                              spiritualStatus: '',
+                                              workoutStatus: 'Sometimes',
+                                              drinkingStatus: 'Sometimes',
+                                              smokingStatus: 'Sometimes',
+                                              spiritualStatus: 'Sometimes',
                                             ),
-                                            'interests': [''],
-                                            'lookingFor': [''],
+                                            'interests': ['Walking'],
+                                            'lookingFor': ['Friendship'],
                                           };
-                                          await UserProfilesRecord.collection
-                                              .doc()
+                                          var userProfilesRecordReference =
+                                              UserProfilesRecord.collection
+                                                  .doc();
+                                          await userProfilesRecordReference
                                               .set(userProfilesCreateData);
+                                          userProfile = UserProfilesRecord
+                                              .getDocumentFromData(
+                                                  userProfilesCreateData,
+                                                  userProfilesRecordReference);
+                                          await actions
+                                              .initializeUserProfileState(
+                                            userProfile!,
+                                          );
                                           await Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => NavBarPage(
-                                                  initialPage: 'ProfileView'),
+                                              builder: (context) =>
+                                                  CreateProfileViewWidget(
+                                                userProfile: userProfile,
+                                              ),
                                             ),
                                           );
+
+                                          setState(() {});
                                         },
                                         text: 'Create account',
                                         options: FFButtonOptions(

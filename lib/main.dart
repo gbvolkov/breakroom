@@ -119,7 +119,6 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'ChatView': ChatViewWidget(),
       'ProfileView': ProfileViewWidget(),
       'MatchesView': MatchesViewWidget(),
       'NotificationsView': NotificationsViewWidget(),
@@ -142,14 +141,6 @@ class _NavBarPageState extends State<NavBarPage> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.chat_rounded,
-              size: 20,
-            ),
-            label: 'Chat',
-            tooltip: '',
-          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_outline,
@@ -184,14 +175,14 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat_bubble_outline,
+              Icons.chat_outlined,
               size: 24,
             ),
             activeIcon: Icon(
-              Icons.chat_bubble_rounded,
+              Icons.chat,
               size: 24,
             ),
-            label: '',
+            label: 'Chat',
             tooltip: '',
           )
         ],
