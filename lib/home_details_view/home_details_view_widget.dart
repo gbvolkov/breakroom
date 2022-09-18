@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -721,7 +722,15 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         userProfilesUpdateData);
                                                 setState(() => FFAppState()
                                                     .swipeAction = 'left');
-                                                Navigator.pop(context);
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NavBarPage(
+                                                            initialPage:
+                                                                'HomeView'),
+                                                  ),
+                                                );
                                               },
                                             ),
                                           ),
@@ -848,7 +857,15 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         userProfilesUpdateData);
                                                 setState(() => FFAppState()
                                                     .swipeAction = 'right');
-                                                Navigator.pop(context);
+                                                await Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NavBarPage(
+                                                            initialPage:
+                                                                'HomeView'),
+                                                  ),
+                                                );
                                               },
                                             ),
                                           ),

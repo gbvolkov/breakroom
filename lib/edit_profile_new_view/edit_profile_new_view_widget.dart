@@ -315,8 +315,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   setState(() => FFAppState().usrFirstName =
@@ -435,8 +435,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   setState(() => FFAppState().usrBio =
@@ -565,8 +565,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   setState(() => FFAppState().usrIndustry =
@@ -630,76 +630,82 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Occupation',
-                                style: FlutterFlowTheme.of(context).subtitle2,
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Text(
+                                    'Occupation',
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: FutureBuilder<List<OccupationsRecord>>(
-                              future: queryOccupationsRecordOnce(
-                                queryBuilder: (occupationsRecord) =>
-                                    occupationsRecord
-                                        .where('industry',
-                                            isEqualTo: ddIndustryValue)
-                                        .orderBy('occupation'),
-                              ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50,
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: FutureBuilder<List<OccupationsRecord>>(
+                                  future: queryOccupationsRecordOnce(
+                                    queryBuilder: (occupationsRecord) =>
+                                        occupationsRecord
+                                            .where('industry',
+                                                isEqualTo: ddIndustryValue)
+                                            .orderBy('occupation'),
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: CircularProgressIndicator(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<OccupationsRecord>
+                                        ddOccupationOccupationsRecordList =
+                                        snapshot.data!;
+                                    return FlutterFlowDropDown(
+                                      initialOption: ddOccupationValue ??=
+                                          widget.userProfile!.occupation,
+                                      options: ddOccupationOccupationsRecordList
+                                          .map((e) => e.occupation!)
+                                          .toList()
+                                          .toList(),
+                                      onChanged: (val) => setState(
+                                          () => ddOccupationValue = val),
+                                      width: MediaQuery.of(context).size.width,
                                       height: 50,
-                                      child: CircularProgressIndicator(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<OccupationsRecord>
-                                    ddOccupationOccupationsRecordList =
-                                    snapshot.data!;
-                                return FlutterFlowDropDown(
-                                  initialOption: ddOccupationValue ??=
-                                      widget.userProfile!.occupation,
-                                  options: ddOccupationOccupationsRecordList
-                                      .map((e) => e.occupation!)
-                                      .toList()
-                                      .toList(),
-                                  onChanged: (val) =>
-                                      setState(() => ddOccupationValue = val),
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).subtitle1,
-                                  hintText: 'Please select...',
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  elevation: 2,
-                                  borderColor: Colors.transparent,
-                                  borderWidth: 0,
-                                  borderRadius: 0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
-                                  hidesUnderline: true,
-                                );
-                              },
-                            ),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                      hintText: 'Please select...',
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      elevation: 2,
+                                      borderColor: Colors.transparent,
+                                      borderWidth: 0,
+                                      borderRadius: 0,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                      hidesUnderline: true,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   setState(() => FFAppState().usrOccupation =
@@ -890,44 +896,50 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Text(
+                                    'Your gender',
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  child: custom_widgets.MyRadioButton(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    buttonLabels: FFAppState().genders.toList(),
+                                    buttonValues: FFAppState().genders.toList(),
+                                    horizontal: false,
+                                    buttonWidth: 100.0,
+                                    buttonHeight: 50.0,
+                                    defaultSelected: FFAppState().usrGender,
+                                    onValue: () async {
+                                      setState(() => FFAppState().usrGender =
+                                          FFAppState().mrbSelectedValue);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Your gender',
-                                style: FlutterFlowTheme.of(context).subtitle2,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              child: custom_widgets.MyRadioButton(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                buttonLabels: FFAppState().genders.toList(),
-                                buttonValues: FFAppState().genders.toList(),
-                                horizontal: false,
-                                buttonWidth: 100.0,
-                                buttonHeight: 50.0,
-                                defaultSelected: FFAppState().usrGender,
-                                onValue: () async {
-                                  setState(() => FFAppState().usrGender =
-                                      FFAppState().mrbSelectedValue);
-                                },
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -2202,15 +2214,15 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 16),
                                         child: Container(
-                                          width: 115,
-                                          height: 115,
+                                          width: 125,
+                                          height: 142,
                                           child: Stack(
                                             alignment:
                                                 AlignmentDirectional(0, 1),
                                             children: [
                                               Align(
                                                 alignment:
-                                                    AlignmentDirectional(0, 0),
+                                                    AlignmentDirectional(0, -1),
                                                 child: AuthUserStreamWidget(
                                                   child: Container(
                                                     width: 105,
@@ -2236,7 +2248,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                 child: FlutterFlowIconButton(
                                                   borderRadius: 30,
                                                   borderWidth: 0,
-                                                  buttonSize: 36,
+                                                  buttonSize: 45,
                                                   icon: Icon(
                                                     Icons.photo_camera,
                                                     color: Color(0x7F050A41),
@@ -2809,10 +2821,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
+                                                      elevation: 0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
-                                                        width: 1,
+                                                        width: 0,
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -2928,6 +2941,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
+                                                      elevation: 0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -2969,6 +2983,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
+                                                      elevation: 0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -3010,6 +3025,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
+                                                      elevation: 0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
@@ -3055,6 +3071,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
+                                                      elevation: 0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
