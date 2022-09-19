@@ -74,7 +74,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if ((pageViewController?.page?.round() ?? 0) == 1) {
+            if ((pageViewController?.page?.round() ?? 0) == 0) {
               Navigator.pop(context);
             } else {
               await pageViewController?.previousPage(
@@ -141,8 +141,14 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                 child: Text(
-                                  FFAppState().usrFirstName,
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  'First Name*',
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
                               ),
                             ),
@@ -201,13 +207,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   filled: true,
                                   fillColor: Color(0xFFEFEFEF),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
+                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
                             ),
                             Align(
@@ -217,7 +217,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                 child: Text(
                                   'Last Name*',
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
                               ),
                             ),
@@ -276,13 +282,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   filled: true,
                                   fillColor: Color(0xFFEFEFEF),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
+                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
                             ),
                             Align(
@@ -292,7 +292,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                 child: Text(
                                   'Date of birth*',
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
                               ),
                             ),
@@ -314,13 +320,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         dateTimeFormat(
                                             'yMd', FFAppState().usrBDay),
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
+                                            .subtitle1,
                                       ),
                                     ),
                                   ),
@@ -361,7 +361,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                 child: Text(
                                   'Industry*',
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
                               ),
                             ),
@@ -404,12 +410,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       width: MediaQuery.of(context).size.width,
                                       height: 50,
                                       textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
+                                          .subtitle1,
                                       hintText: 'Please select...',
                                       fillColor: Color(0xFFEFEFEF),
                                       elevation: 2,
@@ -431,7 +432,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                 child: Text(
                                   'Occupation*',
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
                               ),
                             ),
@@ -477,12 +484,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       width: MediaQuery.of(context).size.width,
                                       height: 50,
                                       textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
+                                          .subtitle1,
                                       hintText: 'Please select...',
                                       fillColor: Color(0xFFEFEFEF),
                                       elevation: 2,
@@ -504,7 +506,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                                 child: Text(
                                   'Bio*',
-                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
                               ),
                             ),
@@ -560,13 +568,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 filled: true,
                                 fillColor: Color(0xFFEFEFEF),
                               ),
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                  ),
+                              style: FlutterFlowTheme.of(context).subtitle1,
                               maxLines: 4,
                             ),
                             Align(
@@ -711,10 +713,6 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             FFAppState().mrbSelectedValue);
                                   },
                                 ),
-                              ),
-                              Text(
-                                FFAppState().usrGender,
-                                style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ],
                           ),
@@ -903,28 +901,21 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               style: FlutterFlowTheme.of(context).title1,
                             ),
                           ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Container(
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            child: custom_widgets.MyRadioButton(
                               width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.6,
-                              child: custom_widgets.MyRadioButton(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.6,
-                                buttonLabels:
-                                    FFAppState().religionList.toList(),
-                                buttonValues:
-                                    FFAppState().religionList.toList(),
-                                horizontal: true,
-                                buttonHeight: 50.0,
-                                defaultSelected: FFAppState().usrReligion,
-                                onValue: () async {
-                                  setState(() => FFAppState().usrReligion =
-                                      FFAppState().mrbSelectedValue);
-                                },
-                              ),
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              buttonLabels: FFAppState().religionList.toList(),
+                              buttonValues: FFAppState().religionList.toList(),
+                              horizontal: true,
+                              buttonHeight: 50.0,
+                              defaultSelected: FFAppState().usrReligion,
+                              onValue: () async {
+                                setState(() => FFAppState().usrReligion =
+                                    FFAppState().mrbSelectedValue);
+                              },
                             ),
                           ),
                           Align(
@@ -1102,140 +1093,135 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           ),
                         ],
                       ),
-                      SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional(-1, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Text(
-                                  'What are you \ninterested in?',
-                                  style: FlutterFlowTheme.of(context).title1,
-                                ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              child: Text(
+                                'What are you \ninterested in?',
+                                style: FlutterFlowTheme.of(context).title1,
                               ),
                             ),
-                            Align(
-                              alignment: AlignmentDirectional(-1, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: FutureBuilder<List<InterestsRecord>>(
-                                  future: queryInterestsRecordOnce(
-                                    queryBuilder: (interestsRecord) =>
-                                        interestsRecord.orderBy('interest'),
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<InterestsRecord>
-                                        choiceChipsInterestsRecordList =
-                                        snapshot.data!;
-                                    return FlutterFlowChoiceChips(
-                                      initiallySelected:
-                                          choiceChipsValues != null
-                                              ? choiceChipsValues
-                                              : widget.userProfile!.interests!
-                                                  .toList(),
-                                      options: choiceChipsInterestsRecordList
-                                          .map((e) => e.interest!)
-                                          .toList()
-                                          .map((label) => ChipData(label))
-                                          .toList(),
-                                      onChanged: (val) => setState(
-                                          () => choiceChipsValues = val),
-                                      selectedChipStyle: ChipStyle(
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .alternate,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBtnText,
-                                            ),
-                                        iconColor: Colors.white,
-                                        iconSize: 18,
-                                        labelPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                16, 0, 16, 8),
-                                        elevation: 0,
-                                      ),
-                                      unselectedChipStyle: ChipStyle(
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2,
-                                        iconColor: Color(0xFF323B45),
-                                        iconSize: 18,
-                                        labelPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                16, 8, 16, 8),
-                                        elevation: 0,
-                                      ),
-                                      chipSpacing: 15,
-                                      rowSpacing: 10,
-                                      multiselect: true,
-                                      initialized: choiceChipsValues != null,
-                                      alignment: WrapAlignment.start,
-                                    );
-                                  },
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              child: FutureBuilder<List<InterestsRecord>>(
+                                future: queryInterestsRecordOnce(
+                                  queryBuilder: (interestsRecord) =>
+                                      interestsRecord.orderBy('interest'),
                                 ),
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(-1, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await pageViewController?.nextPage(
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.ease,
-                                    );
-                                  },
-                                  text: 'Next',
-                                  options: FFButtonOptions(
-                                    width: double.infinity,
-                                    height: 48,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle1
-                                        .override(
-                                          fontFamily: 'Roboto',
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
                                           color: FlutterFlowTheme.of(context)
                                               .primaryColor,
                                         ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
+                                      ),
+                                    );
+                                  }
+                                  List<InterestsRecord>
+                                      choiceChipsInterestsRecordList =
+                                      snapshot.data!;
+                                  return FlutterFlowChoiceChips(
+                                    initiallySelected: choiceChipsValues != null
+                                        ? choiceChipsValues
+                                        : widget.userProfile!.interests!
+                                            .toList(),
+                                    options: choiceChipsInterestsRecordList
+                                        .map((e) => e.interest!)
+                                        .toList()
+                                        .map((label) => ChipData(label))
+                                        .toList(),
+                                    onChanged: (val) =>
+                                        setState(() => choiceChipsValues = val),
+                                    selectedChipStyle: ChipStyle(
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .alternate,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBtnText,
+                                          ),
+                                      iconColor: Colors.white,
+                                      iconSize: 18,
+                                      labelPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 8),
+                                      elevation: 0,
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    unselectedChipStyle: ChipStyle(
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondaryBackground,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2,
+                                      iconColor: Color(0xFF323B45),
+                                      iconSize: 18,
+                                      labelPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 8, 16, 8),
+                                      elevation: 0,
+                                    ),
+                                    chipSpacing: 15,
+                                    rowSpacing: 10,
+                                    multiselect: true,
+                                    initialized: choiceChipsValues != null,
+                                    alignment: WrapAlignment.start,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  await pageViewController?.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+                                },
+                                text: 'Next',
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 1,
                                   ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                       Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1429,29 +1415,34 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: custom_widgets.MyRadioButton(
-                                    width: MediaQuery.of(context).size.width,
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 32),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
                                     height: 50,
-                                    buttonLabels:
-                                        FFAppState().howOftenList.toList(),
-                                    buttonValues:
-                                        FFAppState().howOftenList.toList(),
-                                    horizontal: false,
-                                    buttonWidth: 120.0,
-                                    buttonHeight: 50.0,
-                                    defaultSelected:
-                                        FFAppState().usrWorkoutStatus,
-                                    onValue: () async {
-                                      setState(() =>
-                                          FFAppState().usrWorkoutStatus =
-                                              FFAppState().mrbSelectedValue);
-                                    },
+                                    child: custom_widgets.MyRadioButton(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height: 50,
+                                      buttonLabels:
+                                          FFAppState().howOftenList.toList(),
+                                      buttonValues:
+                                          FFAppState().howOftenList.toList(),
+                                      horizontal: false,
+                                      buttonWidth: 100.0,
+                                      buttonHeight: 50.0,
+                                      defaultSelected:
+                                          FFAppState().usrWorkoutStatus,
+                                      onValue: () async {
+                                        setState(() =>
+                                            FFAppState().usrWorkoutStatus =
+                                                FFAppState().mrbSelectedValue);
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1467,29 +1458,34 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: custom_widgets.MyRadioButton(
-                                    width: MediaQuery.of(context).size.width,
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 32),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
                                     height: 50,
-                                    buttonLabels:
-                                        FFAppState().howOftenList.toList(),
-                                    buttonValues:
-                                        FFAppState().howOftenList.toList(),
-                                    horizontal: false,
-                                    buttonWidth: 120.0,
-                                    buttonHeight: 50.0,
-                                    defaultSelected:
-                                        FFAppState().usrDrinkingStatus,
-                                    onValue: () async {
-                                      setState(() =>
-                                          FFAppState().usrDrinkingStatus =
-                                              FFAppState().mrbSelectedValue);
-                                    },
+                                    child: custom_widgets.MyRadioButton(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height: 50,
+                                      buttonLabels:
+                                          FFAppState().howOftenList.toList(),
+                                      buttonValues:
+                                          FFAppState().howOftenList.toList(),
+                                      horizontal: false,
+                                      buttonWidth: 100.0,
+                                      buttonHeight: 50.0,
+                                      defaultSelected:
+                                          FFAppState().usrDrinkingStatus,
+                                      onValue: () async {
+                                        setState(() =>
+                                            FFAppState().usrDrinkingStatus =
+                                                FFAppState().mrbSelectedValue);
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1505,29 +1501,34 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: custom_widgets.MyRadioButton(
-                                    width: MediaQuery.of(context).size.width,
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 32),
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.9,
                                     height: 50,
-                                    buttonLabels:
-                                        FFAppState().howOftenList.toList(),
-                                    buttonValues:
-                                        FFAppState().howOftenList.toList(),
-                                    horizontal: false,
-                                    buttonWidth: 120.0,
-                                    buttonHeight: 50.0,
-                                    defaultSelected:
-                                        FFAppState().usrSmokingStatus,
-                                    onValue: () async {
-                                      setState(() =>
-                                          FFAppState().usrSmokingStatus =
-                                              FFAppState().mrbSelectedValue);
-                                    },
+                                    child: custom_widgets.MyRadioButton(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.9,
+                                      height: 50,
+                                      buttonLabels:
+                                          FFAppState().howOftenList.toList(),
+                                      buttonValues:
+                                          FFAppState().howOftenList.toList(),
+                                      horizontal: false,
+                                      buttonWidth: 100.0,
+                                      buttonHeight: 50.0,
+                                      defaultSelected:
+                                          FFAppState().usrSmokingStatus,
+                                      onValue: () async {
+                                        setState(() =>
+                                            FFAppState().usrSmokingStatus =
+                                                FFAppState().mrbSelectedValue);
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
@@ -1543,29 +1544,32 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: custom_widgets.MyRadioButton(
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 32),
+                                  child: Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
-                                    buttonLabels:
-                                        FFAppState().howOftenList.toList(),
-                                    buttonValues:
-                                        FFAppState().howOftenList.toList(),
-                                    horizontal: false,
-                                    buttonWidth: 120.0,
-                                    buttonHeight: 50.0,
-                                    defaultSelected:
-                                        FFAppState().usrSpiritualStatus,
-                                    onValue: () async {
-                                      setState(() =>
-                                          FFAppState().usrSpiritualStatus =
-                                              FFAppState().mrbSelectedValue);
-                                    },
+                                    child: custom_widgets.MyRadioButton(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      buttonLabels:
+                                          FFAppState().howOftenList.toList(),
+                                      buttonValues:
+                                          FFAppState().howOftenList.toList(),
+                                      horizontal: false,
+                                      buttonWidth: 100.0,
+                                      buttonHeight: 50.0,
+                                      defaultSelected:
+                                          FFAppState().usrSpiritualStatus,
+                                      onValue: () async {
+                                        setState(() =>
+                                            FFAppState().usrSpiritualStatus =
+                                                FFAppState().mrbSelectedValue);
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),

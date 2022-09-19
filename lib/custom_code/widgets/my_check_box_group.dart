@@ -90,7 +90,7 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
           selectedColor: FlutterFlowTheme.of(context).primaryBackground,
           unSelectedColor: FlutterFlowTheme.of(context).primaryText,
           textStyle: TextStyle(
-              fontSize: FlutterFlowTheme.of(context).subtitle1.fontSize)),
+              fontSize: FlutterFlowTheme.of(context).subtitle2.fontSize)),
     );
   }
 }

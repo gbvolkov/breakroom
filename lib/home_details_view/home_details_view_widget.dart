@@ -724,11 +724,16 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                     .swipeAction = 'left');
                                                 await Navigator.push(
                                                   context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NavBarPage(
-                                                            initialPage:
-                                                                'HomeView'),
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 300),
+                                                    child: NavBarPage(
+                                                        initialPage:
+                                                            'HomeView'),
                                                   ),
                                                 );
                                               },
@@ -859,11 +864,16 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                     .swipeAction = 'right');
                                                 await Navigator.push(
                                                   context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NavBarPage(
-                                                            initialPage:
-                                                                'HomeView'),
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                    reverseDuration: Duration(
+                                                        milliseconds: 300),
+                                                    child: NavBarPage(
+                                                        initialPage:
+                                                            'HomeView'),
                                                   ),
                                                 );
                                               },

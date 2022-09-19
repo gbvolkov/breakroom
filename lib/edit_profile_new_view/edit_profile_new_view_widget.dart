@@ -90,6 +90,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                 duration: Duration(milliseconds: 300),
                 curve: Curves.ease,
               );
+              setState(() => FFAppState().profileContainerName = '');
             }
           },
         ),
@@ -140,7 +141,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -359,7 +360,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -384,52 +385,63 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Bio',
-                                style: FlutterFlowTheme.of(context).subtitle2,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                            child: TextFormField(
-                              controller: txtBioController,
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).subtitle2,
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                focusedErrorBorder: InputBorder.none,
-                                filled: true,
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                              style: FlutterFlowTheme.of(context).subtitle1,
-                              maxLines: 8,
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                '96/150',
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 12,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 8),
+                                    child: Text(
+                                      'Bio',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle2,
                                     ),
-                              ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: TextFormField(
+                                    controller: txtBioController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2,
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      focusedErrorBorder: InputBorder.none,
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle1,
+                                    maxLines: 8,
+                                  ),
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 8),
+                                    child: Text(
+                                      '96/150',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle2
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 12,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Align(
@@ -477,7 +489,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -500,67 +512,73 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Industry',
-                                style: FlutterFlowTheme.of(context).subtitle2,
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Text(
+                                    'Industry',
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: FutureBuilder<List<IndustriesRecord>>(
-                              future: queryIndustriesRecordOnce(
-                                queryBuilder: (industriesRecord) =>
-                                    industriesRecord.orderBy('industry'),
-                              ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50,
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: FutureBuilder<List<IndustriesRecord>>(
+                                  future: queryIndustriesRecordOnce(
+                                    queryBuilder: (industriesRecord) =>
+                                        industriesRecord.orderBy('industry'),
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: CircularProgressIndicator(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<IndustriesRecord>
+                                        ddIndustryIndustriesRecordList =
+                                        snapshot.data!;
+                                    return FlutterFlowDropDown(
+                                      initialOption: ddIndustryValue ??=
+                                          widget.userProfile!.industry,
+                                      options: ddIndustryIndustriesRecordList
+                                          .map((e) => e.industry!)
+                                          .toList()
+                                          .toList(),
+                                      onChanged: (val) =>
+                                          setState(() => ddIndustryValue = val),
+                                      width: MediaQuery.of(context).size.width,
                                       height: 50,
-                                      child: CircularProgressIndicator(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<IndustriesRecord>
-                                    ddIndustryIndustriesRecordList =
-                                    snapshot.data!;
-                                return FlutterFlowDropDown(
-                                  initialOption: ddIndustryValue ??=
-                                      widget.userProfile!.industry,
-                                  options: ddIndustryIndustriesRecordList
-                                      .map((e) => e.industry!)
-                                      .toList()
-                                      .toList(),
-                                  onChanged: (val) =>
-                                      setState(() => ddIndustryValue = val),
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).subtitle1,
-                                  hintText: 'Please select...',
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  elevation: 2,
-                                  borderColor: Colors.transparent,
-                                  borderWidth: 0,
-                                  borderRadius: 0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      12, 4, 12, 4),
-                                  hidesUnderline: true,
-                                );
-                              },
-                            ),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                      hintText: 'Please select...',
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      elevation: 2,
+                                      borderColor: Colors.transparent,
+                                      borderWidth: 0,
+                                      borderRadius: 0,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          12, 4, 12, 4),
+                                      hidesUnderline: true,
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
                           ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
@@ -607,7 +625,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -746,7 +764,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -831,8 +849,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   setState(() => FFAppState().usrBDay =
@@ -873,7 +891,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -978,7 +996,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1001,35 +1019,52 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              child: custom_widgets.MyRadioButton(
-                                width: MediaQuery.of(context).size.width,
-                                height: 50,
-                                buttonLabels: FFAppState().genders.toList(),
-                                buttonValues: FFAppState().genders.toList(),
-                                horizontal: false,
-                                buttonWidth: 100.0,
-                                buttonHeight: 50.0,
-                                defaultSelected:
-                                    FFAppState().usrGenderPreference,
-                                onValue: () async {
-                                  setState(() =>
-                                      FFAppState().usrGenderPreference =
-                                          FFAppState().mrbSelectedValue);
-                                },
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Text(
+                                    'Your preferences',
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
+                                ),
                               ),
-                            ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  child: custom_widgets.MyRadioButton(
+                                    width: MediaQuery.of(context).size.width,
+                                    height: 50,
+                                    buttonLabels: FFAppState().genders.toList(),
+                                    buttonValues: FFAppState().genders.toList(),
+                                    horizontal: false,
+                                    buttonWidth: 100.0,
+                                    buttonHeight: 50.0,
+                                    defaultSelected:
+                                        FFAppState().usrGenderPreference,
+                                    onValue: () async {
+                                      setState(() =>
+                                          FFAppState().usrGenderPreference =
+                                              FFAppState().mrbSelectedValue);
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1068,7 +1103,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1115,8 +1150,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1155,7 +1190,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1209,8 +1244,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1249,7 +1284,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1338,10 +1373,12 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           labelPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   8, 8, 8, 8),
-                                          elevation: 1,
+                                          elevation: 0,
                                         ),
                                         unselectedChipStyle: ChipStyle(
-                                          backgroundColor: Colors.white,
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
                                           textStyle:
                                               FlutterFlowTheme.of(context)
                                                   .subtitle1,
@@ -1350,7 +1387,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           labelPadding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   8, 8, 8, 8),
-                                          elevation: 4,
+                                          elevation: 0,
                                         ),
                                         chipSpacing: 20,
                                         rowSpacing: 8,
@@ -1367,8 +1404,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   setState(() => FFAppState().usrInterests =
@@ -1409,7 +1446,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1464,8 +1501,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1504,7 +1541,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1557,8 +1594,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1597,7 +1634,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1650,8 +1687,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1690,7 +1727,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1743,8 +1780,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1783,7 +1820,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1836,8 +1873,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1876,7 +1913,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -1929,8 +1966,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -1969,7 +2006,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
@@ -2020,8 +2057,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -2060,10 +2097,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.9,
                       decoration: BoxDecoration(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Padding(
                             padding:
@@ -2110,8 +2148,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 32),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   if (scaffoldKey.currentState!.isDrawerOpen ||
@@ -2157,11 +2195,12 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Container(
                     width: double.infinity,
-                    height: 500,
+                    height: MediaQuery.of(context).size.height * 0.8,
                     child: PageView(
                       physics: const NeverScrollableScrollPhysics(),
                       controller: pageViewController ??=
@@ -2322,7 +2361,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       child: Text(
                                         'Name',
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText2,
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
                                       ),
                                     ),
                                     Row(
@@ -2336,7 +2381,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             '${FFAppState().usrFirstName} ${FFAppState().usrLastName}',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2371,7 +2416,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Bio',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2386,7 +2437,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             txtBioController!.text,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2421,7 +2472,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Industry',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2436,7 +2493,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             FFAppState().usrIndustry,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2472,7 +2529,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Occupation',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2487,7 +2550,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             FFAppState().usrOccupation,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2523,7 +2586,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Date of birth',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2539,7 +2608,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             dateTimeFormat(
                                                 'yMd', FFAppState().usrBDay),
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2584,7 +2653,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Gender',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2599,7 +2674,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             FFAppState().usrGender,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2635,7 +2710,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Preferences',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2650,7 +2731,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             FFAppState().usrGenderPreference,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2686,7 +2767,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         child: Text(
                                           'Status',
                                           style: FlutterFlowTheme.of(context)
-                                              .bodyText2,
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -2701,7 +2788,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             FFAppState().usrIntention,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .subtitle1,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
@@ -2745,7 +2832,14 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               'Interests',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
                                             ),
                                           ),
                                         ),
@@ -2810,16 +2904,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .subtitle1
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .alternate,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
                                                               ),
                                                       elevation: 0,
                                                       borderSide: BorderSide(
@@ -2860,7 +2951,14 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               'Basics',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
                                             ),
                                           ),
                                         ),
@@ -2930,16 +3028,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .subtitle1
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .alternate,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
                                                               ),
                                                       elevation: 0,
                                                       borderSide: BorderSide(
@@ -2972,16 +3067,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .subtitle1
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .alternate,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
                                                               ),
                                                       elevation: 0,
                                                       borderSide: BorderSide(
@@ -3014,16 +3106,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .subtitle1
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .alternate,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
                                                               ),
                                                       elevation: 0,
                                                       borderSide: BorderSide(
@@ -3060,16 +3149,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .subtitle1
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .alternate,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
                                                               ),
                                                       elevation: 0,
                                                       borderSide: BorderSide(
@@ -3099,85 +3185,97 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           width: double.infinity,
                           height: double.infinity,
                           decoration: BoxDecoration(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 32),
-                                  child: Text(
-                                    'Your basics',
-                                    style: FlutterFlowTheme.of(context).title1,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 8, 0, 32),
+                                    child: Text(
+                                      'Your basics',
+                                      style:
+                                          FlutterFlowTheme.of(context).title1,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.people,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
-                                              ),
-                                            ],
+                                                Icon(
+                                                  Icons.people,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Looking for',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Padding(
+                                          Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    32, 0, 0, 0),
+                                                    8, 0, 0, 0),
                                             child: Text(
+                                              'Looking for',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            40, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
                                               functions.stringifyList(
                                                   FFAppState()
                                                       .usrLookingFor
@@ -3185,668 +3283,777 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                   2),
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .title3
+                                                      .subtitle1,
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 32,
+                                              icon: Icon(
+                                                Icons.chevron_right_rounded,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 16,
+                                              ),
+                                              onPressed: () async {
+                                                setState(() => FFAppState()
+                                                        .profileContainerName =
+                                                    'Basic1');
+                                                scaffoldKey.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 16),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Container(
+                                                  width: 30,
+                                                  height: 30,
+                                                  child: Stack(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            0, 0),
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Container(
+                                                          width: 100,
+                                                          height: 100,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      FaIcon(
+                                                        FontAwesomeIcons.ruler,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        size: 20,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 0, 0, 0),
+                                                  child: Text(
+                                                    'How tall are you?',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  40, 0, 0, 0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                FFAppState()
+                                                    .usrHeight
+                                                    .toString(),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                              ),
+                                              FlutterFlowIconButton(
+                                                borderColor: Colors.transparent,
+                                                borderRadius: 30,
+                                                borderWidth: 1,
+                                                buttonSize: 32,
+                                                icon: Icon(
+                                                  Icons.chevron_right_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 16,
+                                                ),
+                                                onPressed: () async {
+                                                  setState(() => FFAppState()
+                                                          .profileContainerName =
+                                                      'Basic2');
+                                                  scaffoldKey.currentState!
+                                                      .openEndDrawer();
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Icon(
+                                                  Icons.wine_bar_outlined,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Do you drink?',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
                                                       .override(
                                                         fontFamily: 'Roboto',
-                                                        fontSize: 16,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
                                                       ),
                                             ),
                                           ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic1');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                              ),
-                                              FaIcon(
-                                                FontAwesomeIcons.ruler,
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            40, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              FFAppState().usrDrinkingStatus,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 32,
+                                              icon: Icon(
+                                                Icons.chevron_right_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
+                                                        .primaryText,
+                                                size: 16,
                                               ),
-                                            ],
-                                          ),
+                                              onPressed: () async {
+                                                setState(() => FFAppState()
+                                                        .profileContainerName =
+                                                    'Basic3');
+                                                scaffoldKey.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'How tall are you?',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrHeight.toString(),
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic2');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.wine_bar_outlined,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
-                                              ),
-                                            ],
+                                                FaIcon(
+                                                  FontAwesomeIcons.smoking,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Do you drink?',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Do you smoke?',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrDrinkingStatus,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    40, 0, 0, 0),
+                                            child: Text(
+                                              FFAppState().usrSmokingStatus,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic3');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Basic4');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              FaIcon(
-                                                FontAwesomeIcons.smoking,
+                                                Icon(
+                                                  Icons.people,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 22,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Are you spiritual?',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            40, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              FFAppState().usrSpiritualStatus,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 32,
+                                              icon: Icon(
+                                                Icons.chevron_right_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
+                                                        .primaryText,
+                                                size: 16,
                                               ),
-                                            ],
-                                          ),
+                                              onPressed: () async {
+                                                setState(() => FFAppState()
+                                                        .profileContainerName =
+                                                    'Basic5');
+                                                scaffoldKey.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Do you smoke?',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrSmokingStatus,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic4');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.people,
+                                                Icon(
+                                                  Icons.directions_run,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Do you work out?',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            40, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              FFAppState().usrWorkoutStatus,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 32,
+                                              icon: Icon(
+                                                Icons.chevron_right_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 22,
+                                                        .primaryText,
+                                                size: 16,
                                               ),
-                                            ],
-                                          ),
+                                              onPressed: () async {
+                                                setState(() => FFAppState()
+                                                        .profileContainerName =
+                                                    'Basic6');
+                                                scaffoldKey.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Are you spiritual?',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrSpiritualStatus,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic5');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.directions_run,
+                                                Icon(
+                                                  Icons.child_care,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Children',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            40, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              FFAppState().usrChildfreeStatus,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 32,
+                                              icon: Icon(
+                                                Icons.chevron_right_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
+                                                        .primaryText,
+                                                size: 16,
                                               ),
-                                            ],
-                                          ),
+                                              onPressed: () async {
+                                                setState(() => FFAppState()
+                                                        .profileContainerName =
+                                                    'Basic7');
+                                                scaffoldKey.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Do you work out?',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrWorkoutStatus,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic6');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Container(
+                                            width: 30,
+                                            height: 30,
+                                            child: Stack(
+                                              alignment:
+                                                  AlignmentDirectional(0, 0),
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.child_care,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Children',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrChildfreeStatus,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic7');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
+                                                Icon(
+                                                  Icons.school_outlined,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  size: 20,
                                                 ),
-                                              ),
-                                              Icon(
-                                                Icons.school_outlined,
+                                              ],
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Education',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            40, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              FFAppState().usrEducation,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            FlutterFlowIconButton(
+                                              borderColor: Colors.transparent,
+                                              borderRadius: 30,
+                                              borderWidth: 1,
+                                              buttonSize: 32,
+                                              icon: Icon(
+                                                Icons.chevron_right_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 20,
+                                                        .primaryText,
+                                                size: 16,
                                               ),
-                                            ],
-                                          ),
+                                              onPressed: () async {
+                                                setState(() => FFAppState()
+                                                        .profileContainerName =
+                                                    'Basic8');
+                                                scaffoldKey.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 0, 0),
-                                          child: Text(
-                                            'Education',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrEducation,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic8');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: Row(
+                                Column(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -3891,45 +4098,57 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           child: Text(
                                             'Body type',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Text(
-                                          FFAppState().usrBodyType,
-                                          style: FlutterFlowTheme.of(context)
-                                              .title3,
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          40, 0, 0, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            FFAppState().usrBodyType,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1,
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Basic9');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Basic9');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -3939,7 +4158,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                 Align(
                   alignment: AlignmentDirectional(-1, 0),
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
                     child: FFButtonWidget(
                       onPressed: () async {
                         final userProfilesUpdateData = {

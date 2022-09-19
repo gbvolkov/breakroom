@@ -25,9 +25,9 @@ class FiltersViewWidget extends StatefulWidget {
 }
 
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
-  List<String>? choiceChipsValues;
-  bool? switchListTileValue;
   PageController? pageViewController;
+  String? choiceChipsValue;
+  bool? switchListTileValue;
   double? sliderValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -340,15 +340,15 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowChoiceChips(
-                                initiallySelected: choiceChipsValues != null
-                                    ? choiceChipsValues
-                                    : FFAppState().fltrLookingFor,
+                                initiallySelected: choiceChipsValue != null
+                                    ? [choiceChipsValue!]
+                                    : ['Man'],
                                 options: FFAppState()
                                     .interestedInList
                                     .map((label) => ChipData(label))
                                     .toList(),
-                                onChanged: (val) =>
-                                    setState(() => choiceChipsValues = val),
+                                onChanged: (val) => setState(
+                                    () => choiceChipsValue = val?.first),
                                 selectedChipStyle: ChipStyle(
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).alternate,
@@ -362,8 +362,6 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                       ),
                                   iconColor: Colors.white,
                                   iconSize: 18,
-                                  labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 8, 8, 8),
                                   elevation: 0,
                                 ),
                                 unselectedChipStyle: ChipStyle(
@@ -377,13 +375,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                       ),
                                   iconColor: Color(0xFF323B45),
                                   iconSize: 18,
-                                  labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 8, 8, 8),
                                   elevation: 0,
                                 ),
                                 chipSpacing: 4,
-                                multiselect: true,
-                                initialized: choiceChipsValues != null,
+                                multiselect: false,
+                                initialized: choiceChipsValue != null,
                                 alignment: WrapAlignment.spaceEvenly,
                               ),
                             ),
