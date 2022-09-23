@@ -8,6 +8,7 @@ import '../forgot_password_view/forgot_password_view_widget.dart';
 import '../main.dart';
 import '../sign_up_view/sign_up_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,13 +20,11 @@ class SignInViewWidget extends StatefulWidget {
 }
 
 class _SignInViewWidgetState extends State<SignInViewWidget> {
+  List<String>? checkboxGroupValues;
   TextEditingController? emailTextFieldController;
-
   TextEditingController? passwordTextFieldController;
 
   late bool passwordTextFieldVisibility;
-
-  List<String>? checkboxGroupValues;
   PageController? signInPageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -36,6 +35,13 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
     passwordTextFieldController = TextEditingController();
     passwordTextFieldVisibility = false;
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    emailTextFieldController?.dispose();
+    passwordTextFieldController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -144,6 +150,11 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                       0, 0, 0, 16),
                                   child: TextFormField(
                                     controller: emailTextFieldController,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'emailTextFieldController',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -156,43 +167,46 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
+                                      suffixIcon: emailTextFieldController!
+                                              .text.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () async {
+                                                emailTextFieldController
+                                                    ?.clear();
+                                                setState(() {});
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                color: Color(0xFF757575),
+                                                size: 22,
+                                              ),
+                                            )
+                                          : null,
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
@@ -228,40 +242,28 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
@@ -288,6 +290,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
                                       child: FlutterFlowCheckboxGroup(
@@ -319,7 +323,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                       },
                                       text: 'Forgot password?',
                                       options: FFButtonOptions(
-                                        width: 150,
+                                        width: 136,
                                         height: 40,
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
@@ -335,6 +339,80 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                     ),
                                   ],
                                 ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 48,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFEE837B),
+                                              Color(0xFFF95A82),
+                                              Color(0xFFEA3C7D)
+                                            ],
+                                            stops: [0, 0.6, 1],
+                                            begin: AlignmentDirectional(0, -1),
+                                            end: AlignmentDirectional(0, 1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            final user = await signInWithEmail(
+                                              context,
+                                              emailTextFieldController!.text,
+                                              passwordTextFieldController!.text,
+                                            );
+                                            if (user == null) {
+                                              return;
+                                            }
+
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NavBarPage(
+                                                        initialPage:
+                                                            'ProfileView'),
+                                              ),
+                                            );
+                                          },
+                                          text: 'Log in',
+                                          options: FFButtonOptions(
+                                            width: double.infinity,
+                                            height: 48,
+                                            color: FlutterFlowTheme.of(context)
+                                                .noColor,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                             Padding(
@@ -344,55 +422,6 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          final user = await signInWithEmail(
-                                            context,
-                                            emailTextFieldController!.text,
-                                            passwordTextFieldController!.text,
-                                          );
-                                          if (user == null) {
-                                            return;
-                                          }
-
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => NavBarPage(
-                                                  initialPage: 'ProfileView'),
-                                            ),
-                                          );
-                                        },
-                                        text: 'Log in',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 32),

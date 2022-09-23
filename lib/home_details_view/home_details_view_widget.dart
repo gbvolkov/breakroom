@@ -93,7 +93,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                       ProfileBottomSheetWidget(),
                                                 );
                                               },
-                                            );
+                                            ).then((value) => setState(() {}));
                                           },
                                           child: ClipRRect(
                                             borderRadius:
@@ -145,7 +145,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                     ),
                                                   );
                                                 },
-                                              );
+                                              ).then(
+                                                  (value) => setState(() {}));
                                             },
                                             child: Container(
                                               width: MediaQuery.of(context)

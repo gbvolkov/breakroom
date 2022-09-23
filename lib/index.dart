@@ -5,7 +5,6 @@ export 'phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
 export 'verify_s_m_s/verify_s_m_s_widget.dart' show VerifySMSWidget;
 export 'chat_view/chat_view_widget.dart' show ChatViewWidget;
 export 'profile_view/profile_view_widget.dart' show ProfileViewWidget;
-export 'matches_view/matches_view_widget.dart' show MatchesViewWidget;
 export 'notifications_view/notifications_view_widget.dart'
     show NotificationsViewWidget;
 export 'home_view/home_view_widget.dart' show HomeViewWidget;
@@ -36,3 +35,15 @@ export 'invite_user/invite_user_widget.dart' show InviteUserWidget;
 export 'invite_users/invite_users_widget.dart' show InviteUsersWidget;
 export 'add_users_to_group/add_users_to_group_widget.dart'
     show AddUsersToGroupWidget;
+export 'new_match_view/new_match_view_widget.dart' show NewMatchViewWidget;
+export 'matches_view/matches_view_widget.dart' show MatchesViewWidget;
+export 'get_premium1_view/get_premium1_view_widget.dart'
+    show GetPremium1ViewWidget;
+export 'you_have_paid_view/you_have_paid_view_widget.dart'
+    show YouHavePaidViewWidget;
+export 'about_us_view/about_us_view_widget.dart' show AboutUsViewWidget;
+export 'settings_view/settings_view_widget.dart' show SettingsViewWidget;
+export 'login_details_view/login_details_view_widget.dart'
+    show LoginDetailsViewWidget;
+export 'notification_settings_view/notification_settings_view_widget.dart'
+    show NotificationSettingsViewWidget;

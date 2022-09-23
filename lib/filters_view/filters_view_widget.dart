@@ -627,7 +627,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                     ),
                                                     onPressed: () {
                                                       print(
-                                                          'IconButton pressed ...');
+                                                          'btnLocAddress pressed ...');
                                                     },
                                                   ),
                                                 ],
@@ -900,81 +900,140 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ],
                                   ),
                                 ),
-                                FFButtonWidget(
-                                  onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            GetPremiumViewWidget(),
-                                      ),
-                                    );
-                                  },
-                                  text: 'Get premium',
-                                  options: FFButtonOptions(
-                                    height: 60,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 48,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFEE837B),
+                                              Color(0xFFF95A82),
+                                              Color(0xFFEA3C7D)
+                                            ],
+                                            stops: [0, 0.6, 1],
+                                            begin: AlignmentDirectional(0, -1),
+                                            end: AlignmentDirectional(0, 1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      FFButtonWidget(
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GetPremiumViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                        text: 'Get premium',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 48,
+                                          color: Colors.transparent,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  final flitersUpdateData = {
-                                    ...createFlitersRecordData(
-                                      ageRangeExt: FFAppState().fltrAgeRangeExt,
-                                      location: FFAppState().fltrLocation,
-                                      distance: FFAppState().fltrDistance,
-                                      filterName: currentUserEmail,
-                                      ageRange: createDoubleRangeStruct(
-                                        min: FFAppState().fltrAgeMin,
-                                        max: FFAppState().fltrAgeMax,
-                                        clearUnsetFields: false,
+                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFFEE837B),
+                                          Color(0xFFF95A82),
+                                          Color(0xFFEA3C7D)
+                                        ],
+                                        stops: [0, 0.6, 1],
+                                        begin: AlignmentDirectional(0, -1),
+                                        end: AlignmentDirectional(0, 1),
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 16),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        final flitersUpdateData = {
+                                          ...createFlitersRecordData(
+                                            ageRangeExt:
+                                                FFAppState().fltrAgeRangeExt,
+                                            location: FFAppState().fltrLocation,
+                                            distance: FFAppState().fltrDistance,
+                                            filterName: currentUserEmail,
+                                            ageRange: createDoubleRangeStruct(
+                                              min: FFAppState().fltrAgeMin,
+                                              max: FFAppState().fltrAgeMax,
+                                              clearUnsetFields: false,
+                                            ),
+                                          ),
+                                          'lookingFor':
+                                              FFAppState().fltrLookingFor,
+                                          'industries':
+                                              FFAppState().fltrIndusrtries,
+                                        };
+                                        await widget.filter!.reference
+                                            .update(flitersUpdateData);
+                                        await pageViewController?.previousPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      },
+                                      text: 'Save',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 48,
+                                        color: Colors.transparent,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    'lookingFor': FFAppState().fltrLookingFor,
-                                    'industries': FFAppState().fltrIndusrtries,
-                                  };
-                                  await widget.filter!.reference
-                                      .update(flitersUpdateData);
-                                  await pageViewController?.previousPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
-                                  height: 60,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
+                                ],
                               ),
                             ),
                           ],

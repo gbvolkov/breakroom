@@ -234,6 +234,8 @@ class FFAppState {
   double fltrAgeMax = 0.0;
 
   String swipeAction = '';
+
+  String loginDetailsContainerName = '';
 }
 
 LatLng? _latLngFromString(String? val) {

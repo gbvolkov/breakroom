@@ -25,7 +25,6 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
           .toList();
 
   TextEditingController? textController;
-
   ChatsRecord? groupChat;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -33,6 +32,12 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
   void initState() {
     super.initState();
     textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
   }
 
   @override

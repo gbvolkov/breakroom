@@ -26,20 +26,16 @@ class SignUpViewWidget extends StatefulWidget {
 }
 
 class _SignUpViewWidgetState extends State<SignUpViewWidget> {
+  List<String>? cbIsAgreedValues;
+  TextEditingController? emailTextFieldController;
+  PageController? signUpPageViewController;
   TextEditingController? confirmPasswordTextFieldController;
 
   late bool confirmPasswordTextFieldVisibility;
-
   TextEditingController? passwordTextFieldController;
 
   late bool passwordTextFieldVisibility;
-
   UserProfilesRecord? userProfile;
-
-  TextEditingController? emailTextFieldController;
-
-  List<String>? cbIsAgreedValues;
-  PageController? signUpPageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -51,6 +47,14 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
     passwordTextFieldVisibility = false;
     emailTextFieldController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    confirmPasswordTextFieldController?.dispose();
+    passwordTextFieldController?.dispose();
+    emailTextFieldController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -121,6 +125,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Column(
                               mainAxisSize: MainAxisSize.max,
@@ -176,40 +181,28 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
@@ -235,7 +228,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
@@ -244,12 +237,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FlutterFlowCheckboxGroup(
                                           initiallySelected:
-                                              cbIsAgreedValues ??= [
-                                            'I agree with Privacy Policy'
-                                          ],
-                                          options: [
-                                            'I agree with Privacy Policy'
-                                          ].toList(),
+                                              cbIsAgreedValues ??= [],
+                                          options: ['I agree with'].toList(),
                                           onChanged: (val) => setState(
                                               () => cbIsAgreedValues = val),
                                           activeColor:
@@ -258,73 +247,174 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           checkColor: Colors.white,
                                           checkboxBorderColor:
                                               Color(0xFF95A1AC),
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyText2,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          if (!cbIsAgreedValues!.contains(
-                                              'I agree with Privacy Policy')) {
-                                            await showDialog(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('No allowed'),
-                                                  content: Text(
-                                                      'Please agree with Privacy Policy'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext),
-                                                      child: Text('Ok'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
-                                            return;
-                                          }
-                                          await signUpPageViewController
-                                              ?.nextPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.ease,
-                                          );
-                                        },
-                                        text: 'Next',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle1
+                                              .bodyText2
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primaryText,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                    Text(
+                                      'Privacy ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                          ),
+                                    ),
+                                    Text(
+                                      'and ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                          ),
+                                    ),
+                                    Text(
+                                      'Policy                                   ',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 48,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFEE837B),
+                                              Color(0xFFF95A82),
+                                              Color(0xFFEA3C7D)
+                                            ],
+                                            stops: [0, 0.6, 1],
+                                            begin: AlignmentDirectional(0, -1),
+                                            end: AlignmentDirectional(0, 1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            if (!cbIsAgreedValues!.contains(
+                                                'I agree with Privacy Policy')) {
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('No allowed'),
+                                                    content: Text(
+                                                        'Please agree with Privacy Policy'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              return;
+                                            }
+                                            await signUpPageViewController
+                                                ?.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.ease,
+                                            );
+                                          },
+                                          text: 'Next',
+                                          options: FFButtonOptions(
+                                            width: double.infinity,
+                                            height: 48,
+                                            color: FlutterFlowTheme.of(context)
+                                                .noColor,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 32),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Already have an account?',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                      ),
+                                      FFButtonWidget(
+                                        onPressed: () {
+                                          print('Button pressed ...');
+                                        },
+                                        text: 'Log in',
+                                        options: FFButtonOptions(
+                                          width: 65,
+                                          height: 40,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
                                               ),
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
@@ -334,10 +424,10 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                               BorderRadius.circular(8),
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -548,118 +638,124 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                              child: Stack(
                                 children: [
+                                  Container(
+                                    width: double.infinity,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFFEE837B),
+                                          Color(0xFFF95A82),
+                                          Color(0xFFEA3C7D)
+                                        ],
+                                        stops: [0, 0.6, 1],
+                                        begin: AlignmentDirectional(0, -1),
+                                        end: AlignmentDirectional(0, 1),
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
                                   Align(
                                     alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          if (passwordTextFieldController
-                                                  ?.text !=
-                                              confirmPasswordTextFieldController
-                                                  ?.text) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Passwords don\'t match!',
-                                                ),
-                                              ),
-                                            );
-                                            return;
-                                          }
-
-                                          final user =
-                                              await createAccountWithEmail(
-                                            context,
-                                            emailTextFieldController!.text,
-                                            passwordTextFieldController!.text,
-                                          );
-                                          if (user == null) {
-                                            return;
-                                          }
-
-                                          await sendEmailVerification();
-
-                                          final userProfilesCreateData = {
-                                            ...createUserProfilesRecordData(
-                                              user: currentUserReference,
-                                              firstName: '',
-                                              lastName: '',
-                                              birthDay: getCurrentTimestamp,
-                                              industry: '',
-                                              occupation: '',
-                                              bio: '',
-                                              gender: 'Male',
-                                              genderPreference: 'Female',
-                                              intention: 'Social',
-                                              childfreeStatus: 'Don\'t want',
-                                              religion: 'Agnostic',
-                                              education: 'High school',
-                                              bodyType: 'Average',
-                                              height: 170,
-                                              weight: 65,
-                                              workoutStatus: 'Sometimes',
-                                              drinkingStatus: 'Sometimes',
-                                              smokingStatus: 'Sometimes',
-                                              spiritualStatus: 'Sometimes',
-                                            ),
-                                            'interests': ['Walking'],
-                                            'lookingFor': ['Friendship'],
-                                          };
-                                          var userProfilesRecordReference =
-                                              UserProfilesRecord.collection
-                                                  .doc();
-                                          await userProfilesRecordReference
-                                              .set(userProfilesCreateData);
-                                          userProfile = UserProfilesRecord
-                                              .getDocumentFromData(
-                                                  userProfilesCreateData,
-                                                  userProfilesRecordReference);
-                                          await actions
-                                              .initializeUserProfileState(
-                                            userProfile!,
-                                          );
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  CreateProfileViewWidget(
-                                                userProfile: userProfile,
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        if (passwordTextFieldController?.text !=
+                                            confirmPasswordTextFieldController
+                                                ?.text) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Passwords don\'t match!',
                                               ),
                                             ),
                                           );
+                                          return;
+                                        }
 
-                                          setState(() {});
-                                        },
-                                        text: 'Create account',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
+                                        final user =
+                                            await createAccountWithEmail(
+                                          context,
+                                          emailTextFieldController!.text,
+                                          passwordTextFieldController!.text,
+                                        );
+                                        if (user == null) {
+                                          return;
+                                        }
+
+                                        await sendEmailVerification();
+
+                                        final userProfilesCreateData = {
+                                          ...createUserProfilesRecordData(
+                                            user: currentUserReference,
+                                            firstName: '',
+                                            lastName: '',
+                                            birthDay: getCurrentTimestamp,
+                                            industry: '',
+                                            occupation: '',
+                                            bio: '',
+                                            gender: 'Male',
+                                            genderPreference: 'Female',
+                                            intention: 'Social',
+                                            childfreeStatus: 'Don\'t want',
+                                            religion: 'Agnostic',
+                                            education: 'High school',
+                                            bodyType: 'Average',
+                                            height: 170,
+                                            weight: 65,
+                                            workoutStatus: 'Sometimes',
+                                            drinkingStatus: 'Sometimes',
+                                            smokingStatus: 'Sometimes',
+                                            spiritualStatus: 'Sometimes',
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                          'interests': ['Walking'],
+                                          'lookingFor': ['Friendship'],
+                                        };
+                                        var userProfilesRecordReference =
+                                            UserProfilesRecord.collection.doc();
+                                        await userProfilesRecordReference
+                                            .set(userProfilesCreateData);
+                                        userProfile = UserProfilesRecord
+                                            .getDocumentFromData(
+                                                userProfilesCreateData,
+                                                userProfilesRecordReference);
+                                        await actions
+                                            .initializeUserProfileState(
+                                          userProfile!,
+                                        );
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateProfileViewWidget(
+                                              userProfile: userProfile,
+                                            ),
+                                          ),
+                                        );
+
+                                        setState(() {});
+                                      },
+                                      text: 'Create account',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 48,
+                                        color: Colors.transparent,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
                                         ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                   ),

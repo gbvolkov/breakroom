@@ -1,4 +1,3 @@
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -6,10 +5,8 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,15 +25,12 @@ class CreateProfileViewWidget extends StatefulWidget {
 }
 
 class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
-  TextEditingController? txtBioController;
-
-  TextEditingController? txtFirstNameController;
-
-  TextEditingController? txtSecondNameController;
-
   DateTime? userBDay;
+  TextEditingController? txtFirstNameController;
+  TextEditingController? txtSecondNameController;
   String? ddIndustryValue;
   String? ddOccupationValue;
+  TextEditingController? txtBioController;
   PageController? pageViewController;
   List<String>? choiceChipsValues;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -54,6 +48,14 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
         TextEditingController(text: widget.userProfile!.firstName);
     txtSecondNameController =
         TextEditingController(text: widget.userProfile!.lastName);
+  }
+
+  @override
+  void dispose() {
+    txtBioController?.dispose();
+    txtFirstNameController?.dispose();
+    txtSecondNameController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -169,40 +171,28 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   errorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   focusedErrorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   filled: true,
                                   fillColor: Color(0xFFEFEFEF),
@@ -244,40 +234,28 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   errorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   focusedErrorBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(
                                       color: Color(0x00000000),
                                       width: 1,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                   filled: true,
                                   fillColor: Color(0xFFEFEFEF),
@@ -302,57 +280,72 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: Text(
-                                        dateTimeFormat(
-                                            'yMd', FFAppState().usrBDay),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle1,
+                            Stack(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: 42,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8, 0, 0, 8),
+                                          child: Text(
+                                            dateTimeFormat(
+                                                'yMd', FFAppState().usrBDay),
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30,
-                                    borderWidth: 1,
-                                    buttonSize: 40,
-                                    icon: Icon(
-                                      Icons.calendar_today_outlined,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 22,
-                                    ),
-                                    onPressed: () async {
-                                      userBDay = await actions.vvShowDatePicker(
-                                        context,
-                                        FFAppState().usrBDay,
-                                        'Birthday',
-                                        'Enter your birthday',
-                                        'Birthday',
-                                      );
-                                      if (userBDay != null) {
-                                        setState(() =>
-                                            FFAppState().usrBDay = userBDay);
-                                      }
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 40,
+                                        icon: Icon(
+                                          Icons.calendar_today_outlined,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 22,
+                                        ),
+                                        onPressed: () async {
+                                          userBDay =
+                                              await actions.vvShowDatePicker(
+                                            context,
+                                            FFAppState().usrBDay,
+                                            'Birthday',
+                                            'Enter your birthday',
+                                            'Birthday',
+                                          );
+                                          if (userBDay != null) {
+                                            setState(() => FFAppState()
+                                                .usrBDay = userBDay);
+                                          }
 
-                                      setState(() {});
-                                    },
+                                          setState(() {});
+                                        },
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                             Align(
                               alignment: AlignmentDirectional(-1, 0),
@@ -530,40 +523,28 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 errorBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 focusedErrorBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
                                     color: Color(0x00000000),
                                     width: 1,
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
                                 filled: true,
                                 fillColor: Color(0xFFEFEFEF),
@@ -587,38 +568,60 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: AlignmentDirectional(-1, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    await pageViewController?.nextPage(
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.ease,
-                                    );
-                                  },
-                                  text: 'Next',
-                                  options: FFButtonOptions(
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              child: Stack(
+                                children: [
+                                  Container(
                                     width: double.infinity,
                                     height: 48,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFFEE837B),
+                                          Color(0xFFF95A82),
+                                          Color(0xFFEA3C7D)
+                                        ],
+                                        stops: [0, 0.6, 1],
+                                        begin: AlignmentDirectional(0, -1),
+                                        end: AlignmentDirectional(0, 1),
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                ),
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      },
+                                      text: 'Next',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 48,
+                                        color: FlutterFlowTheme.of(context)
+                                            .noColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -716,37 +719,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -783,37 +808,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -855,37 +902,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -918,37 +987,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               },
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -988,37 +1079,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1058,37 +1171,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1188,37 +1323,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1285,37 +1442,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1354,37 +1533,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  await pageViewController?.nextPage(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease,
-                                  );
-                                },
-                                text: 'Next',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Next',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1575,73 +1776,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  final userProfilesUpdateData = {
-                                    ...createUserProfilesRecordData(
-                                      firstName: txtFirstNameController!.text,
-                                      lastName: txtSecondNameController!.text,
-                                      birthDay: FFAppState().usrBDay,
-                                      industry: ddIndustryValue,
-                                      occupation: ddOccupationValue,
-                                      bio: txtBioController!.text,
-                                      gender: FFAppState().usrGender,
-                                      genderPreference:
-                                          FFAppState().usrGenderPreference,
-                                      intention: FFAppState().usrIntention,
-                                      childfreeStatus:
-                                          FFAppState().usrChildfreeStatus,
-                                      religion: FFAppState().usrReligion,
-                                      education: FFAppState().usrEducation,
-                                      bodyType: FFAppState().usrBodyType,
-                                      workoutStatus:
-                                          FFAppState().usrWorkoutStatus,
-                                      drinkingStatus:
-                                          FFAppState().usrDrinkingStatus,
-                                      smokingStatus:
-                                          FFAppState().usrSmokingStatus,
-                                      spiritualStatus:
-                                          FFAppState().usrSpiritualStatus,
-                                      height: FFAppState().usrHeight,
-                                      weight: 80,
-                                    ),
-                                    'interests': choiceChipsValues,
-                                    'lookingFor': FFAppState().usrLookingFor,
-                                  };
-                                  await widget.userProfile!.reference
-                                      .update(userProfilesUpdateData);
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => NavBarPage(
-                                          initialPage: 'ProfileView'),
-                                    ),
-                                  );
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color:
+                                          FlutterFlowTheme.of(context).noColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

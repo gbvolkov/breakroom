@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../chat/chat_widget.dart';
+import '../components/empty_list_widget_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -37,7 +38,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
             );
           },
           child: Text(
-            'All Chats',
+            'Chats',
             style: FlutterFlowTheme.of(context).bodyText1.override(
                   fontFamily: 'Roboto',
                   color: Colors.black,
@@ -68,7 +69,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
           ),
         ],
         centerTitle: true,
-        elevation: 4,
+        elevation: 0,
       ),
       body: SafeArea(
         child: Padding(
@@ -93,6 +94,9 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                 );
               }
               List<ChatsRecord> listViewChatsRecordList = snapshot.data!;
+              if (listViewChatsRecordList.isEmpty) {
+                return EmptyListWidgetWidget();
+              }
               return ListView.builder(
                 padding: EdgeInsets.zero,
                 scrollDirection: Axis.vertical,

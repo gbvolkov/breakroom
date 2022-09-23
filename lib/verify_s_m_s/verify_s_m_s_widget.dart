@@ -18,7 +18,6 @@ class VerifySMSWidget extends StatefulWidget {
 class _VerifySMSWidgetState extends State<VerifySMSWidget>
     with TickerProviderStateMixin {
   TextEditingController? verificationCodeController;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'textOnPageLoadAnimation': AnimationInfo(
@@ -49,6 +48,12 @@ class _VerifySMSWidgetState extends State<VerifySMSWidget>
     );
 
     verificationCodeController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    verificationCodeController?.dispose();
+    super.dispose();
   }
 
   @override

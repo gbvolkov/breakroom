@@ -8,6 +8,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../settings_view/settings_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -67,6 +68,25 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
               );
             },
           ),
+          FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30,
+            borderWidth: 1,
+            buttonSize: 60,
+            icon: Icon(
+              Icons.settings_outlined,
+              color: FlutterFlowTheme.of(context).alternate,
+              size: 30,
+            ),
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SettingsViewWidget(),
+                ),
+              );
+            },
+          ),
         ],
         centerTitle: false,
         elevation: 0,
@@ -111,7 +131,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.75,
+                      height: MediaQuery.of(context).size.height * 0.65,
                       decoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground,
                       ),
@@ -784,51 +804,74 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                         ),
                       ),
                     ),
-                    Align(
-                      alignment: AlignmentDirectional(-1, 0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              barrierColor: Color(0x7B000000),
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.of(context).viewInsets,
-                                  child: MenuAddPhotoWidget(
-                                    userProfile: columnUserProfilesRecord,
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                          text: 'Add photo',
-                          icon: Icon(
-                            Icons.add_circle,
-                            size: 15,
-                          ),
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 48,
-                            color: FlutterFlowTheme.of(context).alternate,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
+                    Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFFEE837B),
+                                Color(0xFFF95A82),
+                                Color(0xFFEA3C7D)
+                              ],
+                              stops: [0, 0.6, 1],
+                              begin: AlignmentDirectional(0, -1),
+                              end: AlignmentDirectional(0, 1),
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                      ),
+                        Align(
+                          alignment: AlignmentDirectional(-1, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  barrierColor: Color(0x7B000000),
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding:
+                                          MediaQuery.of(context).viewInsets,
+                                      child: MenuAddPhotoWidget(
+                                        userProfile: columnUserProfilesRecord,
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+                              },
+                              text: 'Add photo',
+                              icon: Icon(
+                                Icons.add_circle,
+                                size: 15,
+                              ),
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 48,
+                                color: Colors.transparent,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle1
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 );

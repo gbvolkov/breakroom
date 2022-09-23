@@ -32,20 +32,17 @@ class EditProfileNewViewWidget extends StatefulWidget {
 }
 
 class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
-  TextEditingController? textController1;
-
-  TextEditingController? textController2;
-
-  TextEditingController? txtBioController;
-
-  String? ddIndustryValue;
-  String? ddOccupationValue;
-  DateTimeRange? calBDaySelectedDay;
-  List<String>? ccInterestsValues;
   DateTime? userBDay;
   String uploadedFileUrl = '';
   PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  DateTimeRange? calBDaySelectedDay;
+  String? ddIndustryValue;
+  TextEditingController? textController1;
+  TextEditingController? textController2;
+  TextEditingController? txtBioController;
+  String? ddOccupationValue;
+  List<String>? ccInterestsValues;
 
   @override
   void initState() {
@@ -63,6 +60,14 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
         TextEditingController(text: widget.userProfile!.firstName);
     textController2 = TextEditingController(text: widget.userProfile!.lastName);
     txtBioController = TextEditingController(text: widget.userProfile!.bio);
+  }
+
+  @override
+  void dispose() {
+    textController1?.dispose();
+    textController2?.dispose();
+    txtBioController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -195,40 +200,28 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
                                     fillColor: Color(0xFFEFEFEF),
@@ -270,40 +263,28 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     errorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     focusedErrorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                     filled: true,
                                     fillColor: Color(0xFFEFEFEF),
@@ -313,42 +294,72 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => FFAppState().usrFirstName =
-                                      textController1!.text);
-                                  setState(() => FFAppState().usrLastName =
-                                      textController2!.text);
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 32),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        setState(() =>
+                                            FFAppState().usrFirstName =
+                                                textController1!.text);
+                                        setState(() =>
+                                            FFAppState().usrLastName =
+                                                textController2!.text);
+                                        if (scaffoldKey
+                                                .currentState!.isDrawerOpen ||
+                                            scaffoldKey.currentState!
+                                                .isEndDrawerOpen) {
+                                          Navigator.pop(context);
+                                        }
+                                      },
+                                      text: 'Save',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 48,
+                                        color: FlutterFlowTheme.of(context)
+                                            .noColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -444,40 +455,62 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ],
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => FFAppState().usrBio =
-                                      txtBioController!.text);
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() => FFAppState().usrBio =
+                                          txtBioController!.text);
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -580,40 +613,62 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => FFAppState().usrIndustry =
-                                      ddIndustryValue!);
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() => FFAppState().usrIndustry =
+                                          ddIndustryValue!);
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -719,40 +774,62 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => FFAppState().usrOccupation =
-                                      ddOccupationValue!);
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() => FFAppState()
+                                          .usrOccupation = ddOccupationValue!);
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -846,40 +923,62 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               inactiveDateStyle: TextStyle(),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => FFAppState().usrBDay =
-                                      calBDaySelectedDay?.start);
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() => FFAppState().usrBDay =
+                                          calBDaySelectedDay?.start);
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -953,38 +1052,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1060,38 +1181,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1147,38 +1290,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1241,38 +1406,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1401,40 +1588,62 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() => FFAppState().usrInterests =
-                                      ccInterestsValues!.toList());
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() => FFAppState().usrInterests =
+                                          ccInterestsValues!.toList());
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1498,38 +1707,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ],
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1591,38 +1822,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1684,38 +1937,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1777,38 +2052,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1870,38 +2167,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -1963,38 +2282,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -2054,38 +2395,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -2145,38 +2508,60 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               ),
                             ),
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 32),
-                              child: FFButtonWidget(
-                                onPressed: () async {
-                                  if (scaffoldKey.currentState!.isDrawerOpen ||
-                                      scaffoldKey
-                                          .currentState!.isEndDrawerOpen) {
-                                    Navigator.pop(context);
-                                  }
-                                },
-                                text: 'Save',
-                                options: FFButtonOptions(
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                            child: Stack(
+                              children: [
+                                Container(
                                   width: double.infinity,
                                   height: 48,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1,
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFFEE837B),
+                                        Color(0xFFF95A82),
+                                        Color(0xFFEA3C7D)
+                                      ],
+                                      stops: [0, 0.6, 1],
+                                      begin: AlignmentDirectional(0, -1),
+                                      end: AlignmentDirectional(0, 1),
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              ),
+                                Align(
+                                  alignment: AlignmentDirectional(-1, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (scaffoldKey
+                                              .currentState!.isDrawerOpen ||
+                                          scaffoldKey
+                                              .currentState!.isEndDrawerOpen) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    text: 'Save',
+                                    options: FFButtonOptions(
+                                      width: double.infinity,
+                                      height: 48,
+                                      color: Colors.transparent,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -4155,59 +4540,84 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        final userProfilesUpdateData = {
-                          ...createUserProfilesRecordData(
-                            firstName: textController1!.text,
-                            lastName: textController2!.text,
-                            birthDay: FFAppState().usrBDay,
-                            industry: ddIndustryValue,
-                            occupation: ddOccupationValue,
-                            bio: txtBioController!.text,
-                            gender: FFAppState().usrGender,
-                            genderPreference: FFAppState().usrGenderPreference,
-                            intention: FFAppState().usrIntention,
-                            childfreeStatus: FFAppState().usrChildfreeStatus,
-                            religion: FFAppState().usrReligion,
-                            education: FFAppState().usrEducation,
-                            bodyType: FFAppState().usrBodyType,
-                            workoutStatus: FFAppState().usrWorkoutStatus,
-                            drinkingStatus: FFAppState().usrDrinkingStatus,
-                            smokingStatus: FFAppState().usrSmokingStatus,
-                            spiritualStatus: FFAppState().usrSpiritualStatus,
-                            height: FFAppState().usrHeight,
-                            weight: 80,
-                          ),
-                          'interests': FFAppState().usrInterests,
-                          'lookingFor': FFAppState().usrLookingFor,
-                        };
-                        await widget.userProfile!.reference
-                            .update(userProfilesUpdateData);
-                        Navigator.pop(context);
-                      },
-                      text: 'Save',
-                      options: FFButtonOptions(
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                  child: Stack(
+                    children: [
+                      Container(
                         width: double.infinity,
                         height: 48,
-                        color: FlutterFlowTheme.of(context).alternate,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle1
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFFEE837B),
+                              Color(0xFFF95A82),
+                              Color(0xFFEA3C7D)
+                            ],
+                            stops: [0, 0.6, 1],
+                            begin: AlignmentDirectional(0, -1),
+                            end: AlignmentDirectional(0, 1),
+                          ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        borderRadius: BorderRadius.circular(8),
                       ),
-                    ),
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            final userProfilesUpdateData = {
+                              ...createUserProfilesRecordData(
+                                firstName: textController1!.text,
+                                lastName: textController2!.text,
+                                birthDay: FFAppState().usrBDay,
+                                industry: ddIndustryValue,
+                                occupation: ddOccupationValue,
+                                bio: txtBioController!.text,
+                                gender: FFAppState().usrGender,
+                                genderPreference:
+                                    FFAppState().usrGenderPreference,
+                                intention: FFAppState().usrIntention,
+                                childfreeStatus:
+                                    FFAppState().usrChildfreeStatus,
+                                religion: FFAppState().usrReligion,
+                                education: FFAppState().usrEducation,
+                                bodyType: FFAppState().usrBodyType,
+                                workoutStatus: FFAppState().usrWorkoutStatus,
+                                drinkingStatus: FFAppState().usrDrinkingStatus,
+                                smokingStatus: FFAppState().usrSmokingStatus,
+                                spiritualStatus:
+                                    FFAppState().usrSpiritualStatus,
+                                height: FFAppState().usrHeight,
+                                weight: 80,
+                              ),
+                              'interests': FFAppState().usrInterests,
+                              'lookingFor': FFAppState().usrLookingFor,
+                            };
+                            await widget.userProfile!.reference
+                                .update(userProfilesUpdateData);
+                            Navigator.pop(context);
+                          },
+                          text: 'Save',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 48,
+                            color: Colors.transparent,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle1
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

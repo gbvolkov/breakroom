@@ -18,11 +18,9 @@ class _LoginSetNewPasswordViewWidgetState
   TextEditingController? textController1;
 
   late bool passwordVisibility1;
-
   TextEditingController? textController2;
 
   late bool passwordVisibility2;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -32,6 +30,13 @@ class _LoginSetNewPasswordViewWidgetState
     passwordVisibility1 = false;
     textController2 = TextEditingController(text: 'Cooper');
     passwordVisibility2 = false;
+  }
+
+  @override
+  void dispose() {
+    textController1?.dispose();
+    textController2?.dispose();
+    super.dispose();
   }
 
   @override

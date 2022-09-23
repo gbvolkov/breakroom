@@ -29,7 +29,6 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
           .toList();
 
   TextEditingController? textController;
-
   ChatsRecord? groupChat;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -37,6 +36,12 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
   void initState() {
     super.initState();
     textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    textController?.dispose();
+    super.dispose();
   }
 
   @override

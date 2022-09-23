@@ -262,27 +262,50 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 32),
-                    child: FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
-                      },
-                      text: 'Continue',
-                      options: FFButtonOptions(
-                        height: 60,
-                        color: FlutterFlowTheme.of(context).alternate,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle1
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: double.infinity,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFFEE837B),
+                                Color(0xFFF95A82),
+                                Color(0xFFEA3C7D)
+                              ],
+                              stops: [0, 0.6, 1],
+                              begin: AlignmentDirectional(0, -1),
+                              end: AlignmentDirectional(0, 1),
                             ),
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                        FFButtonWidget(
+                          onPressed: () {
+                            print('Button pressed ...');
+                          },
+                          text: 'Continue',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 48,
+                            color: Colors.transparent,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle1
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

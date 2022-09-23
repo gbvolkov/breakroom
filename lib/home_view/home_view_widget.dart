@@ -364,7 +364,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                         ProfileBottomSheetWidget(),
                                                   );
                                                 },
-                                              );
+                                              ).then(
+                                                  (value) => setState(() {}));
                                             },
                                             child: ClipRRect(
                                               borderRadius:

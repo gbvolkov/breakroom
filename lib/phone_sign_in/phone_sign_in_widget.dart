@@ -18,7 +18,6 @@ class PhoneSignInWidget extends StatefulWidget {
 class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
     with TickerProviderStateMixin {
   TextEditingController? phoneNumberController;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'textOnPageLoadAnimation': AnimationInfo(
@@ -49,6 +48,12 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
     );
 
     phoneNumberController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    phoneNumberController?.dispose();
+    super.dispose();
   }
 
   @override

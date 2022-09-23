@@ -19,17 +19,13 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   TextEditingController? emailAddressController;
-
   TextEditingController? passwordController;
 
   late bool passwordVisibility;
-
   TextEditingController? emailAddressCreateController;
-
   TextEditingController? passwordCreateController;
 
   late bool passwordCreateVisibility;
-
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -41,6 +37,15 @@ class _HomeWidgetState extends State<HomeWidget> {
     emailAddressCreateController = TextEditingController();
     passwordCreateController = TextEditingController();
     passwordCreateVisibility = false;
+  }
+
+  @override
+  void dispose() {
+    emailAddressController?.dispose();
+    passwordController?.dispose();
+    emailAddressCreateController?.dispose();
+    passwordCreateController?.dispose();
+    super.dispose();
   }
 
   @override

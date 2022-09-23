@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../sign_in_view/sign_in_view_widget.dart';
 import '../sign_up_view/sign_up_view_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -17,18 +18,15 @@ class ForgotPasswordViewWidget extends StatefulWidget {
 }
 
 class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
+  PageController? pageViewController;
+  TextEditingController? textController1;
+  TextEditingController? pinCodeController;
   TextEditingController? newPassword1TextFieldController;
 
   late bool newPassword1TextFieldVisibility;
-
   TextEditingController? newPassword2TextFieldController;
 
   late bool newPassword2TextFieldVisibility;
-
-  TextEditingController? textController1;
-
-  PageController? pageViewController;
-  TextEditingController? pinCodeController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -41,6 +39,14 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
     newPassword2TextFieldVisibility = false;
     pinCodeController = TextEditingController();
     textController1 = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    newPassword1TextFieldController?.dispose();
+    newPassword2TextFieldController?.dispose();
+    textController1?.dispose();
+    super.dispose();
   }
 
   @override
@@ -93,7 +99,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  height: 500,
+                  height: MediaQuery.of(context).size.height * 1,
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     controller: pageViewController ??=
@@ -155,6 +161,11 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                       0, 0, 0, 16),
                                   child: TextFormField(
                                     controller: textController1,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'textController1',
+                                      Duration(milliseconds: 2000),
+                                      () => setState(() {}),
+                                    ),
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
@@ -167,47 +178,110 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
+                                      suffixIcon:
+                                          textController1!.text.isNotEmpty
+                                              ? InkWell(
+                                                  onTap: () async {
+                                                    textController1?.clear();
+                                                    setState(() {});
+                                                  },
+                                                  child: Icon(
+                                                    Icons.clear,
+                                                    color: Color(0xFF757575),
+                                                    size: 22,
+                                                  ),
+                                                )
+                                              : null,
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
                                     keyboardType: TextInputType.emailAddress,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 64, 0, 0),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 48,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFEE837B),
+                                              Color(0xFFF95A82),
+                                              Color(0xFFEA3C7D)
+                                            ],
+                                            stops: [0, 0.6, 1],
+                                            begin: AlignmentDirectional(0, -1),
+                                            end: AlignmentDirectional(0, 1),
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            await pageViewController?.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.ease,
+                                            );
+                                          },
+                                          text: 'Next',
+                                          options: FFButtonOptions(
+                                            width: double.infinity,
+                                            height: 48,
+                                            color: FlutterFlowTheme.of(context)
+                                                .noColor,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -219,44 +293,6 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          await pageViewController?.nextPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.ease,
-                                          );
-                                        },
-                                        text: 'Next',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 32),
@@ -446,43 +482,62 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                       ],
                                     ),
                                   ),
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          await pageViewController?.nextPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.ease,
-                                          );
-                                        },
-                                        text: 'Next',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
+                                  Stack(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        height: 48,
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Color(0xFFEE837B),
+                                              Color(0xFFF95A82),
+                                              Color(0xFFEA3C7D)
+                                            ],
+                                            stops: [0, 0.6, 1],
+                                            begin: AlignmentDirectional(0, -1),
+                                            end: AlignmentDirectional(0, 1),
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
                                       ),
-                                    ),
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            await pageViewController?.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.ease,
+                                            );
+                                          },
+                                          text: 'Next',
+                                          options: FFButtonOptions(
+                                            width: double.infinity,
+                                            height: 48,
+                                            color: FlutterFlowTheme.of(context)
+                                                .noColor,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -706,66 +761,74 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                             ),
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
+                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                              child: Stack(
                                 children: [
+                                  Container(
+                                    width: double.infinity,
+                                    height: 48,
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0xFFEE837B),
+                                          Color(0xFFF95A82),
+                                          Color(0xFFEA3C7D)
+                                        ],
+                                        stops: [0, 0.6, 1],
+                                        begin: AlignmentDirectional(0, -1),
+                                        end: AlignmentDirectional(0, 1),
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
                                   Align(
                                     alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 32),
-                                      child: FFButtonWidget(
-                                        onPressed: () async {
-                                          await showDialog(
-                                            context: context,
-                                            builder: (alertDialogContext) {
-                                              return AlertDialog(
-                                                title: Text('Success!'),
-                                                content: Text(
-                                                    'Password has been changed'),
-                                                actions: [
-                                                  TextButton(
-                                                    onPressed: () =>
-                                                        Navigator.pop(
-                                                            alertDialogContext),
-                                                    child: Text('Ok'),
-                                                  ),
-                                                ],
-                                              );
-                                            },
-                                          );
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SignInViewWidget(),
-                                            ),
-                                          );
-                                        },
-                                        text: 'Submit',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Success!'),
+                                              content: Text(
+                                                  'Password has been changed'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                SignInViewWidget(),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                                        );
+                                      },
+                                      text: 'Submit',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 48,
+                                        color: Colors.transparent,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
                                         ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
                                   ),

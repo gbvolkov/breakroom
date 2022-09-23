@@ -33,7 +33,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
             children: [
               Expanded(
                 child: Align(
-                  alignment: AlignmentDirectional(-1, 0),
+                  alignment: AlignmentDirectional(0, -1),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                     child: Image.asset(
@@ -56,40 +56,62 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                       ),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(-1, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          duration: Duration(milliseconds: 300),
-                          reverseDuration: Duration(milliseconds: 300),
-                          child: SignInViewWidget(),
-                        ),
-                      );
-                    },
-                    text: 'Login with email',
-                    options: FFButtonOptions(
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                child: Stack(
+                  children: [
+                    Container(
                       width: double.infinity,
                       height: 48,
-                      color: FlutterFlowTheme.of(context).alternate,
-                      textStyle: FlutterFlowTheme.of(context)
-                          .subtitle1
-                          .override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFFEE837B),
+                            Color(0xFFF95A82),
+                            Color(0xFFEA3C7D)
+                          ],
+                          stops: [0, 0.6, 1],
+                          begin: AlignmentDirectional(0, -1),
+                          end: AlignmentDirectional(0, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ),
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              duration: Duration(milliseconds: 300),
+                              reverseDuration: Duration(milliseconds: 300),
+                              child: SignInViewWidget(),
+                            ),
+                          );
+                        },
+                        text: 'Login with email',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 48,
+                          color: Colors.transparent,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Align(
@@ -145,7 +167,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                         size: 30,
                       ),
                       onPressed: () {
-                        print('IconButton pressed ...');
+                        print('ibAppleLogin pressed ...');
                       },
                     ),
                     FlutterFlowIconButton(
@@ -159,7 +181,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                         size: 30,
                       ),
                       onPressed: () {
-                        print('IconButton pressed ...');
+                        print('ibGoogleLogin pressed ...');
                       },
                     ),
                     FlutterFlowIconButton(
@@ -174,7 +196,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                         size: 30,
                       ),
                       onPressed: () {
-                        print('IconButton pressed ...');
+                        print('ibFacebookLogin pressed ...');
                       },
                     ),
                   ],
