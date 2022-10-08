@@ -4609,6 +4609,12 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                             };
                             await widget.userProfile!.reference
                                 .update(userProfilesUpdateData);
+
+                            final usersUpdateData = createUsersRecordData(
+                              displayName:
+                                  '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
+                            );
+                            await currentUserReference!.update(usersUpdateData);
                             Navigator.pop(context);
                           },
                           text: 'Save',

@@ -9,6 +9,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -1840,6 +1841,14 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       };
                                       await widget.userProfile!.reference
                                           .update(userProfilesUpdateData);
+
+                                      final usersUpdateData =
+                                          createUsersRecordData(
+                                        displayName:
+                                            '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
+                                      );
+                                      await currentUserReference!
+                                          .update(usersUpdateData);
                                       await Navigator.push(
                                         context,
                                         MaterialPageRoute(

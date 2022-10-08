@@ -114,8 +114,17 @@ List<DocumentReference> concatUsersList(
 }
 
 List<UserProfilesRecord> filterMatches(
-  List<UserProfilesRecord>? fans,
+  List<UserProfilesRecord> fans,
   List<DocumentReference>? liked,
 ) {
-  return fans ?? [];
+  List<UserProfilesRecord> result = [];
+  if (liked == null) {
+    return result;
+  }
+  for (var fan in fans) {
+    if (liked.contains(fan.user)) {
+      result.add(fan);
+    }
+  }
+  return result;
 }
