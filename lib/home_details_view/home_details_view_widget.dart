@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../components/profile_bottom_sheet_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -78,116 +77,68 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                   children: [
                                     Stack(
                                       children: [
-                                        InkWell(
-                                          onTap: () async {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              context: context,
-                                              builder: (context) {
-                                                return Padding(
-                                                  padding:
-                                                      MediaQuery.of(context)
-                                                          .viewInsets,
-                                                  child:
-                                                      ProfileBottomSheetWidget(
-                                                    userProfile:
-                                                        widget.userProfile,
-                                                  ),
-                                                );
-                                              },
-                                            ).then((value) => setState(() {}));
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(0),
-                                            child: Image.network(
-                                              valueOrDefault<String>(
-                                                functions.getPhotosListValue(
-                                                    widget.userProfile!.photos!
-                                                        .toList(),
-                                                    0),
-                                                'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                              ),
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  1,
-                                              fit: BoxFit.cover,
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(0),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              functions.getPhotosListValue(
+                                                  widget.userProfile!.photos!
+                                                      .toList(),
+                                                  0),
+                                              'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                             ),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                1,
+                                            fit: BoxFit.cover,
                                           ),
                                         ),
                                         Align(
                                           alignment:
                                               AlignmentDirectional(0, -1),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                barrierColor: Color(0x836D768A),
-                                                context: context,
-                                                builder: (context) {
-                                                  return Padding(
-                                                    padding:
-                                                        MediaQuery.of(context)
-                                                            .viewInsets,
-                                                    child: Container(
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .height *
-                                                              0.4,
-                                                      child:
-                                                          ProfileBottomSheetWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then(
-                                                  (value) => setState(() {}));
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  1,
-                                              decoration: BoxDecoration(
-                                                gradient: LinearGradient(
-                                                  colors: [
-                                                    Colors.transparent,
-                                                    Color(0x4E000000)
-                                                  ],
-                                                  stops: [0, 1],
-                                                  begin: AlignmentDirectional(
-                                                      0, -1),
-                                                  end: AlignmentDirectional(
-                                                      0, 1),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(0),
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                1,
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.transparent,
+                                                  Color(0x4E000000)
+                                                ],
+                                                stops: [0, 1],
+                                                begin:
+                                                    AlignmentDirectional(0, -1),
+                                                end: AlignmentDirectional(0, 1),
                                               ),
+                                              borderRadius:
+                                                  BorderRadius.circular(0),
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
                                     Image.network(
-                                      'https://a9p9n2x2.stackpathcdn.com/wp-content/blogs.dir/1/files/2016/01/BE_female-doctor-natural-hair-shutterstock.jpg',
+                                      functions.getPhotosListValue(
+                                          widget.userProfile!.photos!.toList(),
+                                          0)!,
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,
                                     ),
                                     Image.network(
-                                      'https://picsum.photos/seed/988/600',
+                                      functions.getPhotosListValue(
+                                          widget.userProfile!.photos!.toList(),
+                                          0)!,
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,
