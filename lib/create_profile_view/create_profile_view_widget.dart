@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
@@ -5,8 +6,10 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +32,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
   TextEditingController? txtFirstNameController;
   TextEditingController? txtSecondNameController;
   String? ddIndustryValue;
-  String? ddOccupationValue;
+  TextEditingController? txtOccupationController;
   TextEditingController? txtBioController;
   PageController? pageViewController;
   List<String>? choiceChipsValues;
@@ -48,6 +51,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
         TextEditingController(text: widget.userProfile!.firstName);
     txtSecondNameController =
         TextEditingController(text: widget.userProfile!.lastName);
+    txtOccupationController =
+        TextEditingController(text: widget.userProfile!.occupation);
   }
 
   @override
@@ -55,6 +60,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
     txtBioController?.dispose();
     txtFirstNameController?.dispose();
     txtSecondNameController?.dispose();
+    txtOccupationController?.dispose();
     super.dispose();
   }
 
@@ -62,6 +68,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -98,7 +105,6 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
         centerTitle: true,
         elevation: 0,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Column(
@@ -435,62 +441,59 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: AlignmentDirectional(-1, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: FutureBuilder<List<OccupationsRecord>>(
-                                  future: queryOccupationsRecordOnce(
-                                    queryBuilder: (occupationsRecord) =>
-                                        occupationsRecord
-                                            .where('industry',
-                                                isEqualTo: ddIndustryValue)
-                                            .orderBy('occupation'),
+                            TextFormField(
+                              controller: txtOccupationController,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).subtitle2,
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).bodyText2,
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<OccupationsRecord>
-                                        ddOccupationOccupationsRecordList =
-                                        snapshot.data!;
-                                    return FlutterFlowDropDown(
-                                      initialOption: ddOccupationValue ??=
-                                          FFAppState().usrOccupation,
-                                      options: ddOccupationOccupationsRecordList
-                                          .map((e) => e.occupation!)
-                                          .toList()
-                                          .toList(),
-                                      onChanged: (val) => setState(
-                                          () => ddOccupationValue = val),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                      hintText: 'Please select...',
-                                      fillColor: Color(0xFFEFEFEF),
-                                      elevation: 2,
-                                      borderColor: Colors.transparent,
-                                      borderWidth: 0,
-                                      borderRadius: 0,
-                                      margin: EdgeInsetsDirectional.fromSTEB(
-                                          12, 4, 12, 4),
-                                      hidesUnderline: true,
-                                    );
-                                  },
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
                                 ),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Color(0x00000000),
+                                    width: 1,
+                                  ),
+                                  borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(4.0),
+                                    topRight: Radius.circular(4.0),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Color(0xFFEFEFEF),
                               ),
+                              style: FlutterFlowTheme.of(context).subtitle1,
                             ),
                             Align(
                               alignment: AlignmentDirectional(-1, 0),
@@ -1271,10 +1274,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       choiceChipsInterestsRecordList =
                                       snapshot.data!;
                                   return FlutterFlowChoiceChips(
-                                    initiallySelected: choiceChipsValues != null
-                                        ? choiceChipsValues
-                                        : widget.userProfile!.interests!
-                                            .toList(),
+                                    initiallySelected:
+                                        widget.userProfile!.interests!.toList(),
                                     options: choiceChipsInterestsRecordList
                                         .map((e) => e.interest!)
                                         .toList()
@@ -1802,9 +1803,49 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
+                                      final userProfilesUpdateData = {
+                                        ...createUserProfilesRecordData(
+                                          firstName:
+                                              txtFirstNameController!.text,
+                                          lastName:
+                                              txtSecondNameController!.text,
+                                          birthDay: FFAppState().usrBDay,
+                                          industry: ddIndustryValue,
+                                          occupation:
+                                              txtOccupationController!.text,
+                                          bio: txtBioController!.text,
+                                          gender: FFAppState().usrGender,
+                                          genderPreference:
+                                              FFAppState().usrGenderPreference,
+                                          intention: FFAppState().usrIntention,
+                                          childfreeStatus:
+                                              FFAppState().usrChildfreeStatus,
+                                          religion: FFAppState().usrReligion,
+                                          education: FFAppState().usrEducation,
+                                          bodyType: FFAppState().usrBodyType,
+                                          height: FFAppState().usrHeight,
+                                          weight: 70,
+                                          workoutStatus:
+                                              FFAppState().usrWorkoutStatus,
+                                          drinkingStatus:
+                                              FFAppState().usrDrinkingStatus,
+                                          smokingStatus:
+                                              FFAppState().usrSmokingStatus,
+                                          spiritualStatus:
+                                              FFAppState().usrSpiritualStatus,
+                                        ),
+                                        'interests': FFAppState().usrInterests,
+                                        'lookingFor':
+                                            FFAppState().usrLookingFor,
+                                      };
+                                      await widget.userProfile!.reference
+                                          .update(userProfilesUpdateData);
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => NavBarPage(
+                                              initialPage: 'ProfileView'),
+                                        ),
                                       );
                                     },
                                     text: 'Save',

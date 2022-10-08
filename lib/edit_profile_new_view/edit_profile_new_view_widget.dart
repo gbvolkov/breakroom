@@ -32,8 +32,10 @@ class EditProfileNewViewWidget extends StatefulWidget {
 }
 
 class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
-  DateTime? userBDay;
+  bool isMediaUploading = false;
   String uploadedFileUrl = '';
+
+  DateTime? userBDay;
   PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   DateTimeRange? calBDaySelectedDay;
@@ -41,7 +43,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   TextEditingController? textController1;
   TextEditingController? textController2;
   TextEditingController? txtBioController;
-  String? ddOccupationValue;
+  TextEditingController? txtOccupationController;
   List<String>? ccInterestsValues;
 
   @override
@@ -60,6 +62,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
         TextEditingController(text: widget.userProfile!.firstName);
     textController2 = TextEditingController(text: widget.userProfile!.lastName);
     txtBioController = TextEditingController(text: widget.userProfile!.bio);
+    txtOccupationController =
+        TextEditingController(text: widget.userProfile!.occupation);
   }
 
   @override
@@ -67,6 +71,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
     textController1?.dispose();
     textController2?.dispose();
     txtBioController?.dispose();
+    txtOccupationController?.dispose();
     super.dispose();
   }
 
@@ -74,43 +79,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
-          ),
-          onPressed: () async {
-            if (FFAppState().profileContainerName != 'Basics') {
-              Navigator.pop(context);
-            } else {
-              await pageViewController?.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-              setState(() => FFAppState().profileContainerName = '');
-            }
-          },
-        ),
-        title: Text(
-          'Edit profile',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       endDrawer: Container(
         width: MediaQuery.of(context).size.width,
@@ -718,59 +686,56 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: FutureBuilder<List<OccupationsRecord>>(
-                                  future: queryOccupationsRecordOnce(
-                                    queryBuilder: (occupationsRecord) =>
-                                        occupationsRecord
-                                            .where('industry',
-                                                isEqualTo: ddIndustryValue)
-                                            .orderBy('occupation'),
+                              TextFormField(
+                                controller: txtOccupationController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  hintText: 'Please enter...',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
-                                          height: 50,
-                                          child: CircularProgressIndicator(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<OccupationsRecord>
-                                        ddOccupationOccupationsRecordList =
-                                        snapshot.data!;
-                                    return FlutterFlowDropDown(
-                                      initialOption: ddOccupationValue ??=
-                                          widget.userProfile!.occupation,
-                                      options: ddOccupationOccupationsRecordList
-                                          .map((e) => e.occupation!)
-                                          .toList()
-                                          .toList(),
-                                      onChanged: (val) => setState(
-                                          () => ddOccupationValue = val),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                      hintText: 'Please select...',
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      elevation: 2,
-                                      borderColor: Colors.transparent,
-                                      borderWidth: 0,
-                                      borderRadius: 0,
-                                      margin: EdgeInsetsDirectional.fromSTEB(
-                                          12, 4, 12, 4),
-                                      hidesUnderline: true,
-                                    );
-                                  },
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
                                 ),
+                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
                             ],
                           ),
@@ -800,8 +765,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      setState(() => FFAppState()
-                                          .usrOccupation = ddOccupationValue!);
+                                      setState(() =>
+                                          FFAppState().usrOccupation =
+                                              txtOccupationController!.text);
                                       if (scaffoldKey
                                               .currentState!.isDrawerOpen ||
                                           scaffoldKey
@@ -1530,11 +1496,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           ccInterestsInterestsRecordList =
                                           snapshot.data!;
                                       return FlutterFlowChoiceChips(
-                                        initiallySelected:
-                                            ccInterestsValues != null
-                                                ? ccInterestsValues
-                                                : widget.userProfile!.interests!
-                                                    .toList(),
+                                        initiallySelected: widget
+                                            .userProfile!.interests!
+                                            .toList(),
                                         options: ccInterestsInterestsRecordList
                                             .map((e) => e.interest!)
                                             .toList()
@@ -2573,6 +2537,43 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
           ),
         ),
       ),
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: FlutterFlowTheme.of(context).primaryText,
+            size: 30,
+          ),
+          onPressed: () async {
+            if (FFAppState().profileContainerName != 'Basics') {
+              Navigator.pop(context);
+            } else {
+              await pageViewController?.previousPage(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.ease,
+              );
+              setState(() => FFAppState().profileContainerName = '');
+            }
+          },
+        ),
+        title: Text(
+          'Edit profile',
+          style: FlutterFlowTheme.of(context).title2.override(
+                fontFamily: 'Roboto',
+                color: FlutterFlowTheme.of(context).primaryText,
+                fontSize: 22,
+              ),
+        ),
+        actions: [],
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -2689,23 +2690,37 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                             validateFileFormat(
                                                                 m.storagePath,
                                                                 context))) {
-                                                      showUploadMessage(
-                                                        context,
-                                                        'Uploading file...',
-                                                        showLoading: true,
-                                                      );
-                                                      final downloadUrls = (await Future
-                                                              .wait(selectedMedia
-                                                                  .map((m) async =>
-                                                                      await uploadData(
-                                                                          m.storagePath,
-                                                                          m.bytes))))
-                                                          .where((u) => u != null)
-                                                          .map((u) => u!)
-                                                          .toList();
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .hideCurrentSnackBar();
+                                                      setState(() =>
+                                                          isMediaUploading =
+                                                              true);
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        showUploadMessage(
+                                                          context,
+                                                          'Uploading file...',
+                                                          showLoading: true,
+                                                        );
+                                                        downloadUrls =
+                                                            (await Future.wait(
+                                                          selectedMedia.map(
+                                                            (m) async =>
+                                                                await uploadData(
+                                                                    m.storagePath,
+                                                                    m.bytes),
+                                                          ),
+                                                        ))
+                                                                .where((u) =>
+                                                                    u != null)
+                                                                .map((u) => u!)
+                                                                .toList();
+                                                      } finally {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentSnackBar();
+                                                        isMediaUploading =
+                                                            false;
+                                                      }
                                                       if (downloadUrls.length ==
                                                           selectedMedia
                                                               .length) {
@@ -2714,14 +2729,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                                 downloadUrls
                                                                     .first);
                                                         showUploadMessage(
-                                                          context,
-                                                          'Success!',
-                                                        );
+                                                            context,
+                                                            'Success!');
                                                       } else {
+                                                        setState(() {});
                                                         showUploadMessage(
-                                                          context,
-                                                          'Failed to upload media',
-                                                        );
+                                                            context,
+                                                            'Failed to upload media');
                                                         return;
                                                       }
                                                     }
@@ -2933,7 +2947,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                           alignment:
                                               AlignmentDirectional(-1, 0),
                                           child: Text(
-                                            FFAppState().usrOccupation,
+                                            txtOccupationController!.text,
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1,
                                           ),
@@ -4571,7 +4585,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 lastName: textController2!.text,
                                 birthDay: FFAppState().usrBDay,
                                 industry: ddIndustryValue,
-                                occupation: ddOccupationValue,
+                                occupation: txtOccupationController!.text,
                                 bio: txtBioController!.text,
                                 gender: FFAppState().usrGender,
                                 genderPreference:

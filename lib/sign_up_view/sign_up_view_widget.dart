@@ -46,7 +46,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
     passwordTextFieldController = TextEditingController();
     passwordTextFieldVisibility = false;
     emailTextFieldController = TextEditingController();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -61,6 +60,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -103,7 +103,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
         centerTitle: true,
         elevation: 0,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -236,9 +235,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       child: Align(
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FlutterFlowCheckboxGroup(
-                                          initiallySelected:
-                                              cbIsAgreedValues ??= [],
-                                          options: ['I agree with'].toList(),
+                                          options: ['I agree with'],
                                           onChanged: (val) => setState(
                                               () => cbIsAgreedValues = val),
                                           activeColor:
@@ -256,6 +253,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
                                               ),
+                                          initialized: cbIsAgreedValues != null,
                                         ),
                                       ),
                                     ),
@@ -318,8 +316,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            if (!cbIsAgreedValues!.contains(
-                                                'I agree with Privacy Policy')) {
+                                            if (!cbIsAgreedValues!
+                                                .contains('I agree with')) {
                                               await showDialog(
                                                 context: context,
                                                 builder: (alertDialogContext) {

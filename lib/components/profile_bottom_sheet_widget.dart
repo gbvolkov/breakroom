@@ -305,8 +305,6 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                   ),
                 ),
                 FlutterFlowChoiceChips(
-                  initiallySelected:
-                      choiceChipsValues != null ? choiceChipsValues : [],
                   options: FFAppState()
                       .religionList
                       .map((label) => ChipData(label))

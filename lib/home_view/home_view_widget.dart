@@ -202,9 +202,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                             child: Align(
                               alignment: AlignmentDirectional(0, 0),
                               child: FlutterFlowChoiceChips(
-                                initiallySelected: choiceChipsValue != null
-                                    ? [choiceChipsValue!]
-                                    : [columnUserProfilesRecord!.intention!],
+                                initiallySelected: [
+                                  columnUserProfilesRecord!.intention!
+                                ],
                                 options: FFAppState()
                                     .intentions
                                     .map((label) => ChipData(label))

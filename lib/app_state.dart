@@ -54,7 +54,7 @@ class FFAppState {
     prefs.setStringList('ff_intentions', _intentions);
   }
 
-  DateTime? userBirthday;
+  DateTime? userBirthday = DateTime.fromMillisecondsSinceEpoch(33921600000);
 
   int userHeight = 12;
 
@@ -215,13 +215,13 @@ class FFAppState {
 
   List<String> usrInterests = [];
 
-  DateTime? usrBDay;
+  DateTime? usrBDay = DateTime.fromMillisecondsSinceEpoch(33921660000);
 
   String fltrName = '';
 
   List<String> fltrLookingFor = [];
 
-  LatLng? fltrLocation;
+  LatLng? fltrLocation = LatLng(55.987, 37.202);
 
   bool fltrAgeRangeExt = false;
 

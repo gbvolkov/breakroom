@@ -42,43 +42,6 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
-          ),
-          onPressed: () async {
-            if ((pageViewController?.page?.round() ?? 0) == 0) {
-              Navigator.pop(context);
-            } else {
-              setState(() => FFAppState().filterName = 'Filter');
-              await pageViewController?.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            }
-          },
-        ),
-        title: Text(
-          FFAppState().filterName,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       endDrawer: Container(
         width: MediaQuery.of(context).size.width * 0.85,
@@ -301,6 +264,43 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
           ),
         ),
       ),
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: FlutterFlowTheme.of(context).primaryText,
+            size: 30,
+          ),
+          onPressed: () async {
+            if ((pageViewController?.page?.round() ?? 0) == 0) {
+              Navigator.pop(context);
+            } else {
+              setState(() => FFAppState().filterName = 'Filter');
+              await pageViewController?.previousPage(
+                duration: Duration(milliseconds: 300),
+                curve: Curves.ease,
+              );
+            }
+          },
+        ),
+        title: Text(
+          FFAppState().filterName,
+          style: FlutterFlowTheme.of(context).title2.override(
+                fontFamily: 'Roboto',
+                color: FlutterFlowTheme.of(context).primaryText,
+                fontSize: 22,
+              ),
+        ),
+        actions: [],
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Padding(
@@ -340,9 +340,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowChoiceChips(
-                                initiallySelected: choiceChipsValue != null
-                                    ? [choiceChipsValue!]
-                                    : ['Man'],
+                                initiallySelected: ['Man'],
                                 options: FFAppState()
                                     .interestedInList
                                     .map((label) => ChipData(label))

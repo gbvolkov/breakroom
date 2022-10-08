@@ -8,10 +8,11 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:smooth_page_indicator/smooth_page_indicator.dart'
+    as smooth_page_indicator;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeDetailsViewWidget extends StatefulWidget {
   const HomeDetailsViewWidget({
@@ -195,7 +196,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 10),
-                                    child: SmoothPageIndicator(
+                                    child: smooth_page_indicator
+                                        .SmoothPageIndicator(
                                       controller: pageViewController ??=
                                           PageController(initialPage: 0),
                                       count: 3,
@@ -207,7 +209,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                           curve: Curves.ease,
                                         );
                                       },
-                                      effect: ExpandingDotsEffect(
+                                      effect: smooth_page_indicator
+                                          .ExpandingDotsEffect(
                                         expansionFactor: 2,
                                         spacing: 8,
                                         radius: 16,
@@ -613,10 +616,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                           ? choiceChipsInterestsRecordList.first
                                           : null;
                                   return FlutterFlowChoiceChips(
-                                    initiallySelected: choiceChipsValues != null
-                                        ? choiceChipsValues
-                                        : widget.userProfile!.interests!
-                                            .toList(),
+                                    initiallySelected:
+                                        widget.userProfile!.interests!.toList(),
                                     options: widget.userProfile!.interests!
                                         .toList()
                                         .map((label) => ChipData(label))

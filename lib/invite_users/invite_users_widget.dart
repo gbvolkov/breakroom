@@ -44,6 +44,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: Color(0xFFF1F4F8),
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
@@ -88,7 +89,6 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: Color(0xFFF1F4F8),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [

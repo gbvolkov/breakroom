@@ -24,14 +24,19 @@ class ProfileViewWidget extends StatefulWidget {
 }
 
 class _ProfileViewWidgetState extends State<ProfileViewWidget> {
+  bool isMediaUploading1 = false;
   String uploadedFileUrl1 = '';
+
+  bool isMediaUploading2 = false;
   String uploadedFileUrl2 = '';
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -91,7 +96,6 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Container(
@@ -182,36 +186,44 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       validateFileFormat(
                                                           m.storagePath,
                                                           context))) {
-                                                showUploadMessage(
-                                                  context,
-                                                  'Uploading file...',
-                                                  showLoading: true,
-                                                );
-                                                final downloadUrls = (await Future
-                                                        .wait(selectedMedia.map(
-                                                            (m) async =>
-                                                                await uploadData(
-                                                                    m.storagePath,
-                                                                    m.bytes))))
-                                                    .where((u) => u != null)
-                                                    .map((u) => u!)
-                                                    .toList();
-                                                ScaffoldMessenger.of(context)
-                                                    .hideCurrentSnackBar();
+                                                setState(() =>
+                                                    isMediaUploading1 = true);
+                                                var downloadUrls = <String>[];
+                                                try {
+                                                  showUploadMessage(
+                                                    context,
+                                                    'Uploading file...',
+                                                    showLoading: true,
+                                                  );
+                                                  downloadUrls =
+                                                      (await Future.wait(
+                                                    selectedMedia.map(
+                                                      (m) async =>
+                                                          await uploadData(
+                                                              m.storagePath,
+                                                              m.bytes),
+                                                    ),
+                                                  ))
+                                                          .where(
+                                                              (u) => u != null)
+                                                          .map((u) => u!)
+                                                          .toList();
+                                                } finally {
+                                                  ScaffoldMessenger.of(context)
+                                                      .hideCurrentSnackBar();
+                                                  isMediaUploading1 = false;
+                                                }
                                                 if (downloadUrls.length ==
                                                     selectedMedia.length) {
                                                   setState(() =>
                                                       uploadedFileUrl1 =
                                                           downloadUrls.first);
                                                   showUploadMessage(
-                                                    context,
-                                                    'Success!',
-                                                  );
+                                                      context, 'Success!');
                                                 } else {
-                                                  showUploadMessage(
-                                                    context,
-                                                    'Failed to upload media',
-                                                  );
+                                                  setState(() {});
+                                                  showUploadMessage(context,
+                                                      'Failed to upload media');
                                                   return;
                                                 }
                                               }
@@ -248,23 +260,36 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           validateFileFormat(
                                                               m.storagePath,
                                                               context))) {
-                                                    showUploadMessage(
-                                                      context,
-                                                      'Uploading file...',
-                                                      showLoading: true,
-                                                    );
-                                                    final downloadUrls = (await Future
-                                                            .wait(selectedMedia
-                                                                .map((m) async =>
-                                                                    await uploadData(
-                                                                        m.storagePath,
-                                                                        m.bytes))))
-                                                        .where((u) => u != null)
-                                                        .map((u) => u!)
-                                                        .toList();
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .hideCurrentSnackBar();
+                                                    setState(() =>
+                                                        isMediaUploading2 =
+                                                            true);
+                                                    var downloadUrls =
+                                                        <String>[];
+                                                    try {
+                                                      showUploadMessage(
+                                                        context,
+                                                        'Uploading file...',
+                                                        showLoading: true,
+                                                      );
+                                                      downloadUrls =
+                                                          (await Future.wait(
+                                                        selectedMedia.map(
+                                                          (m) async =>
+                                                              await uploadData(
+                                                                  m.storagePath,
+                                                                  m.bytes),
+                                                        ),
+                                                      ))
+                                                              .where((u) =>
+                                                                  u != null)
+                                                              .map((u) => u!)
+                                                              .toList();
+                                                    } finally {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .hideCurrentSnackBar();
+                                                      isMediaUploading2 = false;
+                                                    }
                                                     if (downloadUrls.length ==
                                                         selectedMedia.length) {
                                                       setState(() =>
@@ -272,14 +297,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                               downloadUrls
                                                                   .first);
                                                       showUploadMessage(
-                                                        context,
-                                                        'Success!',
-                                                      );
+                                                          context, 'Success!');
                                                     } else {
-                                                      showUploadMessage(
-                                                        context,
-                                                        'Failed to upload media',
-                                                      );
+                                                      setState(() {});
+                                                      showUploadMessage(context,
+                                                          'Failed to upload media');
                                                       return;
                                                     }
                                                   }

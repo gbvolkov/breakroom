@@ -6,6 +6,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../verify_s_m_s/verify_s_m_s_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PhoneSignInWidget extends StatefulWidget {
@@ -17,33 +19,37 @@ class PhoneSignInWidget extends StatefulWidget {
 
 class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
     with TickerProviderStateMixin {
-  TextEditingController? phoneNumberController;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final animationsMap = {
     'textOnPageLoadAnimation': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
-      duration: 600,
-      hideBeforeAnimating: false,
-      fadeIn: true,
-      initialState: AnimationState(
-        offset: Offset(0, 70),
-        scale: 1,
-        opacity: 0,
-      ),
-      finalState: AnimationState(
-        offset: Offset(0, 0),
-        scale: 1,
-        opacity: 1,
-      ),
+      effects: [
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        MoveEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: Offset(0, 70),
+          end: Offset(0, 0),
+        ),
+      ],
     ),
   };
+  TextEditingController? phoneNumberController;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    startPageLoadAnimations(
-      animationsMap.values
-          .where((anim) => anim.trigger == AnimationTrigger.onPageLoad),
+    setupAnimations(
+      animationsMap.values.where((anim) =>
+          anim.trigger == AnimationTrigger.onActionTrigger ||
+          !anim.applyInitialState),
       this,
     );
 
@@ -60,6 +66,7 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         automaticallyImplyLeading: false,
@@ -94,7 +101,6 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       body: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,7 +114,8 @@ class _PhoneSignInWidgetState extends State<PhoneSignInWidget>
                   child: Text(
                     'Type in your phone number below to register.',
                     style: FlutterFlowTheme.of(context).bodyText2,
-                  ).animated([animationsMap['textOnPageLoadAnimation']!]),
+                  ).animateOnPageLoad(
+                      animationsMap['textOnPageLoadAnimation']!),
                 ),
               ),
             ],

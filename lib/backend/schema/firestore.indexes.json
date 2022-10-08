@@ -19,20 +19,6 @@
       ]
     },
     {
-      "collectionGroup": "occupations",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "industry",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "occupation",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "chats",
       "queryScope": "COLLECTION",
       "fields": [

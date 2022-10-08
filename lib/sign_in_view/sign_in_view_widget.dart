@@ -34,7 +34,6 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
     emailTextFieldController = TextEditingController();
     passwordTextFieldController = TextEditingController();
     passwordTextFieldVisibility = false;
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -48,6 +47,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -90,7 +90,6 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
         centerTitle: true,
         elevation: 0,
       ),
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -295,9 +294,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                   children: [
                                     Expanded(
                                       child: FlutterFlowCheckboxGroup(
-                                        initiallySelected:
-                                            checkboxGroupValues ??= [],
-                                        options: ['Remember me'].toList(),
+                                        options: ['Remember me'],
                                         onChanged: (val) => setState(
                                             () => checkboxGroupValues = val),
                                         activeColor:
@@ -307,6 +304,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                         checkboxBorderColor: Color(0xFF95A1AC),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .bodyText1,
+                                        initialized:
+                                            checkboxGroupValues != null,
                                       ),
                                     ),
                                     FFButtonWidget(

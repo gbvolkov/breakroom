@@ -48,6 +48,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
+      backgroundColor: Color(0xFFF1F4F8),
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
@@ -92,7 +93,6 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
         centerTitle: false,
         elevation: 0,
       ),
-      backgroundColor: Color(0xFFF1F4F8),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [

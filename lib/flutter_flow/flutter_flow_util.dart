@@ -25,12 +25,12 @@ export 'package:page_transition/page_transition.dart';
 T valueOrDefault<T>(T? value, T defaultValue) =>
     (value is String && value.isEmpty) || value == null ? defaultValue : value;
 
-String dateTimeFormat(String format, DateTime? dateTime) {
+String dateTimeFormat(String format, DateTime? dateTime, {String? locale}) {
   if (dateTime == null) {
     return '';
   }
   if (format == 'relative') {
-    return timeago.format(dateTime);
+    return timeago.format(dateTime, locale: locale);
   }
   return DateFormat(format).format(dateTime);
 }

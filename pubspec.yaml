@@ -51,7 +51,9 @@ dependencies:
   firebase_storage: 10.3.1
   firebase_storage_platform_interface: 4.1.10
   firebase_storage_web: 3.2.19
+  flutter_animate: 1.0.0
   font_awesome_flutter: 10.1.0
+  from_css_color: 2.0.0
   geolocator: 9.0.1
   geolocator_android: 4.1.0
   geolocator_apple: 2.2.1
