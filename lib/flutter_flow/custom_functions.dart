@@ -142,6 +142,7 @@ List<UserProfilesRecord> cleanUpFilteredProfiles(
   for (var profile in fliteredProfiles) {
     if (!selectedUsers.contains(profile.user)) {
       result.add(profile);
+      return result;
     }
   }
   return result;
