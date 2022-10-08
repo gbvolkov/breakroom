@@ -329,9 +329,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           context,
                                           PageTransition(
                                             type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
+                                            duration:
+                                                Duration(milliseconds: 300),
                                             reverseDuration:
-                                                Duration(milliseconds: 0),
+                                                Duration(milliseconds: 300),
                                             child: NavBarPage(
                                                 initialPage: 'HomeView'),
                                           ),
@@ -351,9 +352,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           context,
                                           PageTransition(
                                             type: PageTransitionType.fade,
-                                            duration: Duration(milliseconds: 0),
+                                            duration:
+                                                Duration(milliseconds: 300),
                                             reverseDuration:
-                                                Duration(milliseconds: 0),
+                                                Duration(milliseconds: 300),
                                             child: NavBarPage(
                                                 initialPage: 'HomeView'),
                                           ),
