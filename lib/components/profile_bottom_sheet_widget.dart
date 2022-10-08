@@ -1,13 +1,20 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ProfileBottomSheetWidget extends StatefulWidget {
-  const ProfileBottomSheetWidget({Key? key}) : super(key: key);
+  const ProfileBottomSheetWidget({
+    Key? key,
+    this.userProfile,
+  }) : super(key: key);
+
+  final UserProfilesRecord? userProfile;
 
   @override
   _ProfileBottomSheetWidgetState createState() =>
@@ -48,7 +55,8 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                               shape: BoxShape.circle,
                             ),
                             child: Image.network(
-                              'https://expertphotography.b-cdn.net/wp-content/uploads/2020/08/profile-photos-4.jpg',
+                              functions.getPhotosListValue(
+                                  widget.userProfile!.photos!.toList(), 0)!,
                               fit: BoxFit.fitHeight,
                             ),
                           ),
@@ -67,7 +75,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Ronald, 23',
+                                        '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
                                         style: FlutterFlowTheme.of(context)
                                             .title3
                                             .override(
@@ -92,7 +100,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Medicine, Surgeon',
+                                      '${widget.userProfile!.industry}, ${widget.userProfile!.lastName}',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2
                                           .override(
@@ -158,7 +166,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                       ),
                 ),
                 Text(
-                  'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
+                  widget.userProfile!.bio!,
                   style: FlutterFlowTheme.of(context).bodyText2,
                 ),
                 Divider(
@@ -191,7 +199,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                         onPressed: () {
                           print('Button pressed ...');
                         },
-                        text: '181 cm',
+                        text: '${widget.userProfile!.height?.toString()} cm',
                         icon: Icon(
                           Icons.height,
                           size: 16,
@@ -217,7 +225,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                         onPressed: () {
                           print('Button pressed ...');
                         },
-                        text: 'Socially',
+                        text: widget.userProfile!.drinkingStatus!,
                         icon: Icon(
                           Icons.wine_bar_outlined,
                           size: 16,
@@ -243,7 +251,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                         onPressed: () {
                           print('Button pressed ...');
                         },
-                        text: 'Smoking',
+                        text: widget.userProfile!.smokingStatus!,
                         icon: Icon(
                           Icons.smoking_rooms,
                           size: 16,
@@ -269,7 +277,7 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                         onPressed: () {
                           print('Button pressed ...');
                         },
-                        text: 'Relationship',
+                        text: widget.userProfile!.intention!,
                         icon: Icon(
                           Icons.search_outlined,
                           size: 16,
@@ -304,36 +312,66 @@ class _ProfileBottomSheetWidgetState extends State<ProfileBottomSheetWidget> {
                         ),
                   ),
                 ),
-                FlutterFlowChoiceChips(
-                  options: FFAppState()
-                      .religionList
-                      .map((label) => ChipData(label))
-                      .toList(),
-                  onChanged: (val) => setState(() => choiceChipsValues = val),
-                  selectedChipStyle: ChipStyle(
-                    backgroundColor: FlutterFlowTheme.of(context).alternate,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Roboto',
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                FutureBuilder<List<InterestsRecord>>(
+                  future: queryInterestsRecordOnce(
+                    queryBuilder: (interestsRecord) =>
+                        interestsRecord.orderBy('interest'),
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
                         ),
-                    iconColor: Colors.white,
-                    iconSize: 18,
-                    labelPadding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                    elevation: 1,
-                  ),
-                  unselectedChipStyle: ChipStyle(
-                    backgroundColor: Colors.white,
-                    textStyle: FlutterFlowTheme.of(context).subtitle2,
-                    iconColor: Color(0xFF323B45),
-                    iconSize: 18,
-                    labelPadding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                    elevation: 4,
-                  ),
-                  chipSpacing: 20,
-                  rowSpacing: 8,
-                  multiselect: true,
-                  initialized: choiceChipsValues != null,
-                  alignment: WrapAlignment.start,
+                      );
+                    }
+                    List<InterestsRecord> choiceChipsInterestsRecordList =
+                        snapshot.data!;
+                    return FlutterFlowChoiceChips(
+                      initiallySelected:
+                          widget.userProfile!.interests!.toList(),
+                      options: choiceChipsInterestsRecordList
+                          .map((e) => e.interest!)
+                          .toList()
+                          .map((label) => ChipData(label))
+                          .toList(),
+                      onChanged: (val) =>
+                          setState(() => choiceChipsValues = val),
+                      selectedChipStyle: ChipStyle(
+                        backgroundColor: FlutterFlowTheme.of(context).alternate,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .subtitle2
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                        iconColor: Colors.white,
+                        iconSize: 18,
+                        labelPadding:
+                            EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                        elevation: 1,
+                      ),
+                      unselectedChipStyle: ChipStyle(
+                        backgroundColor: Colors.white,
+                        textStyle: FlutterFlowTheme.of(context).subtitle2,
+                        iconColor: Color(0xFF323B45),
+                        iconSize: 18,
+                        labelPadding:
+                            EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                        elevation: 4,
+                      ),
+                      chipSpacing: 20,
+                      rowSpacing: 8,
+                      multiselect: true,
+                      initialized: choiceChipsValues != null,
+                      alignment: WrapAlignment.start,
+                    );
+                  },
                 ),
               ],
             ),
