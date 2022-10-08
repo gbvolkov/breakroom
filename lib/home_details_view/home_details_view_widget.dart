@@ -91,7 +91,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                       MediaQuery.of(context)
                                                           .viewInsets,
                                                   child:
-                                                      ProfileBottomSheetWidget(),
+                                                      ProfileBottomSheetWidget(
+                                                    userProfile:
+                                                        widget.userProfile,
+                                                  ),
                                                 );
                                               },
                                             ).then((value) => setState(() {}));
