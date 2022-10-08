@@ -37,6 +37,31 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        leading: FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30,
+          borderWidth: 1,
+          buttonSize: 60,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: FlutterFlowTheme.of(context).primaryText,
+            size: 30,
+          ),
+          onPressed: () async {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text(
+          widget.userProfile!.firstName!,
+          style: FlutterFlowTheme.of(context).subtitle1,
+        ),
+        actions: [],
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: StreamBuilder<UsersRecord>(
@@ -132,7 +157,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                         functions.getPhotosListValue(
                                             widget.userProfile!.photos!
                                                 .toList(),
-                                            0),
+                                            1),
                                         'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                       ),
                                       width: 100,
@@ -144,7 +169,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                         functions.getPhotosListValue(
                                             widget.userProfile!.photos!
                                                 .toList(),
-                                            0),
+                                            2),
                                         'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                       ),
                                       width: 100,
@@ -189,23 +214,6 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                 ),
                               ],
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                          child: FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            buttonSize: 60,
-                            icon: Icon(
-                              Icons.arrow_back_outlined,
-                              color: FlutterFlowTheme.of(context).trueBlack,
-                              size: 30,
-                            ),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
                           ),
                         ),
                       ],

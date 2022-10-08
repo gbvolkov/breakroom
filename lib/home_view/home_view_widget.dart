@@ -262,7 +262,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                               ? columnUserProfilesRecord!
                                                   .genderPreference
                                               : null),
-                              limit: 30,
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.

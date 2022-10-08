@@ -61,7 +61,9 @@ String? getPhotosListValue(
   int? optionNo,
 ) {
   if (options.isNotEmpty) {
-    return options[optionNo ?? 0].image;
+    optionNo = optionNo ?? 0;
+    if (optionNo >= options.length) optionNo = options.length - 1;
+    return options[optionNo].image;
   } else {
     return null;
   }
