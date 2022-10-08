@@ -1,24 +1,6 @@
 {
   "indexes": [
     {
-      "collectionGroup": "user_profiles",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "intention",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "gender",
-          "order": "ASCENDING"
-        },
-        {
-          "fieldPath": "user",
-          "order": "ASCENDING"
-        }
-      ]
-    },
-    {
       "collectionGroup": "chats",
       "queryScope": "COLLECTION",
       "fields": [

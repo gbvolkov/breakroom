@@ -128,3 +128,19 @@ List<UserProfilesRecord> filterMatches(
   }
   return result;
 }
+
+List<UserProfilesRecord> cleanUpFilteredProfiles(
+  List<UserProfilesRecord> fliteredProfiles,
+  List<DocumentReference> likedUsers,
+  List<DocumentReference> dislikedUsers,
+) {
+  List<UserProfilesRecord> result = [];
+  List<DocumentReference> selectedUsers = likedUsers + dislikedUsers;
+
+  for (var profile in fliteredProfiles) {
+    if (!selectedUsers.contains(profile.user)) {
+      result.add(profile);
+    }
+  }
+  return result;
+}
