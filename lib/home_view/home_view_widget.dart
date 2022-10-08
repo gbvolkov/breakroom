@@ -298,6 +298,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             columnUserProfilesRecord!.disliked!
                                                 .toList())
                                         .map((e) => e)
+                                        .toList()
+                                        .take(1)
                                         .toList();
                                     if (cleanedList.isEmpty) {
                                       return Image.asset(
