@@ -9,6 +9,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../home_details_view/home_details_view_widget.dart';
 import '../introduction_view/introduction_view_widget.dart';
+import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -324,6 +325,17 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         await columnUserProfilesRecord!
                                             .reference
                                             .update(userProfilesUpdateData);
+                                        await Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: NavBarPage(
+                                                initialPage: 'HomeView'),
+                                          ),
+                                        );
                                       },
                                       onRightSwipe: (index) async {
                                         // addToLikedList
@@ -335,6 +347,17 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         await columnUserProfilesRecord!
                                             .reference
                                             .update(userProfilesUpdateData);
+                                        await Navigator.pushReplacement(
+                                          context,
+                                          PageTransition(
+                                            type: PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                            reverseDuration:
+                                                Duration(milliseconds: 0),
+                                            child: NavBarPage(
+                                                initialPage: 'HomeView'),
+                                          ),
+                                        );
                                       },
                                       onUpSwipe: (index) {},
                                       onDownSwipe: (index) {},
