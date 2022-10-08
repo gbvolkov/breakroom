@@ -128,17 +128,25 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                       ],
                                     ),
                                     Image.network(
-                                      functions.getPhotosListValue(
-                                          widget.userProfile!.photos!.toList(),
-                                          0)!,
+                                      valueOrDefault<String>(
+                                        functions.getPhotosListValue(
+                                            widget.userProfile!.photos!
+                                                .toList(),
+                                            0),
+                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                      ),
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,
                                     ),
                                     Image.network(
-                                      functions.getPhotosListValue(
-                                          widget.userProfile!.photos!.toList(),
-                                          0)!,
+                                      valueOrDefault<String>(
+                                        functions.getPhotosListValue(
+                                            widget.userProfile!.photos!
+                                                .toList(),
+                                            0),
+                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                      ),
                                       width: 100,
                                       height: 100,
                                       fit: BoxFit.cover,
