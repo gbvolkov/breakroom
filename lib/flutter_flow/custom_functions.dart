@@ -112,3 +112,10 @@ List<DocumentReference> concatUsersList(
 
   return result;
 }
+
+List<UserProfilesRecord> filterMatches(
+  List<UserProfilesRecord>? fans,
+  List<DocumentReference>? liked,
+) {
+  return fans ?? [];
+}
