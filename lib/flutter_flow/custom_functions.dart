@@ -149,9 +149,11 @@ List<UserProfilesRecord> cleanUpFilteredProfiles(
 }
 
 double geoDistance(
-  LatLng latlng1,
-  LatLng latlng2,
+  LatLng? latlng1,
+  LatLng? latlng2,
 ) {
+  latlng1 = latlng1 ?? const LatLng(0, 0);
+  latlng2 = latlng2 ?? const LatLng(0, 0);
   double lat1 = latlng1.latitude;
   double lng1 = latlng1.longitude;
   double lat2 = latlng2.latitude;
