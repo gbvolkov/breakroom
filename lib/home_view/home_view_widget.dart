@@ -628,7 +628,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            '${functions.geoDistance(cardUsersRecord.geoposition!, currentUserLocationValue!).toString()} kms',
+                                                                            '${functions.geoDistance(cardUsersRecord.geoposition, currentUserLocationValue).toString()} kms',
                                                                             style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                   fontFamily: 'Roboto',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
