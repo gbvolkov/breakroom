@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../chat/chat_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -28,12 +29,31 @@ class HomeDetailsViewWidget extends StatefulWidget {
 }
 
 class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
+  LatLng? currentUserLocationValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   List<String>? choiceChipsValues;
   PageController? pageViewController;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
+  }
 
   @override
   Widget build(BuildContext context) {
+    if (currentUserLocationValue == null) {
+      return Center(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CircularProgressIndicator(
+            color: FlutterFlowTheme.of(context).primaryColor,
+          ),
+        ),
+      );
+    }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -331,8 +351,15 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                       ],
                                     ),
                                     FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ChatWidget(
+                                              chatUser: columnUsersRecord,
+                                            ),
+                                          ),
+                                        );
                                       },
                                       text: 'Chat',
                                       options: FFButtonOptions(
@@ -371,7 +398,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                       size: 24,
                                     ),
                                     Text(
-                                      '12 miles from you',
+                                      '${functions.geoDistance(columnUsersRecord.geoposition!, currentUserLocationValue!).toString()} kms from you',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle1,
                                     ),

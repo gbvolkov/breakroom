@@ -147,3 +147,23 @@ List<UserProfilesRecord> cleanUpFilteredProfiles(
   }
   return result;
 }
+
+double geoDistance(
+  LatLng latlng1,
+  LatLng latlng2,
+) {
+  double lat1 = latlng1.latitude;
+  double lng1 = latlng1.longitude;
+  double lat2 = latlng2.latitude;
+  double lng2 = latlng2.longitude;
+  var p = 0.017453292519943295;
+  var c = math.cos;
+  var a = 0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) * (1 - c((lng2 - lng1) * p)) / 2;
+  // Returns distance in Kilo-meters
+  var d = (12742 * math.asin(math.sqrt(a)));
+  String inString = d.toStringAsFixed(2); // '2.35'
+  double inDouble = double.parse(inString);
+  return inDouble;
+}

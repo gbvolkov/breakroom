@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -8,6 +9,7 @@ import '../forgot_password_view/forgot_password_view_widget.dart';
 import '../main.dart';
 import '../sign_up_view/sign_up_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,13 +22,14 @@ class SignInViewWidget extends StatefulWidget {
 }
 
 class _SignInViewWidgetState extends State<SignInViewWidget> {
+  LatLng? currentUserLocationValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   List<String>? checkboxGroupValues;
   TextEditingController? emailTextFieldController;
   TextEditingController? passwordTextFieldController;
 
   late bool passwordTextFieldVisibility;
   PageController? signInPageViewController;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -365,6 +368,11 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
+                                            currentUserLocationValue =
+                                                await getCurrentUserLocation(
+                                                    defaultLocation:
+                                                        LatLng(0.0, 0.0));
+
                                             final user = await signInWithEmail(
                                               context,
                                               emailTextFieldController!.text,
@@ -374,6 +382,13 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                               return;
                                             }
 
+                                            final usersUpdateData =
+                                                createUsersRecordData(
+                                              geoposition:
+                                                  currentUserLocationValue,
+                                            );
+                                            await currentUserReference!
+                                                .update(usersUpdateData);
                                             await Navigator.push(
                                               context,
                                               MaterialPageRoute(

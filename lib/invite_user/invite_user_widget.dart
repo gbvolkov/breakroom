@@ -141,7 +141,7 @@ class _InviteUserWidgetState extends State<InviteUserWidget> {
                                                   fontFamily: 'Outfit',
                                                   color: Color(0xFF101213),
                                                   fontSize: 18,
-                                                  fontWeight: FontWeight.w500,
+                                                  fontWeight: FontWeight.normal,
                                                 ),
                                           ),
                                           Padding(

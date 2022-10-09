@@ -18,6 +18,8 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  LatLng? currentUserLocationValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? emailAddressController;
   TextEditingController? passwordController;
 
@@ -26,7 +28,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   TextEditingController? passwordCreateController;
 
   late bool passwordCreateVisibility;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -392,6 +393,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       children: [
                                         InkWell(
                                           onTap: () async {
+                                            currentUserLocationValue =
+                                                await getCurrentUserLocation(
+                                                    defaultLocation:
+                                                        LatLng(0.0, 0.0));
                                             final user =
                                                 await signInWithGoogle(context);
                                             if (user == null) {
@@ -609,6 +614,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         0, 24, 0, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        currentUserLocationValue =
+                                            await getCurrentUserLocation(
+                                                defaultLocation:
+                                                    LatLng(0.0, 0.0));
+
                                         final user =
                                             await createAccountWithEmail(
                                           context,
@@ -618,6 +628,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         if (user == null) {
                                           return;
                                         }
+
+                                        final usersCreateData =
+                                            createUsersRecordData(
+                                          geoposition: currentUserLocationValue,
+                                        );
+                                        await UsersRecord.collection
+                                            .doc(user.uid)
+                                            .update(usersCreateData);
 
                                         final userProfilesCreateData = {
                                           ...createUserProfilesRecordData(
@@ -716,6 +734,10 @@ class _HomeWidgetState extends State<HomeWidget> {
                                       children: [
                                         InkWell(
                                           onTap: () async {
+                                            currentUserLocationValue =
+                                                await getCurrentUserLocation(
+                                                    defaultLocation:
+                                                        LatLng(0.0, 0.0));
                                             final user =
                                                 await signInWithGoogle(context);
                                             if (user == null) {

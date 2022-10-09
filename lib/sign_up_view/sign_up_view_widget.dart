@@ -26,6 +26,8 @@ class SignUpViewWidget extends StatefulWidget {
 }
 
 class _SignUpViewWidgetState extends State<SignUpViewWidget> {
+  LatLng? currentUserLocationValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   List<String>? cbIsAgreedValues;
   TextEditingController? emailTextFieldController;
   PageController? signUpPageViewController;
@@ -36,7 +38,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
 
   late bool passwordTextFieldVisibility;
   UserProfilesRecord? userProfile;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -660,6 +661,10 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     alignment: AlignmentDirectional(-1, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
+                                        currentUserLocationValue =
+                                            await getCurrentUserLocation(
+                                                defaultLocation:
+                                                    LatLng(0.0, 0.0));
                                         if (passwordTextFieldController?.text !=
                                             confirmPasswordTextFieldController
                                                 ?.text) {
@@ -683,6 +688,14 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                         if (user == null) {
                                           return;
                                         }
+
+                                        final usersCreateData =
+                                            createUsersRecordData(
+                                          geoposition: currentUserLocationValue,
+                                        );
+                                        await UsersRecord.collection
+                                            .doc(user.uid)
+                                            .update(usersCreateData);
 
                                         await sendEmailVerification();
 
@@ -708,6 +721,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             drinkingStatus: 'Sometimes',
                                             smokingStatus: 'Sometimes',
                                             spiritualStatus: 'Sometimes',
+                                            geoposition:
+                                                currentUserLocationValue,
                                           ),
                                           'interests': ['Walking'],
                                           'lookingFor': ['Friendship'],

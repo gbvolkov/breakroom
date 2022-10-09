@@ -132,47 +132,34 @@ class _ChatWidgetState extends State<ChatWidget> {
               ? FFChatPage(
                   chatInfo: snapshot.data!,
                   allowImages: true,
-                  backgroundColor: Color(0xFFF2F4F8),
+                  backgroundColor: FlutterFlowTheme.of(context).primaryColor,
                   timeDisplaySetting: TimeDisplaySetting.visibleOnTap,
                   currentUserBoxDecoration: BoxDecoration(
-                    color: Colors.white,
+                    color: FlutterFlowTheme.of(context).alternate,
                     border: Border.all(
                       color: Colors.transparent,
                     ),
                     borderRadius: BorderRadius.circular(15),
                   ),
                   otherUsersBoxDecoration: BoxDecoration(
-                    color: Color(0xFF4B39EF),
+                    color: Color(0xFFF8F8F9),
                     border: Border.all(
                       color: Colors.transparent,
                     ),
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  currentUserTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Color(0xFF1E2429),
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                    fontStyle: FontStyle.normal,
-                  ),
-                  otherUsersTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
-                  ),
-                  inputHintTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Color(0xFF95A1AC),
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14,
-                  ),
-                  inputTextStyle: GoogleFonts.getFont(
-                    'DM Sans',
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal,
-                    fontSize: 14,
-                  ),
+                  currentUserTextStyle:
+                      FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
+                  otherUsersTextStyle:
+                      FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).trueBlack,
+                          ),
+                  inputHintTextStyle: FlutterFlowTheme.of(context).bodyText2,
+                  inputTextStyle: FlutterFlowTheme.of(context).bodyText2,
                   emptyChatWidget: Center(
                     child: Image.asset(
                       'assets/images/SplashScreen.png',

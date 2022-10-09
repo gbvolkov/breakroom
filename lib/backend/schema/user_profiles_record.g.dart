@@ -205,6 +205,13 @@ class _$UserProfilesRecordSerializer
                   DocumentReference, const [const FullType.nullable(Object)])
             ])));
     }
+    value = object.geoposition;
+    if (value != null) {
+      result
+        ..add('geoposition')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(LatLng)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -342,6 +349,10 @@ class _$UserProfilesRecordSerializer
                     DocumentReference, const [const FullType.nullable(Object)])
               ]))! as BuiltList<Object?>);
           break;
+        case 'geoposition':
+          result.geoposition = serializers.deserialize(value,
+              specifiedType: const FullType(LatLng)) as LatLng?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -407,6 +418,8 @@ class _$UserProfilesRecord extends UserProfilesRecord {
   @override
   final BuiltList<DocumentReference<Object?>>? disliked;
   @override
+  final LatLng? geoposition;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UserProfilesRecord(
@@ -439,6 +452,7 @@ class _$UserProfilesRecord extends UserProfilesRecord {
       this.photos,
       this.liked,
       this.disliked,
+      this.geoposition,
       this.ffRef})
       : super._();
 
@@ -480,6 +494,7 @@ class _$UserProfilesRecord extends UserProfilesRecord {
         photos == other.photos &&
         liked == other.liked &&
         disliked == other.disliked &&
+        geoposition == other.geoposition &&
         ffRef == other.ffRef;
   }
 
@@ -503,25 +518,25 @@ class _$UserProfilesRecord extends UserProfilesRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode),
-                                                                                gender.hashCode),
-                                                                            genderPreference.hashCode),
-                                                                        intention.hashCode),
-                                                                    childfreeStatus.hashCode),
-                                                                religion.hashCode),
-                                                            education.hashCode),
-                                                        bodyType.hashCode),
-                                                    interests.hashCode),
-                                                lookingFor.hashCode),
-                                            height.hashCode),
-                                        weight.hashCode),
-                                    workoutStatus.hashCode),
-                                drinkingStatus.hashCode),
-                            smokingStatus.hashCode),
-                        spiritualStatus.hashCode),
-                    photos.hashCode),
-                liked.hashCode),
-            disliked.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, user.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode),
+                                                                                genderPreference.hashCode),
+                                                                            intention.hashCode),
+                                                                        childfreeStatus.hashCode),
+                                                                    religion.hashCode),
+                                                                education.hashCode),
+                                                            bodyType.hashCode),
+                                                        interests.hashCode),
+                                                    lookingFor.hashCode),
+                                                height.hashCode),
+                                            weight.hashCode),
+                                        workoutStatus.hashCode),
+                                    drinkingStatus.hashCode),
+                                smokingStatus.hashCode),
+                            spiritualStatus.hashCode),
+                        photos.hashCode),
+                    liked.hashCode),
+                disliked.hashCode),
+            geoposition.hashCode),
         ffRef.hashCode));
   }
 
@@ -553,6 +568,7 @@ class _$UserProfilesRecord extends UserProfilesRecord {
           ..add('photos', photos)
           ..add('liked', liked)
           ..add('disliked', disliked)
+          ..add('geoposition', geoposition)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -677,6 +693,10 @@ class UserProfilesRecordBuilder
   set disliked(ListBuilder<DocumentReference<Object?>>? disliked) =>
       _$this._disliked = disliked;
 
+  LatLng? _geoposition;
+  LatLng? get geoposition => _$this._geoposition;
+  set geoposition(LatLng? geoposition) => _$this._geoposition = geoposition;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -713,6 +733,7 @@ class UserProfilesRecordBuilder
       _photos = $v.photos?.toBuilder();
       _liked = $v.liked?.toBuilder();
       _disliked = $v.disliked?.toBuilder();
+      _geoposition = $v.geoposition;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -763,6 +784,7 @@ class UserProfilesRecordBuilder
               photos: _photos?.build(),
               liked: _liked?.build(),
               disliked: _disliked?.build(),
+              geoposition: geoposition,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

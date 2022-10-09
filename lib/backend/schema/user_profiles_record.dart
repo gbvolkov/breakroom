@@ -61,6 +61,8 @@ abstract class UserProfilesRecord
 
   BuiltList<DocumentReference>? get disliked;
 
+  LatLng? get geoposition;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -133,6 +135,7 @@ Map<String, dynamic> createUserProfilesRecordData({
   String? drinkingStatus,
   String? smokingStatus,
   String? spiritualStatus,
+  LatLng? geoposition,
 }) {
   final firestoreData = serializers.toFirestore(
     UserProfilesRecord.serializer,
@@ -162,7 +165,8 @@ Map<String, dynamic> createUserProfilesRecordData({
         ..spiritualStatus = spiritualStatus
         ..photos = null
         ..liked = null
-        ..disliked = null,
+        ..disliked = null
+        ..geoposition = geoposition,
     ),
   );
 
