@@ -135,6 +135,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'SettingsView': (data) async => SettingsViewWidget(),
   'LoginDetailsView': (data) async => LoginDetailsViewWidget(),
   'NotificationSettingsView': (data) async => NotificationSettingsViewWidget(),
+  'PrivacyAndPolicyView': (data) async => PrivacyAndPolicyViewWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

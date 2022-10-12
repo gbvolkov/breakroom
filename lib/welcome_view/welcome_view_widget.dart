@@ -1,11 +1,9 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../sign_in_view/sign_in_view_widget.dart';
 import '../sign_up_view/sign_up_view_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class WelcomeViewWidget extends StatefulWidget {
@@ -48,7 +46,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                 child: Text(
-                  'Let’s connect your preferences partner or friends',
+                  'Let’s connect your \npreferences partner or \nfriends',
                   style: FlutterFlowTheme.of(context).title1.override(
                         fontFamily: 'Roboto',
                         fontSize: 32,
@@ -70,7 +68,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                             Color(0xFFF95A82),
                             Color(0xFFEA3C7D)
                           ],
-                          stops: [0, 0.6, 1],
+                          stops: [0.13, 0.69, 1],
                           begin: AlignmentDirectional(0, -1),
                           end: AlignmentDirectional(0, 1),
                         ),
@@ -91,7 +89,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                             ),
                           );
                         },
-                        text: 'Login with email',
+                        text: 'Log In with email',
                         options: FFButtonOptions(
                           width: double.infinity,
                           height: 48,
@@ -134,15 +132,16 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                     options: FFButtonOptions(
                       width: double.infinity,
                       height: 48,
-                      color: Color(0xFFF3F3F3),
+                      color: Colors.transparent,
                       textStyle:
                           FlutterFlowTheme.of(context).subtitle1.override(
                                 fontFamily: 'Roboto',
                                 color: FlutterFlowTheme.of(context).alternate,
                               ),
+                      elevation: 0,
                       borderSide: BorderSide(
                         color: Colors.transparent,
-                        width: 1,
+                        width: 0,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -155,49 +154,23 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 0,
-                      buttonSize: 60,
-                      fillColor: FlutterFlowTheme.of(context).trueBlack,
-                      icon: FaIcon(
-                        FontAwesomeIcons.apple,
-                        color: Color(0xFFEFEFEF),
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        print('ibAppleLogin pressed ...');
-                      },
+                    Image.asset(
+                      'assets/images/AppleSignIn.png',
+                      width: 56,
+                      height: 56,
+                      fit: BoxFit.cover,
                     ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      buttonSize: 60,
-                      fillColor: FlutterFlowTheme.of(context).trueBlack,
-                      icon: FaIcon(
-                        FontAwesomeIcons.google,
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        print('ibGoogleLogin pressed ...');
-                      },
+                    Image.asset(
+                      'assets/images/GoogleSignIn.png',
+                      width: 56,
+                      height: 56,
+                      fit: BoxFit.cover,
                     ),
-                    FlutterFlowIconButton(
-                      borderColor: Colors.transparent,
-                      borderRadius: 30,
-                      borderWidth: 1,
-                      buttonSize: 60,
-                      fillColor: FlutterFlowTheme.of(context).trueBlack,
-                      icon: FaIcon(
-                        FontAwesomeIcons.facebookF,
-                        color: Color(0xFFEFEFEF),
-                        size: 30,
-                      ),
-                      onPressed: () {
-                        print('ibFacebookLogin pressed ...');
-                      },
+                    Image.asset(
+                      'assets/images/FacebookSignIn.png',
+                      width: 56,
+                      height: 56,
+                      fit: BoxFit.cover,
                     ),
                   ],
                 ),

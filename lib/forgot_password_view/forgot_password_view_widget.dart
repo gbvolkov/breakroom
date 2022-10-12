@@ -32,10 +32,9 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
   @override
   void initState() {
     super.initState();
-    newPassword1TextFieldController =
-        TextEditingController(text: 'example@email.com');
+    newPassword1TextFieldController = TextEditingController();
     newPassword1TextFieldVisibility = false;
-    newPassword2TextFieldController = TextEditingController(text: 'Cooper');
+    newPassword2TextFieldController = TextEditingController();
     newPassword2TextFieldVisibility = false;
     pinCodeController = TextEditingController();
     textController1 = TextEditingController();
@@ -63,7 +62,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.chevron_left,
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
@@ -178,31 +177,35 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon:
                                           textController1!.text.isNotEmpty
                                               ? InkWell(
@@ -608,48 +611,40 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
                                           () => newPassword1TextFieldVisibility =
@@ -695,48 +690,40 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
                                           () => newPassword2TextFieldVisibility =

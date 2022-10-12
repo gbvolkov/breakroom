@@ -8,7 +8,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../forgot_password_view/forgot_password_view_widget.dart';
 import '../main.dart';
 import '../sign_up_view/sign_up_view_widget.dart';
-import '../welcome_view/welcome_view_widget.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -60,25 +60,12 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.chevron_left,
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
           onPressed: () async {
-            if (emailTextFieldController!.text == null ||
-                emailTextFieldController!.text == '') {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomeViewWidget(),
-                ),
-              );
-            } else {
-              await signInPageViewController?.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            }
+            Navigator.pop(context);
           },
         ),
         title: Text(
@@ -164,36 +151,40 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: emailTextFieldController!
                                               .text.isNotEmpty
                                           ? InkWell(
@@ -239,36 +230,40 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
                                           () => passwordTextFieldVisibility =
@@ -307,6 +302,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                         checkboxBorderColor: Color(0xFF95A1AC),
                                         textStyle: FlutterFlowTheme.of(context)
                                             .bodyText1,
+                                        checkboxBorderRadius:
+                                            BorderRadius.circular(5),
                                         initialized:
                                             checkboxGroupValues != null,
                                       ),
@@ -372,32 +369,64 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                 await getCurrentUserLocation(
                                                     defaultLocation:
                                                         LatLng(0.0, 0.0));
+                                            if (functions.isEmailAndPasswordValid(
+                                                    emailTextFieldController!
+                                                        .text,
+                                                    passwordTextFieldController!
+                                                        .text) ==
+                                                true) {
+                                              final user =
+                                                  await signInWithEmail(
+                                                context,
+                                                emailTextFieldController!.text,
+                                                passwordTextFieldController!
+                                                    .text,
+                                              );
+                                              if (user == null) {
+                                                return;
+                                              }
 
-                                            final user = await signInWithEmail(
-                                              context,
-                                              emailTextFieldController!.text,
-                                              passwordTextFieldController!.text,
-                                            );
-                                            if (user == null) {
-                                              return;
+                                              final usersUpdateData =
+                                                  createUsersRecordData(
+                                                geoposition:
+                                                    currentUserLocationValue,
+                                              );
+                                              await currentUserReference!
+                                                  .update(usersUpdateData);
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      NavBarPage(
+                                                          initialPage:
+                                                              'ProfileView'),
+                                                ),
+                                              );
+                                            } else {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Email or password is not valid',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .systemError,
+                                                        ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryColor,
+                                                ),
+                                              );
                                             }
-
-                                            final usersUpdateData =
-                                                createUsersRecordData(
-                                              geoposition:
-                                                  currentUserLocationValue,
-                                            );
-                                            await currentUserReference!
-                                                .update(usersUpdateData);
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    NavBarPage(
-                                                        initialPage:
-                                                            'ProfileView'),
-                                              ),
-                                            );
                                           },
                                           text: 'Log in',
                                           options: FFButtonOptions(
@@ -487,7 +516,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                             elevation: 0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 0,
                                             ),
                                             borderRadius:
                                                 BorderRadius.circular(8),

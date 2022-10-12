@@ -1,6 +1,7 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../privacy_and_policy_view/privacy_and_policy_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -28,8 +29,8 @@ class _AboutUsViewWidgetState extends State<AboutUsViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
+            Icons.chevron_left,
+            color: FlutterFlowTheme.of(context).alternate,
             size: 30,
           ),
           onPressed: () async {
@@ -155,9 +156,20 @@ class _AboutUsViewWidgetState extends State<AboutUsViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Privacy Policy',
-                            style: FlutterFlowTheme.of(context).subtitle1,
+                          InkWell(
+                            onTap: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PrivacyAndPolicyViewWidget(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Privacy Policy',
+                              style: FlutterFlowTheme.of(context).subtitle1,
+                            ),
                           ),
                           FlutterFlowIconButton(
                             borderColor: Colors.transparent,
@@ -169,8 +181,14 @@ class _AboutUsViewWidgetState extends State<AboutUsViewWidget> {
                               color: FlutterFlowTheme.of(context).secondaryText,
                               size: 16,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      PrivacyAndPolicyViewWidget(),
+                                ),
+                              );
                             },
                           ),
                         ],

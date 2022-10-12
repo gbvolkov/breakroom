@@ -169,3 +169,10 @@ double geoDistance(
   double inDouble = double.parse(inString);
   return inDouble;
 }
+
+bool isEmailValid(String email) {
+  // Check if email and password valid
+  email = email.trim();
+
+  return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+}

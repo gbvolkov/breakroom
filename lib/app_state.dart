@@ -236,6 +236,8 @@ class FFAppState {
   String swipeAction = '';
 
   String loginDetailsContainerName = '';
+
+  bool agreeCheck = false;
 }
 
 LatLng? _latLngFromString(String? val) {

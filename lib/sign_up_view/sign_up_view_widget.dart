@@ -1,13 +1,15 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../create_profile_view/create_profile_view_widget.dart';
-import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../privacy_and_policy_view/privacy_and_policy_view_widget.dart';
+import '../sign_in_view/sign_in_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +30,8 @@ class SignUpViewWidget extends StatefulWidget {
 class _SignUpViewWidgetState extends State<SignUpViewWidget> {
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String>? cbIsAgreedValues;
-  TextEditingController? emailTextFieldController;
   PageController? signUpPageViewController;
+  TextEditingController? emailTextFieldController;
   TextEditingController? confirmPasswordTextFieldController;
 
   late bool confirmPasswordTextFieldVisibility;
@@ -71,13 +72,12 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.chevron_left,
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
           onPressed: () async {
-            if (passwordTextFieldController!.text == null ||
-                passwordTextFieldController!.text == '') {
+            if ((signUpPageViewController?.page?.round() ?? 0) == 0) {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -176,36 +176,41 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Color(0x00000000),
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                          color: Color(0x00000000),
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: Color(0xFFF8F8F9),
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: emailTextFieldController!
                                               .text.isNotEmpty
                                           ? InkWell(
@@ -227,26 +232,51 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Expanded(
-                                      child: Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: FlutterFlowCheckboxGroup(
-                                          options: ['I agree with'],
-                                          onChanged: (val) => setState(
-                                              () => cbIsAgreedValues = val),
-                                          activeColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                          checkColor: Colors.white,
-                                          checkboxBorderColor:
-                                              Color(0xFF95A1AC),
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 12, 0, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      if (FFAppState().agreeCheck)
+                                        FlutterFlowIconButton(
+                                          borderRadius: 90,
+                                          buttonSize: 40,
+                                          icon: Icon(
+                                            Icons.check_box_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 24,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() => FFAppState()
+                                                .agreeCheck = false);
+                                          },
+                                        ),
+                                      if (!FFAppState().agreeCheck)
+                                        FlutterFlowIconButton(
+                                          borderRadius: 30,
+                                          buttonSize: 40,
+                                          icon: Icon(
+                                            Icons.check_box_outline_blank,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24,
+                                          ),
+                                          onPressed: () async {
+                                            setState(() =>
+                                                FFAppState().agreeCheck = true);
+                                          },
+                                        ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await launchURL(
+                                              'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
+                                        },
+                                        child: Text(
+                                          'I agree with ',
+                                          style: FlutterFlowTheme.of(context)
                                               .bodyText2
                                               .override(
                                                 fontFamily: 'Roboto',
@@ -254,41 +284,65 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
                                               ),
-                                          initialized: cbIsAgreedValues != null,
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      'Privacy ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          ),
-                                    ),
-                                    Text(
-                                      'and ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
-                                    ),
-                                    Text(
-                                      'Policy                                   ',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          ),
-                                    ),
-                                  ],
+                                      InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PrivacyAndPolicyViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Privacy ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                        ),
+                                      ),
+                                      Text(
+                                        'and ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PrivacyAndPolicyViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Policy',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -317,15 +371,46 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            if (!cbIsAgreedValues!
-                                                .contains('I agree with')) {
+                                            if (functions.isEmailValid(
+                                                emailTextFieldController!
+                                                    .text)) {
+                                              if (FFAppState().agreeCheck) {
+                                                await signUpPageViewController
+                                                    ?.nextPage(
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  curve: Curves.ease,
+                                                );
+                                              } else {
+                                                await showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (alertDialogContext) {
+                                                    return AlertDialog(
+                                                      title: Text(
+                                                          'Privacy and Policy'),
+                                                      content: Text(
+                                                          'Please accept Privacy and Policy'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () =>
+                                                              Navigator.pop(
+                                                                  alertDialogContext),
+                                                          child: Text('Ok'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            } else {
                                               await showDialog(
                                                 context: context,
                                                 builder: (alertDialogContext) {
                                                   return AlertDialog(
-                                                    title: Text('No allowed'),
+                                                    title: Text('Email error'),
                                                     content: Text(
-                                                        'Please agree with Privacy Policy'),
+                                                        'Please specify correct email'),
                                                     actions: [
                                                       TextButton(
                                                         onPressed: () =>
@@ -337,14 +422,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                   );
                                                 },
                                               );
-                                              return;
                                             }
-                                            await signUpPageViewController
-                                                ?.nextPage(
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
                                           },
                                           text: 'Next',
                                           options: FFButtonOptions(
@@ -352,16 +430,16 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             height: 48,
                                             color: FlutterFlowTheme.of(context)
                                                 .noColor,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle1
-                                                    .override(
-                                                      fontFamily: 'Roboto',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                    ),
+                                            textStyle: FlutterFlowTheme.of(
+                                                    context)
+                                                .subtitle1
+                                                .override(
+                                                  fontFamily: 'Montserrat',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                               width: 1,
@@ -397,15 +475,20 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             ),
                                       ),
                                       FFButtonWidget(
-                                        onPressed: () {
-                                          print('Button pressed ...');
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SignInViewWidget(),
+                                            ),
+                                          );
                                         },
                                         text: 'Log in',
                                         options: FFButtonOptions(
                                           width: 65,
                                           height: 40,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                          color: Colors.transparent,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
                                               .bodyText2
@@ -415,9 +498,10 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
                                               ),
+                                          elevation: 0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 1,
+                                            width: 0,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(8),
@@ -486,43 +570,35 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
                                           () => passwordTextFieldVisibility =
@@ -575,43 +651,35 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(4.0),
-                                          topRight: Radius.circular(4.0),
-                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
                                       filled: true,
-                                      fillColor: Color(0xFFEFEFEF),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
+                                      contentPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              16, 0, 16, 0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
                                           () => confirmPasswordTextFieldVisibility =

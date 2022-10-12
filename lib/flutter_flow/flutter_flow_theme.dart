@@ -30,6 +30,7 @@ abstract class FlutterFlowTheme {
   late Color noColor;
   late Color trueBlack;
   late Color bottomSheetBackground;
+  late Color textFieldBackground;
 
   String get title1Family => typography.title1Family;
   TextStyle get title1 => typography.title1;
@@ -72,6 +73,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color noColor = Color(0x00FFFFFF);
   late Color trueBlack = Color(0xFF000000);
   late Color bottomSheetBackground = Color(0x001E1E1E);
+  late Color textFieldBackground = Color(0xFFF8F8F9);
 }
 
 abstract class Typography {
