@@ -120,11 +120,11 @@ class _NavBarPageState extends State<NavBarPage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'ProfileView': ProfileViewWidget(),
-      'NotificationsView': NotificationsViewWidget(),
       'HomeView': HomeViewWidget(),
       'AllChats': AllChatsWidget(),
       'MatchesView': MatchesViewWidget(),
+      'NotificationsView': NotificationsViewWidget(),
+      'ProfileView': ProfileViewWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -142,22 +142,6 @@ class _NavBarPageState extends State<NavBarPage> {
         showUnselectedLabels: true,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_outline,
-              size: 20,
-            ),
-            label: 'Profile',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add_alert_rounded,
-              size: 20,
-            ),
-            label: 'Notifications',
-            tooltip: '',
-          ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
@@ -184,6 +168,22 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24,
             ),
             label: 'Matches',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.add_alert_rounded,
+              size: 20,
+            ),
+            label: 'Notifications',
+            tooltip: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_outline,
+              size: 20,
+            ),
+            label: 'Profile',
             tooltip: '',
           )
         ],

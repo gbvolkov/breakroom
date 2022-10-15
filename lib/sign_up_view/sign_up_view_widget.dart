@@ -565,28 +565,28 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
@@ -646,28 +646,28 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           .subtitle2,
                                       hintStyle: FlutterFlowTheme.of(context)
                                           .bodyText2,
-                                      enabledBorder: UnderlineInputBorder(
+                                      enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedBorder: UnderlineInputBorder(
+                                      focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      errorBorder: UnderlineInputBorder(
+                                      errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,
                                         ),
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      focusedErrorBorder: UnderlineInputBorder(
+                                      focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
                                           width: 1,

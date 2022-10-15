@@ -111,7 +111,7 @@ class FFAppState {
 
   List<String> lookingForList = ['Relationship', 'Date', 'Friendship'];
 
-  List<String> howOftenList = ['Active', 'Sometimes', 'Never'];
+  List<String> howOftenList = ['Active', 'Sometimes', 'Never', 'Socially'];
 
   List<String> selectedValues = [
     'gender',

@@ -18,10 +18,10 @@ export 'forgot_password_view/forgot_password_view_widget.dart'
 export 'create_profile_view/create_profile_view_widget.dart'
     show CreateProfileViewWidget;
 export 'sign_up_view/sign_up_view_widget.dart' show SignUpViewWidget;
-export 'edit_profile_new_view/edit_profile_new_view_widget.dart'
-    show EditProfileNewViewWidget;
 export 'home_details_view/home_details_view_widget.dart'
     show HomeDetailsViewWidget;
+export 'edit_profile_new_view/edit_profile_new_view_widget.dart'
+    show EditProfileNewViewWidget;
 export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
 export 'get_premium_view/get_premium_view_widget.dart'
     show GetPremiumViewWidget;

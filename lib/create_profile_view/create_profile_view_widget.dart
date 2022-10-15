@@ -79,7 +79,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.chevron_left,
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),

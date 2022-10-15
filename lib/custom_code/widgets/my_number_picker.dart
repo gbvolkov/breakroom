@@ -60,7 +60,7 @@ class _MyNumberPickerState extends State<MyNumberPicker> {
       }, //(value) => widget.updateCallback
       itemCount: 5,
       textStyle: TextStyle(
-          color: FlutterFlowTheme.of(context).secondaryBackground,
+          color: FlutterFlowTheme.of(context).secondaryText,
           fontSize: FlutterFlowTheme.of(context).title2.fontSize),
       selectedTextStyle: TextStyle(
           color: FlutterFlowTheme.of(context).alternate,

@@ -15,7 +15,6 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditProfileNewViewWidget extends StatefulWidget {
@@ -91,27 +90,30 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
               children: [
                 Align(
                   alignment: AlignmentDirectional(-1, 0),
-                  child: FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 60,
-                    icon: Icon(
-                      Icons.close,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 30,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                    child: FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30,
+                      borderWidth: 1,
+                      buttonSize: 60,
+                      icon: Icon(
+                        Icons.chevron_left,
+                        color: FlutterFlowTheme.of(context).primaryText,
+                        size: 30,
+                      ),
+                      onPressed: () async {
+                        if (scaffoldKey.currentState!.isDrawerOpen ||
+                            scaffoldKey.currentState!.isEndDrawerOpen) {
+                          Navigator.pop(context);
+                        }
+                      },
                     ),
-                    onPressed: () async {
-                      if (scaffoldKey.currentState!.isDrawerOpen ||
-                          scaffoldKey.currentState!.isEndDrawerOpen) {
-                        Navigator.pop(context);
-                      }
-                    },
                   ),
                 ),
                 if (FFAppState().profileContainerName == 'Name')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -163,36 +165,37 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         FlutterFlowTheme.of(context).subtitle2,
                                     hintStyle:
                                         FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: UnderlineInputBorder(
+                                    enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
+                                    focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    errorBorder: UnderlineInputBorder(
+                                    errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    focusedErrorBorder: UnderlineInputBorder(
+                                    focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
                                     filled: true,
-                                    fillColor: Color(0xFFEFEFEF),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .textFieldBackground,
                                   ),
                                   style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
@@ -226,36 +229,37 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         FlutterFlowTheme.of(context).subtitle2,
                                     hintStyle:
                                         FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: UnderlineInputBorder(
+                                    enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
+                                    focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    errorBorder: UnderlineInputBorder(
+                                    errorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
-                                    focusedErrorBorder: UnderlineInputBorder(
+                                    focusedErrorBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
                                         width: 1,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(12),
                                     ),
                                     filled: true,
-                                    fillColor: Color(0xFFEFEFEF),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .textFieldBackground,
                                   ),
                                   style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
@@ -336,7 +340,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Bio')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -345,87 +349,123 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Your bio',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
-                                    child: Text(
-                                      'Bio',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
-                                  child: TextFormField(
-                                    controller: txtBioController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      errorBorder: InputBorder.none,
-                                      focusedErrorBorder: InputBorder.none,
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                    maxLines: 8,
+                                      0, 0, 0, 64),
+                                  child: Text(
+                                    'Your bio',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
-                                Align(
-                                  alignment: AlignmentDirectional(1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
-                                    child: Text(
-                                      '96/150',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 12,
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Align(
+                                      alignment: AlignmentDirectional(-1, 0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 8),
+                                        child: Text(
+                                          'Bio',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
+                                      child: TextFormField(
+                                        controller: txtBioController,
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle2,
+                                          hintStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyText2,
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
                                           ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color(0x00000000),
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          filled: true,
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .textFieldBackground,
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                        maxLines: 8,
+                                      ),
                                     ),
-                                  ),
+                                    Align(
+                                      alignment: AlignmentDirectional(1, 0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 8),
+                                        child: Text(
+                                          '96/150',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 12,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                             child: Stack(
                               children: [
                                 Container(
@@ -487,7 +527,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Industry')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -496,23 +536,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Industry',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
                           Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -520,64 +543,94 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0, 0, 0, 64),
                                   child: Text(
                                     'Industry',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: FutureBuilder<List<IndustriesRecord>>(
-                                  future: queryIndustriesRecordOnce(
-                                    queryBuilder: (industriesRecord) =>
-                                        industriesRecord.orderBy('industry'),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
+                                      child: Text(
+                                        'Industry',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                      ),
+                                    ),
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50,
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child:
+                                        FutureBuilder<List<IndustriesRecord>>(
+                                      future: queryIndustriesRecordOnce(
+                                        queryBuilder: (industriesRecord) =>
+                                            industriesRecord
+                                                .orderBy('industry'),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child: CircularProgressIndicator(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<IndustriesRecord>
+                                            ddIndustryIndustriesRecordList =
+                                            snapshot.data!;
+                                        return FlutterFlowDropDown(
+                                          initialOption: ddIndustryValue ??=
+                                              widget.userProfile!.industry,
+                                          options:
+                                              ddIndustryIndustriesRecordList
+                                                  .map((e) => e.industry!)
+                                                  .toList()
+                                                  .toList(),
+                                          onChanged: (val) => setState(
+                                              () => ddIndustryValue = val),
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           height: 50,
-                                          child: CircularProgressIndicator(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<IndustriesRecord>
-                                        ddIndustryIndustriesRecordList =
-                                        snapshot.data!;
-                                    return FlutterFlowDropDown(
-                                      initialOption: ddIndustryValue ??=
-                                          widget.userProfile!.industry,
-                                      options: ddIndustryIndustriesRecordList
-                                          .map((e) => e.industry!)
-                                          .toList()
-                                          .toList(),
-                                      onChanged: (val) =>
-                                          setState(() => ddIndustryValue = val),
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                      hintText: 'Please select...',
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      elevation: 2,
-                                      borderColor: Colors.transparent,
-                                      borderWidth: 0,
-                                      borderRadius: 0,
-                                      margin: EdgeInsetsDirectional.fromSTEB(
-                                          12, 4, 12, 4),
-                                      hidesUnderline: true,
-                                    );
-                                  },
-                                ),
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle1,
+                                          hintText: 'Please select...',
+                                          fillColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .textFieldBackground,
+                                          elevation: 2,
+                                          borderColor: Colors.transparent,
+                                          borderWidth: 0,
+                                          borderRadius: 0,
+                                          margin:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  12, 4, 12, 4),
+                                          hidesUnderline: true,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -645,7 +698,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Occupation')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -654,23 +707,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Occupation',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
                           Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -678,64 +714,78 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0, 0, 0, 64),
                                   child: Text(
                                     'Occupation',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                               ),
-                              TextFormField(
-                                controller: txtOccupationController,
-                                autofocus: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: 'Please enter...',
-                                  hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
+                                      child: Text(
+                                        'Occupation',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                      ),
                                     ),
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                  TextFormField(
+                                    controller: txtOccupationController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      hintText: 'Please enter...',
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
                                     ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle1,
                                   ),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                  focusedErrorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
-                                    ),
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(4.0),
-                                      topRight: Radius.circular(4.0),
-                                    ),
-                                  ),
-                                ),
-                                style: FlutterFlowTheme.of(context).subtitle1,
+                                ],
                               ),
                             ],
                           ),
@@ -804,7 +854,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'DateOfBirth')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -813,81 +863,103 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Date of birth',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                'Date of birth',
-                                style: FlutterFlowTheme.of(context).subtitle2,
-                              ),
-                            ),
-                          ),
-                          Row(
+                          Column(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
-                                child: Container(
-                                  width: 100,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
-                                  child: Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          4, 0, 0, 0),
-                                      child: Text(
-                                        dateTimeFormat(
-                                            'yMd', calBDaySelectedDay!.start),
-                                        style:
-                                            FlutterFlowTheme.of(context).title3,
-                                      ),
-                                    ),
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 64),
+                                  child: Text(
+                                    'Date of birth',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                               ),
+                              Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Text(
+                                    'Date of birth',
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Expanded(
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: Container(
+                                        width: 100,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .textFieldBackground,
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        child: Align(
+                                          alignment:
+                                              AlignmentDirectional(-1, 0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              dateTimeFormat('yMd',
+                                                  calBDaySelectedDay!.start),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .title3,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: FlutterFlowCalendar(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  weekFormat: false,
+                                  weekStartsMonday: true,
+                                  initialDate: widget.userProfile!.birthDay,
+                                  onChange:
+                                      (DateTimeRange? newSelectedDate) async {
+                                    calBDaySelectedDay = newSelectedDate;
+                                    setState(() => FFAppState().usrBDay =
+                                        calBDaySelectedDay?.start);
+                                    setState(() {});
+                                  },
+                                  titleStyle: TextStyle(),
+                                  dayOfWeekStyle: TextStyle(),
+                                  dateStyle: TextStyle(),
+                                  selectedDateStyle: TextStyle(),
+                                  inactiveDateStyle: TextStyle(),
+                                ),
+                              ),
                             ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                            child: FlutterFlowCalendar(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              weekFormat: false,
-                              weekStartsMonday: false,
-                              initialDate: widget.userProfile!.birthDay,
-                              onChange: (DateTimeRange? newSelectedDate) {
-                                setState(
-                                    () => calBDaySelectedDay = newSelectedDate);
-                              },
-                              titleStyle: TextStyle(),
-                              dayOfWeekStyle: TextStyle(),
-                              dateStyle: TextStyle(),
-                              selectedDateStyle: TextStyle(),
-                              inactiveDateStyle: TextStyle(),
-                            ),
                           ),
                           Padding(
                             padding:
@@ -953,7 +1025,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Gender')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -962,59 +1034,69 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Gender',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
                           Column(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Align(
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0, 0, 0, 64),
                                   child: Text(
-                                    'Your gender',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle2,
+                                    'Gender',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: custom_widgets.MyRadioButton(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    buttonLabels: FFAppState().genders.toList(),
-                                    buttonValues: FFAppState().genders.toList(),
-                                    horizontal: false,
-                                    buttonWidth: 100.0,
-                                    buttonHeight: 50.0,
-                                    defaultSelected: FFAppState().usrGender,
-                                    onValue: () async {
-                                      setState(() => FFAppState().usrGender =
-                                          FFAppState().mrbSelectedValue);
-                                    },
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
+                                      child: Text(
+                                        'Your gender',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 32),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      child: custom_widgets.MyRadioButton(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        buttonLabels:
+                                            FFAppState().genders.toList(),
+                                        buttonValues:
+                                            FFAppState().genders.toList(),
+                                        horizontal: false,
+                                        buttonWidth: 100.0,
+                                        buttonHeight: 50.0,
+                                        defaultSelected: FFAppState().usrGender,
+                                        onValue: () async {
+                                          setState(() => FFAppState()
+                                                  .usrGender =
+                                              FFAppState().mrbSelectedValue);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -1080,7 +1162,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Preferences')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1089,23 +1171,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Preferences',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
                           Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
@@ -1113,37 +1178,62 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0, 0, 0, 64),
                                   child: Text(
-                                    'Your preferences',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle2,
+                                    'Preferences',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
-                                  child: custom_widgets.MyRadioButton(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
-                                    buttonLabels: FFAppState().genders.toList(),
-                                    buttonValues: FFAppState().genders.toList(),
-                                    horizontal: false,
-                                    buttonWidth: 100.0,
-                                    buttonHeight: 50.0,
-                                    defaultSelected:
-                                        FFAppState().usrGenderPreference,
-                                    onValue: () async {
-                                      setState(() =>
-                                          FFAppState().usrGenderPreference =
-                                              FFAppState().mrbSelectedValue);
-                                    },
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 8),
+                                      child: Text(
+                                        'Your preferences',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 32),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 50,
+                                      child: custom_widgets.MyRadioButton(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 50,
+                                        buttonLabels:
+                                            FFAppState().genders.toList(),
+                                        buttonValues:
+                                            FFAppState().genders.toList(),
+                                        horizontal: false,
+                                        buttonWidth: 100.0,
+                                        buttonHeight: 50.0,
+                                        defaultSelected:
+                                            FFAppState().usrGenderPreference,
+                                        onValue: () async {
+                                          setState(() => FFAppState()
+                                                  .usrGenderPreference =
+                                              FFAppState().mrbSelectedValue);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -1209,7 +1299,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'ChooseYourStatus')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1318,7 +1408,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic1')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1434,7 +1524,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Interests')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1616,7 +1706,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic2')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1733,7 +1823,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic3')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1848,7 +1938,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic4')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -1963,7 +2053,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic5')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -2078,7 +2168,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic6')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -2193,7 +2283,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic7')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -2308,7 +2398,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic8')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -2421,7 +2511,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                   ),
                 if (FFAppState().profileContainerName == 'Basic9')
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.9,
@@ -2546,8 +2636,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
+            Icons.chevron_left,
+            color: FlutterFlowTheme.of(context).alternate,
             size: 30,
           ),
           onPressed: () async {
@@ -2562,13 +2652,16 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
             }
           },
         ),
-        title: Text(
-          'Edit profile',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
+        title: Visibility(
+          visible: FFAppState().profileContainerName != 'Basics',
+          child: Text(
+            'Edit profile',
+            style: FlutterFlowTheme.of(context).title2.override(
+                  fontFamily: 'Roboto',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22,
+                ),
+          ),
         ),
         actions: [],
         centerTitle: true,
@@ -2634,124 +2727,104 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Align(
-                                      alignment: AlignmentDirectional(0, 1),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 16),
+                                      alignment: AlignmentDirectional(0, -1),
+                                      child: AuthUserStreamWidget(
                                         child: Container(
-                                          width: 125,
-                                          height: 142,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 1),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, -1),
-                                                child: AuthUserStreamWidget(
-                                                  child: Container(
-                                                    width: 105,
-                                                    height: 105,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Image.network(
-                                                      valueOrDefault<String>(
-                                                        currentUserPhoto,
-                                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                      ),
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 1),
-                                                child: FlutterFlowIconButton(
-                                                  borderRadius: 30,
-                                                  borderWidth: 0,
-                                                  buttonSize: 45,
-                                                  icon: Icon(
-                                                    Icons.photo_camera,
-                                                    color: Color(0x7F050A41),
-                                                    size: 30,
-                                                  ),
-                                                  onPressed: () async {
-                                                    final selectedMedia =
-                                                        await selectMediaWithSourceBottomSheet(
-                                                      context: context,
-                                                      allowPhoto: true,
-                                                    );
-                                                    if (selectedMedia != null &&
-                                                        selectedMedia.every((m) =>
-                                                            validateFileFormat(
-                                                                m.storagePath,
-                                                                context))) {
-                                                      setState(() =>
-                                                          isMediaUploading =
-                                                              true);
-                                                      var downloadUrls =
-                                                          <String>[];
-                                                      try {
-                                                        showUploadMessage(
-                                                          context,
-                                                          'Uploading file...',
-                                                          showLoading: true,
-                                                        );
-                                                        downloadUrls =
-                                                            (await Future.wait(
-                                                          selectedMedia.map(
-                                                            (m) async =>
-                                                                await uploadData(
-                                                                    m.storagePath,
-                                                                    m.bytes),
-                                                          ),
-                                                        ))
-                                                                .where((u) =>
-                                                                    u != null)
-                                                                .map((u) => u!)
-                                                                .toList();
-                                                      } finally {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .hideCurrentSnackBar();
-                                                        isMediaUploading =
-                                                            false;
-                                                      }
-                                                      if (downloadUrls.length ==
-                                                          selectedMedia
-                                                              .length) {
-                                                        setState(() =>
-                                                            uploadedFileUrl =
-                                                                downloadUrls
-                                                                    .first);
-                                                        showUploadMessage(
-                                                            context,
-                                                            'Success!');
-                                                      } else {
-                                                        setState(() {});
-                                                        showUploadMessage(
-                                                            context,
-                                                            'Failed to upload media');
-                                                        return;
-                                                      }
-                                                    }
-
-                                                    final usersUpdateData =
-                                                        createUsersRecordData(
-                                                      photoUrl: uploadedFileUrl,
-                                                    );
-                                                    await currentUserReference!
-                                                        .update(
-                                                            usersUpdateData);
-                                                  },
-                                                ),
-                                              ),
-                                            ],
+                                          width: 105,
+                                          height: 105,
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
                                           ),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              currentUserPhoto,
+                                              'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                            ),
+                                            fit: BoxFit.contain,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          final selectedMedia =
+                                              await selectMediaWithSourceBottomSheet(
+                                            context: context,
+                                            allowPhoto: true,
+                                          );
+                                          if (selectedMedia != null &&
+                                              selectedMedia.every((m) =>
+                                                  validateFileFormat(
+                                                      m.storagePath,
+                                                      context))) {
+                                            setState(
+                                                () => isMediaUploading = true);
+                                            var downloadUrls = <String>[];
+                                            try {
+                                              showUploadMessage(
+                                                context,
+                                                'Uploading file...',
+                                                showLoading: true,
+                                              );
+                                              downloadUrls = (await Future.wait(
+                                                selectedMedia.map(
+                                                  (m) async => await uploadData(
+                                                      m.storagePath, m.bytes),
+                                                ),
+                                              ))
+                                                  .where((u) => u != null)
+                                                  .map((u) => u!)
+                                                  .toList();
+                                            } finally {
+                                              ScaffoldMessenger.of(context)
+                                                  .hideCurrentSnackBar();
+                                              isMediaUploading = false;
+                                            }
+                                            if (downloadUrls.length ==
+                                                selectedMedia.length) {
+                                              setState(() => uploadedFileUrl =
+                                                  downloadUrls.first);
+                                              showUploadMessage(
+                                                  context, 'Success!');
+                                            } else {
+                                              setState(() {});
+                                              showUploadMessage(context,
+                                                  'Failed to upload media');
+                                              return;
+                                            }
+                                          }
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            photoUrl: uploadedFileUrl,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+                                        },
+                                        text: 'Change profile photo',
+                                        options: FFButtonOptions(
+                                          width: 210,
+                                          height: 40,
+                                          color: Colors.transparent,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                         ),
                                       ),
                                     ),
@@ -2769,38 +2842,53 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            '${FFAppState().usrFirstName} ${FFAppState().usrLastName}',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() => FFAppState()
+                                            .profileContainerName = 'Name');
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              '${FFAppState().usrFirstName} ${FFAppState().usrLastName}'
+                                                  .maybeHandleOverflow(
+                                                maxChars: 40,
+                                                replacement: '…',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
                                           ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Name');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                .profileContainerName = 'Name');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -2825,38 +2913,52 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            txtBioController!.text,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() => FFAppState()
+                                            .profileContainerName = 'Bio');
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              txtBioController!.text
+                                                  .maybeHandleOverflow(
+                                                      maxChars: 150),
+                                              maxLines: 3,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
                                           ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Bio');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                .profileContainerName = 'Bio');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -2881,39 +2983,49 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            FFAppState().usrIndustry,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() => FFAppState()
+                                            .profileContainerName = 'Industry');
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              FFAppState().usrIndustry,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
                                           ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Industry');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Industry');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -2938,39 +3050,54 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            txtOccupationController!.text,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() =>
+                                            FFAppState().profileContainerName =
                                                 'Occupation');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              txtOccupationController!.text
+                                                  .maybeHandleOverflow(
+                                                maxChars: 50,
+                                                replacement: '…',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                          ),
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Occupation');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -3062,39 +3189,49 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            FFAppState().usrGender,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() => FFAppState()
+                                            .profileContainerName = 'Gender');
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              FFAppState().usrGender,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
                                           ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Gender');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Gender');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -3119,39 +3256,50 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            FFAppState().usrGenderPreference,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() =>
+                                            FFAppState().profileContainerName =
                                                 'Preferences');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              FFAppState().usrGenderPreference,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                          ),
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'Preferences');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -3176,39 +3324,50 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            FFAppState().usrIntention,
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
-                                          ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() =>
+                                            FFAppState().profileContainerName =
                                                 'ChooseYourStatus');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
-                                          },
-                                        ),
-                                      ],
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              FFAppState().usrIntention,
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                          ),
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                      .profileContainerName =
+                                                  'ChooseYourStatus');
+                                              scaffoldKey.currentState!
+                                                  .openEndDrawer();
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
@@ -3271,58 +3430,69 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               final interests = FFAppState()
                                                   .usrInterests
                                                   .toList();
-                                              return Wrap(
-                                                spacing: 8,
-                                                runSpacing: 8,
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment:
-                                                    WrapCrossAlignment.start,
-                                                direction: Axis.horizontal,
-                                                runAlignment:
-                                                    WrapAlignment.start,
-                                                verticalDirection:
-                                                    VerticalDirection.down,
-                                                clipBehavior: Clip.none,
-                                                children: List.generate(
-                                                    interests.length,
-                                                    (interestsIndex) {
-                                                  final interestsItem =
-                                                      interests[interestsIndex];
-                                                  return FFButtonWidget(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    text: interestsItem,
-                                                    options: FFButtonOptions(
-                                                      height: 32,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .backgroundGrey,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                              ),
-                                                      elevation: 0,
-                                                      borderSide: BorderSide(
+                                              return InkWell(
+                                                onTap: () async {
+                                                  setState(() => FFAppState()
+                                                          .profileContainerName =
+                                                      'Interests');
+                                                  scaffoldKey.currentState!
+                                                      .openEndDrawer();
+                                                },
+                                                child: Wrap(
+                                                  spacing: 8,
+                                                  runSpacing: 8,
+                                                  alignment:
+                                                      WrapAlignment.start,
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.start,
+                                                  direction: Axis.horizontal,
+                                                  runAlignment:
+                                                      WrapAlignment.start,
+                                                  verticalDirection:
+                                                      VerticalDirection.down,
+                                                  clipBehavior: Clip.none,
+                                                  children: List.generate(
+                                                      interests.length,
+                                                      (interestsIndex) {
+                                                    final interestsItem =
+                                                        interests[
+                                                            interestsIndex];
+                                                    return FFButtonWidget(
+                                                      onPressed: () {
+                                                        print(
+                                                            'Button pressed ...');
+                                                      },
+                                                      text: interestsItem,
+                                                      options: FFButtonOptions(
+                                                        height: 32,
                                                         color:
-                                                            Colors.transparent,
-                                                        width: 0,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .backgroundGrey,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                          width: 0,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  );
-                                                }),
+                                                    );
+                                                  }),
+                                                ),
                                               );
                                             },
                                           ),
@@ -3394,180 +3564,194 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 0, 0, 16),
-                                              child: Wrap(
-                                                spacing: 8,
-                                                runSpacing: 8,
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment:
-                                                    WrapCrossAlignment.start,
-                                                direction: Axis.horizontal,
-                                                runAlignment:
-                                                    WrapAlignment.start,
-                                                verticalDirection:
-                                                    VerticalDirection.down,
-                                                clipBehavior: Clip.none,
-                                                children: [
-                                                  FFButtonWidget(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    text:
-                                                        '${FFAppState().usrHeight.toString()} sm',
-                                                    icon: Icon(
-                                                      Icons.height,
-                                                      size: 16,
-                                                    ),
-                                                    options: FFButtonOptions(
-                                                      height: 32,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .backgroundGrey,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                              ),
-                                                      elevation: 0,
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1,
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  setState(() => FFAppState()
+                                                          .profileContainerName =
+                                                      'Basics');
+                                                  await pageViewController
+                                                      ?.nextPage(
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                    curve: Curves.ease,
+                                                  );
+                                                },
+                                                child: Wrap(
+                                                  spacing: 8,
+                                                  runSpacing: 8,
+                                                  alignment:
+                                                      WrapAlignment.start,
+                                                  crossAxisAlignment:
+                                                      WrapCrossAlignment.start,
+                                                  direction: Axis.horizontal,
+                                                  runAlignment:
+                                                      WrapAlignment.start,
+                                                  verticalDirection:
+                                                      VerticalDirection.down,
+                                                  clipBehavior: Clip.none,
+                                                  children: [
+                                                    FFButtonWidget(
+                                                      onPressed: () {
+                                                        print(
+                                                            'Button pressed ...');
+                                                      },
+                                                      text:
+                                                          '${FFAppState().usrHeight.toString()} sm',
+                                                      icon: Icon(
+                                                        Icons.height,
+                                                        size: 16,
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                  FFButtonWidget(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    text: FFAppState()
-                                                        .usrDrinkingStatus,
-                                                    icon: Icon(
-                                                      Icons.wine_bar_outlined,
-                                                      size: 16,
-                                                    ),
-                                                    options: FFButtonOptions(
-                                                      height: 32,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .backgroundGrey,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                              ),
-                                                      elevation: 0,
-                                                      borderSide: BorderSide(
+                                                      options: FFButtonOptions(
+                                                        height: 32,
                                                         color:
-                                                            Colors.transparent,
-                                                        width: 1,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .backgroundGrey,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
                                                     ),
-                                                  ),
-                                                  FFButtonWidget(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    text: FFAppState()
-                                                        .usrSmokingStatus,
-                                                    icon: Icon(
-                                                      Icons.smoking_rooms,
-                                                      size: 16,
-                                                    ),
-                                                    options: FFButtonOptions(
-                                                      height: 32,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .backgroundGrey,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                              ),
-                                                      elevation: 0,
-                                                      borderSide: BorderSide(
+                                                    FFButtonWidget(
+                                                      onPressed: () {
+                                                        print(
+                                                            'Button pressed ...');
+                                                      },
+                                                      text: FFAppState()
+                                                          .usrDrinkingStatus,
+                                                      icon: Icon(
+                                                        Icons.wine_bar_outlined,
+                                                        size: 16,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        height: 32,
                                                         color:
-                                                            Colors.transparent,
-                                                        width: 1,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .backgroundGrey,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
                                                     ),
-                                                  ),
-                                                  FFButtonWidget(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    text:
-                                                        functions.stringifyList(
-                                                            FFAppState()
-                                                                .usrLookingFor
-                                                                .toList(),
-                                                            1),
-                                                    icon: Icon(
-                                                      Icons.search_outlined,
-                                                      size: 16,
-                                                    ),
-                                                    options: FFButtonOptions(
-                                                      height: 32,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .backgroundGrey,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                              ),
-                                                      elevation: 0,
-                                                      borderSide: BorderSide(
+                                                    FFButtonWidget(
+                                                      onPressed: () {
+                                                        print(
+                                                            'Button pressed ...');
+                                                      },
+                                                      text: FFAppState()
+                                                          .usrSmokingStatus,
+                                                      icon: Icon(
+                                                        Icons.smoking_rooms,
+                                                        size: 16,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        height: 32,
                                                         color:
-                                                            Colors.transparent,
-                                                        width: 1,
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .backgroundGrey,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
                                                       ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
                                                     ),
-                                                  ),
-                                                ],
+                                                    FFButtonWidget(
+                                                      onPressed: () {
+                                                        print(
+                                                            'Button pressed ...');
+                                                      },
+                                                      text: functions
+                                                          .stringifyList(
+                                                              FFAppState()
+                                                                  .usrLookingFor
+                                                                  .toList(),
+                                                              1),
+                                                      icon: Icon(
+                                                        Icons.search_outlined,
+                                                        size: 16,
+                                                      ),
+                                                      options: FFButtonOptions(
+                                                        height: 32,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .backgroundGrey,
+                                                        textStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .subtitle1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                        elevation: 0,
+                                                        borderSide: BorderSide(
+                                                          color: Colors
+                                                              .transparent,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -3609,40 +3793,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.people,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgLookingFor.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -3724,43 +3879,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                Container(
-                                                  width: 30,
-                                                  height: 30,
-                                                  child: Stack(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            0, 0),
-                                                    children: [
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0, 0),
-                                                        child: Container(
-                                                          width: 100,
-                                                          height: 100,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      FaIcon(
-                                                        FontAwesomeIcons.ruler,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                        size: 20,
-                                                      ),
-                                                    ],
-                                                  ),
+                                                Image.asset(
+                                                  'assets/images/imgHowTall.png',
+                                                  width: 28,
+                                                  height: 28,
+                                                  fit: BoxFit.cover,
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
@@ -3835,40 +3958,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.wine_bar_outlined,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgDrinking.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -3939,40 +4033,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                FaIcon(
-                                                  FontAwesomeIcons.smoking,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgSmoking.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -4044,40 +4109,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.people,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 22,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgSpiritual.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -4148,40 +4184,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.directions_run,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgSport.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -4252,40 +4259,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.child_care,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgChildren.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -4356,40 +4334,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Container(
-                                            width: 30,
-                                            height: 30,
-                                            child: Stack(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 100,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Icon(
-                                                  Icons.school_outlined,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  size: 20,
-                                                ),
-                                              ],
-                                            ),
+                                          Image.asset(
+                                            'assets/images/imgEducation.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Padding(
                                             padding:
@@ -4457,38 +4406,11 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, 0),
-                                            children: [
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: 100,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                  ),
-                                                ),
-                                              ),
-                                              FaIcon(
-                                                FontAwesomeIcons.male,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                                size: 22,
-                                              ),
-                                            ],
-                                          ),
+                                        Image.asset(
+                                          'assets/images/imgBodyType.png',
+                                          width: 28,
+                                          height: 28,
+                                          fit: BoxFit.cover,
                                         ),
                                         Padding(
                                           padding:

@@ -9,7 +9,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../settings_view/settings_view_widget.dart';
-import '../welcome_view/welcome_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,45 +51,24 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
           ),
         ),
         actions: [
-          FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
-            icon: Icon(
-              Icons.logout,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30,
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
+            child: InkWell(
+              onTap: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsViewWidget(),
+                  ),
+                );
+              },
+              child: Image.asset(
+                'assets/images/ic_settings.png',
+                width: 30,
+                height: 30,
+                fit: BoxFit.scaleDown,
+              ),
             ),
-            onPressed: () async {
-              await signOut();
-              await Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomeViewWidget(),
-                ),
-                (r) => false,
-              );
-            },
-          ),
-          FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
-            icon: Icon(
-              Icons.settings_outlined,
-              color: FlutterFlowTheme.of(context).alternate,
-              size: 30,
-            ),
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SettingsViewWidget(),
-                ),
-              );
-            },
           ),
         ],
         centerTitle: false,
@@ -325,7 +303,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       currentUserPhoto,
                                                       'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                     ),
-                                                    fit: BoxFit.cover,
+                                                    fit: BoxFit.contain,
                                                   ),
                                                 ),
                                               ),

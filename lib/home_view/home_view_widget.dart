@@ -310,8 +310,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                 width: double.infinity,
                                 height: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  color: Colors.transparent,
                                 ),
                                 child: Builder(
                                   builder: (context) {
@@ -415,7 +414,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             return Card(
                                               clipBehavior:
                                                   Clip.antiAliasWithSaveLayer,
-                                              color: Color(0xFFF5F5F5),
+                                              color: Colors.transparent,
+                                              elevation: 0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(24),
