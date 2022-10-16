@@ -12,8 +12,8 @@ int getAge(DateTime? birthday) {
 }
 
 Future initializeFilterState(
-  FlitersRecord? filter,
-  UserProfilesRecord userProfile,
+  FiltersRecord? filter,
+  UsersRecord userProfile,
   LatLng? currentLocation,
 ) async {
   FFAppState().fltrName =

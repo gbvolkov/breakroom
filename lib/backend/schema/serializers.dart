@@ -9,6 +9,7 @@ import 'interests_record.dart';
 import 'chats_record.dart';
 import 'chat_messages_record.dart';
 import 'fliters_record.dart';
+import 'filters_record.dart';
 
 import 'index.dart';
 
@@ -27,6 +28,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   ChatsRecord,
   ChatMessagesRecord,
   FlitersRecord,
+  FiltersRecord,
   PhotoStruct,
   DateRangeStruct,
   IntRangeStruct,

@@ -18,12 +18,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditProfileNewViewWidget extends StatefulWidget {
-  const EditProfileNewViewWidget({
-    Key? key,
-    this.userProfile,
-  }) : super(key: key);
-
-  final UserProfilesRecord? userProfile;
+  const EditProfileNewViewWidget({Key? key}) : super(key: key);
 
   @override
   _EditProfileNewViewWidgetState createState() =>
@@ -39,9 +34,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   DateTimeRange? calBDaySelectedDay;
   String? ddIndustryValue;
-  TextEditingController? textController1;
-  TextEditingController? textController2;
   TextEditingController? txtBioController;
+  TextEditingController? txtFirstNameController;
+  TextEditingController? txtLastNameController;
   TextEditingController? txtOccupationController;
   List<String>? ccInterestsValues;
 
@@ -57,19 +52,21 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
       start: DateTime.now().startOfDay,
       end: DateTime.now().endOfDay,
     );
-    textController1 =
-        TextEditingController(text: widget.userProfile!.firstName);
-    textController2 = TextEditingController(text: widget.userProfile!.lastName);
-    txtBioController = TextEditingController(text: widget.userProfile!.bio);
-    txtOccupationController =
-        TextEditingController(text: widget.userProfile!.occupation);
+    txtBioController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.bio, ''));
+    txtFirstNameController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.firstName, ''));
+    txtLastNameController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.lastName, ''));
+    txtOccupationController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.occupation, ''));
   }
 
   @override
   void dispose() {
-    textController1?.dispose();
-    textController2?.dispose();
     txtBioController?.dispose();
+    txtFirstNameController?.dispose();
+    txtLastNameController?.dispose();
     txtOccupationController?.dispose();
     super.dispose();
   }
@@ -156,48 +153,51 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: TextFormField(
-                                  controller: textController1,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelStyle:
-                                        FlutterFlowTheme.of(context).subtitle2,
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    controller: txtFirstNameController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2,
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
                                     ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .textFieldBackground,
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle1,
                                   ),
-                                  style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
                               ),
                               Align(
@@ -220,48 +220,51 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: TextFormField(
-                                  controller: textController2,
-                                  autofocus: true,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelStyle:
-                                        FlutterFlowTheme.of(context).subtitle2,
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                child: AuthUserStreamWidget(
+                                  child: TextFormField(
+                                    controller: txtLastNameController,
+                                    autofocus: true,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2,
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1,
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      borderRadius: BorderRadius.circular(12),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .textFieldBackground,
                                     ),
-                                    filled: true,
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .textFieldBackground,
+                                    style:
+                                        FlutterFlowTheme.of(context).subtitle1,
                                   ),
-                                  style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
                               ),
                             ],
@@ -297,10 +300,10 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                       onPressed: () async {
                                         setState(() =>
                                             FFAppState().usrFirstName =
-                                                textController1!.text);
+                                                txtFirstNameController!.text);
                                         setState(() =>
                                             FFAppState().usrLastName =
-                                                textController2!.text);
+                                                txtLastNameController!.text);
                                         if (scaffoldKey
                                                 .currentState!.isDrawerOpen ||
                                             scaffoldKey.currentState!
@@ -389,57 +392,59 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 8),
-                                      child: TextFormField(
-                                        controller: txtBioController,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .subtitle2,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyText2,
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
+                                      child: AuthUserStreamWidget(
+                                        child: TextFormField(
+                                          controller: txtBioController,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle2,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyText2,
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
+                                            errorBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0x00000000),
-                                              width: 1,
+                                            focusedErrorBorder:
+                                                OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Color(0x00000000),
+                                                width: 1,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12),
+                                            filled: true,
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .textFieldBackground,
                                           ),
-                                          filled: true,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .textFieldBackground,
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1,
+                                          maxLines: 8,
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle1,
-                                        maxLines: 8,
                                       ),
                                     ),
                                     Align(
@@ -573,61 +578,68 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   ),
                                   Align(
                                     alignment: AlignmentDirectional(-1, 0),
-                                    child:
-                                        FutureBuilder<List<IndustriesRecord>>(
-                                      future: queryIndustriesRecordOnce(
-                                        queryBuilder: (industriesRecord) =>
-                                            industriesRecord
-                                                .orderBy('industry'),
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: CircularProgressIndicator(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                    child: AuthUserStreamWidget(
+                                      child:
+                                          FutureBuilder<List<IndustriesRecord>>(
+                                        future: queryIndustriesRecordOnce(
+                                          queryBuilder: (industriesRecord) =>
+                                              industriesRecord
+                                                  .orderBy('industry'),
+                                        ),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50,
+                                                height: 50,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                ),
                                               ),
-                                            ),
+                                            );
+                                          }
+                                          List<IndustriesRecord>
+                                              ddIndustryIndustriesRecordList =
+                                              snapshot.data!;
+                                          return FlutterFlowDropDown(
+                                            initialOption: ddIndustryValue ??=
+                                                valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.industry,
+                                                    ''),
+                                            options:
+                                                ddIndustryIndustriesRecordList
+                                                    .map((e) => e.industry!)
+                                                    .toList()
+                                                    .toList(),
+                                            onChanged: (val) => setState(
+                                                () => ddIndustryValue = val),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 50,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1,
+                                            hintText: 'Please select...',
+                                            fillColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .textFieldBackground,
+                                            elevation: 2,
+                                            borderColor: Colors.transparent,
+                                            borderWidth: 0,
+                                            borderRadius: 0,
+                                            margin:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    12, 4, 12, 4),
+                                            hidesUnderline: true,
                                           );
-                                        }
-                                        List<IndustriesRecord>
-                                            ddIndustryIndustriesRecordList =
-                                            snapshot.data!;
-                                        return FlutterFlowDropDown(
-                                          initialOption: ddIndustryValue ??=
-                                              widget.userProfile!.industry,
-                                          options:
-                                              ddIndustryIndustriesRecordList
-                                                  .map((e) => e.industry!)
-                                                  .toList()
-                                                  .toList(),
-                                          onChanged: (val) => setState(
-                                              () => ddIndustryValue = val),
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 50,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .subtitle1,
-                                          hintText: 'Please select...',
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .textFieldBackground,
-                                          elevation: 2,
-                                          borderColor: Colors.transparent,
-                                          borderWidth: 0,
-                                          borderRadius: 0,
-                                          margin:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  12, 4, 12, 4),
-                                          hidesUnderline: true,
-                                        );
-                                      },
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -730,60 +742,54 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: Text(
-                                        'Occupation',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                  AuthUserStreamWidget(
+                                    child: TextFormField(
+                                      controller: txtOccupationController,
+                                      autofocus: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Please enter...',
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .bodyText2,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color(0x00000000),
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .textFieldBackground,
                                       ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1,
                                     ),
-                                  ),
-                                  TextFormField(
-                                    controller: txtOccupationController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      hintText: 'Please enter...',
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .textFieldBackground,
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
                                   ),
                                 ],
                               ),
@@ -883,18 +889,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
-                                  child: Text(
-                                    'Date of birth',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle2,
-                                  ),
-                                ),
-                              ),
                               Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -939,24 +933,26 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                child: FlutterFlowCalendar(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  weekFormat: false,
-                                  weekStartsMonday: true,
-                                  initialDate: widget.userProfile!.birthDay,
-                                  onChange:
-                                      (DateTimeRange? newSelectedDate) async {
-                                    calBDaySelectedDay = newSelectedDate;
-                                    setState(() => FFAppState().usrBDay =
-                                        calBDaySelectedDay?.start);
-                                    setState(() {});
-                                  },
-                                  titleStyle: TextStyle(),
-                                  dayOfWeekStyle: TextStyle(),
-                                  dateStyle: TextStyle(),
-                                  selectedDateStyle: TextStyle(),
-                                  inactiveDateStyle: TextStyle(),
+                                child: AuthUserStreamWidget(
+                                  child: FlutterFlowCalendar(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryColor,
+                                    weekFormat: false,
+                                    weekStartsMonday: true,
+                                    initialDate: currentUserDocument!.birthDay,
+                                    onChange:
+                                        (DateTimeRange? newSelectedDate) async {
+                                      calBDaySelectedDay = newSelectedDate;
+                                      setState(() => FFAppState().usrBDay =
+                                          calBDaySelectedDay?.start);
+                                      setState(() {});
+                                    },
+                                    titleStyle: TextStyle(),
+                                    dayOfWeekStyle: TextStyle(),
+                                    dateStyle: TextStyle(),
+                                    selectedDateStyle: TextStyle(),
+                                    inactiveDateStyle: TextStyle(),
+                                  ),
                                 ),
                               ),
                             ],
@@ -1562,81 +1558,88 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 verticalDirection: VerticalDirection.down,
                                 clipBehavior: Clip.none,
                                 children: [
-                                  FutureBuilder<List<InterestsRecord>>(
-                                    future: queryInterestsRecordOnce(
-                                      queryBuilder: (interestsRecord) =>
-                                          interestsRecord.orderBy('interest'),
-                                    ),
-                                    builder: (context, snapshot) {
-                                      // Customize what your widget looks like when it's loading.
-                                      if (!snapshot.hasData) {
-                                        return Center(
-                                          child: SizedBox(
-                                            width: 50,
-                                            height: 50,
-                                            child: CircularProgressIndicator(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                      List<InterestsRecord>
-                                          ccInterestsInterestsRecordList =
-                                          snapshot.data!;
-                                      return FlutterFlowChoiceChips(
-                                        initiallySelected: widget
-                                            .userProfile!.interests!
-                                            .toList(),
-                                        options: ccInterestsInterestsRecordList
-                                            .map((e) => e.interest!)
-                                            .toList()
-                                            .map((label) => ChipData(label))
-                                            .toList(),
-                                        onChanged: (val) => setState(
-                                            () => ccInterestsValues = val),
-                                        selectedChipStyle: ChipStyle(
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
+                                  AuthUserStreamWidget(
+                                    child: FutureBuilder<List<InterestsRecord>>(
+                                      future: queryInterestsRecordOnce(
+                                        queryBuilder: (interestsRecord) =>
+                                            interestsRecord.orderBy('interest'),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50,
+                                              height: 50,
+                                              child: CircularProgressIndicator(
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryColor,
                                               ),
-                                          iconColor: Colors.white,
-                                          iconSize: 18,
-                                          labelPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 8, 8, 8),
-                                          elevation: 0,
-                                        ),
-                                        unselectedChipStyle: ChipStyle(
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .subtitle1,
-                                          iconColor: Color(0xFF323B45),
-                                          iconSize: 18,
-                                          labelPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 8, 8, 8),
-                                          elevation: 0,
-                                        ),
-                                        chipSpacing: 20,
-                                        rowSpacing: 8,
-                                        multiselect: true,
-                                        initialized: ccInterestsValues != null,
-                                        alignment: WrapAlignment.start,
-                                      );
-                                    },
+                                            ),
+                                          );
+                                        }
+                                        List<InterestsRecord>
+                                            ccInterestsInterestsRecordList =
+                                            snapshot.data!;
+                                        return FlutterFlowChoiceChips(
+                                          initiallySelected:
+                                              (currentUserDocument?.interests
+                                                      ?.toList() ??
+                                                  []),
+                                          options:
+                                              ccInterestsInterestsRecordList
+                                                  .map((e) => e.interest!)
+                                                  .toList()
+                                                  .map((label) =>
+                                                      ChipData(label))
+                                                  .toList(),
+                                          onChanged: (val) => setState(
+                                              () => ccInterestsValues = val),
+                                          selectedChipStyle: ChipStyle(
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            iconColor: Colors.white,
+                                            iconSize: 18,
+                                            labelPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 8, 8, 8),
+                                            elevation: 0,
+                                          ),
+                                          unselectedChipStyle: ChipStyle(
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryBackground,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1,
+                                            iconColor: Color(0xFF323B45),
+                                            iconSize: 18,
+                                            labelPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 8, 8, 8),
+                                            elevation: 0,
+                                          ),
+                                          chipSpacing: 20,
+                                          rowSpacing: 8,
+                                          multiselect: true,
+                                          initialized:
+                                              ccInterestsValues != null,
+                                          alignment: WrapAlignment.start,
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ],
                               ),
@@ -4501,10 +4504,10 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            final userProfilesUpdateData = {
-                              ...createUserProfilesRecordData(
-                                firstName: textController1!.text,
-                                lastName: textController2!.text,
+                            final usersUpdateData = {
+                              ...createUsersRecordData(
+                                firstName: txtFirstNameController!.text,
+                                lastName: txtLastNameController!.text,
                                 birthDay: FFAppState().usrBDay,
                                 industry: ddIndustryValue,
                                 occupation: txtOccupationController!.text,
@@ -4525,17 +4528,12 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     FFAppState().usrSpiritualStatus,
                                 height: FFAppState().usrHeight,
                                 weight: 80,
+                                displayName:
+                                    '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
                               ),
                               'interests': FFAppState().usrInterests,
                               'lookingFor': FFAppState().usrLookingFor,
                             };
-                            await widget.userProfile!.reference
-                                .update(userProfilesUpdateData);
-
-                            final usersUpdateData = createUsersRecordData(
-                              displayName:
-                                  '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
-                            );
                             await currentUserReference!.update(usersUpdateData);
                             Navigator.pop(context);
                           },

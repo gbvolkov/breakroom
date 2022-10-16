@@ -115,32 +115,32 @@ List<DocumentReference> concatUsersList(
   return result;
 }
 
-List<UserProfilesRecord> filterMatches(
-  List<UserProfilesRecord> fans,
+List<UsersRecord> filterMatches(
+  List<UsersRecord> fans,
   List<DocumentReference>? liked,
 ) {
-  List<UserProfilesRecord> result = [];
+  List<UsersRecord> result = [];
   if (liked == null) {
     return result;
   }
   for (var fan in fans) {
-    if (liked.contains(fan.user)) {
+    if (liked.contains(fan.reference)) {
       result.add(fan);
     }
   }
   return result;
 }
 
-List<UserProfilesRecord> cleanUpFilteredProfiles(
-  List<UserProfilesRecord> fliteredProfiles,
+List<UsersRecord> cleanUpFilteredProfiles(
+  List<UsersRecord> fliteredProfiles,
   List<DocumentReference> likedUsers,
   List<DocumentReference> dislikedUsers,
 ) {
-  List<UserProfilesRecord> result = [];
+  List<UsersRecord> result = [];
   List<DocumentReference> selectedUsers = likedUsers + dislikedUsers;
 
   for (var profile in fliteredProfiles) {
-    if (!selectedUsers.contains(profile.user)) {
+    if (!selectedUsers.contains(profile.reference)) {
       result.add(profile);
       return result;
     }

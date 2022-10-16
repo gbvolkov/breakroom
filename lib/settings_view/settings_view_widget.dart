@@ -75,38 +75,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.people,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgLogin.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -156,38 +129,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.card_travel,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgSubscription.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -246,38 +192,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.add_alert,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgNotifications.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -332,38 +251,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.headset_mic,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgContacts.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -413,38 +305,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.info_outline,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgAboutUs.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -494,38 +359,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.star_outline,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgRate.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -575,38 +413,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.description,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgCommunityGuide.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -656,38 +467,11 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    width: 30,
-                                    height: 30,
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: 30,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                            ),
-                                          ),
-                                        ),
-                                        Align(
-                                          alignment: AlignmentDirectional(0, 0),
-                                          child: Icon(
-                                            Icons.security,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 20,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    'assets/images/imgPrivacy.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
@@ -759,30 +543,20 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       child: Stack(
                                         alignment: AlignmentDirectional(-1, 0),
                                         children: [
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(-1, 0),
-                                            child: Container(
-                                              width: 30,
-                                              height: 100,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                            ),
+                                          Image.asset(
+                                            'assets/images/28x28_gradient_box.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
                                           ),
                                           Align(
                                             alignment:
                                                 AlignmentDirectional(0, 0),
-                                            child: Icon(
-                                              Icons.logout,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              size: 20,
+                                            child: Image.asset(
+                                              'assets/images/imgLogout.png',
+                                              width: 20,
+                                              height: 20,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ],

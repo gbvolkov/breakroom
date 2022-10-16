@@ -10,12 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MenuAddPhotoWidget extends StatefulWidget {
-  const MenuAddPhotoWidget({
-    Key? key,
-    this.userProfile,
-  }) : super(key: key);
-
-  final UserProfilesRecord? userProfile;
+  const MenuAddPhotoWidget({Key? key}) : super(key: key);
 
   @override
   _MenuAddPhotoWidgetState createState() => _MenuAddPhotoWidgetState();
@@ -96,7 +91,7 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                   }
                 }
 
-                final userProfilesUpdateData = {
+                final usersUpdateData = {
                   'photos': FieldValue.arrayUnion([
                     getPhotoFirestoreData(
                       createPhotoStruct(
@@ -108,8 +103,7 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                     )
                   ]),
                 };
-                await widget.userProfile!.reference
-                    .update(userProfilesUpdateData);
+                await currentUserReference!.update(usersUpdateData);
               },
               text: 'From gallery',
               options: FFButtonOptions(
@@ -167,7 +161,7 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                     }
                   }
 
-                  final userProfilesUpdateData = {
+                  final usersUpdateData = {
                     'photos': FieldValue.arrayUnion([
                       getPhotoFirestoreData(
                         createPhotoStruct(
@@ -179,8 +173,7 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                       )
                     ]),
                   };
-                  await widget.userProfile!.reference
-                      .update(userProfilesUpdateData);
+                  await currentUserReference!.update(usersUpdateData);
                 },
                 text: 'Take a photo',
                 options: FFButtonOptions(

@@ -12,6 +12,7 @@ import '../introduction_view/introduction_view_widget.dart';
 import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class HomeViewWidget extends StatefulWidget {
 }
 
 class _HomeViewWidgetState extends State<HomeViewWidget> {
-  FlitersRecord? newFilter;
+  FiltersRecord? newFilter;
   String? choiceChipsValue;
   late SwipeableCardSectionController swipeableStackController;
   LatLng? currentUserLocationValue;
@@ -73,12 +74,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-            child: StreamBuilder<List<UserProfilesRecord>>(
-              stream: queryUserProfilesRecord(
-                queryBuilder: (userProfilesRecord) => userProfilesRecord
-                    .where('user', isEqualTo: currentUserReference),
-                singleRecord: true,
-              ),
+            child: StreamBuilder<UsersRecord>(
+              stream: UsersRecord.getDocument(currentUserReference!),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -92,22 +89,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                     ),
                   );
                 }
-                List<UserProfilesRecord> columnUserProfilesRecordList =
-                    snapshot.data!;
-                // Return an empty Container when the document does not exist.
-                if (snapshot.data!.isEmpty) {
-                  return Container();
-                }
-                final columnUserProfilesRecord =
-                    columnUserProfilesRecordList.isNotEmpty
-                        ? columnUserProfilesRecordList.first
-                        : null;
+                final columnUsersRecord = snapshot.data!;
                 return Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    StreamBuilder<List<FlitersRecord>>(
-                      stream: queryFlitersRecord(
-                        parent: columnUserProfilesRecord!.reference,
+                    StreamBuilder<List<FiltersRecord>>(
+                      stream: queryFiltersRecord(
+                        parent: currentUserReference,
                         singleRecord: true,
                       ),
                       builder: (context, snapshot) {
@@ -124,10 +112,14 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                             ),
                           );
                         }
-                        List<FlitersRecord> rowFlitersRecordList =
+                        List<FiltersRecord> rowFiltersRecordList =
                             snapshot.data!;
-                        final rowFlitersRecord = rowFlitersRecordList.isNotEmpty
-                            ? rowFlitersRecordList.first
+                        // Return an empty Container when the document does not exist.
+                        if (snapshot.data!.isEmpty) {
+                          return Container();
+                        }
+                        final rowFiltersRecord = rowFiltersRecordList.isNotEmpty
+                            ? rowFiltersRecordList.first
                             : null;
                         return Row(
                           mainAxisSize: MainAxisSize.max,
@@ -166,39 +158,41 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                 currentUserLocationValue =
                                     await getCurrentUserLocation(
                                         defaultLocation: LatLng(0.0, 0.0));
-                                if (rowFlitersRecord != null) {
+                                if (rowFiltersRecord != null) {
                                   await actions.initializeFilterState(
-                                    rowFlitersRecord,
-                                    columnUserProfilesRecord!,
+                                    rowFiltersRecord,
+                                    columnUsersRecord,
                                     currentUserLocationValue,
                                   );
                                 } else {
-                                  final flitersCreateData = {
-                                    ...createFlitersRecordData(
+                                  final filtersCreateData = {
+                                    ...createFiltersRecordData(
                                       ageRangeExt: false,
                                       location: currentUserLocationValue,
                                       distance: 50.0,
-                                      filterName:
-                                          columnUserProfilesRecord!.firstName,
+                                      filterName: currentUserEmail,
                                     ),
                                     'lookingFor': [
-                                      columnUserProfilesRecord!.genderPreference
+                                      valueOrDefault(
+                                          currentUserDocument?.genderPreference,
+                                          '')
                                     ],
                                     'industries': [
-                                      columnUserProfilesRecord!.industry
+                                      valueOrDefault(
+                                          currentUserDocument?.industry, '')
                                     ],
                                   };
-                                  var flitersRecordReference =
-                                      FlitersRecord.createDoc(
-                                          columnUserProfilesRecord!.reference);
-                                  await flitersRecordReference
-                                      .set(flitersCreateData);
-                                  newFilter = FlitersRecord.getDocumentFromData(
-                                      flitersCreateData,
-                                      flitersRecordReference);
+                                  var filtersRecordReference =
+                                      FiltersRecord.createDoc(
+                                          currentUserReference!);
+                                  await filtersRecordReference
+                                      .set(filtersCreateData);
+                                  newFilter = FiltersRecord.getDocumentFromData(
+                                      filtersCreateData,
+                                      filtersRecordReference);
                                   await actions.initializeFilterState(
                                     newFilter,
-                                    columnUserProfilesRecord!,
+                                    columnUsersRecord,
                                     currentUserLocationValue,
                                   );
                                 }
@@ -207,7 +201,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => FiltersViewWidget(
-                                      filter: rowFlitersRecord,
+                                      filter: rowFiltersRecord,
                                     ),
                                   ),
                                 );
@@ -227,43 +221,48 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                           Expanded(
                             child: Align(
                               alignment: AlignmentDirectional(0, 0),
-                              child: FlutterFlowChoiceChips(
-                                initiallySelected: [
-                                  columnUserProfilesRecord!.intention!
-                                ],
-                                options: FFAppState()
-                                    .intentions
-                                    .map((label) => ChipData(label))
-                                    .toList(),
-                                onChanged: (val) => setState(
-                                    () => choiceChipsValue = val?.first),
-                                selectedChipStyle: ChipStyle(
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                      ),
-                                  iconColor: Colors.white,
-                                  iconSize: 18,
-                                  elevation: 0,
+                              child: AuthUserStreamWidget(
+                                child: FlutterFlowChoiceChips(
+                                  initiallySelected: [
+                                    valueOrDefault(
+                                        currentUserDocument?.intention, '')
+                                  ],
+                                  options: FFAppState()
+                                      .intentions
+                                      .map((label) => ChipData(label))
+                                      .toList(),
+                                  onChanged: (val) => setState(
+                                      () => choiceChipsValue = val?.first),
+                                  selectedChipStyle: ChipStyle(
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                        ),
+                                    iconColor: Colors.white,
+                                    iconSize: 18,
+                                    elevation: 0,
+                                  ),
+                                  unselectedChipStyle: ChipStyle(
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                    textStyle:
+                                        FlutterFlowTheme.of(context).subtitle1,
+                                    iconColor: Color(0xFF323B45),
+                                    iconSize: 18,
+                                    elevation: 0,
+                                  ),
+                                  chipSpacing: 4,
+                                  multiselect: false,
+                                  initialized: choiceChipsValue != null,
+                                  alignment: WrapAlignment.spaceEvenly,
                                 ),
-                                unselectedChipStyle: ChipStyle(
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).subtitle1,
-                                  iconColor: Color(0xFF323B45),
-                                  iconSize: 18,
-                                  elevation: 0,
-                                ),
-                                chipSpacing: 4,
-                                multiselect: false,
-                                initialized: choiceChipsValue != null,
-                                alignment: WrapAlignment.spaceEvenly,
                               ),
                             ),
                           ),
@@ -273,145 +272,116 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                     Expanded(
                       child: Stack(
                         children: [
-                          StreamBuilder<List<UserProfilesRecord>>(
-                            stream: queryUserProfilesRecord(
-                              queryBuilder: (userProfilesRecord) =>
-                                  userProfilesRecord
+                          Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                            ),
+                            child: AuthUserStreamWidget(
+                              child: StreamBuilder<List<UsersRecord>>(
+                                stream: queryUsersRecord(
+                                  queryBuilder: (usersRecord) => usersRecord
                                       .where('intention',
                                           isEqualTo: choiceChipsValue != ''
                                               ? choiceChipsValue
                                               : null)
                                       .where('gender',
-                                          isEqualTo: columnUserProfilesRecord!
-                                                      .genderPreference !=
+                                          isEqualTo: valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.gender,
+                                                      '') !=
                                                   ''
-                                              ? columnUserProfilesRecord!
-                                                  .genderPreference
+                                              ? valueOrDefault(
+                                                  currentUserDocument?.gender,
+                                                  '')
                                               : null),
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<UserProfilesRecord>
-                                  containerUserProfilesRecordList =
-                                  snapshot.data!;
-                              return Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
+                                  singleRecord: true,
                                 ),
-                                child: Builder(
-                                  builder: (context) {
-                                    final cleanedList = functions
-                                        .cleanUpFilteredProfiles(
-                                            containerUserProfilesRecordList
-                                                .toList(),
-                                            columnUserProfilesRecord!.liked!
-                                                .toList(),
-                                            columnUserProfilesRecord!.disliked!
-                                                .toList())
-                                        .map((e) => e)
-                                        .toList()
-                                        .take(1)
-                                        .toList();
-                                    if (cleanedList.isEmpty) {
-                                      return Image.asset(
-                                        'assets/images/UnknownSurgeon.png',
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50,
+                                        height: 50,
+                                        child: CircularProgressIndicator(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  List<UsersRecord>
+                                      swipeableStackUsersRecordList = snapshot
+                                          .data!
+                                          .where((u) => u.uid != currentUserUid)
+                                          .toList();
+                                  // Return an empty Container when the document does not exist.
+                                  if (snapshot.data!.isEmpty) {
+                                    return Container();
+                                  }
+                                  final swipeableStackUsersRecord =
+                                      swipeableStackUsersRecordList.isNotEmpty
+                                          ? swipeableStackUsersRecordList.first
+                                          : null;
+                                  return FlutterFlowSwipeableStack(
+                                    topCardHeightFraction: 0.72,
+                                    middleCardHeightFraction: 0.68,
+                                    botttomCardHeightFraction: 0.75,
+                                    topCardWidthFraction: 0.9,
+                                    middleCardWidthFraction: 0.85,
+                                    botttomCardWidthFraction: 0.8,
+                                    onSwipeFn: (index) {},
+                                    onLeftSwipe: (index) async {
+                                      // addToDislikedLike
+
+                                      final usersUpdateData = {
+                                        'disliked': FieldValue.arrayUnion([
+                                          swipeableStackUsersRecord!.reference
+                                        ]),
+                                      };
+                                      await currentUserReference!
+                                          .update(usersUpdateData);
+                                      await Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 300),
+                                          reverseDuration:
+                                              Duration(milliseconds: 300),
+                                          child: NavBarPage(
+                                              initialPage: 'HomeView'),
+                                        ),
                                       );
-                                    }
-                                    return FlutterFlowSwipeableStack(
-                                      topCardHeightFraction: 0.72,
-                                      middleCardHeightFraction: 0.68,
-                                      botttomCardHeightFraction: 0.75,
-                                      topCardWidthFraction: 0.9,
-                                      middleCardWidthFraction: 0.85,
-                                      botttomCardWidthFraction: 0.8,
-                                      onSwipeFn: (index) {},
-                                      onLeftSwipe: (index) async {
-                                        // addToDislikedLike
+                                    },
+                                    onRightSwipe: (index) async {
+                                      // addToLikedList
 
-                                        final userProfilesUpdateData = {
-                                          'disliked': FieldValue.arrayUnion(
-                                              [cleanedList[index]!.user]),
-                                        };
-                                        await columnUserProfilesRecord!
-                                            .reference
-                                            .update(userProfilesUpdateData);
-                                        await Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            reverseDuration:
-                                                Duration(milliseconds: 300),
-                                            child: NavBarPage(
-                                                initialPage: 'HomeView'),
-                                          ),
-                                        );
-                                      },
-                                      onRightSwipe: (index) async {
-                                        // addToLikedList
-
-                                        final userProfilesUpdateData = {
-                                          'liked': FieldValue.arrayUnion(
-                                              [cleanedList[index]!.user]),
-                                        };
-                                        await columnUserProfilesRecord!
-                                            .reference
-                                            .update(userProfilesUpdateData);
-                                        await Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                            type: PageTransitionType.fade,
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            reverseDuration:
-                                                Duration(milliseconds: 300),
-                                            child: NavBarPage(
-                                                initialPage: 'HomeView'),
-                                          ),
-                                        );
-                                      },
-                                      onUpSwipe: (index) {},
-                                      onDownSwipe: (index) {},
-                                      itemBuilder: (context, cleanedListIndex) {
-                                        final cleanedListItem =
-                                            cleanedList[cleanedListIndex];
-                                        return StreamBuilder<UsersRecord>(
-                                          stream: UsersRecord.getDocument(
-                                              cleanedListItem.user!),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50,
-                                                  height: 50,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryColor,
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            final cardUsersRecord =
-                                                snapshot.data!;
-                                            return Card(
+                                      final usersUpdateData = {
+                                        'liked': FieldValue.arrayUnion([
+                                          swipeableStackUsersRecord!.reference
+                                        ]),
+                                      };
+                                      await currentUserReference!
+                                          .update(usersUpdateData);
+                                      await Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                          type: PageTransitionType.fade,
+                                          duration: Duration(milliseconds: 300),
+                                          reverseDuration:
+                                              Duration(milliseconds: 300),
+                                          child: NavBarPage(
+                                              initialPage: 'HomeView'),
+                                        ),
+                                      );
+                                    },
+                                    onUpSwipe: (index) {},
+                                    onDownSwipe: (index) {},
+                                    itemBuilder: (context, index) {
+                                      return [
+                                        () => Card(
                                               clipBehavior:
                                                   Clip.antiAliasWithSaveLayer,
                                               color: Colors.transparent,
@@ -458,10 +428,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                               valueOrDefault<
                                                                   String>(
                                                             functions.getPhotosListValue(
-                                                                cleanedListItem
+                                                                swipeableStackUsersRecord!
                                                                     .photos!
                                                                     .toList(),
-                                                                0),
+                                                                random_data
+                                                                    .randomInteger(
+                                                                        0, 10)),
                                                             'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                           ),
                                                           width: MediaQuery.of(
@@ -507,9 +479,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                               child:
                                                                   HomeDetailsViewWidget(
                                                                 userProfile:
-                                                                    cleanedListItem,
-                                                                myProfile:
-                                                                    columnUserProfilesRecord,
+                                                                    swipeableStackUsersRecord,
                                                               ),
                                                             ),
                                                           );
@@ -628,7 +598,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            '${functions.geoDistance(cardUsersRecord.geoposition, currentUserLocationValue).toString()} kms',
+                                                                            '${functions.geoDistance(swipeableStackUsersRecord!.geoposition, currentUserLocationValue).toString()} kms',
                                                                             style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                   fontFamily: 'Roboto',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
@@ -704,7 +674,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            cleanedListItem.photos!.toList().length.toString(),
+                                                                            swipeableStackUsersRecord!.photos!.toList().length.toString(),
                                                                             style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                   fontFamily: 'Roboto',
                                                                                   color: FlutterFlowTheme.of(context).primaryColor,
@@ -805,7 +775,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                               child: Padding(
                                                                                 padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                                                                                 child: Text(
-                                                                                  cleanedListItem.intention!,
+                                                                                  swipeableStackUsersRecord!.intention!,
                                                                                   style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                         fontFamily: 'Roboto',
                                                                                         color: FlutterFlowTheme.of(context).alternate,
@@ -858,7 +828,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                     );
                                                                   },
                                                                   child: Text(
-                                                                    '${cleanedListItem.firstName}, ${functions.getAge(cleanedListItem.birthDay).toString()}',
+                                                                    '${swipeableStackUsersRecord!.firstName}, ${functions.getAge(currentUserDocument!.birthDay).toString()}',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .title2
@@ -882,7 +852,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                             0,
                                                                             8),
                                                                 child: Text(
-                                                                  '${cleanedListItem.industry}, ${cleanedListItem.occupation}',
+                                                                  '${swipeableStackUsersRecord!.industry}, ${swipeableStackUsersRecord!.occupation}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .subtitle1
@@ -897,7 +867,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                 ),
                                                               ),
                                                               Text(
-                                                                cleanedListItem
+                                                                swipeableStackUsersRecord!
                                                                     .bio!,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
@@ -923,19 +893,17 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                   ),
                                                 ],
                                               ),
-                                            );
-                                          },
-                                        );
-                                      },
-                                      itemCount: cleanedList.length,
-                                      controller: swipeableStackController,
-                                      enableSwipeUp: false,
-                                      enableSwipeDown: false,
-                                    );
-                                  },
-                                ),
-                              );
-                            },
+                                            ),
+                                      ][index]();
+                                    },
+                                    itemCount: 1,
+                                    controller: swipeableStackController,
+                                    enableSwipeUp: false,
+                                    enableSwipeDown: false,
+                                  );
+                                },
+                              ),
+                            ),
                           ),
                           Align(
                             alignment: AlignmentDirectional(0, 1),

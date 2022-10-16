@@ -2644,7 +2644,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2653,36 +2653,11 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  child: Stack(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Container(
-                                          width: 30,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Icon(
-                                          Icons.alternate_email,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                Image.asset(
+                                  'assets/images/imgEmail.png',
+                                  width: 28,
+                                  height: 28,
+                                  fit: BoxFit.cover,
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -2719,7 +2694,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -2728,36 +2703,11 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  child: Stack(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Container(
-                                          width: 30,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Icon(
-                                          Icons.phone_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                Image.asset(
+                                  'assets/images/imgPhone.png',
+                                  width: 28,
+                                  height: 28,
+                                  fit: BoxFit.cover,
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -2803,36 +2753,11 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 30,
-                                  height: 30,
-                                  child: Stack(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Container(
-                                          width: 30,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Icon(
-                                          Icons.lock_outlined,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          size: 20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                Image.asset(
+                                  'assets/images/imgChangePassword.png',
+                                  width: 28,
+                                  height: 28,
+                                  fit: BoxFit.cover,
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(

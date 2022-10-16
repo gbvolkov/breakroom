@@ -803,17 +803,78 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             .getDocumentFromData(
                                                 userProfilesCreateData,
                                                 userProfilesRecordReference);
-                                        await actions
-                                            .initializeUserProfileState(
-                                          userProfile!,
+                                        await actions.initializeUserDataState(
+                                          valueOrDefault(
+                                              currentUserDocument?.bodyType,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.childfreeStatus,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.drinkingStatus,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.education,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.gender, ''),
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.genderPreference,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.height, 0),
+                                          valueOrDefault(
+                                              currentUserDocument?.weight, 0),
+                                          valueOrDefault(
+                                              currentUserDocument?.intention,
+                                              ''),
+                                          (currentUserDocument?.lookingFor
+                                                      ?.toList() ??
+                                                  [])
+                                              .toList(),
+                                          valueOrDefault(
+                                              currentUserDocument?.religion,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.smokingStatus,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.spiritualStatus,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.workoutStatus,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.firstName,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.lastName,
+                                              ''),
+                                          currentUserDocument!.birthDay,
+                                          valueOrDefault(
+                                              currentUserDocument?.bio, ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.industry,
+                                              ''),
+                                          valueOrDefault(
+                                              currentUserDocument?.occupation,
+                                              ''),
+                                          (currentUserDocument?.interests
+                                                      ?.toList() ??
+                                                  [])
+                                              .toList(),
                                         );
                                         await Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                CreateProfileViewWidget(
-                                              userProfile: userProfile,
-                                            ),
+                                                CreateProfileViewWidget(),
                                           ),
                                         );
 

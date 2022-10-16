@@ -92,26 +92,18 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EndDrawerTest': (data) async => EndDrawerTestWidget(),
   'PageViewTest': (data) async => PageViewTestWidget(),
   'ForgotPasswordView': (data) async => ForgotPasswordViewWidget(),
-  'CreateProfileView': (data) async => CreateProfileViewWidget(
-        userProfile: await getDocumentParameter(
-            data, 'userProfile', UserProfilesRecord.serializer),
-      ),
+  'CreateProfileView': (data) async => CreateProfileViewWidget(),
   'SignUpView': (data) async => SignUpViewWidget(
         email: getParameter(data, 'email'),
       ),
   'HomeDetailsView': (data) async => HomeDetailsViewWidget(
         userProfile: await getDocumentParameter(
-            data, 'userProfile', UserProfilesRecord.serializer),
-        myProfile: await getDocumentParameter(
-            data, 'myProfile', UserProfilesRecord.serializer),
+            data, 'userProfile', UsersRecord.serializer),
       ),
-  'EditProfileNewView': (data) async => EditProfileNewViewWidget(
-        userProfile: await getDocumentParameter(
-            data, 'userProfile', UserProfilesRecord.serializer),
-      ),
+  'EditProfileNewView': (data) async => EditProfileNewViewWidget(),
   'FiltersView': (data) async => FiltersViewWidget(
         filter: await getDocumentParameter(
-            data, 'filter', FlitersRecord.serializer),
+            data, 'filter', FiltersRecord.serializer),
       ),
   'GetPremiumView': (data) async => GetPremiumViewWidget(),
   'LoginSetNewPasswordView': (data) async => LoginSetNewPasswordViewWidget(),
@@ -136,6 +128,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'LoginDetailsView': (data) async => LoginDetailsViewWidget(),
   'NotificationSettingsView': (data) async => NotificationSettingsViewWidget(),
   'PrivacyAndPolicyView': (data) async => PrivacyAndPolicyViewWidget(),
+  'tmp_UserMgmt': (data) async => TmpUserMgmtWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

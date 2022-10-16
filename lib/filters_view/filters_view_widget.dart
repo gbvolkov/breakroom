@@ -18,7 +18,7 @@ class FiltersViewWidget extends StatefulWidget {
     this.filter,
   }) : super(key: key);
 
-  final FlitersRecord? filter;
+  final FiltersRecord? filter;
 
   @override
   _FiltersViewWidgetState createState() => _FiltersViewWidgetState();
@@ -985,8 +985,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         0, 0, 0, 16),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        final flitersUpdateData = {
-                                          ...createFlitersRecordData(
+                                        final filtersUpdateData = {
+                                          ...createFiltersRecordData(
                                             ageRangeExt:
                                                 FFAppState().fltrAgeRangeExt,
                                             location: FFAppState().fltrLocation,
@@ -1004,7 +1004,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               FFAppState().fltrIndusrtries,
                                         };
                                         await widget.filter!.reference
-                                            .update(flitersUpdateData);
+                                            .update(filtersUpdateData);
                                         await pageViewController?.previousPage(
                                           duration: Duration(milliseconds: 300),
                                           curve: Curves.ease,

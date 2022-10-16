@@ -14,7 +14,7 @@ class ProfileBottomSheetWidget extends StatefulWidget {
     this.userProfile,
   }) : super(key: key);
 
-  final UserProfilesRecord? userProfile;
+  final UsersRecord? userProfile;
 
   @override
   _ProfileBottomSheetWidgetState createState() =>

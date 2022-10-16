@@ -27,6 +27,54 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   LatLng? get geoposition;
 
+  String? get firstName;
+
+  String? get lastName;
+
+  DateTime? get birthDay;
+
+  String? get industry;
+
+  String? get occupation;
+
+  String? get bio;
+
+  String? get gender;
+
+  String? get genderPreference;
+
+  String? get intention;
+
+  String? get childfreeStatus;
+
+  String? get religion;
+
+  String? get education;
+
+  String? get bodyType;
+
+  BuiltList<String>? get interests;
+
+  BuiltList<String>? get lookingFor;
+
+  int? get height;
+
+  int? get weight;
+
+  String? get workoutStatus;
+
+  String? get drinkingStatus;
+
+  String? get smokingStatus;
+
+  String? get spiritualStatus;
+
+  BuiltList<PhotoStruct>? get photos;
+
+  BuiltList<DocumentReference>? get liked;
+
+  BuiltList<DocumentReference>? get disliked;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -36,7 +84,30 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..displayName = ''
     ..photoUrl = ''
     ..uid = ''
-    ..phoneNumber = '';
+    ..phoneNumber = ''
+    ..firstName = ''
+    ..lastName = ''
+    ..industry = ''
+    ..occupation = ''
+    ..bio = ''
+    ..gender = ''
+    ..genderPreference = ''
+    ..intention = ''
+    ..childfreeStatus = ''
+    ..religion = ''
+    ..education = ''
+    ..bodyType = ''
+    ..interests = ListBuilder()
+    ..lookingFor = ListBuilder()
+    ..height = 0
+    ..weight = 0
+    ..workoutStatus = ''
+    ..drinkingStatus = ''
+    ..smokingStatus = ''
+    ..spiritualStatus = ''
+    ..photos = ListBuilder()
+    ..liked = ListBuilder()
+    ..disliked = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -67,6 +138,25 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? createdTime,
   String? phoneNumber,
   LatLng? geoposition,
+  String? firstName,
+  String? lastName,
+  DateTime? birthDay,
+  String? industry,
+  String? occupation,
+  String? bio,
+  String? gender,
+  String? genderPreference,
+  String? intention,
+  String? childfreeStatus,
+  String? religion,
+  String? education,
+  String? bodyType,
+  int? height,
+  int? weight,
+  String? workoutStatus,
+  String? drinkingStatus,
+  String? smokingStatus,
+  String? spiritualStatus,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -78,7 +168,31 @@ Map<String, dynamic> createUsersRecordData({
         ..uid = uid
         ..createdTime = createdTime
         ..phoneNumber = phoneNumber
-        ..geoposition = geoposition,
+        ..geoposition = geoposition
+        ..firstName = firstName
+        ..lastName = lastName
+        ..birthDay = birthDay
+        ..industry = industry
+        ..occupation = occupation
+        ..bio = bio
+        ..gender = gender
+        ..genderPreference = genderPreference
+        ..intention = intention
+        ..childfreeStatus = childfreeStatus
+        ..religion = religion
+        ..education = education
+        ..bodyType = bodyType
+        ..interests = null
+        ..lookingFor = null
+        ..height = height
+        ..weight = weight
+        ..workoutStatus = workoutStatus
+        ..drinkingStatus = drinkingStatus
+        ..smokingStatus = smokingStatus
+        ..spiritualStatus = spiritualStatus
+        ..photos = null
+        ..liked = null
+        ..disliked = null,
     ),
   );
 

@@ -49,3 +49,4 @@ export 'notification_settings_view/notification_settings_view_widget.dart'
     show NotificationSettingsViewWidget;
 export 'privacy_and_policy_view/privacy_and_policy_view_widget.dart'
     show PrivacyAndPolicyViewWidget;
+export 'tmp_user_mgmt/tmp_user_mgmt_widget.dart' show TmpUserMgmtWidget;

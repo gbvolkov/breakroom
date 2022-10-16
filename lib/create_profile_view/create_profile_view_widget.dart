@@ -16,12 +16,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateProfileViewWidget extends StatefulWidget {
-  const CreateProfileViewWidget({
-    Key? key,
-    this.userProfile,
-  }) : super(key: key);
-
-  final UserProfilesRecord? userProfile;
+  const CreateProfileViewWidget({Key? key}) : super(key: key);
 
   @override
   _CreateProfileViewWidgetState createState() =>
@@ -47,13 +42,14 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
       setState(() => FFAppState().usrFirstName = FFAppState().usrFirstName);
     });
 
-    txtBioController = TextEditingController(text: widget.userProfile!.bio);
-    txtFirstNameController =
-        TextEditingController(text: widget.userProfile!.firstName);
-    txtSecondNameController =
-        TextEditingController(text: widget.userProfile!.lastName);
-    txtOccupationController =
-        TextEditingController(text: widget.userProfile!.occupation);
+    txtBioController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.bio, ''));
+    txtFirstNameController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.firstName, ''));
+    txtSecondNameController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.lastName, ''));
+    txtOccupationController = TextEditingController(
+        text: valueOrDefault(currentUserDocument?.occupation, ''));
   }
 
   @override
@@ -164,47 +160,49 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: TextFormField(
-                                controller: txtFirstNameController,
-                                autofocus: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelStyle:
-                                      FlutterFlowTheme.of(context).subtitle2,
-                                  hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                              child: AuthUserStreamWidget(
+                                child: TextFormField(
+                                  controller: txtFirstNameController,
+                                  autofocus: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelStyle:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                    hintStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedErrorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    filled: true,
+                                    fillColor: Color(0xFFEFEFEF),
                                   ),
-                                  filled: true,
-                                  fillColor: Color(0xFFEFEFEF),
+                                  style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
-                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
                             ),
                             Align(
@@ -227,47 +225,49 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: TextFormField(
-                                controller: txtSecondNameController,
-                                autofocus: true,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  labelStyle:
-                                      FlutterFlowTheme.of(context).subtitle2,
-                                  hintStyle:
-                                      FlutterFlowTheme.of(context).bodyText2,
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                              child: AuthUserStreamWidget(
+                                child: TextFormField(
+                                  controller: txtSecondNameController,
+                                  autofocus: true,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelStyle:
+                                        FlutterFlowTheme.of(context).subtitle2,
+                                    hintStyle:
+                                        FlutterFlowTheme.of(context).bodyText2,
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                    errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedErrorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 1,
+                                    focusedErrorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    filled: true,
+                                    fillColor: Color(0xFFEFEFEF),
                                   ),
-                                  filled: true,
-                                  fillColor: Color(0xFFEFEFEF),
+                                  style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
-                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
                             ),
                             Align(
@@ -442,59 +442,61 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                             ),
-                            TextFormField(
-                              controller: txtOccupationController,
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).subtitle2,
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                            AuthUserStreamWidget(
+                              child: TextFormField(
+                                controller: txtOccupationController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelStyle:
+                                      FlutterFlowTheme.of(context).subtitle2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
                                   ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  filled: true,
+                                  fillColor: Color(0xFFEFEFEF),
                                 ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
-                                  ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor: Color(0xFFEFEFEF),
+                                style: FlutterFlowTheme.of(context).subtitle1,
                               ),
-                              style: FlutterFlowTheme.of(context).subtitle1,
                             ),
                             Align(
                               alignment: AlignmentDirectional(-1, 0),
@@ -513,48 +515,50 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                             ),
-                            TextFormField(
-                              controller: txtBioController,
-                              autofocus: true,
-                              obscureText: false,
-                              decoration: InputDecoration(
-                                labelStyle:
-                                    FlutterFlowTheme.of(context).subtitle2,
-                                hintStyle:
-                                    FlutterFlowTheme.of(context).bodyText2,
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                            AuthUserStreamWidget(
+                              child: TextFormField(
+                                controller: txtBioController,
+                                autofocus: true,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelStyle:
+                                      FlutterFlowTheme.of(context).subtitle2,
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                errorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedErrorBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Color(0x00000000),
-                                    width: 1,
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
+                                  filled: true,
+                                  fillColor: Color(0xFFEFEFEF),
                                 ),
-                                filled: true,
-                                fillColor: Color(0xFFEFEFEF),
+                                style: FlutterFlowTheme.of(context).subtitle1,
+                                maxLines: 4,
                               ),
-                              style: FlutterFlowTheme.of(context).subtitle1,
-                              maxLines: 4,
                             ),
                             Align(
                               alignment: AlignmentDirectional(1, 0),
@@ -664,29 +668,21 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                                child: InkWell(
-                                  onTap: () async {
-                                    setState(() => FFAppState().usrGender =
-                                        FFAppState().mrbSelectedValue);
-                                  },
-                                  child: Container(
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 50,
+                                  child: custom_widgets.MyRadioButton(
                                     width: MediaQuery.of(context).size.width,
                                     height: 50,
-                                    child: custom_widgets.MyRadioButton(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      buttonLabels:
-                                          FFAppState().genders.toList(),
-                                      buttonValues:
-                                          FFAppState().genders.toList(),
-                                      horizontal: false,
-                                      buttonHeight: 50.0,
-                                      defaultSelected: FFAppState().usrGender,
-                                      onValue: () async {
-                                        setState(() => FFAppState().usrGender =
-                                            FFAppState().mrbSelectedValue);
-                                      },
-                                    ),
+                                    buttonLabels: FFAppState().genders.toList(),
+                                    buttonValues: FFAppState().genders.toList(),
+                                    horizontal: false,
+                                    buttonHeight: 50.0,
+                                    defaultSelected: FFAppState().usrGender,
+                                    onValue: () async {
+                                      setState(() => FFAppState().usrGender =
+                                          FFAppState().mrbSelectedValue);
+                                    },
                                   ),
                                 ),
                               ),
@@ -1252,76 +1248,81 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                             child: Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: FutureBuilder<List<InterestsRecord>>(
-                                future: queryInterestsRecordOnce(
-                                  queryBuilder: (interestsRecord) =>
-                                      interestsRecord.orderBy('interest'),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: CircularProgressIndicator(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<InterestsRecord>
-                                      choiceChipsInterestsRecordList =
-                                      snapshot.data!;
-                                  return FlutterFlowChoiceChips(
-                                    initiallySelected:
-                                        widget.userProfile!.interests!.toList(),
-                                    options: choiceChipsInterestsRecordList
-                                        .map((e) => e.interest!)
-                                        .toList()
-                                        .map((label) => ChipData(label))
-                                        .toList(),
-                                    onChanged: (val) =>
-                                        setState(() => choiceChipsValues = val),
-                                    selectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Roboto',
+                              child: AuthUserStreamWidget(
+                                child: FutureBuilder<List<InterestsRecord>>(
+                                  future: queryInterestsRecordOnce(
+                                    queryBuilder: (interestsRecord) =>
+                                        interestsRecord.orderBy('interest'),
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: CircularProgressIndicator(
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryBtnText,
+                                                .primaryColor,
                                           ),
-                                      iconColor: Colors.white,
-                                      iconSize: 18,
-                                      labelPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              16, 0, 16, 8),
-                                      elevation: 0,
-                                    ),
-                                    unselectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
-                                      iconColor: Color(0xFF323B45),
-                                      iconSize: 18,
-                                      labelPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              16, 8, 16, 8),
-                                      elevation: 0,
-                                    ),
-                                    chipSpacing: 15,
-                                    rowSpacing: 10,
-                                    multiselect: true,
-                                    initialized: choiceChipsValues != null,
-                                    alignment: WrapAlignment.start,
-                                  );
-                                },
+                                        ),
+                                      );
+                                    }
+                                    List<InterestsRecord>
+                                        choiceChipsInterestsRecordList =
+                                        snapshot.data!;
+                                    return FlutterFlowChoiceChips(
+                                      initiallySelected: (currentUserDocument
+                                              ?.interests
+                                              ?.toList() ??
+                                          []),
+                                      options: choiceChipsInterestsRecordList
+                                          .map((e) => e.interest!)
+                                          .toList()
+                                          .map((label) => ChipData(label))
+                                          .toList(),
+                                      onChanged: (val) => setState(
+                                          () => choiceChipsValues = val),
+                                      selectedChipStyle: ChipStyle(
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBtnText,
+                                            ),
+                                        iconColor: Colors.white,
+                                        iconSize: 18,
+                                        labelPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                16, 0, 16, 8),
+                                        elevation: 0,
+                                      ),
+                                      unselectedChipStyle: ChipStyle(
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                        iconColor: Color(0xFF323B45),
+                                        iconSize: 18,
+                                        labelPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                16, 8, 16, 8),
+                                        elevation: 0,
+                                      ),
+                                      chipSpacing: 15,
+                                      rowSpacing: 10,
+                                      multiselect: true,
+                                      initialized: choiceChipsValues != null,
+                                      alignment: WrapAlignment.start,
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ),
@@ -1395,52 +1396,24 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           ),
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
-                            child: InkWell(
-                              onTap: () async {
-                                setState(() => FFAppState()
-                                        .lookingForSelection =
-                                    FFAppState().lookingForSelection.toList());
-                                setState(() => FFAppState().selectedValues =
-                                    FFAppState().selectedValues.toList());
-                                await showDialog(
-                                  context: context,
-                                  builder: (alertDialogContext) {
-                                    return AlertDialog(
-                                      title: Text('HoHoHo'),
-                                      content: Text('222'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(alertDialogContext),
-                                          child: Text('Ok'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: Container(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.35,
+                              child: custom_widgets.MyCheckBoxGroup(
                                 width: MediaQuery.of(context).size.width,
                                 height:
                                     MediaQuery.of(context).size.height * 0.35,
-                                child: custom_widgets.MyCheckBoxGroup(
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.35,
-                                  buttonLabels:
-                                      FFAppState().lookingForList.toList(),
-                                  buttonValues:
-                                      FFAppState().lookingForList.toList(),
-                                  horizontal: true,
-                                  defaultSelected:
-                                      FFAppState().usrLookingFor.toList(),
-                                  onValue: () async {
-                                    setState(() => FFAppState().usrLookingFor =
-                                        FFAppState()
-                                            .mcbSelectedValues
-                                            .toList());
-                                  },
-                                ),
+                                buttonLabels:
+                                    FFAppState().lookingForList.toList(),
+                                buttonValues:
+                                    FFAppState().lookingForList.toList(),
+                                horizontal: true,
+                                defaultSelected:
+                                    FFAppState().usrLookingFor.toList(),
+                                onValue: () async {
+                                  setState(() => FFAppState().usrLookingFor =
+                                      FFAppState().mcbSelectedValues.toList());
+                                },
                               ),
                             ),
                           ),
@@ -1804,8 +1777,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      final userProfilesUpdateData = {
-                                        ...createUserProfilesRecordData(
+                                      final usersUpdateData = {
+                                        ...createUsersRecordData(
                                           firstName:
                                               txtFirstNameController!.text,
                                           lastName:
@@ -1834,19 +1807,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                               FFAppState().usrSmokingStatus,
                                           spiritualStatus:
                                               FFAppState().usrSpiritualStatus,
+                                          displayName:
+                                              '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
                                         ),
                                         'interests': FFAppState().usrInterests,
                                         'lookingFor':
                                             FFAppState().usrLookingFor,
                                       };
-                                      await widget.userProfile!.reference
-                                          .update(userProfilesUpdateData);
-
-                                      final usersUpdateData =
-                                          createUsersRecordData(
-                                        displayName:
-                                            '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
-                                      );
                                       await currentUserReference!
                                           .update(usersUpdateData);
                                       await Navigator.push(
