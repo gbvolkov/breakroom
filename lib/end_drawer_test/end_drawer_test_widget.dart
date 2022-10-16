@@ -38,35 +38,52 @@ class _EndDrawerTestWidgetState extends State<EndDrawerTestWidget> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: FFButtonWidget(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                PageTransition(
-                  type: PageTransitionType.rightToLeft,
-                  duration: Duration(milliseconds: 300),
-                  reverseDuration: Duration(milliseconds: 300),
-                  child: PageTestWidget(
-                    swipeAction: 'left',
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              FFButtonWidget(
+                onPressed: () async {
+                  await Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      duration: Duration(milliseconds: 300),
+                      reverseDuration: Duration(milliseconds: 300),
+                      child: PageTestWidget(
+                        swipeAction: 'left',
+                      ),
+                    ),
+                  );
+                },
+                text: 'Button',
+                options: FFButtonOptions(
+                  width: 130,
+                  height: 40,
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                        fontFamily: 'Roboto',
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                  borderSide: BorderSide(
+                    color: Colors.transparent,
+                    width: 1,
                   ),
+                  borderRadius: BorderRadius.circular(8),
                 ),
-              );
-            },
-            text: 'Button',
-            options: FFButtonOptions(
-              width: 130,
-              height: 40,
-              color: FlutterFlowTheme.of(context).primaryColor,
-              textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-                    fontFamily: 'Roboto',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                  ),
-              borderSide: BorderSide(
-                color: Colors.transparent,
-                width: 1,
               ),
-              borderRadius: BorderRadius.circular(8),
-            ),
+              Container(
+                width: 120,
+                height: 120,
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                child: Image.network(
+                  'https://picsum.photos/seed/32/600',
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ],
           ),
         ),
       ),

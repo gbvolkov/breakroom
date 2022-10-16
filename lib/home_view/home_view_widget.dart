@@ -1,7 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/profile_bottom_sheet_widget.dart';
-import '../filters_view/filters_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -10,7 +9,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../home_details_view/home_details_view_widget.dart';
 import '../introduction_view/introduction_view_widget.dart';
 import '../main.dart';
-import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -28,11 +26,10 @@ class HomeViewWidget extends StatefulWidget {
 }
 
 class _HomeViewWidgetState extends State<HomeViewWidget> {
-  FiltersRecord? newFilter;
-  String? choiceChipsValue;
-  late SwipeableCardSectionController swipeableStackController;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? choiceChipsValue;
+  late SwipeableCardSectionController swipeableStackController;
 
   @override
   void initState() {
@@ -93,125 +90,41 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                 return Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    StreamBuilder<List<FiltersRecord>>(
-                      stream: queryFiltersRecord(
-                        parent: currentUserReference,
-                        singleRecord: true,
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: CircularProgressIndicator(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => IntroductionViewWidget(),
                               ),
-                            ),
-                          );
-                        }
-                        List<FiltersRecord> rowFiltersRecordList =
-                            snapshot.data!;
-                        // Return an empty Container when the document does not exist.
-                        if (snapshot.data!.isEmpty) {
-                          return Container();
-                        }
-                        final rowFiltersRecord = rowFiltersRecordList.isNotEmpty
-                            ? rowFiltersRecordList.first
-                            : null;
-                        return Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        IntroductionViewWidget(),
-                                  ),
-                                );
-                              },
-                              child: Text(
-                                'BreakRoom',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 38,
-                                    ),
-                              ),
-                            ),
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              buttonSize: 48,
-                              icon: Icon(
-                                Icons.filter_alt_rounded,
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                size: 30,
-                              ),
-                              onPressed: () async {
-                                currentUserLocationValue =
-                                    await getCurrentUserLocation(
-                                        defaultLocation: LatLng(0.0, 0.0));
-                                if (rowFiltersRecord != null) {
-                                  await actions.initializeFilterState(
-                                    rowFiltersRecord,
-                                    columnUsersRecord,
-                                    currentUserLocationValue,
-                                  );
-                                } else {
-                                  final filtersCreateData = {
-                                    ...createFiltersRecordData(
-                                      ageRangeExt: false,
-                                      location: currentUserLocationValue,
-                                      distance: 50.0,
-                                      filterName: currentUserEmail,
-                                    ),
-                                    'lookingFor': [
-                                      valueOrDefault(
-                                          currentUserDocument?.genderPreference,
-                                          '')
-                                    ],
-                                    'industries': [
-                                      valueOrDefault(
-                                          currentUserDocument?.industry, '')
-                                    ],
-                                  };
-                                  var filtersRecordReference =
-                                      FiltersRecord.createDoc(
-                                          currentUserReference!);
-                                  await filtersRecordReference
-                                      .set(filtersCreateData);
-                                  newFilter = FiltersRecord.getDocumentFromData(
-                                      filtersCreateData,
-                                      filtersRecordReference);
-                                  await actions.initializeFilterState(
-                                    newFilter,
-                                    columnUsersRecord,
-                                    currentUserLocationValue,
-                                  );
-                                }
-
-                                await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => FiltersViewWidget(
-                                      filter: rowFiltersRecord,
-                                    ),
-                                  ),
-                                );
-
-                                setState(() {});
-                              },
-                            ),
-                          ],
-                        );
-                      },
+                            );
+                          },
+                          child: Text(
+                            'BreakRoom',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 38,
+                                ),
+                          ),
+                        ),
+                        FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30,
+                          buttonSize: 48,
+                          icon: Icon(
+                            Icons.filter_alt_rounded,
+                            color: FlutterFlowTheme.of(context).primaryText,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            print('IconButton pressed ...');
+                          },
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
