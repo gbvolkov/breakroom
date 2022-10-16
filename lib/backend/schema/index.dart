@@ -6,5 +6,6 @@ export '../../flutter_flow/lat_lng.dart';
 
 export 'structs/date_range_struct.dart';
 export 'structs/double_range_struct.dart';
+export 'structs/filter_struct.dart';
 export 'structs/int_range_struct.dart';
 export 'structs/photo_struct.dart';

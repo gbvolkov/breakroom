@@ -17,7 +17,11 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
   @override
   Iterable<Object?> serialize(Serializers serializers, UsersRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
+    final result = <Object?>[
+      'filter',
+      serializers.serialize(object.filter,
+          specifiedType: const FullType(FilterStruct)),
+    ];
     Object? value;
     value = object.email;
     if (value != null) {
@@ -223,25 +227,29 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(PhotoStruct)])));
     }
+    value = object.touched;
+    if (value != null) {
+      result
+        ..add('touched')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
     value = object.liked;
     if (value != null) {
       result
         ..add('liked')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltList, const [
-              const FullType(
-                  DocumentReference, const [const FullType.nullable(Object)])
-            ])));
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
     }
     value = object.disliked;
     if (value != null) {
       result
         ..add('disliked')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltList, const [
-              const FullType(
-                  DocumentReference, const [const FullType.nullable(Object)])
-            ])));
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
     }
     value = object.ffRef;
     if (value != null) {
@@ -387,19 +395,27 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
                       BuiltList, const [const FullType(PhotoStruct)]))!
               as BuiltList<Object?>);
           break;
+        case 'touched':
+          result.touched.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'filter':
+          result.filter.replace(serializers.deserialize(value,
+              specifiedType: const FullType(FilterStruct))! as FilterStruct);
+          break;
         case 'liked':
           result.liked.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(
-                    DocumentReference, const [const FullType.nullable(Object)])
-              ]))! as BuiltList<Object?>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'disliked':
           result.disliked.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(
-                    DocumentReference, const [const FullType.nullable(Object)])
-              ]))! as BuiltList<Object?>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
@@ -474,9 +490,13 @@ class _$UsersRecord extends UsersRecord {
   @override
   final BuiltList<PhotoStruct>? photos;
   @override
-  final BuiltList<DocumentReference<Object?>>? liked;
+  final BuiltList<String>? touched;
   @override
-  final BuiltList<DocumentReference<Object?>>? disliked;
+  final FilterStruct filter;
+  @override
+  final BuiltList<String>? liked;
+  @override
+  final BuiltList<String>? disliked;
   @override
   final DocumentReference<Object?>? ffRef;
 
@@ -513,10 +533,14 @@ class _$UsersRecord extends UsersRecord {
       this.smokingStatus,
       this.spiritualStatus,
       this.photos,
+      this.touched,
+      required this.filter,
       this.liked,
       this.disliked,
       this.ffRef})
-      : super._();
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(filter, r'UsersRecord', 'filter');
+  }
 
   @override
   UsersRecord rebuild(void Function(UsersRecordBuilder) updates) =>
@@ -558,6 +582,8 @@ class _$UsersRecord extends UsersRecord {
         smokingStatus == other.smokingStatus &&
         spiritualStatus == other.spiritualStatus &&
         photos == other.photos &&
+        touched == other.touched &&
+        filter == other.filter &&
         liked == other.liked &&
         disliked == other.disliked &&
         ffRef == other.ffRef;
@@ -583,23 +609,23 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode),
-                                                                                gender.hashCode),
-                                                                            genderPreference.hashCode),
-                                                                        intention.hashCode),
-                                                                    childfreeStatus.hashCode),
-                                                                religion.hashCode),
-                                                            education.hashCode),
-                                                        bodyType.hashCode),
-                                                    interests.hashCode),
-                                                lookingFor.hashCode),
-                                            height.hashCode),
-                                        weight.hashCode),
-                                    workoutStatus.hashCode),
-                                drinkingStatus.hashCode),
-                            smokingStatus.hashCode),
-                        spiritualStatus.hashCode),
-                    photos.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode),
+                                                                                intention.hashCode),
+                                                                            childfreeStatus.hashCode),
+                                                                        religion.hashCode),
+                                                                    education.hashCode),
+                                                                bodyType.hashCode),
+                                                            interests.hashCode),
+                                                        lookingFor.hashCode),
+                                                    height.hashCode),
+                                                weight.hashCode),
+                                            workoutStatus.hashCode),
+                                        drinkingStatus.hashCode),
+                                    smokingStatus.hashCode),
+                                spiritualStatus.hashCode),
+                            photos.hashCode),
+                        touched.hashCode),
+                    filter.hashCode),
                 liked.hashCode),
             disliked.hashCode),
         ffRef.hashCode));
@@ -637,6 +663,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('smokingStatus', smokingStatus)
           ..add('spiritualStatus', spiritualStatus)
           ..add('photos', photos)
+          ..add('touched', touched)
+          ..add('filter', filter)
           ..add('liked', liked)
           ..add('disliked', disliked)
           ..add('ffRef', ffRef))
@@ -774,17 +802,24 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _$this._photos ??= new ListBuilder<PhotoStruct>();
   set photos(ListBuilder<PhotoStruct>? photos) => _$this._photos = photos;
 
-  ListBuilder<DocumentReference<Object?>>? _liked;
-  ListBuilder<DocumentReference<Object?>> get liked =>
-      _$this._liked ??= new ListBuilder<DocumentReference<Object?>>();
-  set liked(ListBuilder<DocumentReference<Object?>>? liked) =>
-      _$this._liked = liked;
+  ListBuilder<String>? _touched;
+  ListBuilder<String> get touched =>
+      _$this._touched ??= new ListBuilder<String>();
+  set touched(ListBuilder<String>? touched) => _$this._touched = touched;
 
-  ListBuilder<DocumentReference<Object?>>? _disliked;
-  ListBuilder<DocumentReference<Object?>> get disliked =>
-      _$this._disliked ??= new ListBuilder<DocumentReference<Object?>>();
-  set disliked(ListBuilder<DocumentReference<Object?>>? disliked) =>
-      _$this._disliked = disliked;
+  FilterStructBuilder? _filter;
+  FilterStructBuilder get filter =>
+      _$this._filter ??= new FilterStructBuilder();
+  set filter(FilterStructBuilder? filter) => _$this._filter = filter;
+
+  ListBuilder<String>? _liked;
+  ListBuilder<String> get liked => _$this._liked ??= new ListBuilder<String>();
+  set liked(ListBuilder<String>? liked) => _$this._liked = liked;
+
+  ListBuilder<String>? _disliked;
+  ListBuilder<String> get disliked =>
+      _$this._disliked ??= new ListBuilder<String>();
+  set disliked(ListBuilder<String>? disliked) => _$this._disliked = disliked;
 
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
@@ -826,6 +861,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _smokingStatus = $v.smokingStatus;
       _spiritualStatus = $v.spiritualStatus;
       _photos = $v.photos?.toBuilder();
+      _touched = $v.touched?.toBuilder();
+      _filter = $v.filter.toBuilder();
       _liked = $v.liked?.toBuilder();
       _disliked = $v.disliked?.toBuilder();
       _ffRef = $v.ffRef;
@@ -882,6 +919,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               smokingStatus: smokingStatus,
               spiritualStatus: spiritualStatus,
               photos: _photos?.build(),
+              touched: _touched?.build(),
+              filter: filter.build(),
               liked: _liked?.build(),
               disliked: _disliked?.build(),
               ffRef: ffRef);
@@ -895,6 +934,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
 
         _$failedField = 'photos';
         _photos?.build();
+        _$failedField = 'touched';
+        _touched?.build();
+        _$failedField = 'filter';
+        filter.build();
         _$failedField = 'liked';
         _liked?.build();
         _$failedField = 'disliked';

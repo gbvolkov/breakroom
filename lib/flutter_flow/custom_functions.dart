@@ -117,14 +117,14 @@ List<DocumentReference> concatUsersList(
 
 List<UsersRecord> filterMatches(
   List<UsersRecord> fans,
-  List<DocumentReference>? liked,
+  List<String>? liked,
 ) {
   List<UsersRecord> result = [];
   if (liked == null) {
     return result;
   }
   for (var fan in fans) {
-    if (liked.contains(fan.reference)) {
+    if (liked.contains(fan.uid)) {
       result.add(fan);
     }
   }
@@ -175,4 +175,11 @@ bool isEmailValid(String email) {
   email = email.trim();
 
   return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+}
+
+List<DocumentReference> createChatUsersList(
+  DocumentReference userRef1,
+  DocumentReference userRef2,
+) {
+  return [userRef1, userRef1];
 }

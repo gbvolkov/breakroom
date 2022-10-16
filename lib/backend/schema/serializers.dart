@@ -31,6 +31,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   DateRangeStruct,
   IntRangeStruct,
   DoubleRangeStruct,
+  FilterStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())

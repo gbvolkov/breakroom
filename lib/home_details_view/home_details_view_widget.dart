@@ -655,10 +655,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                           ),
                                           onPressed: () async {
                                             final usersUpdateData = {
-                                              'disliked':
-                                                  FieldValue.arrayUnion([
-                                                widget.userProfile!.reference
-                                              ]),
+                                              'disliked': FieldValue.arrayUnion(
+                                                  [widget.userProfile!.uid]),
                                             };
                                             await currentUserReference!
                                                 .update(usersUpdateData);
@@ -787,9 +785,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                           ),
                                           onPressed: () async {
                                             final usersUpdateData = {
-                                              'liked': FieldValue.arrayUnion([
-                                                widget.userProfile!.reference
-                                              ]),
+                                              'liked': FieldValue.arrayUnion(
+                                                  [widget.userProfile!.uid]),
                                             };
                                             await currentUserReference!
                                                 .update(usersUpdateData);

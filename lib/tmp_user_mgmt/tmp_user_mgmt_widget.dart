@@ -1,10 +1,7 @@
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -59,8 +56,8 @@ class _TmpUserMgmtWidgetState extends State<TmpUserMgmtWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: StreamBuilder<List<UserProfilesRecord>>(
-                  stream: queryUserProfilesRecord(),
+                child: StreamBuilder<List<UsersRecord>>(
+                  stream: queryUsersRecord(),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
                     if (!snapshot.hasData) {
@@ -74,84 +71,21 @@ class _TmpUserMgmtWidgetState extends State<TmpUserMgmtWidget> {
                         ),
                       );
                     }
-                    List<UserProfilesRecord> listViewUserProfilesRecordList =
-                        snapshot.data!;
+                    List<UsersRecord> listViewUsersRecordList = snapshot.data!;
                     return ListView.builder(
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
-                      itemCount: listViewUserProfilesRecordList.length,
+                      itemCount: listViewUsersRecordList.length,
                       itemBuilder: (context, listViewIndex) {
-                        final listViewUserProfilesRecord =
-                            listViewUserProfilesRecordList[listViewIndex];
-                        return InkWell(
-                          onTap: () async {
-                            final usersUpdateData = {
-                              ...createUsersRecordData(
-                                displayName:
-                                    '${listViewUserProfilesRecord.firstName}, ${functions.getAge(listViewUserProfilesRecord.birthDay).toString()}',
-                                firstName: listViewUserProfilesRecord.firstName,
-                                lastName: listViewUserProfilesRecord.lastName,
-                                birthDay: listViewUserProfilesRecord.birthDay,
-                                industry: listViewUserProfilesRecord.industry,
-                                occupation:
-                                    listViewUserProfilesRecord.occupation,
-                                bio: listViewUserProfilesRecord.bio,
-                                gender: listViewUserProfilesRecord.gender,
-                                genderPreference:
-                                    listViewUserProfilesRecord.genderPreference,
-                                intention: listViewUserProfilesRecord.intention,
-                                childfreeStatus:
-                                    listViewUserProfilesRecord.childfreeStatus,
-                                religion: listViewUserProfilesRecord.religion,
-                                education: listViewUserProfilesRecord.education,
-                                bodyType: listViewUserProfilesRecord.bodyType,
-                                height: listViewUserProfilesRecord.height,
-                                weight: listViewUserProfilesRecord.weight,
-                                workoutStatus:
-                                    listViewUserProfilesRecord.workoutStatus,
-                                drinkingStatus:
-                                    listViewUserProfilesRecord.drinkingStatus,
-                                smokingStatus:
-                                    listViewUserProfilesRecord.smokingStatus,
-                                spiritualStatus:
-                                    listViewUserProfilesRecord.spiritualStatus,
-                              ),
-                              'interests': listViewUserProfilesRecord.interests!
-                                  .toList(),
-                              'lookingFor': listViewUserProfilesRecord
-                                  .lookingFor!
-                                  .toList(),
-                              'photos': getPhotoListFirestoreData(
-                                listViewUserProfilesRecord.photos!.toList(),
-                              ),
-                            };
-                            await listViewUserProfilesRecord.user!
-                                .update(usersUpdateData);
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Upfate user'),
-                                  content: Text('Done'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0xFFF5F5F5),
-                            child: Text(
-                              listViewUserProfilesRecord.firstName!,
-                              style: FlutterFlowTheme.of(context).bodyText1,
-                            ),
+                        final listViewUsersRecord =
+                            listViewUsersRecordList[listViewIndex];
+                        return Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Color(0xFFF5F5F5),
+                          child: Text(
+                            listViewUsersRecord.email!,
+                            style: FlutterFlowTheme.of(context).bodyText1,
                           ),
                         );
                       },

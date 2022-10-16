@@ -71,9 +71,13 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   BuiltList<PhotoStruct>? get photos;
 
-  BuiltList<DocumentReference>? get liked;
+  BuiltList<String>? get touched;
 
-  BuiltList<DocumentReference>? get disliked;
+  FilterStruct get filter;
+
+  BuiltList<String>? get liked;
+
+  BuiltList<String>? get disliked;
 
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
@@ -106,6 +110,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..smokingStatus = ''
     ..spiritualStatus = ''
     ..photos = ListBuilder()
+    ..touched = ListBuilder()
+    ..filter = FilterStructBuilder()
     ..liked = ListBuilder()
     ..disliked = ListBuilder();
 
@@ -157,6 +163,7 @@ Map<String, dynamic> createUsersRecordData({
   String? drinkingStatus,
   String? smokingStatus,
   String? spiritualStatus,
+  FilterStruct? filter,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -191,10 +198,15 @@ Map<String, dynamic> createUsersRecordData({
         ..smokingStatus = smokingStatus
         ..spiritualStatus = spiritualStatus
         ..photos = null
+        ..touched = null
+        ..filter = FilterStructBuilder()
         ..liked = null
         ..disliked = null,
     ),
   );
+
+  // Handle nested data for "filter" field.
+  addFilterStructData(firestoreData, filter, 'filter');
 
   return firestoreData;
 }

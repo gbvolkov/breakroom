@@ -129,7 +129,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                   child: StreamBuilder<List<UsersRecord>>(
                     stream: queryUsersRecord(
                       queryBuilder: (usersRecord) => usersRecord.where('liked',
-                          arrayContains: currentUserReference),
+                          arrayContains:
+                              currentUserUid != '' ? currentUserUid : null),
                     ),
                     builder: (context, snapshot) {
                       // Customize what your widget looks like when it's loading.

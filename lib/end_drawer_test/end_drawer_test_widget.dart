@@ -79,9 +79,15 @@ class _EndDrawerTestWidgetState extends State<EndDrawerTestWidget> {
                   shape: BoxShape.circle,
                 ),
                 child: Image.network(
-                  'https://picsum.photos/seed/32/600',
-                  fit: BoxFit.fitHeight,
+                  'https://gadgetstouse.com/wp-content/uploads/2017/11/Xiaomi-Redmi-Y1-selfie-sample-artficial-light.jpg',
+                  fit: BoxFit.cover,
                 ),
+              ),
+              Image.network(
+                'https://picsum.photos/seed/32/600',
+                width: 120,
+                height: 120,
+                fit: BoxFit.fitWidth,
               ),
             ],
           ),
