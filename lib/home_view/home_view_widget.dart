@@ -217,8 +217,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     .filter.ageRange?.min,
                                                 18.0,
                                               ),
-                                              -1))
-                                  .orderBy('uid'),
+                                              -1)),
                               singleRecord: true,
                             ),
                             builder: (context, snapshot) {
