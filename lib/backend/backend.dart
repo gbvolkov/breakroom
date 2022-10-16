@@ -11,7 +11,6 @@ import 'schema/occupations_record.dart';
 import 'schema/interests_record.dart';
 import 'schema/chats_record.dart';
 import 'schema/chat_messages_record.dart';
-import 'schema/fliters_record.dart';
 import 'schema/filters_record.dart';
 import 'schema/serializers.dart';
 
@@ -27,7 +26,6 @@ export 'schema/occupations_record.dart';
 export 'schema/interests_record.dart';
 export 'schema/chats_record.dart';
 export 'schema/chat_messages_record.dart';
-export 'schema/fliters_record.dart';
 export 'schema/filters_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
@@ -318,51 +316,6 @@ Future<FFFirestorePage<ChatMessagesRecord>> queryChatMessagesRecordPage({
     queryCollectionPage(
       ChatMessagesRecord.collection,
       ChatMessagesRecord.serializer,
-      queryBuilder: queryBuilder,
-      nextPageMarker: nextPageMarker,
-      pageSize: pageSize,
-      isStream: isStream,
-    );
-
-/// Functions to query FlitersRecords (as a Stream and as a Future).
-Stream<List<FlitersRecord>> queryFlitersRecord({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      FlitersRecord.collection(parent),
-      FlitersRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<FlitersRecord>> queryFlitersRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      FlitersRecord.collection(parent),
-      FlitersRecord.serializer,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<FFFirestorePage<FlitersRecord>> queryFlitersRecordPage({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  DocumentSnapshot? nextPageMarker,
-  required int pageSize,
-  required bool isStream,
-}) =>
-    queryCollectionPage(
-      FlitersRecord.collection(parent),
-      FlitersRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,
