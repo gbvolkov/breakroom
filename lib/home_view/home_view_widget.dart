@@ -191,7 +191,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       'uid',
                                       (currentUserDocument?.touched?.toList() ??
                                           []))
-                                  .orderBy('email'),
+                                  .orderBy('uid'),
                               singleRecord: true,
                             ),
                             builder: (context, snapshot) {
