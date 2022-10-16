@@ -191,6 +191,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       'uid',
                                       (currentUserDocument?.touched?.toList() ??
                                           []))
+                                  .where('gender',
+                                      isEqualTo: valueOrDefault(
+                                          currentUserDocument?.genderPreference,
+                                          ''))
+                                  .where('intention',
+                                      isEqualTo: valueOrDefault(
+                                          currentUserDocument?.intention, ''))
                                   .orderBy('uid'),
                               singleRecord: true,
                             ),
