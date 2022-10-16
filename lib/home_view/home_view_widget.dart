@@ -198,6 +198,26 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   .where('intention',
                                       isEqualTo: valueOrDefault(
                                           currentUserDocument?.intention, ''))
+                                  .where('birthDay',
+                                      isLessThanOrEqualTo:
+                                          functions.addYearsToDate(
+                                              getCurrentTimestamp,
+                                              valueOrDefault<double>(
+                                                currentUserDocument!
+                                                    .filter.ageRange?.max,
+                                                80.0,
+                                              ),
+                                              -1))
+                                  .where('birthDay',
+                                      isGreaterThanOrEqualTo:
+                                          functions.addYearsToDate(
+                                              getCurrentTimestamp,
+                                              valueOrDefault<double>(
+                                                currentUserDocument!
+                                                    .filter.ageRange?.min,
+                                                18.0,
+                                              ),
+                                              -1))
                                   .orderBy('uid'),
                               singleRecord: true,
                             ),

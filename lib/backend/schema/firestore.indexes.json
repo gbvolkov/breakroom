@@ -15,6 +15,10 @@
         {
           "fieldPath": "uid",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "birthDay",
+          "order": "ASCENDING"
         }
       ]
     },
