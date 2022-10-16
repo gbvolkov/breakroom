@@ -57,10 +57,10 @@ String getListValue(
 }
 
 String? getPhotosListValue(
-  List<PhotoStruct> options,
+  List<PhotoStruct>? options,
   int? optionNo,
 ) {
-  if (options.isNotEmpty) {
+  if (options != null && options.isNotEmpty) {
     optionNo = optionNo ?? 0;
     if (optionNo >= options.length) optionNo = options.length - 1;
     return options[optionNo].image;
