@@ -17,8 +17,8 @@
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "lookingFor",
-          "arrayConfig": "CONTAINS"
+          "fieldPath": "industry",
+          "order": "ASCENDING"
         }
       ]
     },

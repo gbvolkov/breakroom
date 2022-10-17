@@ -145,8 +145,9 @@ List<UsersRecord> cleanUpFilteredProfiles(
   for (var profile in fliteredProfiles) {
     if (!selectedUsers.contains(profile.uid)) {
       isOK = true;
-      if (filter.industries != null) {
-        isOK = filter.industries!.asList().contains(profile.industry);
+      if (filter.lookingFor != null && profile.lookingFor != null) {
+        isOK = filter.lookingFor!
+            .any((String s) => profile.lookingFor!.contains(s));
       }
       if (filter.distance != null) {
         isOK = geoDistance(profile.geoposition, location) <= filter.distance!;

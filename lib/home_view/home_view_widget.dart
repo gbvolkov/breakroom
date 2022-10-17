@@ -220,12 +220,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                               80.0,
                                             ),
                                             -1))
-                                .whereArrayContainsAny(
-                                    'lookingFor',
-                                    currentUserDocument!.filter.lookingFor
+                                .whereIn(
+                                    'industry',
+                                    currentUserDocument!.filter.industries
                                                 .toList() !=
                                             ''
-                                        ? currentUserDocument!.filter.lookingFor
+                                        ? currentUserDocument!.filter.industries
                                             .toList()
                                         : null),
                           ),
