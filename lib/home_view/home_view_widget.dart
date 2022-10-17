@@ -219,15 +219,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                   .filter.ageRange?.max,
                                               80.0,
                                             ),
-                                            -1))
-                                .whereIn(
-                                    'industry',
-                                    currentUserDocument!.filter.industries
-                                                .toList() !=
-                                            ''
-                                        ? currentUserDocument!.filter.industries
-                                            .toList()
-                                        : null),
+                                            -1)),
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
