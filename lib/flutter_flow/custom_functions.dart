@@ -158,8 +158,10 @@ List<UsersRecord> cleanUpFilteredProfiles(
       if (isOK && filter.distance != null) {
         isOK = geoDistance(profile.geoposition, location) <= filter.distance!;
       }
-      if (isOK) result.add(profile);
-      return result;
+      if (isOK) {
+        result.add(profile);
+        return result;
+      }
     }
   }
   return result;
