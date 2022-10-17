@@ -145,11 +145,14 @@ List<UsersRecord> cleanUpFilteredProfiles(
   for (var profile in fliteredProfiles) {
     if (!selectedUsers.contains(profile.uid)) {
       isOK = true;
-      if (isOK && filter.lookingFor != null && profile.lookingFor != null) {
+      if (isOK &&
+          filter.lookingFor != null &&
+          filter.lookingFor!.isNotEmpty &&
+          profile.lookingFor != null) {
         isOK = filter.lookingFor!
             .any((String s) => profile.lookingFor!.contains(s));
       }
-      if (isOK && filter.industries != null) {
+      if (isOK && filter.industries != null && filter.industries!.isNotEmpty) {
         isOK = filter.industries!.contains(profile.industry);
       }
       if (isOK && filter.distance != null) {

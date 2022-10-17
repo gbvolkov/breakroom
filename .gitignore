@@ -48,9 +48,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
-ios/Runner/GeneratedPluginRegistrant.h
-ios/Runner/GeneratedPluginRegistrant.m
-android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
-ios/Runner/GeneratedPluginRegistrant.h
-ios/Runner/GeneratedPluginRegistrant.m
