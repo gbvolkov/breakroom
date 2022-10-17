@@ -38,6 +38,8 @@ class _HomeWidgetState extends State<HomeWidget> {
     emailAddressCreateController = TextEditingController();
     passwordCreateController = TextEditingController();
     passwordCreateVisibility = false;
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
   }
 
   @override
@@ -51,6 +53,17 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentUserLocationValue == null) {
+      return Center(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CircularProgressIndicator(
+            color: FlutterFlowTheme.of(context).primaryColor,
+          ),
+        ),
+      );
+    }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFF4B39EF),
@@ -306,7 +319,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                           ),
                                         );
                                       },
-                                      text: 'Sign In',
+                                      text:
+                                          currentUserLocationValue!.toString(),
                                       options: FFButtonOptions(
                                         width: 230,
                                         height: 50,
@@ -632,6 +646,18 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         final usersCreateData =
                                             createUsersRecordData(
                                           geoposition: currentUserLocationValue,
+                                          filter: createFilterStruct(
+                                            ageRangeExt: false,
+                                            distance: 50.0,
+                                            ageRange: createDoubleRangeStruct(
+                                              min: 18.0,
+                                              max: 75.0,
+                                              clearUnsetFields: false,
+                                              create: true,
+                                            ),
+                                            clearUnsetFields: false,
+                                            create: true,
+                                          ),
                                         );
                                         await UsersRecord.collection
                                             .doc(user.uid)

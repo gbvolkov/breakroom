@@ -133,19 +133,44 @@ List<UsersRecord> filterMatches(
 
 List<UsersRecord> cleanUpFilteredProfiles(
   List<UsersRecord> fliteredProfiles,
-  List<DocumentReference> likedUsers,
-  List<DocumentReference> dislikedUsers,
+  List<String> likedUsers,
+  List<String> dislikedUsers,
+  FilterStruct filter,
+  LatLng location,
 ) {
   List<UsersRecord> result = [];
-  List<DocumentReference> selectedUsers = likedUsers + dislikedUsers;
+  List<String> selectedUsers = likedUsers + dislikedUsers;
+  bool isOK;
 
   for (var profile in fliteredProfiles) {
-    if (!selectedUsers.contains(profile.reference)) {
-      result.add(profile);
+    if (!selectedUsers.contains(profile.uid)) {
+      isOK = true;
+      if (filter.industries != null) {
+        isOK = filter.industries!.asList().contains(profile.industry);
+      }
+      if (filter.distance != null) {
+        isOK = geoDistance(profile.geoposition, location) <= filter.distance!;
+      }
+      if (isOK) result.add(profile);
       return result;
     }
   }
   return result;
+}
+
+UsersRecord? getFirstFilteredProfilesCopy(
+  List<UsersRecord> fliteredProfiles,
+  List<String> likedUsers,
+  List<String> dislikedUsers,
+) {
+  List<String> selectedUsers = likedUsers + dislikedUsers;
+
+  for (var profile in fliteredProfiles) {
+    if (!selectedUsers.contains(profile.uid)) {
+      return profile;
+    }
+  }
+  return null;
 }
 
 double geoDistance(
@@ -182,4 +207,33 @@ List<DocumentReference> createChatUsersList(
   DocumentReference userRef2,
 ) {
   return [userRef1, userRef1];
+}
+
+String getFirst(List<String> uids) {
+  // Add your function code here!
+  return uids[0];
+}
+
+List<String>? getFirstDislikedFromList(List<UsersRecord> usersList) {
+  return usersList[0].disliked?.asList();
+}
+
+String? getFirstUID(List<UsersRecord>? users) {
+  if (users != null) {
+    return users[0].uid;
+  } else {
+    return null;
+  }
+}
+
+List<String>? getFirstLikedFromList(List<UsersRecord> usersList) {
+  return usersList[0].liked?.asList();
+}
+
+DocumentReference getFirstUserRef(List<UsersRecord> users) {
+  return users[0].reference;
+}
+
+List<String> getFirstLiked(List<UsersRecord> users) {
+  return users[0].liked!.asList();
 }

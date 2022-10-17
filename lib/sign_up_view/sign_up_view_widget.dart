@@ -760,6 +760,18 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                         final usersCreateData =
                                             createUsersRecordData(
                                           geoposition: currentUserLocationValue,
+                                          filter: createFilterStruct(
+                                            ageRangeExt: false,
+                                            distance: 50.0,
+                                            ageRange: createDoubleRangeStruct(
+                                              min: 18.0,
+                                              max: 75.0,
+                                              clearUnsetFields: false,
+                                              create: true,
+                                            ),
+                                            clearUnsetFields: false,
+                                            create: true,
+                                          ),
                                         );
                                         await UsersRecord.collection
                                             .doc(user.uid)
