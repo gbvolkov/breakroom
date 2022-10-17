@@ -479,10 +479,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                 value: switchListTileValue ??=
                                                     FFAppState()
                                                         .fltrAgeRangeExt,
-                                                onChanged: (newValue) =>
-                                                    setState(() =>
-                                                        switchListTileValue =
-                                                            newValue),
+                                                onChanged: (newValue) async {
+                                                  setState(() =>
+                                                      switchListTileValue =
+                                                          newValue!);
+                                                },
                                                 tileColor: Color(0xFFF5F5F5),
                                                 activeColor: Color(0xFF27AE60),
                                                 activeTrackColor:

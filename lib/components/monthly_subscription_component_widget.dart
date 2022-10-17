@@ -344,9 +344,11 @@ class _MonthlySubscriptionComponentWidgetState
                                       child: SwitchListTile(
                                         value: switchAutomaticallyRenewValue ??=
                                             true,
-                                        onChanged: (newValue) => setState(() =>
-                                            switchAutomaticallyRenewValue =
-                                                newValue),
+                                        onChanged: (newValue) async {
+                                          setState(() =>
+                                              switchAutomaticallyRenewValue =
+                                                  newValue!);
+                                        },
                                         tileColor: Color(0xFFF5F5F5),
                                         activeColor: Color(0xFF27AE60),
                                         activeTrackColor: Color(0xFFA0E0BC),

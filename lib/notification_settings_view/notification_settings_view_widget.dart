@@ -97,9 +97,11 @@ class _NotificationSettingsViewWidgetState
                                       child: SwitchListTile(
                                         value: switchAllNotificationsValue1 ??=
                                             true,
-                                        onChanged: (newValue) => setState(() =>
-                                            switchAllNotificationsValue1 =
-                                                newValue),
+                                        onChanged: (newValue) async {
+                                          setState(() =>
+                                              switchAllNotificationsValue1 =
+                                                  newValue!);
+                                        },
                                         tileColor: Color(0xFFF5F5F5),
                                         activeColor: Color(0xFF27AE60),
                                         activeTrackColor: Color(0xFFA0E0BC),
@@ -168,10 +170,11 @@ class _NotificationSettingsViewWidgetState
                                           value:
                                               switchAllNotificationsValue2 ??=
                                                   true,
-                                          onChanged: (newValue) => setState(
-                                              () =>
-                                                  switchAllNotificationsValue2 =
-                                                      newValue),
+                                          onChanged: (newValue) async {
+                                            setState(() =>
+                                                switchAllNotificationsValue2 =
+                                                    newValue!);
+                                          },
                                           tileColor: Color(0xFFF5F5F5),
                                           activeColor: Color(0xFF27AE60),
                                           activeTrackColor: Color(0xFFA0E0BC),
@@ -231,9 +234,11 @@ class _NotificationSettingsViewWidgetState
                                           value:
                                               switchReceivedLikeNotificationsValue ??=
                                                   true,
-                                          onChanged: (newValue) => setState(() =>
-                                              switchReceivedLikeNotificationsValue =
-                                                  newValue),
+                                          onChanged: (newValue) async {
+                                            setState(() =>
+                                                switchReceivedLikeNotificationsValue =
+                                                    newValue!);
+                                          },
                                           tileColor: Color(0xFFF5F5F5),
                                           activeColor: Color(0xFF27AE60),
                                           activeTrackColor: Color(0xFFA0E0BC),
@@ -293,9 +298,11 @@ class _NotificationSettingsViewWidgetState
                                           value:
                                               switchMatchNotificationsValue ??=
                                                   true,
-                                          onChanged: (newValue) => setState(() =>
-                                              switchMatchNotificationsValue =
-                                                  newValue),
+                                          onChanged: (newValue) async {
+                                            setState(() =>
+                                                switchMatchNotificationsValue =
+                                                    newValue!);
+                                          },
                                           tileColor: Color(0xFFF5F5F5),
                                           activeColor: Color(0xFF27AE60),
                                           activeTrackColor: Color(0xFFA0E0BC),
@@ -353,9 +360,11 @@ class _NotificationSettingsViewWidgetState
                                         value:
                                             switchMessagesNotificationsValue ??=
                                                 true,
-                                        onChanged: (newValue) => setState(() =>
-                                            switchMessagesNotificationsValue =
-                                                newValue),
+                                        onChanged: (newValue) async {
+                                          setState(() =>
+                                              switchMessagesNotificationsValue =
+                                                  newValue!);
+                                        },
                                         tileColor: Color(0xFFF5F5F5),
                                         activeColor: Color(0xFF27AE60),
                                         activeTrackColor: Color(0xFFA0E0BC),

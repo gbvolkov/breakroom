@@ -254,9 +254,10 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                                   child: CheckboxListTile(
                                     value: checkboxListTileValueMap[
                                         listViewUsersRecord] ??= false,
-                                    onChanged: (newValue) => setState(() =>
-                                        checkboxListTileValueMap[
-                                            listViewUsersRecord] = newValue!),
+                                    onChanged: (newValue) async {
+                                      setState(() => checkboxListTileValueMap[
+                                          listViewUsersRecord] = newValue!);
+                                    },
                                     title: Text(
                                       listViewUsersRecord.displayName!,
                                       style: FlutterFlowTheme.of(context)

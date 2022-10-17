@@ -155,7 +155,7 @@ List<UsersRecord> cleanUpFilteredProfiles(
       if (isOK && filter.industries != null && filter.industries!.isNotEmpty) {
         isOK = filter.industries!.contains(profile.industry);
       }
-      if (isOK && filter.distance != null) {
+      if (isOK && filter.distance != null && filter.distance! > 0) {
         isOK = geoDistance(profile.geoposition, location) <= filter.distance!;
       }
       if (isOK) {

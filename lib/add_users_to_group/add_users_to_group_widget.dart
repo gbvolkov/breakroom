@@ -260,9 +260,10 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                                             listViewUsersRecord] ??=
                                         widget.chat!.users!.toList().contains(
                                             listViewUsersRecord.reference),
-                                    onChanged: (newValue) => setState(() =>
-                                        checkboxListTileValueMap[
-                                            listViewUsersRecord] = newValue!),
+                                    onChanged: (newValue) async {
+                                      setState(() => checkboxListTileValueMap[
+                                          listViewUsersRecord] = newValue!);
+                                    },
                                     title: Text(
                                       listViewUsersRecord.displayName!,
                                       style: FlutterFlowTheme.of(context)
