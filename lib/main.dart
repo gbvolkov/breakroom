@@ -125,7 +125,6 @@ class _NavBarPageState extends State<NavBarPage> {
       'MatchesView': MatchesViewWidget(),
       'NotificationsView': NotificationsViewWidget(),
       'ProfileView': ProfileViewWidget(),
-      'tmp_UserMgmt': TmpUserMgmtWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -185,14 +184,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 20,
             ),
             label: 'Profile',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.admin_panel_settings_outlined,
-              size: 24,
-            ),
-            label: 'Admin',
             tooltip: '',
           )
         ],
