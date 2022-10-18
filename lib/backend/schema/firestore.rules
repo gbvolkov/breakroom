@@ -50,17 +50,5 @@ service cloud.firestore {
       allow write: if false;
       allow delete: if false;
     }
-
-    match /users/{parent}/filters/{document} {
-      allow create: if request.auth.uid == parent;
-      allow read: if request.auth != null;
-      allow write: if request.auth != null;
-      allow delete: if false;
-    }
-
-    match /{path=**}/filters/{document} {
-      allow read: if request.auth != null;
-    }
-
   }
 }

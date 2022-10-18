@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/profile_bottom_sheet_widget.dart';
+import '../filters_view/filters_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -110,11 +111,21 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                             ),
                       ),
                     ),
-                    Image.asset(
-                      'assets/images/imgFilter.png',
-                      width: 25,
-                      height: 25,
-                      fit: BoxFit.cover,
+                    InkWell(
+                      onTap: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FiltersViewWidget(),
+                          ),
+                        );
+                      },
+                      child: Image.asset(
+                        'assets/images/imgFilter.png',
+                        width: 25,
+                        height: 25,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ],
                 ),

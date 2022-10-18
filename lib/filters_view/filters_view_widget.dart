@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../get_premium_view/get_premium_view_widget.dart';
+import '../main.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -13,21 +14,16 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FiltersViewWidget extends StatefulWidget {
-  const FiltersViewWidget({
-    Key? key,
-    this.filter,
-  }) : super(key: key);
-
-  final FiltersRecord? filter;
+  const FiltersViewWidget({Key? key}) : super(key: key);
 
   @override
   _FiltersViewWidgetState createState() => _FiltersViewWidgetState();
 }
 
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
-  PageController? pageViewController;
-  String? choiceChipsValue;
+  List<String>? choiceChipsValues;
   bool? switchListTileValue;
+  PageController? pageViewController;
   double? sliderValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -339,46 +335,51 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: FlutterFlowChoiceChips(
-                                initiallySelected: ['Man'],
-                                options: FFAppState()
-                                    .interestedInList
-                                    .map((label) => ChipData(label))
-                                    .toList(),
-                                onChanged: (val) => setState(
-                                    () => choiceChipsValue = val?.first),
-                                selectedChipStyle: ChipStyle(
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                  iconColor: Colors.white,
-                                  iconSize: 18,
-                                  elevation: 0,
+                              child: AuthUserStreamWidget(
+                                child: FlutterFlowChoiceChips(
+                                  initiallySelected: currentUserDocument!
+                                      .filter.lookingFor
+                                      .toList(),
+                                  options: FFAppState()
+                                      .interestedInList
+                                      .map((label) => ChipData(label))
+                                      .toList(),
+                                  onChanged: (val) =>
+                                      setState(() => choiceChipsValues = val),
+                                  selectedChipStyle: ChipStyle(
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                    iconColor: Colors.white,
+                                    iconSize: 18,
+                                    elevation: 0,
+                                  ),
+                                  unselectedChipStyle: ChipStyle(
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w300,
+                                        ),
+                                    iconColor: Color(0xFF323B45),
+                                    iconSize: 18,
+                                    elevation: 0,
+                                  ),
+                                  chipSpacing: 4,
+                                  multiselect: true,
+                                  initialized: choiceChipsValues != null,
+                                  alignment: WrapAlignment.spaceEvenly,
                                 ),
-                                unselectedChipStyle: ChipStyle(
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                  iconColor: Color(0xFF323B45),
-                                  iconSize: 18,
-                                  elevation: 0,
-                                ),
-                                chipSpacing: 4,
-                                multiselect: false,
-                                initialized: choiceChipsValue != null,
-                                alignment: WrapAlignment.spaceEvenly,
                               ),
                             ),
                             Padding(
@@ -417,50 +418,60 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 0, 0, 8),
-                                              child: Text(
-                                                'Between ${FFAppState().rangeSliderStart.toString()} and ${FFAppState().rangeSliderEnd.toString()}',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
+                                              child: AuthUserStreamWidget(
+                                                child: Text(
+                                                  'Between ${formatNumber(
+                                                    currentUserDocument!
+                                                        .filter.ageRange?.min,
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  )} and ${formatNumber(
+                                                    currentUserDocument!
+                                                        .filter.ageRange?.max,
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  )}',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1,
+                                                ),
                                               ),
                                             ),
                                           ],
                                         ),
-                                        InkWell(
-                                          onTap: () async {
-                                            setState(() => FFAppState()
-                                                    .fltrAgeMin =
-                                                FFAppState().rangeSliderStart);
-                                          },
-                                          child: Container(
+                                        Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 50,
+                                          child:
+                                              custom_widgets.CustomRangeSlider(
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width,
                                             height: 50,
-                                            child: custom_widgets
-                                                .CustomRangeSlider(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 50,
-                                              minValue: 18.0,
-                                              maxValue: 70.0,
-                                              rangeStart: 20.0,
-                                              rangeEnd: 50.0,
-                                              activeColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              inactiveColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              onValueChanged: () async {
-                                                setState(() =>
-                                                    FFAppState().fltrAgeMin =
-                                                        FFAppState()
-                                                            .option
-                                                            .toDouble());
-                                              },
-                                            ),
+                                            minValue: 18.0,
+                                            maxValue: 70.0,
+                                            rangeStart: 20.0,
+                                            rangeEnd: 50.0,
+                                            activeColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .alternate,
+                                            inactiveColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondaryText,
+                                            onValueChanged: () async {
+                                              setState(() =>
+                                                  FFAppState().fltrAgeMin =
+                                                      FFAppState()
+                                                          .rangeSliderStart);
+                                              setState(() => FFAppState()
+                                                      .fltrAgeMax =
+                                                  FFAppState().rangeSliderEnd);
+                                            },
                                           ),
                                         ),
                                         Row(
@@ -986,29 +997,33 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         0, 0, 0, 16),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        final filtersUpdateData = {
-                                          ...createFiltersRecordData(
-                                            ageRangeExt:
-                                                FFAppState().fltrAgeRangeExt,
-                                            location: FFAppState().fltrLocation,
-                                            distance: FFAppState().fltrDistance,
-                                            filterName: currentUserEmail,
+                                        final usersUpdateData =
+                                            createUsersRecordData(
+                                          filter: createFilterStruct(
+                                            ageRangeExt: false,
+                                            distance: sliderValue,
                                             ageRange: createDoubleRangeStruct(
                                               min: FFAppState().fltrAgeMin,
                                               max: FFAppState().fltrAgeMax,
                                               clearUnsetFields: false,
                                             ),
+                                            fieldValues: {
+                                              'lookingFor':
+                                                  FFAppState().fltrLookingFor,
+                                              'industries':
+                                                  FFAppState().fltrIndusrtries,
+                                            },
+                                            clearUnsetFields: false,
                                           ),
-                                          'lookingFor':
-                                              FFAppState().fltrLookingFor,
-                                          'industries':
-                                              FFAppState().fltrIndusrtries,
-                                        };
-                                        await widget.filter!.reference
-                                            .update(filtersUpdateData);
-                                        await pageViewController?.previousPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
+                                        );
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
+                                        await Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => NavBarPage(
+                                                initialPage: 'HomeView'),
+                                          ),
                                         );
                                       },
                                       text: 'Save',

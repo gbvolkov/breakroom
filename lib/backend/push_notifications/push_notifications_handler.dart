@@ -84,9 +84,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'PhoneSignIn': (data) async => PhoneSignInWidget(),
   'VerifySMS': (data) async => VerifySMSWidget(),
   'ChatView': (data) async => ChatViewWidget(),
+  'ProfileView': (data) async => NavBarPage(initialPage: 'ProfileView'),
   'NotificationsView': (data) async =>
       NavBarPage(initialPage: 'NotificationsView'),
-  'HomeView': (data) async => NavBarPage(initialPage: 'HomeView'),
   'SignInView': (data) async => SignInViewWidget(),
   'WelcomeView': (data) async => WelcomeViewWidget(),
   'PageTest': (data) async => PageTestWidget(
@@ -104,10 +104,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
             data, 'userProfile', UsersRecord.serializer),
       ),
   'EditProfileNewView': (data) async => EditProfileNewViewWidget(),
-  'FiltersView': (data) async => FiltersViewWidget(
-        filter: await getDocumentParameter(
-            data, 'filter', FiltersRecord.serializer),
-      ),
+  'FiltersView': (data) async => FiltersViewWidget(),
   'GetPremiumView': (data) async => GetPremiumViewWidget(),
   'LoginSetNewPasswordView': (data) async => LoginSetNewPasswordViewWidget(),
   'IntroductionView': (data) async => IntroductionViewWidget(),

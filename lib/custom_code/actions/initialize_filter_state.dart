@@ -12,12 +12,11 @@ int getAge(DateTime? birthday) {
 }
 
 Future initializeFilterState(
-  FiltersRecord? filter,
+  FilterStruct? filter,
   UsersRecord userProfile,
   LatLng? currentLocation,
 ) async {
-  FFAppState().fltrName =
-      filter?.filterName ?? userProfile.firstName ?? "Filter";
+  FFAppState().fltrName = userProfile.firstName ?? "Filter";
   if (filter?.ageRange.min == null) {
     FFAppState().fltrAgeMin =
         getAge(userProfile.birthDay ?? DateTime.now()) - 10;
