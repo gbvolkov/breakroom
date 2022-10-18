@@ -10,6 +10,7 @@ import '../home_details_view/home_details_view_widget.dart';
 import '../introduction_view/introduction_view_widget.dart';
 import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,11 +39,25 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-
-      final usersUpdateData = createUsersRecordData(
-        geoposition: currentUserLocationValue,
-      );
-      await currentUserReference!.update(usersUpdateData);
+      if (await getPermissionStatus(locationPermission)) {
+        if (currentUserLocationValue != null) {
+          final usersUpdateData = createUsersRecordData(
+            geoposition: currentUserLocationValue,
+          );
+          await currentUserReference!.update(usersUpdateData);
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Please permit Geoposition usage to find people around',
+              style: FlutterFlowTheme.of(context).subtitle2,
+            ),
+            duration: Duration(milliseconds: 4000),
+            backgroundColor: Color(0x00000000),
+          ),
+        );
+      }
     });
 
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)

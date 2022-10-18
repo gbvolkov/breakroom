@@ -194,7 +194,8 @@ class _VerifySMSWidgetState extends State<VerifySMSWidget>
                 await Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NavBarPage(initialPage: 'HomeView'),
+                    builder: (context) =>
+                        NavBarPage(initialPage: 'ProfileView'),
                   ),
                   (r) => false,
                 );
