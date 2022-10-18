@@ -13,19 +13,20 @@ int getAge(DateTime? birthday) {
 
 Future initializeFilterState(
   FilterStruct? filter,
-  UsersRecord userProfile,
+  //UsersRecord userProfile,
   LatLng? currentLocation,
 ) async {
-  FFAppState().fltrName = userProfile.firstName ?? "Filter";
+  //FFAppState().fltrName = userProfile.firstName??"Filter";
+  FFAppState().fltrName = "Filter";
   if (filter?.ageRange.min == null) {
     FFAppState().fltrAgeMin =
-        getAge(userProfile.birthDay ?? DateTime.now()) - 10;
+        25; //getAge(userProfile.birthDay ?? DateTime.now())-10;
   } else {
     FFAppState().fltrAgeMin = filter?.ageRange.min ?? 0;
   }
   if (filter?.ageRange.max == null) {
     FFAppState().fltrAgeMax =
-        getAge(userProfile.birthDay ?? DateTime.now()) + 10;
+        60; //getAge(userProfile.birthDay ?? DateTime.now())+10;
   } else {
     FFAppState().fltrAgeMax = filter?.ageRange.max ?? 0;
   }

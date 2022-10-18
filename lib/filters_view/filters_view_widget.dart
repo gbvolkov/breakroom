@@ -335,51 +335,46 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: AuthUserStreamWidget(
-                                child: FlutterFlowChoiceChips(
-                                  initiallySelected: currentUserDocument!
-                                      .filter.lookingFor
-                                      .toList(),
-                                  options: FFAppState()
-                                      .interestedInList
-                                      .map((label) => ChipData(label))
-                                      .toList(),
-                                  onChanged: (val) =>
-                                      setState(() => choiceChipsValues = val),
-                                  selectedChipStyle: ChipStyle(
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                    iconColor: Colors.white,
-                                    iconSize: 18,
-                                    elevation: 0,
-                                  ),
-                                  unselectedChipStyle: ChipStyle(
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                    iconColor: Color(0xFF323B45),
-                                    iconSize: 18,
-                                    elevation: 0,
-                                  ),
-                                  chipSpacing: 4,
-                                  multiselect: true,
-                                  initialized: choiceChipsValues != null,
-                                  alignment: WrapAlignment.spaceEvenly,
+                              child: FlutterFlowChoiceChips(
+                                initiallySelected: FFAppState().fltrLookingFor,
+                                options: FFAppState()
+                                    .interestedInList
+                                    .map((label) => ChipData(label))
+                                    .toList(),
+                                onChanged: (val) =>
+                                    setState(() => choiceChipsValues = val),
+                                selectedChipStyle: ChipStyle(
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).alternate,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                  iconColor: Colors.white,
+                                  iconSize: 18,
+                                  elevation: 0,
                                 ),
+                                unselectedChipStyle: ChipStyle(
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                  iconColor: Color(0xFF323B45),
+                                  iconSize: 18,
+                                  elevation: 0,
+                                ),
+                                chipSpacing: 4,
+                                multiselect: true,
+                                initialized: choiceChipsValues != null,
+                                alignment: WrapAlignment.spaceEvenly,
                               ),
                             ),
                             Padding(
@@ -454,9 +449,9 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                 .width,
                                             height: 50,
                                             minValue: 18.0,
-                                            maxValue: 70.0,
-                                            rangeStart: 20.0,
-                                            rangeEnd: 50.0,
+                                            maxValue: 150.0,
+                                            rangeStart: 25.0,
+                                            rangeEnd: 60.0,
                                             activeColor:
                                                 FlutterFlowTheme.of(context)
                                                     .alternate,

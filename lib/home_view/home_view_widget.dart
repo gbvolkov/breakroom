@@ -10,6 +10,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../home_details_view/home_details_view_widget.dart';
 import '../introduction_view/introduction_view_widget.dart';
 import '../main.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
@@ -113,6 +114,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                     ),
                     InkWell(
                       onTap: () async {
+                        currentUserLocationValue = await getCurrentUserLocation(
+                            defaultLocation: LatLng(0.0, 0.0));
+                        await actions.initializeFilterState(
+                          currentUserDocument!.filter,
+                          currentUserLocationValue,
+                        );
                         await Navigator.push(
                           context,
                           MaterialPageRoute(
