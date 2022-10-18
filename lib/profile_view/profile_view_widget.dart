@@ -343,10 +343,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 8, 0),
                                         child: Icon(
-                                          Icons.person_outline_outlined,
+                                          FFIcons.kmale,
                                           color: FlutterFlowTheme.of(context)
                                               .secondaryText,
-                                          size: 24,
+                                          size: 20,
                                         ),
                                       ),
                                       AuthUserStreamWidget(

@@ -132,6 +132,12 @@ flutter:
     - family: MyFlutterApp
       fonts:
         - asset: assets/fonts/MyFlutterApp.ttf
+    - family: HomeScreenIcons
+      fonts:
+        - asset: assets/fonts/HomeScreenIcons.ttf
+    - family: MaleFemaleIcons
+      fonts:
+        - asset: assets/fonts/MaleFemaleIcons.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

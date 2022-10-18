@@ -783,8 +783,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                           0,
                                                                           0),
                                                                   child: Icon(
-                                                                    Icons
-                                                                        .perm_identity,
+                                                                    FFIcons
+                                                                        .kmale,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
                                                                         .primaryColor,

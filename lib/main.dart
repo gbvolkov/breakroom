@@ -145,7 +145,7 @@ class _NavBarPageState extends State<NavBarPage> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home_outlined,
+              FFIcons.kicHome,
               size: 20,
             ),
             label: 'Home',
@@ -153,11 +153,11 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat_outlined,
+              FFIcons.kicChat,
               size: 24,
             ),
             activeIcon: Icon(
-              Icons.chat,
+              FFIcons.kicChat,
               size: 24,
             ),
             label: 'Chat',
@@ -165,7 +165,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.favorite_border,
+              FFIcons.kicHeart,
               size: 24,
             ),
             label: 'Matches',
@@ -173,7 +173,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.add_alert_rounded,
+              FFIcons.kicNotifications,
               size: 20,
             ),
             label: 'Notifications',
@@ -181,7 +181,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.person_outline,
+              FFIcons.kicUser,
               size: 20,
             ),
             label: 'Profile',

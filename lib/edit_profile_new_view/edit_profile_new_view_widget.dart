@@ -1720,49 +1720,83 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                         children: [
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 100),
-                              child: Text(
-                                'How tall are you?',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
+                            child: Text(
+                              'How tall are you?',
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                             ),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 75,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.33,
-                                child: custom_widgets.MyNumberPicker(
-                                  width: 75,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.33,
-                                  personHeight: FFAppState().usrHeight,
-                                  onValueChanged: () async {
-                                    setState(() => FFAppState().usrHeight =
-                                        FFAppState().nmpPickedNumber);
-                                  },
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
+                            child: Stack(
+                              alignment: AlignmentDirectional(0, 0),
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 75,
+                                      height: 260,
+                                      child: custom_widgets.MyNumberPicker(
+                                        width: 75,
+                                        height: 260,
+                                        personHeight: FFAppState().usrHeight,
+                                        onValueChanged: () async {
+                                          setState(() =>
+                                              FFAppState().usrHeight =
+                                                  FFAppState().nmpPickedNumber);
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 6),
+                                      child: Text(
+                                        'cm',
+                                        style:
+                                            FlutterFlowTheme.of(context).title3,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
-                                child: Text(
-                                  'cm',
-                                  style: FlutterFlowTheme.of(context).title3,
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 48, 32, 0),
+                                    child: Container(
+                                      width: 150,
+                                      height: 1,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 32, 70),
+                                    child: Container(
+                                      width: 150,
+                                      height: 1,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           Padding(
                             padding:
@@ -2092,9 +2126,9 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   height:
                                       MediaQuery.of(context).size.height * 0.4,
                                   buttonLabels:
-                                      FFAppState().howOftenList.toList(),
+                                      FFAppState().areYouSpiritualList.toList(),
                                   buttonValues:
-                                      FFAppState().howOftenList.toList(),
+                                      FFAppState().areYouSpiritualList.toList(),
                                   horizontal: true,
                                   buttonWidth: 120.0,
                                   buttonHeight: 50.0,

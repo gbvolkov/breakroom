@@ -282,7 +282,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(8, 0, 0, 0),
                                                   child: Icon(
-                                                    Icons.person_outline,
+                                                    FFIcons.kmale,
                                                     color: Colors.black,
                                                     size: 24,
                                                   ),
