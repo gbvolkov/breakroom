@@ -238,6 +238,10 @@ class FFAppState {
   String loginDetailsContainerName = '';
 
   bool agreeCheck = false;
+
+  DateTime? currentBDate;
+
+  bool falseconst = false;
 }
 
 LatLng? _latLngFromString(String? val) {

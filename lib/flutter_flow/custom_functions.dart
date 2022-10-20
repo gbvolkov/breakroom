@@ -246,3 +246,15 @@ DocumentReference getFirstUserRef(List<UsersRecord> users) {
 List<String> getFirstLiked(List<UsersRecord> users) {
   return users[0].liked!.asList();
 }
+
+bool isAgeValid(DateTime? birthDay) {
+  // Check if users age is valid
+  if (birthDay == null) return false;
+  DateTime today = DateTime.now();
+  if (birthDay.compareTo(today) > 0) return false;
+
+  int ageInDays = today.difference(birthDay).inDays;
+  int age = ageInDays ~/ 365;
+  bool result = (age > 18 && age < 70);
+  return result;
+}

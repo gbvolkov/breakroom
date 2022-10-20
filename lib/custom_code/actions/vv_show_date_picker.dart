@@ -17,12 +17,14 @@ Future<DateTime?> vvShowDatePicker(
   // Add your function code here!
 
   return showDatePicker(
-    context: context,
-    initialDate: initialDate ?? DateTime.now(),
-    firstDate: DateTime(1900, 1, 1),
-    lastDate: DateTime.now(),
-    helpText: helpText,
-    fieldHintText: fieldHintText,
-    fieldLabelText: fieldLabelText,
-  );
+      context: context,
+      initialDate: initialDate ?? DateTime.now(),
+      firstDate: DateTime(1900, 1, 1),
+      lastDate: DateTime.now(),
+      helpText: helpText,
+      fieldHintText: fieldHintText,
+      fieldLabelText: fieldLabelText,
+      builder: (context, child) {
+        return Theme(data: ThemeData.light(), child: child!);
+      });
 }

@@ -197,6 +197,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.name,
                                   ),
                                 ),
                               ),
@@ -264,6 +265,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
+                                    keyboardType: TextInputType.name,
                                   ),
                                 ),
                               ),
@@ -858,7 +860,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                       ),
                     ),
                   ),
-                if (FFAppState().profileContainerName == 'DateOfBirth')
+                if (FFAppState().profileContainerName == 'Birthday')
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: Container(
@@ -983,6 +985,33 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
+                                      if (!functions.isAgeValid(
+                                          calBDaySelectedDay?.start)) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Please select valid age between 18 and 70',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText2
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                      ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .systemError,
+                                          ),
+                                        );
+                                        return;
+                                      }
                                       setState(() => FFAppState().usrBDay =
                                           calBDaySelectedDay?.start);
                                       if (scaffoldKey
@@ -3159,49 +3188,59 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Text(
-                                            dateTimeFormat(
-                                                'yMd', FFAppState().usrBDay),
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                    InkWell(
+                                      onTap: () async {
+                                        setState(() => FFAppState()
+                                            .profileContainerName = 'Birthday');
+                                        scaffoldKey.currentState!
+                                            .openEndDrawer();
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Text(
+                                              dateTimeFormat(
+                                                  'yMd', FFAppState().usrBDay),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
                                           ),
-                                        ),
-                                        FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          buttonSize: 32,
-                                          icon: Icon(
-                                            Icons.chevron_right_rounded,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            size: 16,
-                                          ),
-                                          onPressed: () async {
-                                            userBDay =
-                                                await actions.vvShowDatePicker(
-                                              context,
-                                              FFAppState().usrBDay,
-                                              'Birthday',
-                                              'Enter your birthday',
-                                              'Birthday',
-                                            );
-                                            if (userBDay != null) {
-                                              setState(() => FFAppState()
-                                                  .usrBDay = userBDay);
-                                            }
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            buttonSize: 32,
+                                            icon: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              size: 16,
+                                            ),
+                                            onPressed: () async {
+                                              userBDay = await actions
+                                                  .vvShowDatePicker(
+                                                context,
+                                                FFAppState().usrBDay,
+                                                'Birthday',
+                                                'Enter your birthday',
+                                                'Birthday',
+                                              );
+                                              if (userBDay != null) {
+                                                setState(() => FFAppState()
+                                                    .usrBDay = userBDay);
+                                              }
 
-                                            setState(() {});
-                                          },
-                                        ),
-                                      ],
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Divider(
                                       thickness: 1,
