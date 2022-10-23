@@ -258,3 +258,32 @@ bool isAgeValid(DateTime? birthDay) {
   bool result = (age > 18 && age < 70);
   return result;
 }
+
+LatLng getUserLocation(LatLng? userLocation) {
+  if (userLocation == null ||
+      (userLocation.latitude == 0 && userLocation.longitude == 0)) {
+    return const LatLng(40.8295538, -73.9386429);
+  }
+  return userLocation;
+}
+
+int stringLength(String? strVal) {
+  // Get length of string
+  if (strVal == null) {
+    return 0;
+  }
+  int length = 0;
+  for (int i = 0; i < strVal.length; i++) {
+    if (strVal.substring(i) == " ") {
+      if (strVal.substring(0, i) != "") {
+        length++;
+      }
+      while (strVal.substring(i + 1) != " " && strVal.substring(i + 1) != "") {
+        length++;
+        i++;
+      }
+    }
+    length++;
+  }
+  return length;
+}

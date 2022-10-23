@@ -242,6 +242,12 @@ class FFAppState {
   DateTime? currentBDate;
 
   bool falseconst = false;
+
+  LatLng? mppLocation;
+
+  String mppAddress = '';
+
+  int bioCharCounter = 0;
 }
 
 LatLng? _latLngFromString(String? val) {

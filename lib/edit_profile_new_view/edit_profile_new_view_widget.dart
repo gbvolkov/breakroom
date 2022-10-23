@@ -1,9 +1,12 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
-import '../flutter_flow/flutter_flow_calendar.dart';
+import '../edit_bio_view/edit_bio_view_widget.dart';
+import '../edit_birthday_view/edit_birthday_view_widget.dart';
+import '../edit_industry_view/edit_industry_view_widget.dart';
+import '../edit_name_view/edit_name_view_widget.dart';
+import '../edit_occupation_view/edit_occupation_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -32,12 +35,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   DateTime? userBDay;
   PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  DateTimeRange? calBDaySelectedDay;
-  String? ddIndustryValue;
-  TextEditingController? txtBioController;
-  TextEditingController? txtFirstNameController;
-  TextEditingController? txtLastNameController;
-  TextEditingController? txtOccupationController;
   List<String>? ccInterestsValues;
 
   @override
@@ -47,28 +44,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() => FFAppState().usrFirstName = FFAppState().usrFirstName);
     });
-
-    calBDaySelectedDay = DateTimeRange(
-      start: DateTime.now().startOfDay,
-      end: DateTime.now().endOfDay,
-    );
-    txtBioController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.bio, ''));
-    txtFirstNameController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.firstName, ''));
-    txtLastNameController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.lastName, ''));
-    txtOccupationController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.occupation, ''));
-  }
-
-  @override
-  void dispose() {
-    txtBioController?.dispose();
-    txtFirstNameController?.dispose();
-    txtLastNameController?.dispose();
-    txtOccupationController?.dispose();
-    super.dispose();
   }
 
   @override
@@ -108,946 +83,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     ),
                   ),
                 ),
-                if (FFAppState().profileContainerName == 'Name')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Your name',
-                                    style: FlutterFlowTheme.of(context).title1,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
-                                  child: Text(
-                                    'First name',
-                                    style: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    controller: txtFirstNameController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .textFieldBackground,
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                    keyboardType: TextInputType.name,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
-                                  child: Text(
-                                    'Last name',
-                                    style: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    controller: txtLastNameController,
-                                    autofocus: true,
-                                    obscureText: false,
-                                    decoration: InputDecoration(
-                                      labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
-                                      hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
-                                      enabledBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      errorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      focusedErrorBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                          color: Color(0x00000000),
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      filled: true,
-                                      fillColor: FlutterFlowTheme.of(context)
-                                          .textFieldBackground,
-                                    ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                    keyboardType: TextInputType.name,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        setState(() =>
-                                            FFAppState().usrFirstName =
-                                                txtFirstNameController!.text);
-                                        setState(() =>
-                                            FFAppState().usrLastName =
-                                                txtLastNameController!.text);
-                                        if (scaffoldKey
-                                                .currentState!.isDrawerOpen ||
-                                            scaffoldKey.currentState!
-                                                .isEndDrawerOpen) {
-                                          Navigator.pop(context);
-                                        }
-                                      },
-                                      text: 'Save',
-                                      options: FFButtonOptions(
-                                        width: double.infinity,
-                                        height: 48,
-                                        color: FlutterFlowTheme.of(context)
-                                            .noColor,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                            ),
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'Bio')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Your bio',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(-1, 0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
-                                        child: Text(
-                                          'Bio',
-                                          style: FlutterFlowTheme.of(context)
-                                              .subtitle2,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: AuthUserStreamWidget(
-                                        child: TextFormField(
-                                          controller: txtBioController,
-                                          obscureText: false,
-                                          decoration: InputDecoration(
-                                            labelStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle2,
-                                            hintStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyText2,
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            errorBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            focusedErrorBorder:
-                                                OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                color: Color(0x00000000),
-                                                width: 1,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                            filled: true,
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .textFieldBackground,
-                                          ),
-                                          style: FlutterFlowTheme.of(context)
-                                              .subtitle1,
-                                          maxLines: 8,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional(1, 0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 8),
-                                        child: Text(
-                                          '96/150',
-                                          style: FlutterFlowTheme.of(context)
-                                              .subtitle2
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                fontSize: 12,
-                                              ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      setState(() => FFAppState().usrBio =
-                                          txtBioController!.text);
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'Industry')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Industry',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: Text(
-                                        'Industry',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: AuthUserStreamWidget(
-                                      child:
-                                          FutureBuilder<List<IndustriesRecord>>(
-                                        future: queryIndustriesRecordOnce(
-                                          queryBuilder: (industriesRecord) =>
-                                              industriesRecord
-                                                  .orderBy('industry'),
-                                        ),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: SizedBox(
-                                                width: 50,
-                                                height: 50,
-                                                child:
-                                                    CircularProgressIndicator(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          List<IndustriesRecord>
-                                              ddIndustryIndustriesRecordList =
-                                              snapshot.data!;
-                                          return FlutterFlowDropDown(
-                                            initialOption: ddIndustryValue ??=
-                                                valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.industry,
-                                                    ''),
-                                            options:
-                                                ddIndustryIndustriesRecordList
-                                                    .map((e) => e.industry!)
-                                                    .toList()
-                                                    .toList(),
-                                            onChanged: (val) => setState(
-                                                () => ddIndustryValue = val),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 50,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle1,
-                                            hintText: 'Please select...',
-                                            fillColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .textFieldBackground,
-                                            elevation: 2,
-                                            borderColor: Colors.transparent,
-                                            borderWidth: 0,
-                                            borderRadius: 0,
-                                            margin:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12, 4, 12, 4),
-                                            hidesUnderline: true,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      setState(() => FFAppState().usrIndustry =
-                                          ddIndustryValue!);
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'Occupation')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Occupation',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  AuthUserStreamWidget(
-                                    child: TextFormField(
-                                      controller: txtOccupationController,
-                                      autofocus: true,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        hintText: 'Please enter...',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .bodyText2,
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0x00000000),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        filled: true,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .textFieldBackground,
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      setState(() =>
-                                          FFAppState().usrOccupation =
-                                              txtOccupationController!.text);
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'Birthday')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Date of birth',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Expanded(
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Container(
-                                        width: 100,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .textFieldBackground,
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                        ),
-                                        child: Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 0, 0),
-                                            child: Text(
-                                              dateTimeFormat('yMd',
-                                                  calBDaySelectedDay!.start),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .title3,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                child: AuthUserStreamWidget(
-                                  child: FlutterFlowCalendar(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    weekFormat: false,
-                                    weekStartsMonday: true,
-                                    initialDate: currentUserDocument!.birthDay,
-                                    onChange:
-                                        (DateTimeRange? newSelectedDate) async {
-                                      calBDaySelectedDay = newSelectedDate;
-                                      setState(() => FFAppState().usrBDay =
-                                          calBDaySelectedDay?.start);
-                                      setState(() {});
-                                    },
-                                    titleStyle: TextStyle(),
-                                    dayOfWeekStyle: TextStyle(),
-                                    dateStyle: TextStyle(),
-                                    selectedDateStyle: TextStyle(),
-                                    inactiveDateStyle: TextStyle(),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (!functions.isAgeValid(
-                                          calBDaySelectedDay?.start)) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Please select valid age between 18 and 70',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryColor,
-                                                      ),
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 4000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .systemError,
-                                          ),
-                                        );
-                                        return;
-                                      }
-                                      setState(() => FFAppState().usrBDay =
-                                          calBDaySelectedDay?.start);
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 if (FFAppState().profileContainerName == 'Gender')
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -2910,10 +1945,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Name');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditNameViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -2946,11 +1984,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'Name');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditNameViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
@@ -2981,10 +2021,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Bio');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditBioViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -2995,7 +2038,8 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             alignment:
                                                 AlignmentDirectional(-1, 0),
                                             child: Text(
-                                              txtBioController!.text
+                                              FFAppState()
+                                                  .usrBio
                                                   .maybeHandleOverflow(
                                                       maxChars: 150),
                                               maxLines: 3,
@@ -3016,11 +2060,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'Bio');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditBioViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
@@ -3051,10 +2097,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Industry');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditIndustryViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -3083,11 +2132,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'Industry');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditIndustryViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
@@ -3118,11 +2169,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
-                                                'Occupation');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditOccupationViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -3133,11 +2186,12 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             alignment:
                                                 AlignmentDirectional(-1, 0),
                                             child: Text(
-                                              txtOccupationController!.text
+                                              FFAppState()
+                                                  .usrOccupation
                                                   .maybeHandleOverflow(
-                                                maxChars: 50,
-                                                replacement: '…',
-                                              ),
+                                                    maxChars: 50,
+                                                    replacement: '…',
+                                                  ),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .subtitle1,
@@ -3155,11 +2209,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'Occupation');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditOccupationViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
@@ -3190,10 +2246,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Birthday');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditBirthdayViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -4579,12 +3638,12 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                           onPressed: () async {
                             final usersUpdateData = {
                               ...createUsersRecordData(
-                                firstName: txtFirstNameController!.text,
-                                lastName: txtLastNameController!.text,
+                                firstName: FFAppState().usrFirstName,
+                                lastName: FFAppState().usrLastName,
                                 birthDay: FFAppState().usrBDay,
-                                industry: ddIndustryValue,
-                                occupation: txtOccupationController!.text,
-                                bio: txtBioController!.text,
+                                industry: FFAppState().usrIndustry,
+                                occupation: FFAppState().usrOccupation,
+                                bio: FFAppState().usrBio,
                                 gender: FFAppState().usrGender,
                                 genderPreference:
                                     FFAppState().usrGenderPreference,
@@ -4602,7 +3661,7 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                 height: FFAppState().usrHeight,
                                 weight: 80,
                                 displayName:
-                                    '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
+                                    '${FFAppState().usrFirstName}, ${functions.getAge(FFAppState().usrBDay).toString()}',
                               ),
                               'interests': FFAppState().usrInterests,
                               'lookingFor': FFAppState().usrLookingFor,

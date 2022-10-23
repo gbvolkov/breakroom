@@ -21,9 +21,13 @@ export 'home_details_view/home_details_view_widget.dart'
     show HomeDetailsViewWidget;
 export 'edit_profile_new_view/edit_profile_new_view_widget.dart'
     show EditProfileNewViewWidget;
+export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
+export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
 export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
 export 'get_premium_view/get_premium_view_widget.dart'
     show GetPremiumViewWidget;
+export 'choose_location_page/choose_location_page_widget.dart'
+    show ChooseLocationPageWidget;
 export 'login_set_new_password_view/login_set_new_password_view_widget.dart'
     show LoginSetNewPasswordViewWidget;
 export 'introduction_view/introduction_view_widget.dart'
@@ -48,3 +52,9 @@ export 'notification_settings_view/notification_settings_view_widget.dart'
     show NotificationSettingsViewWidget;
 export 'privacy_and_policy_view/privacy_and_policy_view_widget.dart'
     show PrivacyAndPolicyViewWidget;
+export 'edit_industry_view/edit_industry_view_widget.dart'
+    show EditIndustryViewWidget;
+export 'edit_occupation_view/edit_occupation_view_widget.dart'
+    show EditOccupationViewWidget;
+export 'edit_birthday_view/edit_birthday_view_widget.dart'
+    show EditBirthdayViewWidget;

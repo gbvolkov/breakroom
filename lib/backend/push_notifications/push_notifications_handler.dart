@@ -111,8 +111,13 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
             data, 'userProfile', UsersRecord.serializer),
       ),
   'EditProfileNewView': (data) async => EditProfileNewViewWidget(),
+  'EditNameView': (data) async => EditNameViewWidget(),
+  'EditBioView': (data) async => EditBioViewWidget(),
   'FiltersView': (data) async => FiltersViewWidget(),
   'GetPremiumView': (data) async => GetPremiumViewWidget(),
+  'ChooseLocationPage': (data) async => ChooseLocationPageWidget(
+        currentLocation: getParameter(data, 'currentLocation'),
+      ),
   'LoginSetNewPasswordView': (data) async => LoginSetNewPasswordViewWidget(),
   'IntroductionView': (data) async => IntroductionViewWidget(),
   'Chat': (data) async => ChatWidget(
@@ -135,6 +140,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'LoginDetailsView': (data) async => LoginDetailsViewWidget(),
   'NotificationSettingsView': (data) async => NotificationSettingsViewWidget(),
   'PrivacyAndPolicyView': (data) async => PrivacyAndPolicyViewWidget(),
+  'EditIndustryView': (data) async => EditIndustryViewWidget(),
+  'EditOccupationView': (data) async => EditOccupationViewWidget(),
+  'EditBirthdayView': (data) async => EditBirthdayViewWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
