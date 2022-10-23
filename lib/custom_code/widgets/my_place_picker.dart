@@ -7,6 +7,9 @@ import '../actions/index.dart'; // Imports custom actions
 import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 
+import '../../flutter_flow/flutter_flow_place_picker.dart';
+import '../../flutter_flow/flutter_flow_widgets.dart';
+
 // Begin custom widget code
 class MyPlacePicker extends StatefulWidget {
   const MyPlacePicker({
@@ -35,6 +38,8 @@ class MyPlacePicker extends StatefulWidget {
 }
 
 class _MyPlacePickerState extends State<MyPlacePicker> {
+  var placePickerValue = const FFPlace();
+
   @override
   Widget build(BuildContext context) {
     return Container(
