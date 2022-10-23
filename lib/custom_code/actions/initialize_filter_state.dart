@@ -33,4 +33,5 @@ Future initializeFilterState(
   FFAppState().fltrAgeRangeExt = false;
   FFAppState().fltrIndusrtries = filter?.industries?.asList() ?? [];
   FFAppState().fltrLocation = filter?.location ?? currentLocation;
+  FFAppState().fltrAddress = filter?.address ?? '';
 }

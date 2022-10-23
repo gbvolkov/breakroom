@@ -64,6 +64,13 @@ class _$FilterStructSerializer implements StructuredSerializer<FilterStruct> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
+    value = object.address;
+    if (value != null) {
+      result
+        ..add('address')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -108,6 +115,10 @@ class _$FilterStructSerializer implements StructuredSerializer<FilterStruct> {
                   specifiedType: const FullType(DoubleRangeStruct))!
               as DoubleRangeStruct);
           break;
+        case 'address':
+          result.address = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
                   specifiedType: const FullType(FirestoreUtilData))!
@@ -134,6 +145,8 @@ class _$FilterStruct extends FilterStruct {
   @override
   final DoubleRangeStruct ageRange;
   @override
+  final String? address;
+  @override
   final FirestoreUtilData firestoreUtilData;
 
   factory _$FilterStruct([void Function(FilterStructBuilder)? updates]) =>
@@ -146,6 +159,7 @@ class _$FilterStruct extends FilterStruct {
       this.distance,
       this.industries,
       required this.ageRange,
+      this.address,
       required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -171,6 +185,7 @@ class _$FilterStruct extends FilterStruct {
         distance == other.distance &&
         industries == other.industries &&
         ageRange == other.ageRange &&
+        address == other.address &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
@@ -180,11 +195,15 @@ class _$FilterStruct extends FilterStruct {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, lookingFor.hashCode), ageRangeExt.hashCode),
-                        location.hashCode),
-                    distance.hashCode),
-                industries.hashCode),
-            ageRange.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc(0, lookingFor.hashCode),
+                                ageRangeExt.hashCode),
+                            location.hashCode),
+                        distance.hashCode),
+                    industries.hashCode),
+                ageRange.hashCode),
+            address.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -197,6 +216,7 @@ class _$FilterStruct extends FilterStruct {
           ..add('distance', distance)
           ..add('industries', industries)
           ..add('ageRange', ageRange)
+          ..add('address', address)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -236,6 +256,10 @@ class FilterStructBuilder
   set ageRange(DoubleRangeStructBuilder? ageRange) =>
       _$this._ageRange = ageRange;
 
+  String? _address;
+  String? get address => _$this._address;
+  set address(String? address) => _$this._address = address;
+
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
   set firestoreUtilData(FirestoreUtilData? firestoreUtilData) =>
@@ -254,6 +278,7 @@ class FilterStructBuilder
       _distance = $v.distance;
       _industries = $v.industries?.toBuilder();
       _ageRange = $v.ageRange.toBuilder();
+      _address = $v.address;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -285,6 +310,7 @@ class FilterStructBuilder
               distance: distance,
               industries: _industries?.build(),
               ageRange: ageRange.build(),
+              address: address,
               firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                   firestoreUtilData, r'FilterStruct', 'firestoreUtilData'));
     } catch (_) {
