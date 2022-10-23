@@ -248,6 +248,8 @@ class FFAppState {
   String mppAddress = '';
 
   int bioCharCounter = 0;
+
+  String tmpString = '';
 }
 
 LatLng? _latLngFromString(String? val) {

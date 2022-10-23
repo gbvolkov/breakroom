@@ -3,6 +3,8 @@ import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../edit_bio_view/edit_bio_view_widget.dart';
 import '../edit_birthday_view/edit_birthday_view_widget.dart';
+import '../edit_gender_prefs_view/edit_gender_prefs_view_widget.dart';
+import '../edit_gender_view/edit_gender_view_widget.dart';
 import '../edit_industry_view/edit_industry_view_widget.dart';
 import '../edit_name_view/edit_name_view_widget.dart';
 import '../edit_occupation_view/edit_occupation_view_widget.dart';
@@ -83,389 +85,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                     ),
                   ),
                 ),
-                if (FFAppState().profileContainerName == 'Gender')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Gender',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: Text(
-                                        'Your gender',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      child: custom_widgets.MyRadioButton(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 50,
-                                        buttonLabels:
-                                            FFAppState().genders.toList(),
-                                        buttonValues:
-                                            FFAppState().genders.toList(),
-                                        horizontal: false,
-                                        buttonWidth: 100.0,
-                                        buttonHeight: 50.0,
-                                        defaultSelected: FFAppState().usrGender,
-                                        onValue: () async {
-                                          setState(() => FFAppState()
-                                                  .usrGender =
-                                              FFAppState().mrbSelectedValue);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'Preferences')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 64),
-                                  child: Text(
-                                    'Preferences',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 8),
-                                      child: Text(
-                                        'Your preferences',
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
-                                      child: custom_widgets.MyRadioButton(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 50,
-                                        buttonLabels:
-                                            FFAppState().genders.toList(),
-                                        buttonValues:
-                                            FFAppState().genders.toList(),
-                                        horizontal: false,
-                                        buttonWidth: 100.0,
-                                        buttonHeight: 50.0,
-                                        defaultSelected:
-                                            FFAppState().usrGenderPreference,
-                                        onValue: () async {
-                                          setState(() => FFAppState()
-                                                  .usrGenderPreference =
-                                              FFAppState().mrbSelectedValue);
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'ChooseYourStatus')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'Choose your status',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 200,
-                              child: custom_widgets.MyRadioButton(
-                                width: MediaQuery.of(context).size.width,
-                                height: 200,
-                                buttonLabels: FFAppState().intentions.toList(),
-                                buttonValues: FFAppState().intentions.toList(),
-                                horizontal: true,
-                                buttonHeight: 50.0,
-                                defaultSelected: FFAppState().usrIntention,
-                                onValue: () async {
-                                  setState(() => FFAppState().usrIntention =
-                                      FFAppState().mrbSelectedValue);
-                                },
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 if (FFAppState().profileContainerName == 'Basic1')
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -2326,10 +1945,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Gender');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditGenderViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -2358,11 +1980,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'Gender');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditGenderViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
@@ -2393,11 +2017,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
-                                                'Preferences');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditGenderPrefsViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -2426,11 +2052,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'Preferences');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditGenderPrefsViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
