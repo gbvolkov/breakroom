@@ -64,3 +64,5 @@ export 'edit_gender_prefs_view/edit_gender_prefs_view_widget.dart'
     show EditGenderPrefsViewWidget;
 export 'edit_status_view/edit_status_view_widget.dart'
     show EditStatusViewWidget;
+export 'edit_interests_view/edit_interests_view_widget.dart'
+    show EditInterestsViewWidget;

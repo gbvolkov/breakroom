@@ -48,8 +48,8 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            Navigator.pop(context);
           },
         ),
         title: Text(
@@ -207,7 +207,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   height: 40,
-                                  child: custom_widgets.TestPlacePicker(
+                                  child: custom_widgets.MakPlacePicker(
                                     width: double.infinity,
                                     height: 40,
                                     location: functions.getUserLocation(

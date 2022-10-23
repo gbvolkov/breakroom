@@ -6,9 +6,10 @@ import '../edit_birthday_view/edit_birthday_view_widget.dart';
 import '../edit_gender_prefs_view/edit_gender_prefs_view_widget.dart';
 import '../edit_gender_view/edit_gender_view_widget.dart';
 import '../edit_industry_view/edit_industry_view_widget.dart';
+import '../edit_interests_view/edit_interests_view_widget.dart';
 import '../edit_name_view/edit_name_view_widget.dart';
 import '../edit_occupation_view/edit_occupation_view_widget.dart';
-import '../flutter_flow/flutter_flow_choice_chips.dart';
+import '../edit_status_view/edit_status_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -37,7 +38,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
   DateTime? userBDay;
   PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String>? ccInterestsValues;
 
   @override
   void initState() {
@@ -167,195 +167,6 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if (scaffoldKey
-                                              .currentState!.isDrawerOpen ||
-                                          scaffoldKey
-                                              .currentState!.isEndDrawerOpen) {
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    text: 'Save',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 48,
-                                      color: Colors.transparent,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().profileContainerName == 'Interests')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.9,
-                      decoration: BoxDecoration(),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(-1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                              child: Text(
-                                'What are you \ninterested in?',
-                                style: FlutterFlowTheme.of(context)
-                                    .title1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 32,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(-1, -1),
-                              child: Wrap(
-                                spacing: 0,
-                                runSpacing: 0,
-                                alignment: WrapAlignment.start,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                direction: Axis.horizontal,
-                                runAlignment: WrapAlignment.start,
-                                verticalDirection: VerticalDirection.down,
-                                clipBehavior: Clip.none,
-                                children: [
-                                  AuthUserStreamWidget(
-                                    child: FutureBuilder<List<InterestsRecord>>(
-                                      future: queryInterestsRecordOnce(
-                                        queryBuilder: (interestsRecord) =>
-                                            interestsRecord.orderBy('interest'),
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: CircularProgressIndicator(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<InterestsRecord>
-                                            ccInterestsInterestsRecordList =
-                                            snapshot.data!;
-                                        return FlutterFlowChoiceChips(
-                                          initiallySelected:
-                                              (currentUserDocument?.interests
-                                                      ?.toList() ??
-                                                  []),
-                                          options:
-                                              ccInterestsInterestsRecordList
-                                                  .map((e) => e.interest!)
-                                                  .toList()
-                                                  .map((label) =>
-                                                      ChipData(label))
-                                                  .toList(),
-                                          onChanged: (val) => setState(
-                                              () => ccInterestsValues = val),
-                                          selectedChipStyle: ChipStyle(
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle1
-                                                    .override(
-                                                      fontFamily: 'Roboto',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                    ),
-                                            iconColor: Colors.white,
-                                            iconSize: 18,
-                                            labelPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 8, 8, 8),
-                                            elevation: 0,
-                                          ),
-                                          unselectedChipStyle: ChipStyle(
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle1,
-                                            iconColor: Color(0xFF323B45),
-                                            iconSize: 18,
-                                            labelPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 8, 8, 8),
-                                            elevation: 0,
-                                          ),
-                                          chipSpacing: 20,
-                                          rowSpacing: 8,
-                                          multiselect: true,
-                                          initialized:
-                                              ccInterestsValues != null,
-                                          alignment: WrapAlignment.start,
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: double.infinity,
-                                  height: 48,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color(0xFFEE837B),
-                                        Color(0xFFF95A82),
-                                        Color(0xFFEA3C7D)
-                                      ],
-                                      stops: [0, 0.6, 1],
-                                      begin: AlignmentDirectional(0, -1),
-                                      end: AlignmentDirectional(0, 1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      setState(() => FFAppState().usrInterests =
-                                          ccInterestsValues!.toList());
                                       if (scaffoldKey
                                               .currentState!.isDrawerOpen ||
                                           scaffoldKey
@@ -2089,11 +1900,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        setState(() =>
-                                            FFAppState().profileContainerName =
-                                                'ChooseYourStatus');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditStatusViewWidget(),
+                                          ),
+                                        );
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -2122,11 +1935,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              setState(() => FFAppState()
-                                                      .profileContainerName =
-                                                  'ChooseYourStatus');
-                                              scaffoldKey.currentState!
-                                                  .openEndDrawer();
+                                              await Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditStatusViewWidget(),
+                                                ),
+                                              );
                                             },
                                           ),
                                         ],
@@ -2175,11 +1990,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                             size: 16,
                                           ),
                                           onPressed: () async {
-                                            setState(() => FFAppState()
-                                                    .profileContainerName =
-                                                'Interests');
-                                            scaffoldKey.currentState!
-                                                .openEndDrawer();
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditInterestsViewWidget(),
+                                              ),
+                                            );
                                           },
                                         ),
                                       ],
@@ -2195,11 +2012,13 @@ class _EditProfileNewViewWidgetState extends State<EditProfileNewViewWidget> {
                                                   .toList();
                                               return InkWell(
                                                 onTap: () async {
-                                                  setState(() => FFAppState()
-                                                          .profileContainerName =
-                                                      'Interests');
-                                                  scaffoldKey.currentState!
-                                                      .openEndDrawer();
+                                                  await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          EditInterestsViewWidget(),
+                                                    ),
+                                                  );
                                                 },
                                                 child: Wrap(
                                                   spacing: 8,

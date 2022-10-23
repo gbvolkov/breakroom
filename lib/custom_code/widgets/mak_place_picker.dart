@@ -12,8 +12,8 @@ import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
 import 'package:google_api_headers/google_api_headers.dart' as hdr;
 import 'package:google_maps_webservice/places.dart' as places;
 
-class TestPlacePicker extends StatefulWidget {
-  const TestPlacePicker({
+class MyPlacePicker extends StatefulWidget {
+  const MyPlacePicker({
     Key? key,
     this.width,
     this.height,
@@ -27,10 +27,10 @@ class TestPlacePicker extends StatefulWidget {
   final Future<dynamic> Function() onSelect;
 
   @override
-  _TestPlacePickerState createState() => _TestPlacePickerState();
+  _MyPlacePickerState createState() => _MyPlacePickerState();
 }
 
-class _TestPlacePickerState extends State<TestPlacePicker> {
+class _MyPlacePickerState extends State<MyPlacePicker> {
   String? _selectedPlace;
 
   String get googleMapsApiKey {
@@ -52,8 +52,8 @@ class _TestPlacePickerState extends State<TestPlacePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      child: Text("Search places"),
+    return IconButton(
+      icon: const Icon(Icons.place),
       onPressed: () async {
         final p = await fgp.PlacesAutocomplete.show(
           context: context,
