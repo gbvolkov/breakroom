@@ -196,10 +196,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                             Expanded(
                               flex: 7,
                               child: Text(
-                                valueOrDefault<String>(
-                                  FFAppState().mppAddress,
-                                  'Select place',
-                                ),
+                                FFAppState().fltrAddress,
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),

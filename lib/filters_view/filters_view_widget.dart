@@ -1052,6 +1052,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               clearUnsetFields: false,
                                             ),
                                             location: FFAppState().fltrLocation,
+                                            address: FFAppState().fltrAddress,
                                             fieldValues: {
                                               'lookingFor':
                                                   FFAppState().fltrLookingFor,
