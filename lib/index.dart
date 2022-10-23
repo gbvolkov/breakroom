@@ -58,3 +58,9 @@ export 'edit_occupation_view/edit_occupation_view_widget.dart'
     show EditOccupationViewWidget;
 export 'edit_birthday_view/edit_birthday_view_widget.dart'
     show EditBirthdayViewWidget;
+export 'edit_gender_view/edit_gender_view_widget.dart'
+    show EditGenderViewWidget;
+export 'edit_gender_prefs_view/edit_gender_prefs_view_widget.dart'
+    show EditGenderPrefsViewWidget;
+export 'edit_status_view/edit_status_view_widget.dart'
+    show EditStatusViewWidget;

@@ -116,13 +116,15 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                       height: MediaQuery.of(context).size.height * 1,
                       decoration: BoxDecoration(),
                       child: Builder(builder: (context) {
-                        final _googleMapMarker = functions
-                            .getUserLocation(FFAppState().fltrLocation);
+                        final _googleMapMarker = functions.getUserLocation(
+                            FFAppState().fltrLocation, placePickerValue.latLng);
                         return FlutterFlowGoogleMap(
                           controller: googleMapsController,
                           onCameraIdle: (latLng) => googleMapsCenter = latLng,
                           initialLocation: googleMapsCenter ??=
-                              functions.getUserLocation(widget.currentLocation),
+                              functions.getUserLocation(
+                                  FFAppState().fltrLocation,
+                                  placePickerValue.latLng),
                           markers: [
                             FlutterFlowMarker(
                               _googleMapMarker.serialize(),
