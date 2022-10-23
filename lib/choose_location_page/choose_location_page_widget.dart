@@ -217,6 +217,8 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                                     onSelect: () async {
                                       setState(() => FFAppState().fltrLocation =
                                           FFAppState().mppLocation);
+                                      setState(() => FFAppState().fltrAddress =
+                                          FFAppState().mppAddress);
                                       await googleMapsController.future.then(
                                         (c) => c.animateCamera(
                                           CameraUpdate.newLatLng(FFAppState()

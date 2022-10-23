@@ -632,7 +632,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                 children: [
                                                   Expanded(
                                                     child: Text(
-                                                      '8502 Preston Rd. Inglewood, Maine 98380',
+                                                      FFAppState().fltrAddress,
                                                       maxLines: 2,
                                                       style: FlutterFlowTheme
                                                               .of(context)
