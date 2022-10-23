@@ -190,10 +190,11 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                         child: Row(
-                          mainAxisSize: MainAxisSize.max,
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              flex: 3,
+                              flex: 7,
                               child: Text(
                                 valueOrDefault<String>(
                                   FFAppState().mppAddress,
@@ -205,10 +206,10 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                             Expanded(
                               child: AuthUserStreamWidget(
                                 child: Container(
-                                  width: double.infinity,
+                                  width: 40,
                                   height: 40,
-                                  child: custom_widgets.MakPlacePicker(
-                                    width: double.infinity,
+                                  child: custom_widgets.MyPlacePicker(
+                                    width: 40,
                                     height: 40,
                                     location: functions.getUserLocation(
                                         currentUserDocument!.geoposition,
