@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../components/map_place_card_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -8,6 +9,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/lat_lng.dart';
 import '../flutter_flow/place.dart';
 import 'dart:io';
+import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +78,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
             defaultText: 'Select Location',
             icon: Icon(
               Icons.place,
-              color: Colors.white,
+              color: FlutterFlowTheme.of(context).primaryText,
               size: 16,
             ),
             buttonOptions: FFButtonOptions(
@@ -89,6 +91,23 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                 width: 1,
               ),
               borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          AuthUserStreamWidget(
+            child: Container(
+              width: double.infinity,
+              height: 40,
+              child: custom_widgets.TestPlacePicker(
+                width: double.infinity,
+                height: 40,
+                location: functions.getUserLocation(
+                    currentUserDocument!.geoposition,
+                    currentUserDocument!.geoposition),
+                onSelect: () async {
+                  setState(() =>
+                      FFAppState().fltrLocation = FFAppState().mppLocation);
+                },
+              ),
             ),
           ),
           Expanded(
@@ -117,14 +136,15 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                       decoration: BoxDecoration(),
                       child: Builder(builder: (context) {
                         final _googleMapMarker = functions.getUserLocation(
-                            FFAppState().fltrLocation, placePickerValue.latLng);
+                            FFAppState().fltrLocation,
+                            FFAppState().fltrLocation);
                         return FlutterFlowGoogleMap(
                           controller: googleMapsController,
                           onCameraIdle: (latLng) => googleMapsCenter = latLng,
                           initialLocation: googleMapsCenter ??=
                               functions.getUserLocation(
                                   FFAppState().fltrLocation,
-                                  placePickerValue.latLng),
+                                  FFAppState().fltrLocation),
                           markers: [
                             FlutterFlowMarker(
                               _googleMapMarker.serialize(),
