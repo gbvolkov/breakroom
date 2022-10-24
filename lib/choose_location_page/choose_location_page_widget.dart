@@ -1,4 +1,3 @@
-import '../auth/auth_util.dart';
 import '../components/map_place_card_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -7,7 +6,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/lat_lng.dart';
 import '../custom_code/actions/index.dart' as actions;
-import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -191,81 +189,54 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                       ),
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex: 7,
-                              child: Text(
-                                FFAppState().fltrAddress,
-                                style: FlutterFlowTheme.of(context).bodyText1,
+                        child: InkWell(
+                          onTap: () async {
+                            place = await actions.placePickerAction(
+                              context,
+                              FFAppState().fltrLocation,
+                              FFAppState().fltrAddress,
+                            );
+                            setState(() =>
+                                FFAppState().fltrLocation = place!.latLng);
+                            setState(() =>
+                                FFAppState().fltrAddress = place!.address);
+                            await googleMapsController.future.then(
+                              (c) => c.animateCamera(
+                                CameraUpdate.newLatLng(
+                                    FFAppState().fltrLocation!.toGoogleMaps()),
                               ),
-                            ),
-                            Expanded(
-                              child: AuthUserStreamWidget(
-                                child: Container(
-                                  width: 40,
-                                  height: 40,
-                                  child: custom_widgets.MyPlacePicker(
-                                    width: 40,
-                                    height: 40,
-                                    location: functions.getUserLocation(
-                                        currentUserDocument!.geoposition,
-                                        currentUserDocument!.geoposition),
-                                    onSelect: () async {
-                                      setState(() => FFAppState().fltrLocation =
-                                          FFAppState().mppLocation);
-                                      setState(() => FFAppState().fltrAddress =
-                                          FFAppState().mppAddress);
-                                      await googleMapsController.future.then(
-                                        (c) => c.animateCamera(
-                                          CameraUpdate.newLatLng(FFAppState()
-                                              .fltrLocation!
-                                              .toGoogleMaps()),
-                                        ),
-                                      );
-                                    },
-                                  ),
+                            );
+
+                            setState(() {});
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: 7,
+                                child: Text(
+                                  FFAppState().fltrAddress,
+                                  style: FlutterFlowTheme.of(context).bodyText1,
                                 ),
                               ),
-                            ),
-                          ],
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                buttonSize: 60,
+                                icon: Icon(
+                                  Icons.place,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(0.89, 0.49),
-                  child: FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 60,
-                    fillColor: FlutterFlowTheme.of(context).alternate,
-                    icon: Icon(
-                      Icons.place,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      size: 30,
-                    ),
-                    onPressed: () async {
-                      place = await actions.placePickerAction(
-                        context,
-                        FFAppState().fltrLocation,
-                        FFAppState().fltrAddress,
-                      );
-                      setState(() => FFAppState().fltrLocation = place!.latLng);
-                      setState(() => FFAppState().fltrAddress = place!.address);
-                      await googleMapsController.future.then(
-                        (c) => c.animateCamera(
-                          CameraUpdate.newLatLng(
-                              FFAppState().fltrLocation!.toGoogleMaps()),
-                        ),
-                      );
-
-                      setState(() {});
-                    },
                   ),
                 ),
               ],
