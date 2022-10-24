@@ -1,12 +1,11 @@
 import '../backend/backend.dart';
-import '../edit_profile_new_view/edit_profile_new_view_widget.dart';
+import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditInterestsViewWidget extends StatefulWidget {
@@ -20,15 +19,6 @@ class EditInterestsViewWidget extends StatefulWidget {
 class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
   List<String>? ccInterestsValues;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrIntention);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +188,7 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    EditProfileNewViewWidget(),
+                                builder: (context) => EditProfileViewWidget(),
                               ),
                             );
                           },

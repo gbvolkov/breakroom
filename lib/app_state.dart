@@ -239,11 +239,11 @@ class FFAppState {
 
   bool agreeCheck = false;
 
-  DateTime? currentBDate;
+  DateTime? currentBDate = DateTime.fromMillisecondsSinceEpoch(23648220000);
 
   bool falseconst = false;
 
-  LatLng? mppLocation;
+  LatLng? mppLocation = LatLng(40.7127753, -74.0059728);
 
   String mppAddress = '';
 

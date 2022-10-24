@@ -2,7 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../components/menu_add_photo_widget.dart';
-import '../edit_profile_new_view/edit_profile_new_view_widget.dart';
+import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -443,7 +443,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                EditProfileNewViewWidget(),
+                                                EditProfileViewWidget(),
                                           ),
                                         );
                                       },

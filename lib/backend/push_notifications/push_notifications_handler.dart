@@ -110,7 +110,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         userProfile: await getDocumentParameter(
             data, 'userProfile', UsersRecord.serializer),
       ),
-  'EditProfileNewView': (data) async => EditProfileNewViewWidget(),
+  'EditProfileView': (data) async => EditProfileViewWidget(),
   'EditNameView': (data) async => EditNameViewWidget(),
   'EditBioView': (data) async => EditBioViewWidget(),
   'FiltersView': (data) async => FiltersViewWidget(),
@@ -147,6 +147,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditGenderPrefsView': (data) async => EditGenderPrefsViewWidget(),
   'EditStatusView': (data) async => EditStatusViewWidget(),
   'EditInterestsView': (data) async => EditInterestsViewWidget(),
+  'EditBasicsView': (data) async => EditBasicsViewWidget(),
+  'EditLookingForView': (data) async => EditLookingForViewWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

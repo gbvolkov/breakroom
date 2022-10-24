@@ -2,10 +2,13 @@ import '../auth/auth_util.dart';
 import '../components/map_place_card_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
+import '../flutter_flow/flutter_flow_place_picker.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/lat_lng.dart';
+import '../flutter_flow/place.dart';
+import 'dart:io';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
@@ -27,6 +30,7 @@ class ChooseLocationPageWidget extends StatefulWidget {
 class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
   LatLng? googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
+  var placePickerValue = FFPlace();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -64,6 +68,34 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          FlutterFlowPlacePicker(
+            iOSGoogleMapsApiKey: 'AIzaSyCGa189ibbYv_GlfmMckfYlsHOEc5RRDSE',
+            androidGoogleMapsApiKey: 'AIzaSyD3BF3LlQ_jm7HkDSIni9pGeTF-98gV7iA',
+            webGoogleMapsApiKey: 'AIzaSyCecli0giGx_CRhnrErLWcGGNnT496HAcg',
+            onSelect: (place) async {
+              setState(() => placePickerValue = place);
+            },
+            defaultText: 'Select Location',
+            icon: Icon(
+              Icons.place,
+              color: Colors.white,
+              size: 16,
+            ),
+            buttonOptions: FFButtonOptions(
+              width: 200,
+              height: 40,
+              color: FlutterFlowTheme.of(context).primaryColor,
+              textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                    fontFamily: 'Roboto',
+                    color: Colors.white,
+                  ),
+              borderSide: BorderSide(
+                color: Colors.transparent,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
           Expanded(
             child: Stack(
               children: [

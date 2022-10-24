@@ -1,4 +1,4 @@
-import '../edit_profile_new_view/edit_profile_new_view_widget.dart';
+import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -169,8 +169,7 @@ class _EditOccupationViewWidgetState extends State<EditOccupationViewWidget> {
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    EditProfileNewViewWidget(),
+                                builder: (context) => EditProfileViewWidget(),
                               ),
                             );
                           },

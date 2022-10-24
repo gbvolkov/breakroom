@@ -1,4 +1,4 @@
-import '../edit_profile_view/edit_profile_view_widget.dart';
+import '../edit_basics_view/edit_basics_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -8,14 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EditStatusViewWidget extends StatefulWidget {
-  const EditStatusViewWidget({Key? key}) : super(key: key);
+class EditLookingForViewWidget extends StatefulWidget {
+  const EditLookingForViewWidget({Key? key}) : super(key: key);
 
   @override
-  _EditStatusViewWidgetState createState() => _EditStatusViewWidgetState();
+  _EditLookingForViewWidgetState createState() =>
+      _EditLookingForViewWidgetState();
 }
 
-class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
+class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -23,7 +24,7 @@ class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrIntention);
+      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrGender);
     });
   }
 
@@ -73,7 +74,7 @@ class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
                 Align(
                   alignment: AlignmentDirectional(-1, 0),
                   child: Text(
-                    'Choose your status',
+                    'What are you\nlooking for?',
                     style: FlutterFlowTheme.of(context).title1.override(
                           fontFamily: 'Roboto',
                           fontSize: 32,
@@ -83,21 +84,27 @@ class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    child: custom_widgets.MyRadioButton(
+                  child: InkWell(
+                    onTap: () async {
+                      setState(() => FFAppState().usrLookingFor =
+                          FFAppState().mcbSelectedValues.toList());
+                    },
+                    child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: 200,
-                      buttonLabels: FFAppState().intentions.toList(),
-                      buttonValues: FFAppState().intentions.toList(),
-                      horizontal: true,
-                      buttonHeight: 50.0,
-                      defaultSelected: FFAppState().usrIntention,
-                      onValue: () async {
-                        setState(() => FFAppState().usrIntention =
-                            FFAppState().mrbSelectedValue);
-                      },
+                      child: custom_widgets.MyCheckBoxGroup(
+                        width: MediaQuery.of(context).size.width,
+                        height: 200,
+                        buttonLabels: FFAppState().lookingForList.toList(),
+                        buttonValues: FFAppState().lookingForList.toList(),
+                        horizontal: true,
+                        buttonHeight: 50.0,
+                        defaultSelected: FFAppState().usrLookingFor.toList(),
+                        onValue: () async {
+                          setState(() => FFAppState().selectedValues =
+                              FFAppState().mcbSelectedValues.toList());
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -126,12 +133,12 @@ class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrIntention =
-                                FFAppState().mrbSelectedValue);
+                            setState(() => FFAppState().usrLookingFor =
+                                FFAppState().selectedValues.toList());
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditProfileViewWidget(),
+                                builder: (context) => EditBasicsViewWidget(),
                               ),
                             );
                           },
