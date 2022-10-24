@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
 import 'package:google_api_headers/google_api_headers.dart' as hdr;
 import 'package:google_maps_webservice/places.dart' as plc;
+import 'package:collection/collection.dart';
 
 String get googleMapsApiKey {
   if (kIsWeb) {
@@ -77,20 +78,21 @@ Future<FFPlace> placePickerAction(
       name: detail.result.name,
       address: detail.result.formattedAddress ?? defaultAddress ?? '',
       city: detail.result.addressComponents
-              .firstWhere((element) => element.types.contains('locality'))
+              .firstWhereOrNull((element) => element.types.contains('locality'))
               ?.shortName ??
           '',
       state: detail.result.addressComponents
-              .firstWhere((element) =>
+              .firstWhereOrNull((element) =>
                   element.types.contains('administrative_area_level_1'))
               ?.shortName ??
           '',
       country: detail.result.addressComponents
-              .firstWhere((element) => element.types.contains('country'))
+              .firstWhereOrNull((element) => element.types.contains('country'))
               ?.shortName ??
           '',
       zipCode: detail.result.addressComponents
-              .firstWhere((element) => element.types.contains('postal_code'))
+              .firstWhereOrNull(
+                  (element) => element.types.contains('postal_code'))
               ?.shortName ??
           '',
     );
