@@ -70,3 +70,19 @@ export 'edit_basics_view/edit_basics_view_widget.dart'
     show EditBasicsViewWidget;
 export 'edit_looking_for_view/edit_looking_for_view_widget.dart'
     show EditLookingForViewWidget;
+export 'edit_height_view/edit_height_view_widget.dart'
+    show EditHeightViewWidget;
+export 'edit_drink_prefs_view/edit_drink_prefs_view_widget.dart'
+    show EditDrinkPrefsViewWidget;
+export 'edit_smoking_prefs_view/edit_smoking_prefs_view_widget.dart'
+    show EditSmokingPrefsViewWidget;
+export 'edit_spiritual_status_view/edit_spiritual_status_view_widget.dart'
+    show EditSpiritualStatusViewWidget;
+export 'edit_workout_prefs_view/edit_workout_prefs_view_widget.dart'
+    show EditWorkoutPrefsViewWidget;
+export 'edit_children_prefs_view/edit_children_prefs_view_widget.dart'
+    show EditChildrenPrefsViewWidget;
+export 'edit_education_view/edit_education_view_widget.dart'
+    show EditEducationViewWidget;
+export 'edit_body_type_view/edit_body_type_view_widget.dart'
+    show EditBodyTypeViewWidget;

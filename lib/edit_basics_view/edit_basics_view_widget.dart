@@ -1,6 +1,15 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../edit_body_type_view/edit_body_type_view_widget.dart';
+import '../edit_children_prefs_view/edit_children_prefs_view_widget.dart';
+import '../edit_drink_prefs_view/edit_drink_prefs_view_widget.dart';
+import '../edit_education_view/edit_education_view_widget.dart';
+import '../edit_height_view/edit_height_view_widget.dart';
 import '../edit_looking_for_view/edit_looking_for_view_widget.dart';
+import '../edit_profile_view/edit_profile_view_widget.dart';
+import '../edit_smoking_prefs_view/edit_smoking_prefs_view_widget.dart';
+import '../edit_spiritual_status_view/edit_spiritual_status_view_widget.dart';
+import '../edit_workout_prefs_view/edit_workout_prefs_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -224,35 +233,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       40, 0, 0, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        FFAppState().usrHeight.toString(),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle1,
-                                      ),
-                                      FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30,
-                                        borderWidth: 1,
-                                        buttonSize: 32,
-                                        icon: Icon(
-                                          Icons.chevron_right_rounded,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 16,
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              EditHeightViewWidget(),
                                         ),
-                                        onPressed: () async {
-                                          setState(() => FFAppState()
-                                              .profileContainerName = 'Basic2');
-                                          scaffoldKey.currentState!
-                                              .openEndDrawer();
-                                        },
-                                      ),
-                                    ],
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          FFAppState().usrHeight.toString(),
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1,
+                                        ),
+                                        FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          borderWidth: 1,
+                                          buttonSize: 32,
+                                          icon: Icon(
+                                            Icons.chevron_right_rounded,
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryText,
+                                            size: 16,
+                                          ),
+                                          onPressed: () async {
+                                            await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    EditHeightViewWidget(),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
@@ -292,35 +315,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      FFAppState().usrDrinkingStatus,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditDrinkPrefsViewWidget(),
                                       ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Basic3');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        FFAppState().usrDrinkingStatus,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 32,
+                                        icon: Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditDrinkPrefsViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -356,38 +393,53 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                 ],
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
-                                    child: Text(
-                                      FFAppState().usrSmokingStatus,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                              InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditSmokingPrefsViewWidget(),
                                     ),
-                                  ),
-                                  FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30,
-                                    borderWidth: 1,
-                                    buttonSize: 32,
-                                    icon: Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 16,
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          40, 0, 0, 0),
+                                      child: Text(
+                                        FFAppState().usrSmokingStatus,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
                                     ),
-                                    onPressed: () async {
-                                      setState(() => FFAppState()
-                                          .profileContainerName = 'Basic4');
-                                      scaffoldKey.currentState!.openEndDrawer();
-                                    },
-                                  ),
-                                ],
+                                    FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 30,
+                                      borderWidth: 1,
+                                      buttonSize: 32,
+                                      icon: Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 16,
+                                      ),
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditSmokingPrefsViewWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -425,35 +477,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      FFAppState().usrSpiritualStatus,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditSpiritualStatusViewWidget(),
                                       ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Basic5');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        FFAppState().usrSpiritualStatus,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 32,
+                                        icon: Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditSpiritualStatusViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -492,35 +558,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      FFAppState().usrWorkoutStatus,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditWorkoutPrefsViewWidget(),
                                       ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Basic6');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        FFAppState().usrWorkoutStatus,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 32,
+                                        icon: Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditWorkoutPrefsViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -559,35 +639,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      FFAppState().usrChildfreeStatus,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditChildrenPrefsViewWidget(),
                                       ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Basic7');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        FFAppState().usrChildfreeStatus,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 32,
+                                        icon: Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditChildrenPrefsViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -626,35 +720,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      FFAppState().usrEducation,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                    ),
-                                    FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 32,
-                                      icon: Icon(
-                                        Icons.chevron_right_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        size: 16,
+                                child: InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditEducationViewWidget(),
                                       ),
-                                      onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .profileContainerName = 'Basic8');
-                                        scaffoldKey.currentState!
-                                            .openEndDrawer();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        FFAppState().usrEducation,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 32,
+                                        icon: Icon(
+                                          Icons.chevron_right_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () async {
+                                          await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  EditEducationViewWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -691,34 +799,49 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                             Padding(
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    FFAppState().usrBodyType,
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                  ),
-                                  FlutterFlowIconButton(
-                                    borderColor: Colors.transparent,
-                                    borderRadius: 30,
-                                    borderWidth: 1,
-                                    buttonSize: 32,
-                                    icon: Icon(
-                                      Icons.chevron_right_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                      size: 16,
+                              child: InkWell(
+                                onTap: () async {
+                                  await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          EditBodyTypeViewWidget(),
                                     ),
-                                    onPressed: () async {
-                                      setState(() => FFAppState()
-                                          .profileContainerName = 'Basic9');
-                                      scaffoldKey.currentState!.openEndDrawer();
-                                    },
-                                  ),
-                                ],
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      FFAppState().usrBodyType,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                    ),
+                                    FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 30,
+                                      borderWidth: 1,
+                                      buttonSize: 32,
+                                      icon: Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                        size: 16,
+                                      ),
+                                      onPressed: () async {
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditBodyTypeViewWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
@@ -783,7 +906,12 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               'lookingFor': FFAppState().usrLookingFor,
                             };
                             await currentUserReference!.update(usersUpdateData);
-                            Navigator.pop(context);
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditProfileViewWidget(),
+                              ),
+                            );
                           },
                           text: 'Save',
                           options: FFButtonOptions(
@@ -797,9 +925,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                 ),
+                            elevation: 0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 1,
+                              width: 0,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),

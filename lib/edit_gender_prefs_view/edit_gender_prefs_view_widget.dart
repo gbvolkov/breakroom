@@ -169,9 +169,10 @@ class _EditGenderPrefsViewWidgetState extends State<EditGenderPrefsViewWidget> {
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                 ),
+                            elevation: 0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 1,
+                              width: 0,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),

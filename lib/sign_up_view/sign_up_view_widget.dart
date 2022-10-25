@@ -440,6 +440,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                       .primaryColor,
                                                   fontWeight: FontWeight.w600,
                                                 ),
+                                            elevation: 0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                               width: 1,
@@ -905,6 +906,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primaryColor,
                                             ),
+                                        elevation: 0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
                                           width: 1,
