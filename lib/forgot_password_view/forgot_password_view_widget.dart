@@ -275,6 +275,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                                   context)
                                                               .primaryColor,
                                                     ),
+                                            elevation: 0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                               width: 1,
@@ -531,6 +532,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                                   context)
                                                               .primaryColor,
                                                     ),
+                                            elevation: 0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                               width: 1,
@@ -811,6 +813,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .primaryColor,
                                             ),
+                                        elevation: 0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
                                           width: 1,

@@ -204,6 +204,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget> {
                               fontFamily: 'Roboto',
                               color: FlutterFlowTheme.of(context).primaryColor,
                             ),
+                        elevation: 0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
                           width: 1,

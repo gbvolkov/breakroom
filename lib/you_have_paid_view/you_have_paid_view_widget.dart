@@ -152,6 +152,7 @@ class _YouHavePaidViewWidgetState extends State<YouHavePaidViewWidget> {
                                                                     context)
                                                                 .primaryColor,
                                                       ),
+                                                  elevation: 0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
                                                     width: 1,

@@ -1,30 +1,33 @@
-import '../edit_profile_view/edit_profile_view_widget.dart';
-import '../flutter_flow/flutter_flow_calendar.dart';
+import '../edit_basics_view/edit_basics_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class EditBirthdayViewWidget extends StatefulWidget {
-  const EditBirthdayViewWidget({Key? key}) : super(key: key);
+class EditChildrenPrefsViewWidget extends StatefulWidget {
+  const EditChildrenPrefsViewWidget({Key? key}) : super(key: key);
 
   @override
-  _EditBirthdayViewWidgetState createState() => _EditBirthdayViewWidgetState();
+  _EditChildrenPrefsViewWidgetState createState() =>
+      _EditChildrenPrefsViewWidgetState();
 }
 
-class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
-  DateTimeRange? calBDaySelectedDay;
+class _EditChildrenPrefsViewWidgetState
+    extends State<EditChildrenPrefsViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    calBDaySelectedDay = DateTimeRange(
-      start: DateTime.now().startOfDay,
-      end: DateTime.now().endOfDay,
-    );
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() =>
+          FFAppState().mrbSelectedValue = FFAppState().usrChildfreeStatus);
+    });
   }
 
   @override
@@ -70,77 +73,40 @@ class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(-1, 0),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                        child: Text(
-                          'Date of birth',
-                          style: FlutterFlowTheme.of(context).title1.override(
-                                fontFamily: 'Roboto',
-                                fontSize: 32,
-                                fontWeight: FontWeight.bold,
-                              ),
+                Align(
+                  alignment: AlignmentDirectional(-1, 0),
+                  child: Text(
+                    'Do you want children?',
+                    style: FlutterFlowTheme.of(context).title1.override(
+                          fontFamily: 'Roboto',
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Material(
-                            color: Colors.transparent,
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Container(
-                              width: 100,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .textFieldBackground,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Align(
-                                alignment: AlignmentDirectional(-1, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
-                                  child: Text(
-                                    dateTimeFormat(
-                                        'yMd', calBDaySelectedDay!.start),
-                                    style: FlutterFlowTheme.of(context).title3,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                      child: FlutterFlowCalendar(
-                        color: FlutterFlowTheme.of(context).primaryColor,
-                        weekFormat: false,
-                        weekStartsMonday: true,
-                        initialDate: FFAppState().usrBDay,
-                        onChange: (DateTimeRange? newSelectedDate) {
-                          setState(() => calBDaySelectedDay = newSelectedDate);
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional(0, 0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: custom_widgets.MyRadioButton(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        buttonLabels: FFAppState().childrenOptionsList.toList(),
+                        buttonValues: FFAppState().childrenOptionsList.toList(),
+                        horizontal: true,
+                        buttonWidth: 120.0,
+                        buttonHeight: 50.0,
+                        defaultSelected: FFAppState().usrChildfreeStatus,
+                        onValue: () async {
+                          setState(() => FFAppState().tmpString =
+                              FFAppState().mrbSelectedValue);
                         },
-                        titleStyle: TextStyle(),
-                        dayOfWeekStyle: TextStyle(),
-                        dateStyle: TextStyle(),
-                        selectedDateStyle: TextStyle(),
-                        inactiveDateStyle: TextStyle(),
                       ),
                     ),
-                  ],
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
@@ -167,12 +133,12 @@ class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrBDay =
-                                calBDaySelectedDay?.start);
+                            setState(() => FFAppState().usrChildfreeStatus =
+                                FFAppState().mrbSelectedValue);
                             await Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditProfileViewWidget(),
+                                builder: (context) => EditBasicsViewWidget(),
                               ),
                             );
                           },

@@ -91,10 +91,10 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 200,
+                      height: 250,
                       child: custom_widgets.MyCheckBoxGroup(
                         width: MediaQuery.of(context).size.width,
-                        height: 200,
+                        height: 250,
                         buttonLabels: FFAppState().lookingForList.toList(),
                         buttonValues: FFAppState().lookingForList.toList(),
                         horizontal: true,
@@ -154,9 +154,10 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
                                   color:
                                       FlutterFlowTheme.of(context).primaryColor,
                                 ),
+                            elevation: 0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 1,
+                              width: 0,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ),

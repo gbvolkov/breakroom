@@ -444,6 +444,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                                   context)
                                                               .primaryColor,
                                                     ),
+                                            elevation: 0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
                                               width: 1,

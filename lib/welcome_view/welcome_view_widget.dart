@@ -101,6 +101,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                                 color:
                                     FlutterFlowTheme.of(context).primaryColor,
                               ),
+                          elevation: 0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 1,

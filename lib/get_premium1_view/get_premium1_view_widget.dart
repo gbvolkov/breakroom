@@ -483,6 +483,7 @@ class _GetPremium1ViewWidgetState extends State<GetPremium1ViewWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
                                   ),
+                              elevation: 0,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
                                 width: 1,
