@@ -10,7 +10,6 @@ import '../sign_in_view/sign_in_view_widget.dart';
 import '../welcome_view/welcome_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,7 +37,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
   TextEditingController? passwordTextFieldController;
 
   late bool passwordTextFieldVisibility;
-  UserProfilesRecord? userProfile;
 
   @override
   void initState() {
@@ -779,43 +777,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             .update(usersCreateData);
 
                                         await sendEmailVerification();
-
-                                        final userProfilesCreateData = {
-                                          ...createUserProfilesRecordData(
-                                            user: currentUserReference,
-                                            firstName: '',
-                                            lastName: '',
-                                            birthDay: getCurrentTimestamp,
-                                            industry: '',
-                                            occupation: '',
-                                            bio: '',
-                                            gender: 'Male',
-                                            genderPreference: 'Female',
-                                            intention: 'Social',
-                                            childfreeStatus: 'Don\'t want',
-                                            religion: 'Agnostic',
-                                            education: 'High school',
-                                            bodyType: 'Average',
-                                            height: 170,
-                                            weight: 65,
-                                            workoutStatus: 'Sometimes',
-                                            drinkingStatus: 'Sometimes',
-                                            smokingStatus: 'Sometimes',
-                                            spiritualStatus: 'Sometimes',
-                                            geoposition:
-                                                currentUserLocationValue,
-                                          ),
-                                          'interests': ['Walking'],
-                                          'lookingFor': ['Friendship'],
-                                        };
-                                        var userProfilesRecordReference =
-                                            UserProfilesRecord.collection.doc();
-                                        await userProfilesRecordReference
-                                            .set(userProfilesCreateData);
-                                        userProfile = UserProfilesRecord
-                                            .getDocumentFromData(
-                                                userProfilesCreateData,
-                                                userProfilesRecordReference);
                                         await actions.initializeUserDataState(
                                           valueOrDefault(
                                               currentUserDocument?.bodyType,
@@ -890,8 +851,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                 CreateProfileViewWidget(),
                                           ),
                                         );
-
-                                        setState(() {});
                                       },
                                       text: 'Create account',
                                       options: FFButtonOptions(

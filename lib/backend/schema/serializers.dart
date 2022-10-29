@@ -2,7 +2,6 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:from_css_color/from_css_color.dart';
 
 import 'users_record.dart';
-import 'user_profiles_record.dart';
 import 'industries_record.dart';
 import 'occupations_record.dart';
 import 'interests_record.dart';
@@ -19,7 +18,6 @@ const kDocumentReferenceField = 'Document__Reference__Field';
 
 @SerializersFor(const [
   UsersRecord,
-  UserProfilesRecord,
   IndustriesRecord,
   OccupationsRecord,
   InterestsRecord,

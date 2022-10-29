@@ -50,7 +50,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
             size: 30,
           ),
           onPressed: () async {
-            await Navigator.push(
+            await Navigator.pushReplacement(
               context,
               PageTransition(
                 type: PageTransitionType.fade,
