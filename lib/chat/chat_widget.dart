@@ -160,13 +160,6 @@ class _ChatWidgetState extends State<ChatWidget> {
                           ),
                   inputHintTextStyle: FlutterFlowTheme.of(context).bodyText2,
                   inputTextStyle: FlutterFlowTheme.of(context).bodyText2,
-                  emptyChatWidget: Center(
-                    child: Image.asset(
-                      'assets/images/icon.png',
-                      width: MediaQuery.of(context).size.width * 0.76,
-                      height: MediaQuery.of(context).size.height * 0.6,
-                    ),
-                  ),
                 )
               : Center(
                   child: SizedBox(
