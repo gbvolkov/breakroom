@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../chat/chat_widget.dart';
 import '../components/profile_bottom_sheet_widget.dart';
 import '../filters_view/filters_view_widget.dart';
 import '../flutter_flow/chat/index.dart';
@@ -364,14 +363,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             functions.getFirstUserRef(
                                                 matchedUsers.toList())
                                           ],
-                                        );
-                                        await Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => ChatWidget(
-                                              chatRef: groupChat?.reference,
-                                            ),
-                                          ),
                                         );
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
