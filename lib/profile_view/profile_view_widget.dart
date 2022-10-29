@@ -26,11 +26,8 @@ class ProfileViewWidget extends StatefulWidget {
 }
 
 class _ProfileViewWidgetState extends State<ProfileViewWidget> {
-  bool isMediaUploading1 = false;
-  String uploadedFileUrl1 = '';
-
-  bool isMediaUploading2 = false;
-  String uploadedFileUrl2 = '';
+  bool isMediaUploading = false;
+  String uploadedFileUrl = '';
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -125,66 +122,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           color: Color(0x7F050A41),
                                           size: 30,
                                         ),
-                                        onPressed: () async {
-                                          final selectedMedia =
-                                              await selectMediaWithSourceBottomSheet(
-                                            context: context,
-                                            allowPhoto: true,
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                            textColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                          );
-                                          if (selectedMedia != null &&
-                                              selectedMedia.every((m) =>
-                                                  validateFileFormat(
-                                                      m.storagePath,
-                                                      context))) {
-                                            setState(
-                                                () => isMediaUploading1 = true);
-                                            var downloadUrls = <String>[];
-                                            try {
-                                              showUploadMessage(
-                                                context,
-                                                'Uploading file...',
-                                                showLoading: true,
-                                              );
-                                              downloadUrls = (await Future.wait(
-                                                selectedMedia.map(
-                                                  (m) async => await uploadData(
-                                                      m.storagePath, m.bytes),
-                                                ),
-                                              ))
-                                                  .where((u) => u != null)
-                                                  .map((u) => u!)
-                                                  .toList();
-                                            } finally {
-                                              ScaffoldMessenger.of(context)
-                                                  .hideCurrentSnackBar();
-                                              isMediaUploading1 = false;
-                                            }
-                                            if (downloadUrls.length ==
-                                                selectedMedia.length) {
-                                              setState(() => uploadedFileUrl1 =
-                                                  downloadUrls.first);
-                                              showUploadMessage(
-                                                  context, 'Success!');
-                                            } else {
-                                              setState(() {});
-                                              showUploadMessage(context,
-                                                  'Failed to upload media');
-                                              return;
-                                            }
-                                          }
-
-                                          final usersUpdateData =
-                                              createUsersRecordData(
-                                            photoUrl: uploadedFileUrl1,
-                                          );
-                                          await currentUserReference!
-                                              .update(usersUpdateData);
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
                                         },
                                       ),
                                       Align(
@@ -210,7 +149,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           m.storagePath,
                                                           context))) {
                                                 setState(() =>
-                                                    isMediaUploading2 = true);
+                                                    isMediaUploading = true);
                                                 var downloadUrls = <String>[];
                                                 try {
                                                   showUploadMessage(
@@ -234,12 +173,12 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 } finally {
                                                   ScaffoldMessenger.of(context)
                                                       .hideCurrentSnackBar();
-                                                  isMediaUploading2 = false;
+                                                  isMediaUploading = false;
                                                 }
                                                 if (downloadUrls.length ==
                                                     selectedMedia.length) {
                                                   setState(() =>
-                                                      uploadedFileUrl2 =
+                                                      uploadedFileUrl =
                                                           downloadUrls.first);
                                                   showUploadMessage(
                                                       context, 'Success!');
@@ -253,7 +192,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
 
                                               final usersUpdateData =
                                                   createUsersRecordData(
-                                                photoUrl: uploadedFileUrl2,
+                                                photoUrl: uploadedFileUrl,
                                               );
                                               await currentUserReference!
                                                   .update(usersUpdateData);
