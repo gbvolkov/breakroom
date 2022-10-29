@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
+import '../components/gender_icon_widget.dart';
 import '../components/menu_add_photo_widget.dart';
 import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
@@ -306,18 +307,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 8, 0),
-                                            child: Icon(
-                                              FFIcons.kmale,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              size: 20,
-                                            ),
-                                          ),
+                                          GenderIconWidget(),
                                           AuthUserStreamWidget(
                                             child: Text(
                                               valueOrDefault<String>(

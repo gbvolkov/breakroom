@@ -278,15 +278,34 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                             FontWeight.bold,
                                                       ),
                                                 ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(8, 0, 0, 0),
-                                                  child: Icon(
-                                                    FFIcons.kmale,
-                                                    color: Colors.black,
-                                                    size: 24,
+                                                if (widget
+                                                        .userProfile!.gender ==
+                                                    'Male')
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                8, 0, 0, 0),
+                                                    child: Icon(
+                                                      FFIcons.kmale,
+                                                      color: Colors.black,
+                                                      size: 24,
+                                                    ),
                                                   ),
-                                                ),
+                                                if (widget
+                                                        .userProfile!.gender !=
+                                                    'Male')
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                8, 0, 0, 0),
+                                                    child: Icon(
+                                                      FFIcons.kfemale,
+                                                      color: Colors.black,
+                                                      size: 24,
+                                                    ),
+                                                  ),
                                               ],
                                             ),
                                           ),

@@ -119,7 +119,7 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                               controller: txtBioController,
                               onChanged: (_) => EasyDebounce.debounce(
                                 'txtBioController',
-                                Duration(milliseconds: 2000),
+                                Duration(milliseconds: 0),
                                 () async {
                                   setState(() => FFAppState().bioCharCounter =
                                       functions.stringLength(

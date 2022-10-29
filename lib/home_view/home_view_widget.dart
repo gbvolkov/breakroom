@@ -808,22 +808,44 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                     ],
                                                                   ),
                                                                 ),
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          4,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Icon(
-                                                                    FFIcons
-                                                                        .kmale,
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryColor,
-                                                                    size: 24,
+                                                                if (matchedUsersItem
+                                                                        .gender ==
+                                                                    'Male')
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Icon(
+                                                                      FFIcons
+                                                                          .kmale,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                      size: 24,
+                                                                    ),
                                                                   ),
-                                                                ),
+                                                                if (matchedUsersItem
+                                                                        .gender !=
+                                                                    'Male')
+                                                                  Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            4,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Icon(
+                                                                      FFIcons
+                                                                          .kfemale,
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                      size: 24,
+                                                                    ),
+                                                                  ),
                                                               ],
                                                             ),
                                                           ),
