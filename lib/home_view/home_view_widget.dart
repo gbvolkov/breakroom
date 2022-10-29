@@ -1,7 +1,9 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../chat/chat_widget.dart';
 import '../components/profile_bottom_sheet_widget.dart';
 import '../filters_view/filters_view_widget.dart';
+import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -29,10 +31,11 @@ class HomeViewWidget extends StatefulWidget {
 }
 
 class _HomeViewWidgetState extends State<HomeViewWidget> {
+  ChatsRecord? groupChat;
+  late SwipeableCardSectionController swipeableStackController;
+  String? choiceChipsValue;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String? choiceChipsValue;
-  late SwipeableCardSectionController swipeableStackController;
 
   @override
   void initState() {
@@ -355,24 +358,21 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       if (functions
                                           .getFirstLiked(matchedUsers.toList())
                                           .contains(currentUserUid)) {
-                                        final chatsCreateData = {
-                                          ...createChatsRecordData(
-                                            userA: functions.getFirstUserRef(
-                                                matchedUsers.toList()),
-                                            userB: currentUserReference,
-                                            lastMessage: '\"\"',
-                                            lastMessageTime:
-                                                getCurrentTimestamp,
+                                        groupChat = await FFChatManager.instance
+                                            .createChat(
+                                          [
+                                            functions.getFirstUserRef(
+                                                matchedUsers.toList())
+                                          ],
+                                        );
+                                        await Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => ChatWidget(
+                                              chatRef: groupChat?.reference,
+                                            ),
                                           ),
-                                          'users':
-                                              functions.createChatUsersList(
-                                                  functions.getFirstUserRef(
-                                                      matchedUsers.toList()),
-                                                  currentUserReference!),
-                                        };
-                                        await ChatsRecord.collection
-                                            .doc()
-                                            .set(chatsCreateData);
+                                        );
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -403,6 +403,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                               initialPage: 'HomeView'),
                                         ),
                                       );
+
+                                      setState(() {});
                                     },
                                     onUpSwipe: (index) {},
                                     onDownSwipe: (index) {},
