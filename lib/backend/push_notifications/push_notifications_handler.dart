@@ -109,6 +109,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'HomeDetailsView': (data) async => HomeDetailsViewWidget(
         userProfile: await getDocumentParameter(
             data, 'userProfile', UsersRecord.serializer),
+        mode: getParameter(data, 'mode'),
       ),
   'EditNameView': (data) async => EditNameViewWidget(),
   'EditProfileView': (data) async => EditProfileViewWidget(),

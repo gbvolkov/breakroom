@@ -18,9 +18,11 @@ class HomeDetailsViewWidget extends StatefulWidget {
   const HomeDetailsViewWidget({
     Key? key,
     this.userProfile,
+    this.mode,
   }) : super(key: key);
 
   final UsersRecord? userProfile;
+  final String? mode;
 
   @override
   _HomeDetailsViewWidgetState createState() => _HomeDetailsViewWidgetState();
@@ -630,214 +632,220 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0, 1),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-                              child: Container(
-                                width: 80,
-                                height: 80,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Container(
-                                        width: 64,
-                                        height: 64,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(0, 2),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 60,
-                                          icon: Icon(
-                                            Icons.thumb_down_outlined,
+                    if (widget.mode == null || widget.mode == '')
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Align(
+                              alignment: AlignmentDirectional(0, 1),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                                child: Container(
+                                  width: 80,
+                                  height: 80,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Container(
+                                          width: 64,
+                                          height: 64,
+                                          decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 30,
+                                                .alternate,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 4,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            shape: BoxShape.circle,
                                           ),
-                                          onPressed: () async {
-                                            final usersUpdateData = {
-                                              'disliked': FieldValue.arrayUnion(
-                                                  [widget.userProfile!.uid]),
-                                            };
-                                            await currentUserReference!
-                                                .update(usersUpdateData);
-                                            setState(() => FFAppState()
-                                                .swipeAction = 'left');
-                                            await Navigator.pushReplacement(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 300),
-                                                child: NavBarPage(
-                                                    initialPage: 'HomeView'),
-                                              ),
-                                            );
-                                          },
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: Icon(
+                                              Icons.thumb_down_outlined,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              size: 30,
+                                            ),
+                                            onPressed: () async {
+                                              final usersUpdateData = {
+                                                'disliked':
+                                                    FieldValue.arrayUnion([
+                                                  widget.userProfile!.uid
+                                                ]),
+                                              };
+                                              await currentUserReference!
+                                                  .update(usersUpdateData);
+                                              setState(() => FFAppState()
+                                                  .swipeAction = 'left');
+                                              await Navigator.pushReplacement(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  reverseDuration: Duration(
+                                                      milliseconds: 300),
+                                                  child: NavBarPage(
+                                                      initialPage: 'HomeView'),
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0, 1),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Container(
-                                width: 115,
-                                height: 115,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Container(
-                                        width: 110,
-                                        height: 110,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(0, 2),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Container(
-                                        width: 84,
-                                        height: 84,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 60,
-                                          icon: Icon(
-                                            Icons.favorite_rounded,
+                            Align(
+                              alignment: AlignmentDirectional(0, 1),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                                child: Container(
+                                  width: 115,
+                                  height: 115,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Container(
+                                          width: 110,
+                                          height: 110,
+                                          decoration: BoxDecoration(
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
-                                            size: 35,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 4,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            shape: BoxShape.circle,
                                           ),
-                                          onPressed: () async {
-                                            setState(() => FFAppState()
-                                                .swipeAction = 'up');
-                                            Navigator.pop(context);
-                                          },
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Container(
+                                          width: 84,
+                                          height: 84,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: Icon(
+                                              Icons.favorite_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              size: 35,
+                                            ),
+                                            onPressed: () async {
+                                              setState(() => FFAppState()
+                                                  .swipeAction = 'up');
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0, 1),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                              child: Container(
-                                width: 80,
-                                height: 80,
-                                child: Stack(
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Container(
-                                        width: 64,
-                                        height: 64,
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFF27AE60),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(0, 2),
-                                            )
-                                          ],
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: FlutterFlowIconButton(
-                                          borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 60,
-                                          icon: Icon(
-                                            Icons.thumb_up_outlined,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            size: 30,
+                            Align(
+                              alignment: AlignmentDirectional(0, 1),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                child: Container(
+                                  width: 80,
+                                  height: 80,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: Container(
+                                          width: 64,
+                                          height: 64,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF27AE60),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 4,
+                                                color: Color(0x33000000),
+                                                offset: Offset(0, 2),
+                                              )
+                                            ],
+                                            shape: BoxShape.circle,
                                           ),
-                                          onPressed: () async {
-                                            final usersUpdateData = {
-                                              'liked': FieldValue.arrayUnion(
-                                                  [widget.userProfile!.uid]),
-                                            };
-                                            await currentUserReference!
-                                                .update(usersUpdateData);
-                                            setState(() => FFAppState()
-                                                .swipeAction = 'right');
-                                            await Navigator.pushReplacement(
-                                              context,
-                                              PageTransition(
-                                                type: PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 300),
-                                                reverseDuration:
-                                                    Duration(milliseconds: 300),
-                                                child: NavBarPage(
-                                                    initialPage: 'HomeView'),
-                                              ),
-                                            );
-                                          },
+                                          child: FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: Icon(
+                                              Icons.thumb_up_outlined,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              size: 30,
+                                            ),
+                                            onPressed: () async {
+                                              final usersUpdateData = {
+                                                'liked': FieldValue.arrayUnion(
+                                                    [widget.userProfile!.uid]),
+                                              };
+                                              await currentUserReference!
+                                                  .update(usersUpdateData);
+                                              setState(() => FFAppState()
+                                                  .swipeAction = 'right');
+                                              await Navigator.pushReplacement(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  duration: Duration(
+                                                      milliseconds: 300),
+                                                  reverseDuration: Duration(
+                                                      milliseconds: 300),
+                                                  child: NavBarPage(
+                                                      initialPage: 'HomeView'),
+                                                ),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),

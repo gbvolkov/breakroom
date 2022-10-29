@@ -196,6 +196,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                             builder: (context) =>
                                                 HomeDetailsViewWidget(
                                               userProfile: matchesItem,
+                                              mode: 'match',
                                             ),
                                           ),
                                         );
