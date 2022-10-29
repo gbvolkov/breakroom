@@ -53,7 +53,13 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            await Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditProfileViewWidget(),
+              ),
+              (r) => false,
+            );
           },
         ),
         title: Text(

@@ -51,12 +51,9 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
           children: [
             FFButtonWidget(
               onPressed: () async {
-                final selectedMedia = await selectMediaWithSourceBottomSheet(
-                  context: context,
-                  allowPhoto: true,
-                  backgroundColor:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  textColor: FlutterFlowTheme.of(context).secondaryText,
+                final selectedMedia = await selectMedia(
+                  mediaSource: MediaSource.photoGallery,
+                  multiImage: false,
                 );
                 if (selectedMedia != null &&
                     selectedMedia.every(

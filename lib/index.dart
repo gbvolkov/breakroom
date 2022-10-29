@@ -19,9 +19,9 @@ export 'create_profile_view/create_profile_view_widget.dart'
 export 'sign_up_view/sign_up_view_widget.dart' show SignUpViewWidget;
 export 'home_details_view/home_details_view_widget.dart'
     show HomeDetailsViewWidget;
+export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
 export 'edit_profile_view/edit_profile_view_widget.dart'
     show EditProfileViewWidget;
-export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
 export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
 export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
 export 'get_premium_view/get_premium_view_widget.dart'
