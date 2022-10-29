@@ -1,4 +1,3 @@
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -53,13 +52,7 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            await Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditProfileViewWidget(),
-              ),
-              (r) => false,
-            );
+            Navigator.pop(context);
           },
         ),
         title: Text(
@@ -249,12 +242,7 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
                                 txtFirstNameController!.text);
                             setState(() => FFAppState().usrLastName =
                                 txtLastNameController!.text);
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProfileViewWidget(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

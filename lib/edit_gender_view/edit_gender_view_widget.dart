@@ -1,4 +1,3 @@
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -115,10 +114,7 @@ class _EditGenderViewWidgetState extends State<EditGenderViewWidget> {
                               buttonWidth: 100.0,
                               buttonHeight: 50.0,
                               defaultSelected: FFAppState().usrGender,
-                              onValue: () async {
-                                setState(() => FFAppState().usrGender =
-                                    FFAppState().mrbSelectedValue);
-                              },
+                              onValue: () async {},
                             ),
                           ),
                         ),
@@ -153,12 +149,7 @@ class _EditGenderViewWidgetState extends State<EditGenderViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrGender =
                                 FFAppState().mrbSelectedValue);
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProfileViewWidget(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

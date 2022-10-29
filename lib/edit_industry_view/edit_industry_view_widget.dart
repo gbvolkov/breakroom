@@ -1,5 +1,4 @@
 import '../backend/backend.dart';
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_drop_down.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -174,12 +173,7 @@ class _EditIndustryViewWidgetState extends State<EditIndustryViewWidget> {
                           onPressed: () async {
                             setState(() =>
                                 FFAppState().usrIndustry = ddIndustryValue!);
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProfileViewWidget(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

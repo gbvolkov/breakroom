@@ -22,8 +22,8 @@ export 'home_details_view/home_details_view_widget.dart'
 export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
 export 'edit_profile_view/edit_profile_view_widget.dart'
     show EditProfileViewWidget;
-export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
 export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
+export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
 export 'get_premium_view/get_premium_view_widget.dart'
     show GetPremiumViewWidget;
 export 'choose_location_page/choose_location_page_widget.dart'

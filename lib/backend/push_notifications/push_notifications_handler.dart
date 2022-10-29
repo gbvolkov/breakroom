@@ -112,8 +112,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       ),
   'EditNameView': (data) async => EditNameViewWidget(),
   'EditProfileView': (data) async => EditProfileViewWidget(),
-  'EditBioView': (data) async => EditBioViewWidget(),
   'FiltersView': (data) async => FiltersViewWidget(),
+  'EditBioView': (data) async => EditBioViewWidget(),
   'GetPremiumView': (data) async => GetPremiumViewWidget(),
   'ChooseLocationPage': (data) async => ChooseLocationPageWidget(
         currentLocation: getParameter(data, 'currentLocation'),

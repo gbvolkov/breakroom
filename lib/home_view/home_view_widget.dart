@@ -886,7 +886,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          matchedUsersItem.bio!,
+                                                          matchedUsersItem.bio!
+                                                              .maybeHandleOverflow(
+                                                            maxChars: 50,
+                                                            replacement: '…',
+                                                          ),
+                                                          maxLines: 3,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyText2

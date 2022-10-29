@@ -1,11 +1,9 @@
-import '../edit_basics_view/edit_basics_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditLookingForViewWidget extends StatefulWidget {
@@ -18,15 +16,6 @@ class EditLookingForViewWidget extends StatefulWidget {
 
 class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrGender);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,27 +73,18 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
-                  child: InkWell(
-                    onTap: () async {
-                      setState(() => FFAppState().usrLookingFor =
-                          FFAppState().mcbSelectedValues.toList());
-                    },
-                    child: Container(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 250,
+                    child: custom_widgets.MyCheckBoxGroup(
                       width: MediaQuery.of(context).size.width,
                       height: 250,
-                      child: custom_widgets.MyCheckBoxGroup(
-                        width: MediaQuery.of(context).size.width,
-                        height: 250,
-                        buttonLabels: FFAppState().lookingForList.toList(),
-                        buttonValues: FFAppState().lookingForList.toList(),
-                        horizontal: true,
-                        buttonHeight: 50.0,
-                        defaultSelected: FFAppState().usrLookingFor.toList(),
-                        onValue: () async {
-                          setState(() => FFAppState().selectedValues =
-                              FFAppState().mcbSelectedValues.toList());
-                        },
-                      ),
+                      buttonLabels: FFAppState().lookingForList.toList(),
+                      buttonValues: FFAppState().lookingForList.toList(),
+                      horizontal: true,
+                      buttonHeight: 50.0,
+                      defaultSelected: FFAppState().usrLookingFor.toList(),
+                      onValue: () async {},
                     ),
                   ),
                 ),
@@ -133,14 +113,28 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrLookingFor =
-                                FFAppState().selectedValues.toList());
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditBasicsViewWidget(),
-                              ),
-                            );
+                            if (FFAppState().mcbSelectedValues.length > 0) {
+                              setState(() => FFAppState().usrLookingFor =
+                                  FFAppState().mcbSelectedValues.toList());
+                              Navigator.pop(context);
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Value is not selected'),
+                                    content: Text('Please make a selection'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
                           },
                           text: 'Save',
                           options: FFButtonOptions(

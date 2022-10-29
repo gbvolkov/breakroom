@@ -373,7 +373,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                 ),
                           ),
                           Text(
-                            widget.userProfile!.bio!,
+                            widget.userProfile!.bio!.maybeHandleOverflow(
+                              maxChars: 50,
+                              replacement: '…',
+                            ),
                             style: FlutterFlowTheme.of(context).bodyText2,
                           ),
                           Divider(

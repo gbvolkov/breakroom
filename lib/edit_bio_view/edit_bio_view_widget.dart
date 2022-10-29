@@ -1,4 +1,3 @@
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -215,12 +214,7 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                         onPressed: () async {
                           setState(() =>
                               FFAppState().usrBio = txtBioController!.text);
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProfileViewWidget(),
-                            ),
-                          );
+                          Navigator.pop(context);
                         },
                         text: 'Save',
                         options: FFButtonOptions(

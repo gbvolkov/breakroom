@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditGenderPrefsViewWidget extends StatefulWidget {
@@ -17,16 +16,6 @@ class EditGenderPrefsViewWidget extends StatefulWidget {
 
 class _EditGenderPrefsViewWidgetState extends State<EditGenderPrefsViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() =>
-          FFAppState().mrbSelectedValue = FFAppState().usrGenderPreference);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,11 +104,7 @@ class _EditGenderPrefsViewWidgetState extends State<EditGenderPrefsViewWidget> {
                               buttonWidth: 100.0,
                               buttonHeight: 50.0,
                               defaultSelected: FFAppState().usrGenderPreference,
-                              onValue: () async {
-                                setState(() =>
-                                    FFAppState().usrGenderPreference =
-                                        FFAppState().mrbSelectedValue);
-                              },
+                              onValue: () async {},
                             ),
                           ),
                         ),
@@ -152,10 +137,9 @@ class _EditGenderPrefsViewWidgetState extends State<EditGenderPrefsViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            if (scaffoldKey.currentState!.isDrawerOpen ||
-                                scaffoldKey.currentState!.isEndDrawerOpen) {
-                              Navigator.pop(context);
-                            }
+                            setState(() => FFAppState().usrGenderPreference =
+                                FFAppState().mrbSelectedValue);
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

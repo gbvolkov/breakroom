@@ -37,7 +37,7 @@ class FFAppState {
     prefs.setStringList('ff_genders', _genders);
   }
 
-  List<String> _intentions = ['Social', 'Dating'];
+  List<String> _intentions = ['Dating', 'Social'];
   List<String> get intentions => _intentions;
   set intentions(List<String> _value) {
     _intentions = _value;

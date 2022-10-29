@@ -1,11 +1,9 @@
-import '../edit_basics_view/edit_basics_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditHeightViewWidget extends StatefulWidget {
@@ -17,15 +15,6 @@ class EditHeightViewWidget extends StatefulWidget {
 
 class _EditHeightViewWidgetState extends State<EditHeightViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().userHeight = FFAppState().usrHeight);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,16 +86,13 @@ class _EditHeightViewWidgetState extends State<EditHeightViewWidget> {
                               width: 75,
                               height: 260,
                               personHeight: FFAppState().usrHeight,
-                              onValueChanged: () async {
-                                setState(() => FFAppState().userHeight =
-                                    FFAppState().nmpPickedNumber);
-                              },
+                              onValueChanged: () async {},
                             ),
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 6),
                             child: Text(
-                              'cm',
+                              'in',
                               style: FlutterFlowTheme.of(context).title3,
                             ),
                           ),
@@ -167,13 +153,8 @@ class _EditHeightViewWidgetState extends State<EditHeightViewWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             setState(() => FFAppState().usrHeight =
-                                FFAppState().userHeight);
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditBasicsViewWidget(),
-                              ),
-                            );
+                                FFAppState().nmpPickedNumber);
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

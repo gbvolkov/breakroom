@@ -1,5 +1,4 @@
 import '../backend/backend.dart';
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -185,12 +184,7 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrInterests =
                                 ccInterestsValues!.toList());
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditProfileViewWidget(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

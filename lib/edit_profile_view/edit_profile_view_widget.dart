@@ -3,7 +3,6 @@ import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../edit_basics_view/edit_basics_view_widget.dart';
 import '../edit_bio_view/edit_bio_view_widget.dart';
-import '../edit_birthday_view/edit_birthday_view_widget.dart';
 import '../edit_gender_prefs_view/edit_gender_prefs_view_widget.dart';
 import '../edit_gender_view/edit_gender_view_widget.dart';
 import '../edit_industry_view/edit_industry_view_widget.dart';
@@ -20,7 +19,6 @@ import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditProfileViewWidget extends StatefulWidget {
@@ -34,17 +32,9 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
   bool isMediaUploading = false;
   String uploadedFileUrl = '';
 
+  DateTime? userBDay1;
   DateTime? userBDay;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().usrFirstName = FFAppState().usrFirstName);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +208,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   builder: (context) => EditNameViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -225,15 +217,16 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               children: [
                                 Align(
                                   alignment: AlignmentDirectional(-1, 0),
-                                  child: Text(
+                                  child: SelectionArea(
+                                      child: Text(
                                     '${FFAppState().usrFirstName} ${FFAppState().usrLastName}'
                                         .maybeHandleOverflow(
-                                      maxChars: 40,
+                                      maxChars: 35,
                                       replacement: '…',
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
-                                  ),
+                                  )),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
@@ -253,6 +246,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditNameViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -287,6 +282,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   builder: (context) => EditBioViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -295,9 +292,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: Text(
-                                    FFAppState()
-                                        .usrBio
-                                        .maybeHandleOverflow(maxChars: 150),
+                                    FFAppState().usrBio.maybeHandleOverflow(
+                                          maxChars: 35,
+                                          replacement: '…',
+                                        ),
                                     maxLines: 3,
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
@@ -321,6 +319,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditBioViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -356,6 +356,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                       EditIndustryViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -364,7 +366,12 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: Text(
-                                    FFAppState().usrIndustry,
+                                    FFAppState()
+                                        .usrIndustry
+                                        .maybeHandleOverflow(
+                                          maxChars: 35,
+                                          replacement: '…',
+                                        ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
                                   ),
@@ -387,6 +394,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditIndustryViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -422,6 +431,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                       EditOccupationViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -433,7 +444,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     FFAppState()
                                         .usrOccupation
                                         .maybeHandleOverflow(
-                                          maxChars: 50,
+                                          maxChars: 35,
                                           replacement: '…',
                                         ),
                                     style:
@@ -458,6 +469,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditOccupationViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -486,13 +499,19 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
+                              userBDay1 = await actions.vvShowDatePicker(
                                 context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditBirthdayViewWidget(),
-                                ),
+                                FFAppState().usrBDay,
+                                'Birthday',
+                                'Enter your birthday',
+                                'Birthday',
                               );
+                              if (userBDay1 != null) {
+                                setState(
+                                    () => FFAppState().usrBDay = userBDay1);
+                              }
+
+                              setState(() {});
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -564,6 +583,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   builder: (context) => EditGenderViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -595,6 +616,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditGenderViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -630,6 +653,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                       EditGenderPrefsViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -638,7 +663,12 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: Text(
-                                    FFAppState().usrGenderPreference,
+                                    FFAppState()
+                                        .usrGenderPreference
+                                        .maybeHandleOverflow(
+                                          maxChars: 35,
+                                          replacement: '…',
+                                        ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
                                   ),
@@ -661,6 +691,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditGenderPrefsViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -695,6 +727,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   builder: (context) => EditStatusViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -703,7 +737,12 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 Align(
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: Text(
-                                    FFAppState().usrIntention,
+                                    FFAppState()
+                                        .usrIntention
+                                        .maybeHandleOverflow(
+                                          maxChars: 35,
+                                          replacement: '…',
+                                        ),
                                     style:
                                         FlutterFlowTheme.of(context).subtitle1,
                                   ),
@@ -726,6 +765,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditStatusViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -744,6 +785,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                       EditInterestsViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -784,6 +827,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditInterestsViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -875,6 +920,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   builder: (context) => EditBasicsViewWidget(),
                                 ),
                               );
+                              setState(() => FFAppState().usrFirstName =
+                                  FFAppState().usrFirstName);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -915,6 +962,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             EditBasicsViewWidget(),
                                       ),
                                     );
+                                    setState(() => FFAppState().usrFirstName =
+                                        FFAppState().usrFirstName);
                                   },
                                 ),
                               ],
@@ -945,7 +994,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             print('Button pressed ...');
                                           },
                                           text:
-                                              '${FFAppState().usrHeight.toString()} sm',
+                                              '${FFAppState().usrHeight.toString()} in',
                                           icon: Icon(
                                             Icons.height,
                                             size: 16,

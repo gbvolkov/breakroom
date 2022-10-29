@@ -1,11 +1,9 @@
-import '../edit_basics_view/edit_basics_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditBodyTypeViewWidget extends StatefulWidget {
@@ -17,15 +15,6 @@ class EditBodyTypeViewWidget extends StatefulWidget {
 
 class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void initState() {
-    super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrBodyType);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +86,7 @@ class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
                         buttonWidth: 120.0,
                         buttonHeight: 50.0,
                         defaultSelected: FFAppState().usrBodyType,
-                        onValue: () async {
-                          setState(() => FFAppState().tmpString =
-                              FFAppState().mrbSelectedValue);
-                        },
+                        onValue: () async {},
                       ),
                     ),
                   ),
@@ -132,12 +118,7 @@ class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrBodyType =
                                 FFAppState().mrbSelectedValue);
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditBasicsViewWidget(),
-                              ),
-                            );
+                            Navigator.pop(context);
                           },
                           text: 'Save',
                           options: FFButtonOptions(

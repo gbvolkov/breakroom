@@ -40,7 +40,7 @@ class _MyNumberPickerState extends State<MyNumberPicker> {
 
   @override
   void initState() {
-    _currentValue = min(max(widget.personHeight ?? 170, 150), 220);
+    _currentValue = min(max(widget.personHeight ?? 65, 55), 85);
     FFAppState().nmpPickedNumber = _currentValue;
     FFAppState().userHeight = _currentValue;
     super.initState();
@@ -50,8 +50,8 @@ class _MyNumberPickerState extends State<MyNumberPicker> {
   Widget build(BuildContext context) {
     return np.NumberPicker(
       value: _currentValue,
-      minValue: 150,
-      maxValue: 220,
+      minValue: 55,
+      maxValue: 85,
       onChanged: (value) {
         FFAppState().userHeight = value;
         FFAppState().nmpPickedNumber = value;

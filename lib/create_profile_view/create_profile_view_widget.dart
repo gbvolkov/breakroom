@@ -1446,10 +1446,35 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState()
+                                              .mcbSelectedValues
+                                              .length >
+                                          0) {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      } else {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title:
+                                                  Text('Value is not selected'),
+                                              content: Text(
+                                                  'Please make a selection'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1506,7 +1531,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               Text(
-                                'cm',
+                                'in',
                                 style: FlutterFlowTheme.of(context).title3,
                               ),
                             ],
