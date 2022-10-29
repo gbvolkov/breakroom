@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../components/menu_add_photo_widget.dart';
 import '../edit_profile_view/edit_profile_view_widget.dart';
+import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -11,9 +12,11 @@ import '../flutter_flow/upload_media.dart';
 import '../settings_view/settings_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ProfileViewWidget extends StatefulWidget {
   const ProfileViewWidget({Key? key}) : super(key: key);
@@ -250,7 +253,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
 
                                               final usersUpdateData =
                                                   createUsersRecordData(
-                                                photoUrl: uploadedFileUrl1,
+                                                photoUrl: uploadedFileUrl2,
                                               );
                                               await currentUserReference!
                                                   .update(usersUpdateData);
@@ -262,8 +265,9 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                               ),
-                                              child: Image.network(
-                                                valueOrDefault<String>(
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    valueOrDefault<String>(
                                                   currentUserPhoto,
                                                   'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                 ),
@@ -815,11 +819,35 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     itemBuilder: (context, userPhotosIndex) {
                                       final userPhotosItem =
                                           userPhotos[userPhotosIndex];
-                                      return Image.network(
-                                        userPhotosItem.image!,
-                                        width: 100,
-                                        height: 130,
-                                        fit: BoxFit.cover,
+                                      return InkWell(
+                                        onTap: () async {
+                                          await Navigator.push(
+                                            context,
+                                            PageTransition(
+                                              type: PageTransitionType.fade,
+                                              child:
+                                                  FlutterFlowExpandedImageView(
+                                                image: Image.network(
+                                                  userPhotosItem.image!,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                                allowRotation: false,
+                                                tag: userPhotosItem.image!,
+                                                useHeroAnimation: true,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Hero(
+                                          tag: userPhotosItem.image!,
+                                          transitionOnUserGestures: true,
+                                          child: Image.network(
+                                            userPhotosItem.image!,
+                                            width: 100,
+                                            height: 130,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       );
                                     },
                                   );
