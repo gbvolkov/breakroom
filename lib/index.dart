@@ -64,6 +64,8 @@ export 'edit_gender_prefs_view/edit_gender_prefs_view_widget.dart'
     show EditGenderPrefsViewWidget;
 export 'edit_status_view/edit_status_view_widget.dart'
     show EditStatusViewWidget;
+export 'edit_smoking_prefs_view/edit_smoking_prefs_view_widget.dart'
+    show EditSmokingPrefsViewWidget;
 export 'edit_interests_view/edit_interests_view_widget.dart'
     show EditInterestsViewWidget;
 export 'edit_basics_view/edit_basics_view_widget.dart'
@@ -74,8 +76,6 @@ export 'edit_height_view/edit_height_view_widget.dart'
     show EditHeightViewWidget;
 export 'edit_drink_prefs_view/edit_drink_prefs_view_widget.dart'
     show EditDrinkPrefsViewWidget;
-export 'edit_smoking_prefs_view/edit_smoking_prefs_view_widget.dart'
-    show EditSmokingPrefsViewWidget;
 export 'edit_spiritual_status_view/edit_spiritual_status_view_widget.dart'
     show EditSpiritualStatusViewWidget;
 export 'edit_workout_prefs_view/edit_workout_prefs_view_widget.dart'
