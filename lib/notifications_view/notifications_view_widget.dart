@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -123,114 +124,187 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                   itemBuilder: (context, _, listViewIndex) {
                     final listViewNotificationsRecord =
                         _pagingController!.itemList![listViewIndex];
-                    return Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        if (!listViewNotificationsRecord.isRead!)
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: SelectionArea(
-                                    child: Text(
-                                  dateTimeFormat('M/d h:mm a',
-                                      listViewNotificationsRecord.timestamp!),
-                                  style: FlutterFlowTheme.of(context).subtitle2,
-                                )),
+                    return StreamBuilder<UsersRecord>(
+                      stream: UsersRecord.getDocument(
+                          listViewNotificationsRecord.referredUser!),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
                               ),
-                              Expanded(
-                                flex: 8,
-                                child: SelectionArea(
-                                    child: Text(
-                                  listViewNotificationsRecord.content!
-                                      .maybeHandleOverflow(
-                                    maxChars: 32,
-                                    replacement: '…',
+                            ),
+                          );
+                        }
+                        final columnUsersRecord = snapshot.data!;
+                        return InkWell(
+                          onTap: () async {
+                            final notificationsUpdateData =
+                                createNotificationsRecordData(
+                              isRead: true,
+                            );
+                            await listViewNotificationsRecord.reference
+                                .update(notificationsUpdateData);
+                            if (listViewNotificationsRecord.type == 'match') {
+                              context.pushNamed(
+                                'HomeDetailsView',
+                                queryParams: {
+                                  'userProfile': serializeParam(
+                                    columnUsersRecord,
+                                    ParamType.Document,
                                   ),
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context).subtitle2,
-                                )),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderWidth: 1,
-                                  buttonSize: 48,
-                                  icon: Icon(
-                                    Icons.assignment_ind,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 24,
+                                  'mode': serializeParam(
+                                    listViewNotificationsRecord.type,
+                                    ParamType.String,
                                   ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'userProfile': columnUsersRecord,
+                                },
+                              );
+                            } else {
+                              if (listViewNotificationsRecord.type == 'like') {
+                                context.pushNamed(
+                                  'HomeDetailsView',
+                                  queryParams: {
+                                    'userProfile': serializeParam(
+                                      columnUsersRecord,
+                                      ParamType.Document,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    'userProfile': columnUsersRecord,
                                   },
+                                );
+                              }
+                            }
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              if (!listViewNotificationsRecord.isRead!)
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: SelectionArea(
+                                          child: Text(
+                                        dateTimeFormat(
+                                            'M/d h:mm a',
+                                            listViewNotificationsRecord
+                                                .timestamp!),
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                      )),
+                                    ),
+                                    Expanded(
+                                      flex: 8,
+                                      child: SelectionArea(
+                                          child: Text(
+                                        listViewNotificationsRecord.content!
+                                            .maybeHandleOverflow(
+                                          maxChars: 32,
+                                          replacement: '…',
+                                        ),
+                                        maxLines: 2,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2,
+                                      )),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderWidth: 1,
+                                        buttonSize: 48,
+                                        icon: Icon(
+                                          Icons.assignment_ind,
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                          size: 24,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
+                              if (listViewNotificationsRecord.isRead ?? true)
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Expanded(
+                                      flex: 4,
+                                      child: SelectionArea(
+                                          child: Text(
+                                        dateTimeFormat(
+                                            'M/d h:mm a',
+                                            listViewNotificationsRecord
+                                                .timestamp!),
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                      )),
+                                    ),
+                                    Expanded(
+                                      flex: 8,
+                                      child: SelectionArea(
+                                          child: Text(
+                                        listViewNotificationsRecord.content!
+                                            .maybeHandleOverflow(
+                                          maxChars: 32,
+                                          replacement: '…',
+                                        ),
+                                        maxLines: 2,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                      )),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 48,
+                                        icon: Icon(
+                                          Icons.assignment_ind,
+                                          color: Color(0xA5F95A82),
+                                          size: 24,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                             ],
                           ),
-                        if (listViewNotificationsRecord.isRead ?? true)
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex: 4,
-                                child: SelectionArea(
-                                    child: Text(
-                                  dateTimeFormat('M/d h:mm a',
-                                      listViewNotificationsRecord.timestamp!),
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                )),
-                              ),
-                              Expanded(
-                                flex: 8,
-                                child: SelectionArea(
-                                    child: Text(
-                                  listViewNotificationsRecord.content!
-                                      .maybeHandleOverflow(
-                                    maxChars: 32,
-                                    replacement: '…',
-                                  ),
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                )),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 48,
-                                  icon: Icon(
-                                    Icons.assignment_ind,
-                                    color: Color(0xA5F95A82),
-                                    size: 24,
-                                  ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                      ],
+                        );
+                      },
                     );
                   },
                 ),
