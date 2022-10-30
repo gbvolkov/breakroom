@@ -56,7 +56,7 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -214,7 +214,7 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                         onPressed: () async {
                           setState(() =>
                               FFAppState().usrBio = txtBioController!.text);
-                          Navigator.pop(context);
+                          context.pop();
                         },
                         text: 'Save',
                         options: FFButtonOptions(

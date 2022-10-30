@@ -4,7 +4,6 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -81,7 +80,7 @@ class _VerifySMSWidgetState extends State<VerifySMSWidget>
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -174,6 +173,7 @@ class _VerifySMSWidgetState extends State<VerifySMSWidget>
             padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
             child: FFButtonWidget(
               onPressed: () async {
+                GoRouter.of(context).prepareAuthEvent();
                 final smsCodeVal = verificationCodeController!.text;
                 if (smsCodeVal == null || smsCodeVal.isEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -191,13 +191,7 @@ class _VerifySMSWidgetState extends State<VerifySMSWidget>
                   return;
                 }
 
-                await Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => NavBarPage(initialPage: 'HomeView'),
-                  ),
-                  (r) => false,
-                );
+                context.goNamedAuth('HomeView', mounted);
               },
               text: 'Verify Code',
               options: FFButtonOptions(

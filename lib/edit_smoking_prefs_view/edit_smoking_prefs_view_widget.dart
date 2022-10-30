@@ -37,7 +37,7 @@ class _EditSmokingPrefsViewWidgetState
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -120,7 +120,7 @@ class _EditSmokingPrefsViewWidgetState
                           onPressed: () async {
                             setState(() => FFAppState().usrSmokingStatus =
                                 FFAppState().mrbSelectedValue);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

@@ -36,7 +36,7 @@ class _EditDrinkPrefsViewWidgetState extends State<EditDrinkPrefsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -119,7 +119,7 @@ class _EditDrinkPrefsViewWidgetState extends State<EditDrinkPrefsViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrDrinkingStatus =
                                 FFAppState().mrbSelectedValue);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

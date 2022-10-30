@@ -35,7 +35,7 @@ class _EditHeightViewWidgetState extends State<EditHeightViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -154,7 +154,7 @@ class _EditHeightViewWidgetState extends State<EditHeightViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrHeight =
                                 FFAppState().nmpPickedNumber);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

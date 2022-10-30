@@ -128,7 +128,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     ?.round() ??
                                                 0) ==
                                             0) {
-                                          Navigator.pop(context);
+                                          context.pop();
                                         } else {
                                           await changeEmailPageViewController
                                               ?.previousPage(
@@ -381,7 +381,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     ?.round() ??
                                                 0) ==
                                             0) {
-                                          Navigator.pop(context);
+                                          context.pop();
                                         } else {
                                           await changeEmailPageViewController
                                               ?.previousPage(
@@ -750,7 +750,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     ?.round() ??
                                                 0) ==
                                             0) {
-                                          Navigator.pop(context);
+                                          context.pop();
                                         } else {
                                           await changePhonePageViewController
                                               ?.previousPage(
@@ -1361,7 +1361,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     ?.round() ??
                                                 0) ==
                                             0) {
-                                          Navigator.pop(context);
+                                          context.pop();
                                         } else {
                                           await changePasswordPageViewController
                                               ?.previousPage(
@@ -2620,7 +2620,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(

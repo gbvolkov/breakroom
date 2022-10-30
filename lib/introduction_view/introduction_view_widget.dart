@@ -1,7 +1,6 @@
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,7 +41,7 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
                 curve: Curves.ease,
               );
             } else {
-              Navigator.pop(context);
+              context.pop();
             }
           },
         ),
@@ -487,13 +486,7 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
                               alignment: AlignmentDirectional(0, 0),
                               child: InkWell(
                                 onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          NavBarPage(initialPage: 'HomeView'),
-                                    ),
-                                  );
+                                  context.pushNamed('HomeView');
                                 },
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,

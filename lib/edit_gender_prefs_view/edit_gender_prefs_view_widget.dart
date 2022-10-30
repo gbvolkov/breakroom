@@ -36,7 +36,7 @@ class _EditGenderPrefsViewWidgetState extends State<EditGenderPrefsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -139,7 +139,7 @@ class _EditGenderPrefsViewWidgetState extends State<EditGenderPrefsViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrGenderPreference =
                                 FFAppState().mrbSelectedValue);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

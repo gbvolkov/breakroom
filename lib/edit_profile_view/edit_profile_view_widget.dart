@@ -1,15 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
-import '../edit_basics_view/edit_basics_view_widget.dart';
-import '../edit_bio_view/edit_bio_view_widget.dart';
-import '../edit_gender_prefs_view/edit_gender_prefs_view_widget.dart';
-import '../edit_gender_view/edit_gender_view_widget.dart';
-import '../edit_industry_view/edit_industry_view_widget.dart';
-import '../edit_interests_view/edit_interests_view_widget.dart';
-import '../edit_name_view/edit_name_view_widget.dart';
-import '../edit_occupation_view/edit_occupation_view_widget.dart';
-import '../edit_status_view/edit_status_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -55,7 +46,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Visibility(
@@ -160,11 +151,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   }
                                 }
 
-                                final usersUpdateData = createUsersRecordData(
-                                  photoUrl: uploadedFileUrl,
-                                );
-                                await currentUserReference!
-                                    .update(usersUpdateData);
+                                if (uploadedFileUrl != null &&
+                                    uploadedFileUrl != '') {
+                                  final usersUpdateData = createUsersRecordData(
+                                    photoUrl: uploadedFileUrl,
+                                  );
+                                  await currentUserReference!
+                                      .update(usersUpdateData);
+                                }
                               },
                               text: 'Change profile photo',
                               options: FFButtonOptions(
@@ -202,12 +196,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditNameViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditNameView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -239,13 +229,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditNameViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditNameView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -276,12 +261,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditBioViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditBioView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -312,13 +293,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditBioViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditBioView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -349,13 +325,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditIndustryViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditIndustryView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -387,13 +358,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditIndustryViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditIndustryView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -424,13 +390,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditOccupationViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditOccupationView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -462,13 +423,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditOccupationViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditOccupationView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -577,12 +533,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditGenderViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditGenderView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -609,13 +561,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditGenderViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditGenderView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -646,13 +593,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditGenderPrefsViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditGenderPrefsView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -684,13 +626,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditGenderPrefsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditGenderPrefsView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -721,12 +658,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditStatusViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditStatusView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -758,13 +691,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditStatusViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditStatusView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -778,13 +706,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EditInterestsViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditInterestsView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -820,13 +743,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditInterestsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditInterestsView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -844,13 +762,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                         FFAppState().usrInterests.toList();
                                     return InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditInterestsViewWidget(),
-                                          ),
-                                        );
+                                        context.pushNamed('EditInterestsView');
                                       },
                                       child: Wrap(
                                         spacing: 8,
@@ -869,13 +781,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                               interests[interestsIndex];
                                           return FFButtonWidget(
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditInterestsViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditInterestsView');
                                             },
                                             text: interestsItem,
                                             options: FFButtonOptions(
@@ -914,12 +821,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => EditBasicsViewWidget(),
-                                ),
-                              );
+                              context.pushNamed('EditBasicsView');
+
                               setState(() => FFAppState().usrFirstName =
                                   FFAppState().usrFirstName);
                             },
@@ -955,13 +858,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditBasicsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('EditBasicsView');
+
                                     setState(() => FFAppState().usrFirstName =
                                         FFAppState().usrFirstName);
                                   },
@@ -1190,7 +1088,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               'lookingFor': FFAppState().usrLookingFor,
                             };
                             await currentUserReference!.update(usersUpdateData);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

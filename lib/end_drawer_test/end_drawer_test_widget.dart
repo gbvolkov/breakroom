@@ -1,7 +1,6 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../page_test/page_test_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -43,16 +42,20 @@ class _EndDrawerTestWidgetState extends State<EndDrawerTestWidget> {
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  await Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      duration: Duration(milliseconds: 300),
-                      reverseDuration: Duration(milliseconds: 300),
-                      child: PageTestWidget(
-                        swipeAction: 'left',
+                  context.pushNamed(
+                    'PageTest',
+                    queryParams: {
+                      'swipeAction': serializeParam(
+                        'left',
+                        ParamType.String,
                       ),
-                    ),
+                    }.withoutNulls,
+                    extra: <String, dynamic>{
+                      kTransitionInfoKey: TransitionInfo(
+                        hasTransition: true,
+                        transitionType: PageTransitionType.rightToLeft,
+                      ),
+                    },
                   );
                 },
                 text: 'Button',

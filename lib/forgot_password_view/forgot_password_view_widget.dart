@@ -2,8 +2,6 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../sign_in_view/sign_in_view_widget.dart';
-import '../sign_up_view/sign_up_view_widget.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -68,7 +66,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
           ),
           onPressed: () async {
             if ((pageViewController?.page?.round() ?? 0) == 0) {
-              Navigator.pop(context);
+              context.pop();
             } else {
               await pageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
@@ -318,13 +316,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                         ),
                                         FFButtonWidget(
                                           onPressed: () async {
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SignUpViewWidget(),
-                                              ),
-                                            );
+                                            context.pushNamed('SignUpView');
                                           },
                                           text: 'Sign up',
                                           options: FFButtonOptions(
@@ -792,13 +784,8 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                             );
                                           },
                                         );
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                SignInViewWidget(),
-                                          ),
-                                        );
+
+                                        context.pushNamed('SignInView');
                                       },
                                       text: 'Submit',
                                       options: FFButtonOptions(

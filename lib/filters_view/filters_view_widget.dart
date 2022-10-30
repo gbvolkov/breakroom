@@ -1,13 +1,10 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../choose_location_page/choose_location_page_widget.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../get_premium_view/get_premium_view_widget.dart';
-import '../main.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -308,7 +305,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
           ),
           onPressed: () async {
             if ((pageViewController?.page?.round() ?? 0) == 0) {
-              Navigator.pop(context);
+              context.pop();
             } else {
               setState(() => FFAppState().filterName = 'Filter');
               await pageViewController?.previousPage(
@@ -660,16 +657,16 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       size: 20,
                                                     ),
                                                     onPressed: () async {
-                                                      await Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ChooseLocationPageWidget(
-                                                            currentLocation:
-                                                                FFAppState()
-                                                                    .fltrLocation,
+                                                      context.pushNamed(
+                                                        'ChooseLocationPage',
+                                                        queryParams: {
+                                                          'currentLocation':
+                                                              serializeParam(
+                                                            FFAppState()
+                                                                .fltrLocation,
+                                                            ParamType.LatLng,
                                                           ),
-                                                        ),
+                                                        }.withoutNulls,
                                                       );
                                                     },
                                                   ),
@@ -979,13 +976,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                       ),
                                       FFButtonWidget(
                                         onPressed: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  GetPremiumViewWidget(),
-                                            ),
-                                          );
+                                          context.pushNamed('GetPremiumView');
                                         },
                                         text: 'Get premium',
                                         options: FFButtonOptions(
@@ -1064,13 +1055,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         );
                                         await currentUserReference!
                                             .update(usersUpdateData);
-                                        await Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => NavBarPage(
-                                                initialPage: 'HomeView'),
-                                          ),
-                                        );
+                                        if (Navigator.of(context).canPop()) {
+                                          context.pop();
+                                        }
+                                        context.pushNamed('HomeView');
                                       },
                                       text: 'Save',
                                       options: FFButtonOptions(

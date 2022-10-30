@@ -3,14 +3,12 @@ import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../components/gender_icon_widget.dart';
 import '../components/menu_add_photo_widget.dart';
-import '../edit_profile_view/edit_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
-import '../settings_view/settings_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
@@ -56,12 +54,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
             child: InkWell(
               onTap: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SettingsViewWidget(),
-                  ),
-                );
+                context.pushNamed('SettingsView');
               },
               child: Image.asset(
                 'assets/images/ic_settings.png',
@@ -226,14 +219,19 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         }
                                                       }
 
-                                                      final usersUpdateData =
-                                                          createUsersRecordData(
-                                                        photoUrl:
-                                                            uploadedFileUrl,
-                                                      );
-                                                      await currentUserReference!
-                                                          .update(
-                                                              usersUpdateData);
+                                                      if (uploadedFileUrl !=
+                                                              null &&
+                                                          uploadedFileUrl !=
+                                                              '') {
+                                                        final usersUpdateData =
+                                                            createUsersRecordData(
+                                                          photoUrl:
+                                                              uploadedFileUrl,
+                                                        );
+                                                        await currentUserReference!
+                                                            .update(
+                                                                usersUpdateData);
+                                                      }
                                                     },
                                                     child: Container(
                                                       width: 105,
@@ -442,13 +440,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           [])
                                                       .toList(),
                                                 );
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditProfileViewWidget(),
-                                                  ),
-                                                );
+
+                                                context.pushNamed(
+                                                    'EditProfileView');
+
                                                 setState(() => FFAppState()
                                                         .usrFirstName =
                                                     FFAppState().usrFirstName);

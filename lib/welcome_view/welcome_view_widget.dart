@@ -1,8 +1,6 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../sign_in_view/sign_in_view_widget.dart';
-import '../sign_up_view/sign_up_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -79,14 +77,14 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                       alignment: AlignmentDirectional(-1, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          await Navigator.push(
-                            context,
-                            PageTransition(
-                              type: PageTransitionType.rightToLeft,
-                              duration: Duration(milliseconds: 300),
-                              reverseDuration: Duration(milliseconds: 300),
-                              child: SignInViewWidget(),
-                            ),
+                          context.pushNamed(
+                            'SignInView',
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.rightToLeft,
+                              ),
+                            },
                           );
                         },
                         text: 'Log In with email',
@@ -119,14 +117,14 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      await Navigator.push(
-                        context,
-                        PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          duration: Duration(milliseconds: 300),
-                          reverseDuration: Duration(milliseconds: 300),
-                          child: SignUpViewWidget(),
-                        ),
+                      context.pushNamed(
+                        'SignUpView',
+                        extra: <String, dynamic>{
+                          kTransitionInfoKey: TransitionInfo(
+                            hasTransition: true,
+                            transitionType: PageTransitionType.rightToLeft,
+                          ),
+                        },
                       );
                     },
                     text: 'Create an account',

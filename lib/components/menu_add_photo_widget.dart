@@ -88,19 +88,21 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                   }
                 }
 
-                final usersUpdateData = {
-                  'photos': FieldValue.arrayUnion([
-                    getPhotoFirestoreData(
-                      createPhotoStruct(
-                        image: uploadedFileUrl1,
-                        rating: 0.0,
-                        clearUnsetFields: false,
-                      ),
-                      true,
-                    )
-                  ]),
-                };
-                await currentUserReference!.update(usersUpdateData);
+                if (uploadedFileUrl1 != null && uploadedFileUrl1 != '') {
+                  final usersUpdateData = {
+                    'photos': FieldValue.arrayUnion([
+                      getPhotoFirestoreData(
+                        createPhotoStruct(
+                          image: uploadedFileUrl1,
+                          rating: 0.0,
+                          clearUnsetFields: false,
+                        ),
+                        true,
+                      )
+                    ]),
+                  };
+                  await currentUserReference!.update(usersUpdateData);
+                }
               },
               text: 'From gallery',
               options: FFButtonOptions(
@@ -158,19 +160,21 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                     }
                   }
 
-                  final usersUpdateData = {
-                    'photos': FieldValue.arrayUnion([
-                      getPhotoFirestoreData(
-                        createPhotoStruct(
-                          image: uploadedFileUrl2,
-                          rating: 0.0,
-                          clearUnsetFields: false,
-                        ),
-                        true,
-                      )
-                    ]),
-                  };
-                  await currentUserReference!.update(usersUpdateData);
+                  if (uploadedFileUrl2 != null && uploadedFileUrl2 != '') {
+                    final usersUpdateData = {
+                      'photos': FieldValue.arrayUnion([
+                        getPhotoFirestoreData(
+                          createPhotoStruct(
+                            image: uploadedFileUrl2,
+                            rating: 0.0,
+                            clearUnsetFields: false,
+                          ),
+                          true,
+                        )
+                      ]),
+                    };
+                    await currentUserReference!.update(usersUpdateData);
+                  }
                 },
                 text: 'Take a photo',
                 options: FFButtonOptions(

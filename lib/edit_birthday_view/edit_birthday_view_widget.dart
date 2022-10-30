@@ -45,7 +45,7 @@ class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -168,7 +168,7 @@ class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrBDay =
                                 calBDaySelectedDay?.start);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

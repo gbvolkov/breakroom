@@ -36,7 +36,7 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -116,7 +116,7 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
                             if (FFAppState().mcbSelectedValues.length > 0) {
                               setState(() => FFAppState().usrLookingFor =
                                   FFAppState().mcbSelectedValues.toList());
-                              Navigator.pop(context);
+                              context.pop();
                             } else {
                               await showDialog(
                                 context: context,

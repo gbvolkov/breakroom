@@ -1,4 +1,3 @@
-import '../end_drawer_test/end_drawer_test_widget.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -92,13 +91,7 @@ class _PageTestWidgetState extends State<PageTestWidget> {
                               color: Color(0xFFF5F5F5),
                               child: InkWell(
                                 onTap: () async {
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          EndDrawerTestWidget(),
-                                    ),
-                                  );
+                                  context.pushNamed('EndDrawerTest');
                                 },
                                 child: Text(
                                   'Card1',

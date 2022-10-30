@@ -58,7 +58,7 @@ class _LoginSetNewPasswordViewWidgetState
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(

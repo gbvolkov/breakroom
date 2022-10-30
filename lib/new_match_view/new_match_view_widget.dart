@@ -34,7 +34,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(

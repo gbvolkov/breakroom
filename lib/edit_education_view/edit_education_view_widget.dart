@@ -36,7 +36,7 @@ class _EditEducationViewWidgetState extends State<EditEducationViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -119,7 +119,7 @@ class _EditEducationViewWidgetState extends State<EditEducationViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrEducation =
                                 FFAppState().mrbSelectedValue);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

@@ -37,7 +37,7 @@ class _EditIndustryViewWidgetState extends State<EditIndustryViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -173,7 +173,7 @@ class _EditIndustryViewWidgetState extends State<EditIndustryViewWidget> {
                           onPressed: () async {
                             setState(() =>
                                 FFAppState().usrIndustry = ddIndustryValue!);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

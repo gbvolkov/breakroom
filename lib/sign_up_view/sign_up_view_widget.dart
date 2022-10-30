@@ -1,13 +1,9 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../create_profile_view/create_profile_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../privacy_and_policy_view/privacy_and_policy_view_widget.dart';
-import '../sign_in_view/sign_in_view_widget.dart';
-import '../welcome_view/welcome_view_widget.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
@@ -76,12 +72,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
           ),
           onPressed: () async {
             if ((signUpPageViewController?.page?.round() ?? 0) == 0) {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => WelcomeViewWidget(),
-                ),
-              );
+              context.pushNamed('WelcomeView');
             } else {
               await signUpPageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
@@ -286,13 +277,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PrivacyAndPolicyViewWidget(),
-                                            ),
-                                          );
+                                          context.pushNamed(
+                                              'PrivacyAndPolicyView');
                                         },
                                         child: Text(
                                           'Privacy ',
@@ -319,13 +305,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PrivacyAndPolicyViewWidget(),
-                                            ),
-                                          );
+                                          context.pushNamed(
+                                              'PrivacyAndPolicyView');
                                         },
                                         child: Text(
                                           'Policy',
@@ -475,13 +456,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       ),
                                       FFButtonWidget(
                                         onPressed: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SignInViewWidget(),
-                                            ),
-                                          );
+                                          context.pushNamed('SignInView');
                                         },
                                         text: 'Log in',
                                         options: FFButtonOptions(
@@ -732,6 +707,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             await getCurrentUserLocation(
                                                 defaultLocation:
                                                     LatLng(0.0, 0.0));
+                                        GoRouter.of(context).prepareAuthEvent();
                                         if (passwordTextFieldController?.text !=
                                             confirmPasswordTextFieldController
                                                 ?.text) {
@@ -844,13 +820,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                   [])
                                               .toList(),
                                         );
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                CreateProfileViewWidget(),
-                                          ),
-                                        );
+
+                                        context.pushNamedAuth(
+                                            'CreateProfileView', mounted);
                                       },
                                       text: 'Create account',
                                       options: FFButtonOptions(

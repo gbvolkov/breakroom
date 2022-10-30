@@ -1,4 +1,3 @@
-import '../add_users_to_group/add_users_to_group_widget.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -69,7 +68,7 @@ class _ChatWidgetState extends State<ChatWidget> {
             size: 24,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Stack(
@@ -108,13 +107,17 @@ class _ChatWidgetState extends State<ChatWidget> {
               size: 30,
             ),
             onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddUsersToGroupWidget(
-                    chat: _chatInfo!.chatRecord,
+              context.pushNamed(
+                'AddUsersToGroup',
+                queryParams: {
+                  'chat': serializeParam(
+                    _chatInfo!.chatRecord,
+                    ParamType.Document,
                   ),
-                ),
+                }.withoutNulls,
+                extra: <String, dynamic>{
+                  'chat': _chatInfo!.chatRecord,
+                },
               );
             },
           ),

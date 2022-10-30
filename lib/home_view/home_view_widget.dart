@@ -1,16 +1,13 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/profile_bottom_sheet_widget.dart';
-import '../filters_view/filters_view_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home_details_view/home_details_view_widget.dart';
-import '../introduction_view/introduction_view_widget.dart';
-import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
@@ -99,12 +96,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                   children: [
                     InkWell(
                       onTap: () async {
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => IntroductionViewWidget(),
-                          ),
-                        );
+                        context.pushNamed('IntroductionView');
                       },
                       child: Text(
                         'BreakRoom',
@@ -122,12 +114,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                           currentUserDocument!.filter,
                           currentUserLocationValue,
                         );
-                        await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FiltersViewWidget(),
-                          ),
-                        );
+
+                        context.pushNamed('FiltersView');
                       },
                       child: Image.asset(
                         'assets/images/imgFilter.png',
@@ -166,13 +154,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   );
                                   await currentUserReference!
                                       .update(usersUpdateData);
-                                  await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          NavBarPage(initialPage: 'HomeView'),
-                                    ),
-                                  );
+
+                                  context.pushNamed('HomeView');
                                 }
                               },
                               selectedChipStyle: ChipStyle(
@@ -327,16 +310,19 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       };
                                       await currentUserReference!
                                           .update(usersUpdateData);
-                                      await Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: NavBarPage(
-                                              initialPage: 'HomeView'),
-                                        ),
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
+                                      context.pushNamed(
+                                        'HomeView',
+                                        extra: <String, dynamic>{
+                                          kTransitionInfoKey: TransitionInfo(
+                                            hasTransition: true,
+                                            transitionType:
+                                                PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                          ),
+                                        },
                                       );
                                     },
                                     onRightSwipe: (index) async {
@@ -364,6 +350,28 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                 matchedUsers.toList())
                                           ],
                                         );
+                                        triggerPushNotification(
+                                          notificationTitle: 'You have match!',
+                                          notificationText:
+                                              'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                            functions.getAge(
+                                                currentUserDocument!.birthDay),
+                                            formatType: FormatType.custom,
+                                            format: '###',
+                                            locale: '',
+                                          )}!',
+                                          notificationImageUrl:
+                                              currentUserPhoto,
+                                          userRefs: [
+                                            functions.getFirstUserRef(
+                                                matchedUsers.toList())
+                                          ],
+                                          initialPageName: 'HomeDetailsView',
+                                          parameterData: {
+                                            'userProfile': currentUserReference,
+                                            'mode': 'Match',
+                                          },
+                                        );
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -382,17 +390,44 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         );
                                         await Future.delayed(
                                             const Duration(milliseconds: 3000));
+                                      } else {
+                                        triggerPushNotification(
+                                          notificationTitle:
+                                              'Somebody likes you!',
+                                          notificationText:
+                                              'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                            functions.getAge(
+                                                currentUserDocument!.birthDay),
+                                            formatType: FormatType.custom,
+                                            format: '###',
+                                            locale: '',
+                                          )} likes you!',
+                                          notificationImageUrl:
+                                              currentUserPhoto,
+                                          userRefs: [
+                                            functions.getFirstUserRef(
+                                                matchedUsers.toList())
+                                          ],
+                                          initialPageName: 'HomeDetailsView',
+                                          parameterData: {
+                                            'userProfile': currentUserReference,
+                                          },
+                                        );
                                       }
-                                      await Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                          type: PageTransitionType.fade,
-                                          duration: Duration(milliseconds: 0),
-                                          reverseDuration:
-                                              Duration(milliseconds: 0),
-                                          child: NavBarPage(
-                                              initialPage: 'HomeView'),
-                                        ),
+
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
+                                      context.pushNamed(
+                                        'HomeView',
+                                        extra: <String, dynamic>{
+                                          kTransitionInfoKey: TransitionInfo(
+                                            hasTransition: true,
+                                            transitionType:
+                                                PageTransitionType.fade,
+                                            duration: Duration(milliseconds: 0),
+                                          ),
+                                        },
                                       );
 
                                       setState(() {});
@@ -473,25 +508,28 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     .fromSTEB(0, 0, 0, 64),
                                                 child: InkWell(
                                                   onTap: () async {
-                                                    await Navigator.push(
-                                                      context,
-                                                      PageTransition(
-                                                        type: PageTransitionType
-                                                            .scale,
-                                                        alignment: Alignment
-                                                            .bottomCenter,
-                                                        duration: Duration(
-                                                            milliseconds: 300),
-                                                        reverseDuration:
-                                                            Duration(
-                                                                milliseconds:
-                                                                    300),
-                                                        child:
-                                                            HomeDetailsViewWidget(
-                                                          userProfile:
-                                                              matchedUsersItem,
+                                                    context.pushNamed(
+                                                      'HomeDetailsView',
+                                                      queryParams: {
+                                                        'userProfile':
+                                                            serializeParam(
+                                                          matchedUsersItem,
+                                                          ParamType.Document,
                                                         ),
-                                                      ),
+                                                      }.withoutNulls,
+                                                      extra: <String, dynamic>{
+                                                        'userProfile':
+                                                            matchedUsersItem,
+                                                        kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                              PageTransitionType
+                                                                  .scale,
+                                                          alignment: Alignment
+                                                              .bottomCenter,
+                                                        ),
+                                                      },
                                                     );
                                                   },
                                                   child: Container(
@@ -850,15 +888,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                       0, 0, 6),
                                                           child: InkWell(
                                                             onTap: () async {
-                                                              await Navigator
-                                                                  .push(
-                                                                context,
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          IntroductionViewWidget(),
-                                                                ),
-                                                              );
+                                                              context.pushNamed(
+                                                                  'IntroductionView');
                                                             },
                                                             child: Text(
                                                               '${matchedUsersItem.firstName}, ${functions.getAge(matchedUsersItem.birthDay).toString()}',

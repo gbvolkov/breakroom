@@ -58,7 +58,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
             size: 24,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Column(
@@ -326,13 +326,14 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                         .map((e) => e.reference)
                         .toList(),
                   );
-                  await Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChatWidget(
-                        chatRef: groupChat?.reference,
+                  context.pushNamed(
+                    'Chat',
+                    queryParams: {
+                      'chatRef': serializeParam(
+                        groupChat?.reference,
+                        ParamType.DocumentReference,
                       ),
-                    ),
+                    }.withoutNulls,
                   );
 
                   setState(() {});

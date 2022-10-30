@@ -5,9 +5,6 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../forgot_password_view/forgot_password_view_widget.dart';
-import '../main.dart';
-import '../sign_up_view/sign_up_view_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -65,7 +62,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -312,13 +309,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                       onPressed: () async {
                                         setState(() => FFAppState()
                                             .backArrowVisible = false);
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ForgotPasswordViewWidget(),
-                                          ),
-                                        );
+
+                                        context.pushNamed('ForgotPasswordView');
                                       },
                                       text: 'Forgot password?',
                                       options: FFButtonOptions(
@@ -375,6 +367,9 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                     passwordTextFieldController!
                                                         .text) ==
                                                 true) {
+                                              GoRouter.of(context)
+                                                  .prepareAuthEvent();
+
                                               final user =
                                                   await signInWithEmail(
                                                 context,
@@ -393,15 +388,9 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                               );
                                               await currentUserReference!
                                                   .update(usersUpdateData);
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      NavBarPage(
-                                                          initialPage:
-                                                              'ProfileView'),
-                                                ),
-                                              );
+
+                                              context.pushNamedAuth(
+                                                  'ProfileView', mounted);
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
@@ -487,16 +476,15 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                         ),
                                         FFButtonWidget(
                                           onPressed: () async {
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SignUpViewWidget(
-                                                  email:
-                                                      emailTextFieldController!
-                                                          .text,
+                                            context.pushNamed(
+                                              'SignUpView',
+                                              queryParams: {
+                                                'email': serializeParam(
+                                                  emailTextFieldController!
+                                                      .text,
+                                                  ParamType.String,
                                                 ),
-                                              ),
+                                              }.withoutNulls,
                                             );
                                           },
                                           text: 'Sign up',

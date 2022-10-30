@@ -1,12 +1,8 @@
-import '../about_us_view/about_us_view_widget.dart';
 import '../auth/auth_util.dart';
 import '../components/monthly_subscription_component_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../login_details_view/login_details_view_widget.dart';
-import '../notification_settings_view/notification_settings_view_widget.dart';
-import '../welcome_view/welcome_view_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -39,7 +35,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -106,13 +102,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LoginDetailsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('LoginDetailsView');
                                   },
                                 ),
                               ),
@@ -223,13 +213,8 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            NotificationSettingsViewWidget(),
-                                      ),
-                                    );
+                                    context
+                                        .pushNamed('NotificationSettingsView');
                                   },
                                 ),
                               ),
@@ -282,13 +267,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LoginDetailsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('LoginDetailsView');
                                   },
                                 ),
                               ),
@@ -336,13 +315,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            AboutUsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('AboutUsView');
                                   },
                                 ),
                               ),
@@ -390,13 +363,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LoginDetailsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('LoginDetailsView');
                                   },
                                 ),
                               ),
@@ -444,13 +411,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LoginDetailsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('LoginDetailsView');
                                   },
                                 ),
                               ),
@@ -498,13 +459,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            LoginDetailsViewWidget(),
-                                      ),
-                                    );
+                                    context.pushNamed('LoginDetailsView');
                                   },
                                 ),
                               ),
@@ -520,14 +475,10 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                           child: InkWell(
                             onTap: () async {
+                              GoRouter.of(context).prepareAuthEvent();
                               await signOut();
-                              await Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => WelcomeViewWidget(),
-                                ),
-                                (r) => false,
-                              );
+
+                              context.goNamedAuth('WelcomeView', mounted);
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -587,13 +538,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              LoginDetailsViewWidget(),
-                                        ),
-                                      );
+                                      context.pushNamed('LoginDetailsView');
                                     },
                                   ),
                                 ),

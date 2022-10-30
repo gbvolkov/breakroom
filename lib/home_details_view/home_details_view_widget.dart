@@ -1,12 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../chat/chat_widget.dart';
+import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
@@ -29,10 +28,11 @@ class HomeDetailsViewWidget extends StatefulWidget {
 }
 
 class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
-  LatLng? currentUserLocationValue;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  ChatsRecord? groupChat;
   List<String>? choiceChipsValues;
   PageController? pageViewController;
+  LatLng? currentUserLocationValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -336,13 +336,17 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                 ),
                                 FFButtonWidget(
                                   onPressed: () async {
-                                    await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ChatWidget(
-                                          chatUser: widget.userProfile,
+                                    context.pushNamed(
+                                      'Chat',
+                                      queryParams: {
+                                        'chatUser': serializeParam(
+                                          widget.userProfile,
+                                          ParamType.Document,
                                         ),
-                                      ),
+                                      }.withoutNulls,
+                                      extra: <String, dynamic>{
+                                        'chatUser': widget.userProfile,
+                                      },
                                     );
                                   },
                                   text: 'Chat',
@@ -690,17 +694,22 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                   .update(usersUpdateData);
                                               setState(() => FFAppState()
                                                   .swipeAction = 'left');
-                                              await Navigator.pushReplacement(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration: Duration(
-                                                      milliseconds: 300),
-                                                  reverseDuration: Duration(
-                                                      milliseconds: 300),
-                                                  child: NavBarPage(
-                                                      initialPage: 'HomeView'),
-                                                ),
+                                              if (Navigator.of(context)
+                                                  .canPop()) {
+                                                context.pop();
+                                              }
+                                              context.pushNamed(
+                                                'HomeView',
+                                                extra: <String, dynamic>{
+                                                  kTransitionInfoKey:
+                                                      TransitionInfo(
+                                                    hasTransition: true,
+                                                    transitionType:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 300),
+                                                  ),
+                                                },
                                               );
                                             },
                                           ),
@@ -765,7 +774,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                             onPressed: () async {
                                               setState(() => FFAppState()
                                                   .swipeAction = 'up');
-                                              Navigator.pop(context);
+                                              context.pop();
                                             },
                                           ),
                                         ),
@@ -814,26 +823,72 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                               size: 30,
                                             ),
                                             onPressed: () async {
+                                              // addToLikedList
+
                                               final usersUpdateData = {
                                                 'liked': FieldValue.arrayUnion(
                                                     [widget.userProfile!.uid]),
+                                                'touched':
+                                                    FieldValue.arrayUnion([
+                                                  widget.userProfile!.uid
+                                                ]),
                                               };
                                               await currentUserReference!
                                                   .update(usersUpdateData);
+                                              if (widget.userProfile!.liked!
+                                                  .toList()
+                                                  .contains(currentUserUid)) {
+                                                groupChat = await FFChatManager
+                                                    .instance
+                                                    .createChat(
+                                                  [
+                                                    widget
+                                                        .userProfile!.reference
+                                                  ],
+                                                );
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Congrats! You have a match!',
+                                                      style: TextStyle(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryText,
+                                                      ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 4000),
+                                                    backgroundColor:
+                                                        Color(0x00000000),
+                                                  ),
+                                                );
+                                                await Future.delayed(
+                                                    const Duration(
+                                                        milliseconds: 3000));
+                                              }
                                               setState(() => FFAppState()
                                                   .swipeAction = 'right');
-                                              await Navigator.pushReplacement(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  duration: Duration(
-                                                      milliseconds: 300),
-                                                  reverseDuration: Duration(
-                                                      milliseconds: 300),
-                                                  child: NavBarPage(
-                                                      initialPage: 'HomeView'),
-                                                ),
+                                              if (Navigator.of(context)
+                                                  .canPop()) {
+                                                context.pop();
+                                              }
+                                              context.pushNamed(
+                                                'HomeView',
+                                                extra: <String, dynamic>{
+                                                  kTransitionInfoKey:
+                                                      TransitionInfo(
+                                                    hasTransition: true,
+                                                    transitionType:
+                                                        PageTransitionType.fade,
+                                                    duration: Duration(
+                                                        milliseconds: 0),
+                                                  ),
+                                                },
                                               );
+
+                                              setState(() {});
                                             },
                                           ),
                                         ),

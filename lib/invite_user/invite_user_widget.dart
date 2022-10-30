@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../chat/chat_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -36,7 +35,7 @@ class _InviteUserWidgetState extends State<InviteUserWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -86,13 +85,17 @@ class _InviteUserWidgetState extends State<InviteUserWidget> {
                             listViewUsersRecordList[listViewIndex];
                         return InkWell(
                           onTap: () async {
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ChatWidget(
-                                  chatUser: listViewUsersRecord,
+                            context.pushNamed(
+                              'Chat',
+                              queryParams: {
+                                'chatUser': serializeParam(
+                                  listViewUsersRecord,
+                                  ParamType.Document,
                                 ),
-                              ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'chatUser': listViewUsersRecord,
+                              },
                             );
                           },
                           child: Container(

@@ -47,7 +47,7 @@ class _GetPremium1ViewWidgetState extends State<GetPremium1ViewWidget> {
                       size: 30,
                     ),
                     onPressed: () async {
-                      Navigator.pop(context);
+                      context.pop();
                     },
                   ),
                 ],

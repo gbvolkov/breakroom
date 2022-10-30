@@ -35,7 +35,7 @@ class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -118,7 +118,7 @@ class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrBodyType =
                                 FFAppState().mrbSelectedValue);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

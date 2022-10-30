@@ -62,7 +62,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
             size: 24,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Column(
@@ -333,7 +333,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                         .map((e) => e.reference)
                         .toList(),
                   );
-                  Navigator.pop(context);
+                  context.pop();
 
                   setState(() {});
                 },

@@ -1,5 +1,4 @@
 import '../components/map_place_card_widget.dart';
-import '../filters_view/filters_view_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -50,14 +49,18 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
             size: 30,
           ),
           onPressed: () async {
-            await Navigator.pushReplacement(
-              context,
-              PageTransition(
-                type: PageTransitionType.fade,
-                duration: Duration(milliseconds: 0),
-                reverseDuration: Duration(milliseconds: 0),
-                child: FiltersViewWidget(),
-              ),
+            if (Navigator.of(context).canPop()) {
+              context.pop();
+            }
+            context.pushNamed(
+              'FiltersView',
+              extra: <String, dynamic>{
+                kTransitionInfoKey: TransitionInfo(
+                  hasTransition: true,
+                  transitionType: PageTransitionType.fade,
+                  duration: Duration(milliseconds: 0),
+                ),
+              },
             );
           },
         ),

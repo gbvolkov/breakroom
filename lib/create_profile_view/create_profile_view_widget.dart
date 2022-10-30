@@ -6,7 +6,6 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
@@ -81,7 +80,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
           ),
           onPressed: () async {
             if ((pageViewController?.page?.round() ?? 0) == 0) {
-              Navigator.pop(context);
+              context.pop();
             } else {
               await pageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
@@ -1844,13 +1843,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       };
                                       await currentUserReference!
                                           .update(usersUpdateData);
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => NavBarPage(
-                                              initialPage: 'ProfileView'),
-                                        ),
-                                      );
+
+                                      context.pushNamed('ProfileView');
                                     },
                                     text: 'Save',
                                     options: FFButtonOptions(

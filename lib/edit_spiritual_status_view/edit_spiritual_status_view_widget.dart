@@ -37,7 +37,7 @@ class _EditSpiritualStatusViewWidgetState
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -120,7 +120,7 @@ class _EditSpiritualStatusViewWidgetState
                           onPressed: () async {
                             setState(() => FFAppState().usrSpiritualStatus =
                                 FFAppState().mrbSelectedValue);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

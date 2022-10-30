@@ -1,14 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../edit_body_type_view/edit_body_type_view_widget.dart';
-import '../edit_children_prefs_view/edit_children_prefs_view_widget.dart';
-import '../edit_drink_prefs_view/edit_drink_prefs_view_widget.dart';
-import '../edit_education_view/edit_education_view_widget.dart';
-import '../edit_height_view/edit_height_view_widget.dart';
-import '../edit_looking_for_view/edit_looking_for_view_widget.dart';
-import '../edit_smoking_prefs_view/edit_smoking_prefs_view_widget.dart';
-import '../edit_spiritual_status_view/edit_spiritual_status_view_widget.dart';
-import '../edit_workout_prefs_view/edit_workout_prefs_view_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -47,7 +38,7 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         actions: [],
@@ -126,13 +117,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         40, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditLookingForViewWidget(),
-                                          ),
-                                        );
+                                        context.pushNamed('EditLookingForView');
+
                                         setState(() =>
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -144,13 +130,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         children: [
                                           InkWell(
                                             onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditLookingForViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditLookingForView');
                                             },
                                             child: Text(
                                               functions.stringifyList(
@@ -176,13 +157,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditLookingForViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditLookingForView');
+
                                               setState(() => FFAppState()
                                                       .usrWorkoutStatus =
                                                   FFAppState()
@@ -241,13 +218,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           40, 0, 0, 0),
                                       child: InkWell(
                                         onTap: () async {
-                                          await Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  EditHeightViewWidget(),
-                                            ),
-                                          );
+                                          context.pushNamed('EditHeightView');
+
                                           setState(() => FFAppState()
                                                   .usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus);
@@ -276,13 +248,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                                 size: 16,
                                               ),
                                               onPressed: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditHeightViewWidget(),
-                                                  ),
-                                                );
+                                                context.pushNamed(
+                                                    'EditHeightView');
+
                                                 setState(() => FFAppState()
                                                         .usrWorkoutStatus =
                                                     FFAppState()
@@ -334,13 +302,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         40, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditDrinkPrefsViewWidget(),
-                                          ),
-                                        );
+                                        context.pushNamed('EditDrinkPrefsView');
+
                                         setState(() =>
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -368,13 +331,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditDrinkPrefsViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditDrinkPrefsView');
+
                                               setState(() => FFAppState()
                                                       .usrWorkoutStatus =
                                                   FFAppState()
@@ -422,13 +381,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   InkWell(
                                     onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditSmokingPrefsViewWidget(),
-                                        ),
-                                      );
+                                      context.pushNamed('EditSmokingPrefsView');
+
                                       setState(() =>
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus);
@@ -460,13 +414,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                             size: 16,
                                           ),
                                           onPressed: () async {
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditSmokingPrefsViewWidget(),
-                                              ),
-                                            );
+                                            context.pushNamed(
+                                                'EditSmokingPrefsView');
+
                                             setState(() => FFAppState()
                                                     .usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -515,13 +465,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         40, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditSpiritualStatusViewWidget(),
-                                          ),
-                                        );
+                                        context.pushNamed(
+                                            'EditSpiritualStatusView');
+
                                         setState(() =>
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -549,13 +495,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditSpiritualStatusViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditSpiritualStatusView');
+
                                               setState(() => FFAppState()
                                                       .usrWorkoutStatus =
                                                   FFAppState()
@@ -606,13 +548,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         40, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditWorkoutPrefsViewWidget(),
-                                          ),
-                                        );
+                                        context
+                                            .pushNamed('EditWorkoutPrefsView');
+
                                         setState(() =>
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -640,13 +578,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditWorkoutPrefsViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditWorkoutPrefsView');
+
                                               setState(() => FFAppState()
                                                       .usrWorkoutStatus =
                                                   FFAppState()
@@ -697,13 +631,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         40, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditChildrenPrefsViewWidget(),
-                                          ),
-                                        );
+                                        context
+                                            .pushNamed('EditChildrenPrefsView');
+
                                         setState(() =>
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -731,13 +661,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditChildrenPrefsViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditChildrenPrefsView');
+
                                               setState(() => FFAppState()
                                                       .usrWorkoutStatus =
                                                   FFAppState()
@@ -788,13 +714,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         40, 0, 0, 0),
                                     child: InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditEducationViewWidget(),
-                                          ),
-                                        );
+                                        context.pushNamed('EditEducationView');
+
                                         setState(() =>
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -822,13 +743,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               size: 16,
                                             ),
                                             onPressed: () async {
-                                              await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditEducationViewWidget(),
-                                                ),
-                                              );
+                                              context.pushNamed(
+                                                  'EditEducationView');
+
                                               setState(() => FFAppState()
                                                       .usrWorkoutStatus =
                                                   FFAppState()
@@ -876,13 +793,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                       40, 0, 0, 0),
                                   child: InkWell(
                                     onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditBodyTypeViewWidget(),
-                                        ),
-                                      );
+                                      context.pushNamed('EditBodyTypeView');
+
                                       setState(() =>
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus);
@@ -909,13 +821,9 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                             size: 16,
                                           ),
                                           onPressed: () async {
-                                            await Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditBodyTypeViewWidget(),
-                                              ),
-                                            );
+                                            context
+                                                .pushNamed('EditBodyTypeView');
+
                                             setState(() => FFAppState()
                                                     .usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus);
@@ -989,7 +897,7 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               'lookingFor': FFAppState().usrLookingFor,
                             };
                             await currentUserReference!.update(usersUpdateData);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

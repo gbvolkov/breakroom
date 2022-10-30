@@ -52,7 +52,7 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -242,7 +242,7 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
                                 txtFirstNameController!.text);
                             setState(() => FFAppState().usrLastName =
                                 txtLastNameController!.text);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(

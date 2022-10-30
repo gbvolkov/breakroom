@@ -1,10 +1,8 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../chat/chat_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
-import '../home_details_view/home_details_view_widget.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -190,15 +188,21 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                     final matchesItem = matches[matchesIndex];
                                     return InkWell(
                                       onTap: () async {
-                                        await Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                HomeDetailsViewWidget(
-                                              userProfile: matchesItem,
-                                              mode: 'match',
+                                        context.pushNamed(
+                                          'HomeDetailsView',
+                                          queryParams: {
+                                            'userProfile': serializeParam(
+                                              matchesItem,
+                                              ParamType.Document,
                                             ),
-                                          ),
+                                            'mode': serializeParam(
+                                              'match',
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'userProfile': matchesItem,
+                                          },
                                         );
                                       },
                                       child: Card(
@@ -358,14 +362,18 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                   size: 30,
                                                 ),
                                                 onPressed: () async {
-                                                  await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ChatWidget(
-                                                        chatUser: matchesItem,
+                                                  context.pushNamed(
+                                                    'Chat',
+                                                    queryParams: {
+                                                      'chatUser':
+                                                          serializeParam(
+                                                        matchesItem,
+                                                        ParamType.Document,
                                                       ),
-                                                    ),
+                                                    }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      'chatUser': matchesItem,
+                                                    },
                                                   );
                                                 },
                                               ),

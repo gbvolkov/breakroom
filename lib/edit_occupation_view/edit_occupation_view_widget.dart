@@ -49,7 +49,7 @@ class _EditOccupationViewWidgetState extends State<EditOccupationViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
         title: Text(
@@ -165,7 +165,7 @@ class _EditOccupationViewWidgetState extends State<EditOccupationViewWidget> {
                           onPressed: () async {
                             setState(() => FFAppState().usrOccupation =
                                 txtOccupationController!.text);
-                            Navigator.pop(context);
+                            context.pop();
                           },
                           text: 'Save',
                           options: FFButtonOptions(
