@@ -28,6 +28,7 @@ class HomeViewWidget extends StatefulWidget {
 
 class _HomeViewWidgetState extends State<HomeViewWidget> {
   ChatsRecord? groupChat;
+  UsersRecord? matchedUser;
   late SwipeableCardSectionController swipeableStackController;
   String? choiceChipsValue;
   LatLng? currentUserLocationValue;
@@ -326,17 +327,18 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       );
                                     },
                                     onRightSwipe: (index) async {
+                                      matchedUser =
+                                          await actions.getUsersListElement(
+                                        matchedUsers.toList(),
+                                        0,
+                                      );
                                       // addToLikedList
 
                                       final usersUpdateData = {
-                                        'liked': FieldValue.arrayUnion([
-                                          functions.getFirstUID(
-                                              matchedUsers.toList())
-                                        ]),
-                                        'touched': FieldValue.arrayUnion([
-                                          functions.getFirstUID(
-                                              matchedUsers.toList())
-                                        ]),
+                                        'liked': FieldValue.arrayUnion(
+                                            [matchedUser!.uid]),
+                                        'touched': FieldValue.arrayUnion(
+                                            [matchedUser!.uid]),
                                       };
                                       await currentUserReference!
                                           .update(usersUpdateData);
@@ -345,10 +347,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           .contains(currentUserUid)) {
                                         groupChat = await FFChatManager.instance
                                             .createChat(
-                                          [
-                                            functions.getFirstUserRef(
-                                                matchedUsers.toList())
-                                          ],
+                                          [matchedUser!.reference],
                                         );
                                         triggerPushNotification(
                                           notificationTitle: 'You have match!',
@@ -362,10 +361,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           )}!',
                                           notificationImageUrl:
                                               currentUserPhoto,
-                                          userRefs: [
-                                            functions.getFirstUserRef(
-                                                matchedUsers.toList())
-                                          ],
+                                          userRefs: [matchedUser!.reference],
                                           initialPageName: 'HomeDetailsView',
                                           parameterData: {
                                             'userProfile': currentUserReference,
@@ -404,10 +400,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           )} likes you!',
                                           notificationImageUrl:
                                               currentUserPhoto,
-                                          userRefs: [
-                                            functions.getFirstUserRef(
-                                                matchedUsers.toList())
-                                          ],
+                                          userRefs: [matchedUser!.reference],
                                           initialPageName: 'HomeDetailsView',
                                           parameterData: {
                                             'userProfile': currentUserReference,
