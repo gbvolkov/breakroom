@@ -374,13 +374,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           receiver: matchedUser!.reference,
                                           type: 'match',
                                           content:
-                                              'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                              'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
                                             functions.getAge(
                                                 currentUserDocument!.birthDay),
                                             formatType: FormatType.custom,
                                             format: '###',
                                             locale: '',
-                                          )} likes you!',
+                                          )}!',
                                           referredUser: currentUserReference,
                                           timestamp: getCurrentTimestamp,
                                           isRead: false,

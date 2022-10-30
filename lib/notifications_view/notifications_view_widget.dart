@@ -194,7 +194,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     Expanded(
-                                      flex: 4,
+                                      flex: 3,
                                       child: SelectionArea(
                                           child: Text(
                                         dateTimeFormat(
@@ -202,11 +202,15 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                             listViewNotificationsRecord
                                                 .timestamp!),
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 12,
+                                            ),
                                       )),
                                     ),
                                     Expanded(
-                                      flex: 8,
+                                      flex: 10,
                                       child: SelectionArea(
                                           child: Text(
                                         listViewNotificationsRecord.content!

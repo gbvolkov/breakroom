@@ -885,7 +885,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                       .userProfile!.reference,
                                                   type: 'match',
                                                   content:
-                                                      'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                      'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
                                                     functions.getAge(
                                                         currentUserDocument!
                                                             .birthDay),
@@ -893,7 +893,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         FormatType.custom,
                                                     format: '###',
                                                     locale: '',
-                                                  )} likes you!',
+                                                  )}!',
                                                   referredUser:
                                                       currentUserReference,
                                                   timestamp:
