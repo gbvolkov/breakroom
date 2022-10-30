@@ -72,7 +72,11 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            context.pop();
+            if (widget.mode == null || widget.mode == '') {
+              context.pushNamed('HomeView');
+            } else {
+              context.pushNamed('MatchesView');
+            }
           },
         ),
         title: Text(
