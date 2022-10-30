@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../backend/push_notifications/push_notifications_util.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -846,6 +847,33 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         .userProfile!.reference
                                                   ],
                                                 );
+                                                triggerPushNotification(
+                                                  notificationTitle:
+                                                      'You have match!',
+                                                  notificationText:
+                                                      'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                    functions.getAge(
+                                                        currentUserDocument!
+                                                            .birthDay),
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  )}!',
+                                                  notificationImageUrl:
+                                                      currentUserPhoto,
+                                                  userRefs: [
+                                                    widget
+                                                        .userProfile!.reference
+                                                  ],
+                                                  initialPageName:
+                                                      'HomeDetailsView',
+                                                  parameterData: {
+                                                    'userProfile':
+                                                        currentUserReference,
+                                                    'mode': 'Match',
+                                                  },
+                                                );
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
                                                   SnackBar(
@@ -867,7 +895,35 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                 await Future.delayed(
                                                     const Duration(
                                                         milliseconds: 3000));
+                                              } else {
+                                                triggerPushNotification(
+                                                  notificationTitle:
+                                                      'Somebody likes you!',
+                                                  notificationText:
+                                                      'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                    functions.getAge(
+                                                        currentUserDocument!
+                                                            .birthDay),
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  )} likes you!',
+                                                  notificationImageUrl:
+                                                      currentUserPhoto,
+                                                  userRefs: [
+                                                    widget
+                                                        .userProfile!.reference
+                                                  ],
+                                                  initialPageName:
+                                                      'HomeDetailsView',
+                                                  parameterData: {
+                                                    'userProfile':
+                                                        currentUserReference,
+                                                  },
+                                                );
                                               }
+
                                               setState(() => FFAppState()
                                                   .swipeAction = 'right');
                                               if (Navigator.of(context)

@@ -67,7 +67,6 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                     Duration(milliseconds: 2000),
                     () => setState(() {}),
                   ),
-                  autofocus: true,
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'Search',
