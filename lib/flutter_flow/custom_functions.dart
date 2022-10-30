@@ -294,3 +294,17 @@ int stringLength(String? strVal) {
   }
   return length;
 }
+
+List<PhotoStruct> getPhotosFromURLs(List<String> photoURLs) {
+  List<PhotoStruct> photos = [];
+
+  for (var photoURL in photoURLs) {
+    PhotoStruct photo = PhotoStruct();
+    photo.image = photoURL;
+    photo.rating = 0;
+
+    photos.add(photo);
+  }
+
+  return photos;
+}

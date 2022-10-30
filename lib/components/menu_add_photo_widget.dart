@@ -95,7 +95,7 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                         createPhotoStruct(
                           image: uploadedFileUrl1,
                           rating: 0.0,
-                          clearUnsetFields: false,
+                          clearUnsetFields: true,
                         ),
                         true,
                       )

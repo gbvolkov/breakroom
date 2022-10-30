@@ -144,114 +144,107 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               Align(
                                                 alignment: AlignmentDirectional(
                                                     -24.58, -1),
-                                                child: AuthUserStreamWidget(
-                                                  child: InkWell(
-                                                    onTap: () async {
-                                                      final selectedMedia =
-                                                          await selectMediaWithSourceBottomSheet(
-                                                        context: context,
-                                                        maxWidth: 640.00,
-                                                        maxHeight: 480.00,
-                                                        allowPhoto: true,
-                                                        backgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryBackground,
-                                                        textColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                      );
-                                                      if (selectedMedia !=
-                                                              null &&
-                                                          selectedMedia.every((m) =>
-                                                              validateFileFormat(
-                                                                  m.storagePath,
-                                                                  context))) {
-                                                        setState(() =>
-                                                            isMediaUploading =
-                                                                true);
-                                                        var downloadUrls =
-                                                            <String>[];
-                                                        try {
-                                                          showUploadMessage(
-                                                            context,
-                                                            'Uploading file...',
-                                                            showLoading: true,
-                                                          );
-                                                          downloadUrls =
-                                                              (await Future
-                                                                      .wait(
-                                                            selectedMedia.map(
-                                                              (m) async =>
-                                                                  await uploadData(
-                                                                      m.storagePath,
-                                                                      m.bytes),
-                                                            ),
-                                                          ))
-                                                                  .where((u) =>
-                                                                      u != null)
-                                                                  .map(
-                                                                      (u) => u!)
-                                                                  .toList();
-                                                        } finally {
-                                                          ScaffoldMessenger.of(
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    final selectedMedia =
+                                                        await selectMediaWithSourceBottomSheet(
+                                                      context: context,
+                                                      maxWidth: 640.00,
+                                                      maxHeight: 480.00,
+                                                      allowPhoto: true,
+                                                      backgroundColor:
+                                                          FlutterFlowTheme.of(
                                                                   context)
-                                                              .hideCurrentSnackBar();
+                                                              .secondaryBackground,
+                                                      textColor:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                    );
+                                                    if (selectedMedia != null &&
+                                                        selectedMedia.every((m) =>
+                                                            validateFileFormat(
+                                                                m.storagePath,
+                                                                context))) {
+                                                      setState(() =>
                                                           isMediaUploading =
-                                                              false;
-                                                        }
-                                                        if (downloadUrls
-                                                                .length ==
-                                                            selectedMedia
-                                                                .length) {
-                                                          setState(() =>
-                                                              uploadedFileUrl =
-                                                                  downloadUrls
-                                                                      .first);
-                                                          showUploadMessage(
-                                                              context,
-                                                              'Success!');
-                                                        } else {
-                                                          setState(() {});
-                                                          showUploadMessage(
-                                                              context,
-                                                              'Failed to upload media');
-                                                          return;
-                                                        }
-                                                      }
-
-                                                      if (uploadedFileUrl !=
-                                                              null &&
-                                                          uploadedFileUrl !=
-                                                              '') {
-                                                        final usersUpdateData =
-                                                            createUsersRecordData(
-                                                          photoUrl:
-                                                              uploadedFileUrl,
+                                                              true);
+                                                      var downloadUrls =
+                                                          <String>[];
+                                                      try {
+                                                        showUploadMessage(
+                                                          context,
+                                                          'Uploading file...',
+                                                          showLoading: true,
                                                         );
-                                                        await currentUserReference!
-                                                            .update(
-                                                                usersUpdateData);
+                                                        downloadUrls =
+                                                            (await Future.wait(
+                                                          selectedMedia.map(
+                                                            (m) async =>
+                                                                await uploadData(
+                                                                    m.storagePath,
+                                                                    m.bytes),
+                                                          ),
+                                                        ))
+                                                                .where((u) =>
+                                                                    u != null)
+                                                                .map((u) => u!)
+                                                                .toList();
+                                                      } finally {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .hideCurrentSnackBar();
+                                                        isMediaUploading =
+                                                            false;
                                                       }
-                                                    },
-                                                    child: Container(
-                                                      width: 105,
-                                                      height: 105,
-                                                      clipBehavior:
-                                                          Clip.antiAlias,
-                                                      decoration: BoxDecoration(
-                                                        shape: BoxShape.circle,
+                                                      if (downloadUrls.length ==
+                                                          selectedMedia
+                                                              .length) {
+                                                        setState(() =>
+                                                            uploadedFileUrl =
+                                                                downloadUrls
+                                                                    .first);
+                                                        showUploadMessage(
+                                                            context,
+                                                            'Success!');
+                                                      } else {
+                                                        setState(() {});
+                                                        showUploadMessage(
+                                                            context,
+                                                            'Failed to upload media');
+                                                        return;
+                                                      }
+                                                    }
+
+                                                    if (uploadedFileUrl !=
+                                                            null &&
+                                                        uploadedFileUrl != '') {
+                                                      final usersUpdateData =
+                                                          createUsersRecordData(
+                                                        photoUrl:
+                                                            uploadedFileUrl,
+                                                      );
+                                                      await currentUserReference!
+                                                          .update(
+                                                              usersUpdateData);
+                                                    }
+                                                  },
+                                                  child: Container(
+                                                    width: 105,
+                                                    height: 105,
+                                                    clipBehavior:
+                                                        Clip.antiAlias,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl: valueOrDefault<
+                                                          String>(
+                                                        columnUsersRecord
+                                                            .photoUrl,
+                                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                       ),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            valueOrDefault<
-                                                                String>(
-                                                          currentUserPhoto,
-                                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                        ),
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                      fit: BoxFit.cover,
                                                     ),
                                                   ),
                                                 ),
@@ -262,47 +255,43 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 child: Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(0, 100, 0, 0),
-                                                  child: AuthUserStreamWidget(
-                                                    child: FFButtonWidget(
-                                                      onPressed: () {
-                                                        print(
-                                                            'Button pressed ...');
-                                                      },
-                                                      text: valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.intention,
-                                                          ''),
-                                                      options: FFButtonOptions(
-                                                        width: 80,
-                                                        height: 32,
+                                                  child: FFButtonWidget(
+                                                    onPressed: () {
+                                                      print(
+                                                          'Button pressed ...');
+                                                    },
+                                                    text: columnUsersRecord
+                                                        .intention!,
+                                                    options: FFButtonOptions(
+                                                      width: 80,
+                                                      height: 32,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .backgroundGrey,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .normal,
+                                                              ),
+                                                      elevation: 0,
+                                                      borderSide: BorderSide(
                                                         color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .backgroundGrey,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .subtitle2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .normal,
-                                                                ),
-                                                        elevation: 0,
-                                                        borderSide: BorderSide(
-                                                          color: Colors
-                                                              .transparent,
-                                                          width: 1,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
+                                                            Colors.transparent,
+                                                        width: 1,
                                                       ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
                                                     ),
                                                   ),
                                                 ),
@@ -321,33 +310,28 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          AuthUserStreamWidget(
-                                            child: Text(
-                                              currentUserDisplayName,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .title1,
-                                            ),
+                                          Text(
+                                            columnUsersRecord.displayName!,
+                                            style: FlutterFlowTheme.of(context)
+                                                .title1,
                                           ),
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               GenderIconWidget(),
-                                              AuthUserStreamWidget(
-                                                child: Text(
-                                                  valueOrDefault<String>(
-                                                    '${valueOrDefault(currentUserDocument?.industry, '')}, ${valueOrDefault(currentUserDocument?.occupation, '')}',
-                                                    'Unset',
-                                                  ),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w300,
-                                                      ),
+                                              Text(
+                                                valueOrDefault<String>(
+                                                  '${columnUsersRecord.industry}, ${columnUsersRecord.occupation}',
+                                                  'Unset',
                                                 ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
                                               ),
                                             ],
                                           ),
@@ -505,17 +489,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 16),
-                                        child: AuthUserStreamWidget(
-                                          child: Text(
-                                            valueOrDefault(
-                                                currentUserDocument?.bio, ''),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  fontWeight: FontWeight.w300,
-                                                ),
-                                          ),
+                                        child: Text(
+                                          columnUsersRecord.bio!,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontWeight: FontWeight.w300,
+                                              ),
                                         ),
                                       ),
                                     ),
@@ -552,165 +533,146 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               VerticalDirection.down,
                                           clipBehavior: Clip.none,
                                           children: [
-                                            AuthUserStreamWidget(
-                                              child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text:
-                                                    '${valueOrDefault(currentUserDocument?.height, 0).toString()} in',
-                                                icon: Icon(
-                                                  Icons.height,
-                                                  size: 16,
+                                            FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text:
+                                                  '${columnUsersRecord.height?.toString()} in',
+                                              icon: Icon(
+                                                Icons.height,
+                                                size: 16,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 32,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .backgroundGrey,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                elevation: 0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
                                                 ),
-                                                options: FFButtonOptions(
-                                                  height: 32,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .backgroundGrey,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                  elevation: 0,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
                                             ),
-                                            AuthUserStreamWidget(
-                                              child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text: valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.drinkingStatus,
-                                                    ''),
-                                                icon: Icon(
-                                                  Icons.wine_bar_outlined,
-                                                  size: 16,
+                                            FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: columnUsersRecord
+                                                  .drinkingStatus!,
+                                              icon: Icon(
+                                                Icons.wine_bar_outlined,
+                                                size: 16,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 32,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .backgroundGrey,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                elevation: 0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
                                                 ),
-                                                options: FFButtonOptions(
-                                                  height: 32,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .backgroundGrey,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                  elevation: 0,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
                                             ),
-                                            AuthUserStreamWidget(
-                                              child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text: valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.smokingStatus,
-                                                    ''),
-                                                icon: Icon(
-                                                  Icons.smoking_rooms,
-                                                  size: 16,
+                                            FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: columnUsersRecord
+                                                  .smokingStatus!,
+                                              icon: Icon(
+                                                Icons.smoking_rooms,
+                                                size: 16,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 32,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .backgroundGrey,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                elevation: 0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
                                                 ),
-                                                options: FFButtonOptions(
-                                                  height: 32,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .backgroundGrey,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                  elevation: 0,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
                                             ),
-                                            AuthUserStreamWidget(
-                                              child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
-                                                },
-                                                text: functions.stringifyList(
-                                                    (currentUserDocument
-                                                                ?.lookingFor
-                                                                ?.toList() ??
-                                                            [])
-                                                        .toList(),
-                                                    1),
-                                                icon: Icon(
-                                                  Icons.search_outlined,
-                                                  size: 16,
+                                            FFButtonWidget(
+                                              onPressed: () {
+                                                print('Button pressed ...');
+                                              },
+                                              text: functions.stringifyList(
+                                                  columnUsersRecord.lookingFor!
+                                                      .toList(),
+                                                  1),
+                                              icon: Icon(
+                                                Icons.search_outlined,
+                                                size: 16,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 32,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .backgroundGrey,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                elevation: 0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1,
                                                 ),
-                                                options: FFButtonOptions(
-                                                  height: 32,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .backgroundGrey,
-                                                  textStyle: FlutterFlowTheme
-                                                          .of(context)
-                                                      .subtitle2
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                  elevation: 0,
-                                                  borderSide: BorderSide(
-                                                    color: Colors.transparent,
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
                                               ),
                                             ),
                                           ],
@@ -738,73 +700,61 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 16),
-                                        child: AuthUserStreamWidget(
-                                          child: Builder(
-                                            builder: (context) {
-                                              final interests =
-                                                  (currentUserDocument
-                                                              ?.interests
-                                                              ?.toList() ??
-                                                          [])
-                                                      .toList();
-                                              return Wrap(
-                                                spacing: 8,
-                                                runSpacing: 8,
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment:
-                                                    WrapCrossAlignment.start,
-                                                direction: Axis.horizontal,
-                                                runAlignment:
-                                                    WrapAlignment.start,
-                                                verticalDirection:
-                                                    VerticalDirection.down,
-                                                clipBehavior: Clip.none,
-                                                children: List.generate(
-                                                    interests.length,
-                                                    (interestsIndex) {
-                                                  final interestsItem =
-                                                      interests[interestsIndex];
-                                                  return FFButtonWidget(
-                                                    onPressed: () {
-                                                      print(
-                                                          'Button pressed ...');
-                                                    },
-                                                    text: interestsItem,
-                                                    options: FFButtonOptions(
-                                                      height: 32,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .backgroundGrey,
-                                                      textStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .normal,
-                                                              ),
-                                                      elevation: 0,
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 1,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final interests = columnUsersRecord
+                                                .interests!
+                                                .toList();
+                                            return Wrap(
+                                              spacing: 8,
+                                              runSpacing: 8,
+                                              alignment: WrapAlignment.start,
+                                              crossAxisAlignment:
+                                                  WrapCrossAlignment.start,
+                                              direction: Axis.horizontal,
+                                              runAlignment: WrapAlignment.start,
+                                              verticalDirection:
+                                                  VerticalDirection.down,
+                                              clipBehavior: Clip.none,
+                                              children: List.generate(
+                                                  interests.length,
+                                                  (interestsIndex) {
+                                                final interestsItem =
+                                                    interests[interestsIndex];
+                                                return FFButtonWidget(
+                                                  onPressed: () {
+                                                    print('Button pressed ...');
+                                                  },
+                                                  text: interestsItem,
+                                                  options: FFButtonOptions(
+                                                    height: 32,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .backgroundGrey,
+                                                    textStyle: FlutterFlowTheme
+                                                            .of(context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                    elevation: 0,
+                                                    borderSide: BorderSide(
+                                                      color: Colors.transparent,
+                                                      width: 1,
                                                     ),
-                                                  );
-                                                }),
-                                              );
-                                            },
-                                          ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                );
+                                              }),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
@@ -824,68 +774,62 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    AuthUserStreamWidget(
-                                      child: Builder(
-                                        builder: (context) {
-                                          final userPhotos =
-                                              (currentUserDocument?.photos
-                                                          ?.toList() ??
-                                                      [])
-                                                  .toList();
-                                          return GridView.builder(
-                                            padding: EdgeInsets.zero,
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 10,
-                                              childAspectRatio: 0.8,
-                                            ),
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: userPhotos.length,
-                                            itemBuilder:
-                                                (context, userPhotosIndex) {
-                                              final userPhotosItem =
-                                                  userPhotos[userPhotosIndex];
-                                              return InkWell(
-                                                onTap: () async {
-                                                  await Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      child:
-                                                          FlutterFlowExpandedImageView(
-                                                        image: Image.network(
-                                                          userPhotosItem.image!,
-                                                          fit: BoxFit.contain,
-                                                        ),
-                                                        allowRotation: false,
-                                                        tag: userPhotosItem
-                                                            .image!,
-                                                        useHeroAnimation: true,
+                                    Builder(
+                                      builder: (context) {
+                                        final userPhotos =
+                                            columnUsersRecord.photos!.toList();
+                                        return GridView.builder(
+                                          padding: EdgeInsets.zero,
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 10,
+                                            mainAxisSpacing: 10,
+                                            childAspectRatio: 0.8,
+                                          ),
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: userPhotos.length,
+                                          itemBuilder:
+                                              (context, userPhotosIndex) {
+                                            final userPhotosItem =
+                                                userPhotos[userPhotosIndex];
+                                            return InkWell(
+                                              onTap: () async {
+                                                await Navigator.push(
+                                                  context,
+                                                  PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    child:
+                                                        FlutterFlowExpandedImageView(
+                                                      image: Image.network(
+                                                        userPhotosItem.image!,
+                                                        fit: BoxFit.contain,
                                                       ),
+                                                      allowRotation: false,
+                                                      tag:
+                                                          userPhotosItem.image!,
+                                                      useHeroAnimation: true,
                                                     ),
-                                                  );
-                                                },
-                                                child: Hero(
-                                                  tag: userPhotosItem.image!,
-                                                  transitionOnUserGestures:
-                                                      true,
-                                                  child: Image.network(
-                                                    userPhotosItem.image!,
-                                                    width: 100,
-                                                    height: 130,
-                                                    fit: BoxFit.cover,
                                                   ),
+                                                );
+                                              },
+                                              child: Hero(
+                                                tag: userPhotosItem.image!,
+                                                transitionOnUserGestures: true,
+                                                child: Image.network(
+                                                  userPhotosItem.image!,
+                                                  width: 100,
+                                                  height: 130,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
                                     ),
                                   ],
                                 ),
