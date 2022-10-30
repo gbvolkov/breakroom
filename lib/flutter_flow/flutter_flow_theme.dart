@@ -79,7 +79,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color noColor = Color(0x00FFFFFF);
   late Color trueBlack = Color(0xFF000000);
   late Color bottomSheetBackground = Color(0x001E1E1E);
-  late Color textFieldBackground = Color(0xFFF8F8F9);
+  late Color textFieldBackground = Color(0xFFF5F5F5);
   late Color grayIcon = Color(0xFF95A1AC);
   late Color gray200 = Color(0xFFDBE2E7);
   late Color gray600 = Color(0xFF262D34);

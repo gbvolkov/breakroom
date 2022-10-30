@@ -205,18 +205,28 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: SelectionArea(
-                                      child: Text(
-                                    '${FFAppState().usrFirstName} ${FFAppState().usrLastName}'
-                                        .maybeHandleOverflow(
-                                      maxChars: 35,
-                                      replacement: '…',
+                                Expanded(
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.8,
+                                    height: 42,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
-                                  )),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(-1, 0),
+                                      child: SelectionArea(
+                                          child: Text(
+                                        '${FFAppState().usrFirstName} ${FFAppState().usrLastName}'
+                                            .maybeHandleOverflow(
+                                          maxChars: 35,
+                                          replacement: '…',
+                                        ),
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      )),
+                                    ),
+                                  ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,

@@ -368,6 +368,26 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             'mode': 'Match',
                                           },
                                         );
+
+                                        final notificationsCreateData =
+                                            createNotificationsRecordData(
+                                          receiver: matchedUser!.reference,
+                                          type: 'match',
+                                          content:
+                                              'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                            functions.getAge(
+                                                currentUserDocument!.birthDay),
+                                            formatType: FormatType.custom,
+                                            format: '###',
+                                            locale: '',
+                                          )} likes you!',
+                                          referredUser: currentUserReference,
+                                          timestamp: getCurrentTimestamp,
+                                          isRead: false,
+                                        );
+                                        await NotificationsRecord.collection
+                                            .doc()
+                                            .set(notificationsCreateData);
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -406,6 +426,26 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             'userProfile': currentUserReference,
                                           },
                                         );
+
+                                        final notificationsCreateData =
+                                            createNotificationsRecordData(
+                                          receiver: matchedUser!.reference,
+                                          type: 'like',
+                                          content:
+                                              'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                            functions.getAge(
+                                                currentUserDocument!.birthDay),
+                                            formatType: FormatType.custom,
+                                            format: '###',
+                                            locale: '',
+                                          )} likes you!',
+                                          referredUser: currentUserReference,
+                                          timestamp: getCurrentTimestamp,
+                                          isRead: false,
+                                        );
+                                        await NotificationsRecord.collection
+                                            .doc()
+                                            .set(notificationsCreateData);
                                       }
 
                                       if (Navigator.of(context).canPop()) {

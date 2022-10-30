@@ -878,6 +878,33 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                     'mode': 'Match',
                                                   },
                                                 );
+
+                                                final notificationsCreateData =
+                                                    createNotificationsRecordData(
+                                                  receiver: widget
+                                                      .userProfile!.reference,
+                                                  type: 'match',
+                                                  content:
+                                                      'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                    functions.getAge(
+                                                        currentUserDocument!
+                                                            .birthDay),
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  )} likes you!',
+                                                  referredUser:
+                                                      currentUserReference,
+                                                  timestamp:
+                                                      getCurrentTimestamp,
+                                                  isRead: false,
+                                                );
+                                                await NotificationsRecord
+                                                    .collection
+                                                    .doc()
+                                                    .set(
+                                                        notificationsCreateData);
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
                                                   SnackBar(
@@ -926,6 +953,33 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         currentUserReference,
                                                   },
                                                 );
+
+                                                final notificationsCreateData =
+                                                    createNotificationsRecordData(
+                                                  receiver: widget
+                                                      .userProfile!.reference,
+                                                  type: 'like',
+                                                  content:
+                                                      'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                    functions.getAge(
+                                                        currentUserDocument!
+                                                            .birthDay),
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  )} likes you!',
+                                                  referredUser:
+                                                      currentUserReference,
+                                                  timestamp:
+                                                      getCurrentTimestamp,
+                                                  isRead: false,
+                                                );
+                                                await NotificationsRecord
+                                                    .collection
+                                                    .doc()
+                                                    .set(
+                                                        notificationsCreateData);
                                               }
 
                                               setState(() => FFAppState()
