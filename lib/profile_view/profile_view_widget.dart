@@ -150,6 +150,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       final selectedMedia =
                                                           await selectMediaWithSourceBottomSheet(
                                                         context: context,
+                                                        maxWidth: 640.00,
+                                                        maxHeight: 480.00,
                                                         allowPhoto: true,
                                                         backgroundColor:
                                                             FlutterFlowTheme.of(
