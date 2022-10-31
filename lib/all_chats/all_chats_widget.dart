@@ -40,19 +40,22 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
           ),
         ),
         actions: [
-          FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
-            icon: Icon(
-              Icons.person_add_alt,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30,
+          Visibility(
+            visible: FFAppState().falseconst,
+            child: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
+              icon: Icon(
+                Icons.person_add_alt,
+                color: FlutterFlowTheme.of(context).primaryText,
+                size: 30,
+              ),
+              onPressed: () async {
+                context.pushNamed('InviteUser');
+              },
             ),
-            onPressed: () async {
-              context.pushNamed('InviteUser');
-            },
           ),
         ],
         centerTitle: true,

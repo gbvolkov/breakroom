@@ -96,30 +96,33 @@ class _ChatWidgetState extends State<ChatWidget> {
           ],
         ),
         actions: [
-          FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30,
-            borderWidth: 1,
-            buttonSize: 60,
-            icon: Icon(
-              Icons.person_add_outlined,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30,
+          Visibility(
+            visible: FFAppState().falseconst,
+            child: FlutterFlowIconButton(
+              borderColor: Colors.transparent,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
+              icon: Icon(
+                Icons.person_add_outlined,
+                color: FlutterFlowTheme.of(context).primaryText,
+                size: 30,
+              ),
+              onPressed: () async {
+                context.pushNamed(
+                  'AddUsersToGroup',
+                  queryParams: {
+                    'chat': serializeParam(
+                      _chatInfo!.chatRecord,
+                      ParamType.Document,
+                    ),
+                  }.withoutNulls,
+                  extra: <String, dynamic>{
+                    'chat': _chatInfo!.chatRecord,
+                  },
+                );
+              },
             ),
-            onPressed: () async {
-              context.pushNamed(
-                'AddUsersToGroup',
-                queryParams: {
-                  'chat': serializeParam(
-                    _chatInfo!.chatRecord,
-                    ParamType.Document,
-                  ),
-                }.withoutNulls,
-                extra: <String, dynamic>{
-                  'chat': _chatInfo!.chatRecord,
-                },
-              );
-            },
           ),
         ],
         centerTitle: false,

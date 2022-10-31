@@ -466,7 +466,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       setState(() {});
                                     },
                                     onUpSwipe: (index) {},
-                                    onDownSwipe: (index) {},
+                                    onDownSwipe: (index) async {
+                                      if (Navigator.of(context).canPop()) {
+                                        context.pop();
+                                      }
+                                      context.pushNamed('HomeView');
+                                    },
                                     itemBuilder: (context, matchedUsersIndex) {
                                       final matchedUsersItem =
                                           matchedUsers[matchedUsersIndex];
@@ -999,7 +1004,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                     itemCount: matchedUsers.length,
                                     controller: swipeableStackController,
                                     enableSwipeUp: false,
-                                    enableSwipeDown: false,
+                                    enableSwipeDown: true,
                                   );
                                 },
                               ),
