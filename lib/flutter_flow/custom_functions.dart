@@ -156,6 +156,11 @@ List<UsersRecord> cleanUpFilteredProfiles(
         isOK = filter.industries!.contains(profile.industry);
       }
       if (isOK && filter.distance != null && filter.distance! > 0) {
+        if (!(filter.location == null ||
+            (filter.location!.latitude == 0 &&
+                filter.location!.longitude == 0))) {
+          location = filter.location!;
+        }
         isOK = geoDistance(profile.geoposition, location) <= filter.distance!;
       }
       if (isOK) {
