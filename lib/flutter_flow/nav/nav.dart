@@ -443,6 +443,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'testPlacePicker',
               requireAuth: true,
               builder: (context, params) => TestPlacePickerWidget(),
+            ),
+            FFRoute(
+              name: 'testCheckBox',
+              path: 'testCheckBox',
+              requireAuth: true,
+              builder: (context, params) => TestCheckBoxWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

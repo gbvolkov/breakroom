@@ -254,7 +254,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                       ),
                                       child: Image.network(
                                         widget.userProfile!.photoUrl!,
-                                        fit: BoxFit.fitHeight,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                     Padding(
@@ -458,6 +458,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                               .alternate,
                                           fontWeight: FontWeight.normal,
                                         ),
+                                    elevation: 0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
@@ -486,6 +487,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                               .alternate,
                                           fontWeight: FontWeight.normal,
                                         ),
+                                    elevation: 0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
@@ -514,6 +516,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                               .alternate,
                                           fontWeight: FontWeight.normal,
                                         ),
+                                    elevation: 0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
@@ -542,6 +545,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                               .alternate,
                                           fontWeight: FontWeight.normal,
                                         ),
+                                    elevation: 0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
                                       width: 1,
@@ -605,20 +609,21 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                 onChanged: (val) =>
                                     setState(() => choiceChipsValues = val),
                                 selectedChipStyle: ChipStyle(
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).alternate,
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .backgroundGrey,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .subtitle2
                                       .override(
                                         fontFamily: 'Roboto',
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                                            .alternate,
                                       ),
-                                  iconColor: Colors.white,
+                                  iconColor:
+                                      FlutterFlowTheme.of(context).alternate,
                                   iconSize: 18,
                                   labelPadding: EdgeInsetsDirectional.fromSTEB(
                                       8, 8, 8, 8),
-                                  elevation: 1,
+                                  elevation: 0,
                                 ),
                                 unselectedChipStyle: ChipStyle(
                                   backgroundColor: Colors.white,
@@ -628,7 +633,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                   iconSize: 18,
                                   labelPadding: EdgeInsetsDirectional.fromSTEB(
                                       8, 8, 8, 8),
-                                  elevation: 4,
+                                  elevation: 0,
                                 ),
                                 chipSpacing: 20,
                                 rowSpacing: 8,

@@ -18,27 +18,23 @@ class _DialogSignupCompleteWidgetState
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 375,
+      height: 335,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBtnText,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 32),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
               child: Container(
-                width: 105,
-                height: 105,
-                clipBehavior: Clip.antiAlias,
+                width: 106,
+                height: 106,
                 decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).alternate,
                   shape: BoxShape.circle,
-                ),
-                child: Image.network(
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDJ8fHBlcnNvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60',
-                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -60,30 +56,54 @@ class _DialogSignupCompleteWidgetState
                 style: FlutterFlowTheme.of(context).bodyText2,
               ),
             ),
-            Align(
-              alignment: AlignmentDirectional(-1, 0),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                child: FFButtonWidget(
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                  text: 'Let\'s get started',
-                  options: FFButtonOptions(
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+              child: Stack(
+                children: [
+                  Container(
                     width: double.infinity,
                     height: 48,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    textStyle: FlutterFlowTheme.of(context).subtitle1.override(
-                          fontFamily: 'Roboto',
-                          color: FlutterFlowTheme.of(context).primaryColor,
-                        ),
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFFEE837B),
+                          Color(0xFFF95A82),
+                          Color(0xFFEA3C7D)
+                        ],
+                        stops: [0.13, 0.69, 1],
+                        begin: AlignmentDirectional(0, -1),
+                        end: AlignmentDirectional(0, 1),
+                      ),
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                    borderRadius: BorderRadius.circular(8),
                   ),
-                ),
+                  Align(
+                    alignment: AlignmentDirectional(-1, 0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        context.goNamed('CreateProfileView');
+                      },
+                      text: 'let\'s get started',
+                      options: FFButtonOptions(
+                        width: double.infinity,
+                        height: 48,
+                        color: Colors.transparent,
+                        textStyle: FlutterFlowTheme.of(context)
+                            .subtitle1
+                            .override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                        elevation: 0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

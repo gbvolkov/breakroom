@@ -188,122 +188,414 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               if (!listViewNotificationsRecord.isRead!)
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Expanded(
-                                      flex: 3,
-                                      child: SelectionArea(
-                                          child: Text(
-                                        dateTimeFormat(
-                                            'M/d h:mm a',
-                                            listViewNotificationsRecord
-                                                .timestamp!),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 12,
-                                            ),
-                                      )),
-                                    ),
-                                    Expanded(
-                                      flex: 10,
-                                      child: SelectionArea(
-                                          child: Text(
-                                        listViewNotificationsRecord.content!
-                                            .maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
-                                        maxLines: 2,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2,
-                                      )),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderWidth: 1,
-                                        buttonSize: 48,
-                                        icon: Icon(
-                                          Icons.assignment_ind,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          size: 24,
-                                        ),
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
+                                InkWell(
+                                  onTap: () async {
+                                    final notificationsUpdateData =
+                                        createNotificationsRecordData(
+                                      isRead: true,
+                                    );
+                                    await listViewNotificationsRecord.reference
+                                        .update(notificationsUpdateData);
+                                    if (listViewNotificationsRecord.type ==
+                                        'match') {
+                                      context.pushNamed(
+                                        'HomeDetailsView',
+                                        queryParams: {
+                                          'userProfile': serializeParam(
+                                            columnUsersRecord,
+                                            ParamType.Document,
+                                          ),
+                                          'mode': serializeParam(
+                                            listViewNotificationsRecord.type,
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                        extra: <String, dynamic>{
+                                          'userProfile': columnUsersRecord,
                                         },
+                                      );
+                                    } else {
+                                      if (listViewNotificationsRecord.type ==
+                                          'like') {
+                                        context.pushNamed(
+                                          'HomeDetailsView',
+                                          queryParams: {
+                                            'userProfile': serializeParam(
+                                              columnUsersRecord,
+                                              ParamType.Document,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'userProfile': columnUsersRecord,
+                                          },
+                                        );
+                                      }
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        flex: 3,
+                                        child: SelectionArea(
+                                            child: Text(
+                                          dateTimeFormat(
+                                              'M/d h:mm a',
+                                              listViewNotificationsRecord
+                                                  .timestamp!),
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 12,
+                                              ),
+                                        )),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        flex: 10,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            final notificationsUpdateData =
+                                                createNotificationsRecordData(
+                                              isRead: true,
+                                            );
+                                            await listViewNotificationsRecord
+                                                .reference
+                                                .update(
+                                                    notificationsUpdateData);
+                                            if (listViewNotificationsRecord
+                                                    .type ==
+                                                'match') {
+                                              context.pushNamed(
+                                                'HomeDetailsView',
+                                                queryParams: {
+                                                  'userProfile': serializeParam(
+                                                    columnUsersRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'mode': serializeParam(
+                                                    listViewNotificationsRecord
+                                                        .type,
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'userProfile':
+                                                      columnUsersRecord,
+                                                },
+                                              );
+                                            } else {
+                                              if (listViewNotificationsRecord
+                                                      .type ==
+                                                  'like') {
+                                                context.pushNamed(
+                                                  'HomeDetailsView',
+                                                  queryParams: {
+                                                    'userProfile':
+                                                        serializeParam(
+                                                      columnUsersRecord,
+                                                      ParamType.Document,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'userProfile':
+                                                        columnUsersRecord,
+                                                  },
+                                                );
+                                              }
+                                            }
+                                          },
+                                          child: SelectionArea(
+                                              child: Text(
+                                            listViewNotificationsRecord.content!
+                                                .maybeHandleOverflow(
+                                              maxChars: 32,
+                                              replacement: '…',
+                                            ),
+                                            maxLines: 2,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2,
+                                          )),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderWidth: 1,
+                                          buttonSize: 48,
+                                          icon: Icon(
+                                            Icons.assignment_ind,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            size: 24,
+                                          ),
+                                          onPressed: () async {
+                                            final notificationsUpdateData =
+                                                createNotificationsRecordData(
+                                              isRead: true,
+                                            );
+                                            await listViewNotificationsRecord
+                                                .reference
+                                                .update(
+                                                    notificationsUpdateData);
+                                            if (listViewNotificationsRecord
+                                                    .type ==
+                                                'match') {
+                                              context.pushNamed(
+                                                'HomeDetailsView',
+                                                queryParams: {
+                                                  'userProfile': serializeParam(
+                                                    columnUsersRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'mode': serializeParam(
+                                                    listViewNotificationsRecord
+                                                        .type,
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'userProfile':
+                                                      columnUsersRecord,
+                                                },
+                                              );
+                                            } else {
+                                              if (listViewNotificationsRecord
+                                                      .type ==
+                                                  'like') {
+                                                context.pushNamed(
+                                                  'HomeDetailsView',
+                                                  queryParams: {
+                                                    'userProfile':
+                                                        serializeParam(
+                                                      columnUsersRecord,
+                                                      ParamType.Document,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'userProfile':
+                                                        columnUsersRecord,
+                                                  },
+                                                );
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               if (listViewNotificationsRecord.isRead ?? true)
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Expanded(
-                                      flex: 4,
-                                      child: SelectionArea(
-                                          child: Text(
-                                        dateTimeFormat(
-                                            'M/d h:mm a',
-                                            listViewNotificationsRecord
-                                                .timestamp!),
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                      )),
-                                    ),
-                                    Expanded(
-                                      flex: 8,
-                                      child: SelectionArea(
-                                          child: Text(
-                                        listViewNotificationsRecord.content!
-                                            .maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
-                                        maxLines: 2,
-                                        style: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                      )),
-                                    ),
-                                    Expanded(
-                                      flex: 2,
-                                      child: FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30,
-                                        borderWidth: 1,
-                                        buttonSize: 48,
-                                        icon: Icon(
-                                          Icons.assignment_ind,
-                                          color: Color(0xA5F95A82),
-                                          size: 24,
-                                        ),
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
+                                InkWell(
+                                  onTap: () async {
+                                    final notificationsUpdateData =
+                                        createNotificationsRecordData(
+                                      isRead: true,
+                                    );
+                                    await listViewNotificationsRecord.reference
+                                        .update(notificationsUpdateData);
+                                    if (listViewNotificationsRecord.type ==
+                                        'match') {
+                                      context.pushNamed(
+                                        'HomeDetailsView',
+                                        queryParams: {
+                                          'userProfile': serializeParam(
+                                            columnUsersRecord,
+                                            ParamType.Document,
+                                          ),
+                                          'mode': serializeParam(
+                                            listViewNotificationsRecord.type,
+                                            ParamType.String,
+                                          ),
+                                        }.withoutNulls,
+                                        extra: <String, dynamic>{
+                                          'userProfile': columnUsersRecord,
                                         },
+                                      );
+                                    } else {
+                                      if (listViewNotificationsRecord.type ==
+                                          'like') {
+                                        context.pushNamed(
+                                          'HomeDetailsView',
+                                          queryParams: {
+                                            'userProfile': serializeParam(
+                                              columnUsersRecord,
+                                              ParamType.Document,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'userProfile': columnUsersRecord,
+                                          },
+                                        );
+                                      }
+                                    }
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Expanded(
+                                        flex: 4,
+                                        child: SelectionArea(
+                                            child: Text(
+                                          dateTimeFormat(
+                                              'M/d h:mm a',
+                                              listViewNotificationsRecord
+                                                  .timestamp!),
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
+                                        )),
                                       ),
-                                    ),
-                                  ],
+                                      Expanded(
+                                        flex: 8,
+                                        child: InkWell(
+                                          onTap: () async {
+                                            final notificationsUpdateData =
+                                                createNotificationsRecordData(
+                                              isRead: true,
+                                            );
+                                            await listViewNotificationsRecord
+                                                .reference
+                                                .update(
+                                                    notificationsUpdateData);
+                                            if (listViewNotificationsRecord
+                                                    .type ==
+                                                'match') {
+                                              context.pushNamed(
+                                                'HomeDetailsView',
+                                                queryParams: {
+                                                  'userProfile': serializeParam(
+                                                    columnUsersRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'mode': serializeParam(
+                                                    listViewNotificationsRecord
+                                                        .type,
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'userProfile':
+                                                      columnUsersRecord,
+                                                },
+                                              );
+                                            } else {
+                                              if (listViewNotificationsRecord
+                                                      .type ==
+                                                  'like') {
+                                                context.pushNamed(
+                                                  'HomeDetailsView',
+                                                  queryParams: {
+                                                    'userProfile':
+                                                        serializeParam(
+                                                      columnUsersRecord,
+                                                      ParamType.Document,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'userProfile':
+                                                        columnUsersRecord,
+                                                  },
+                                                );
+                                              }
+                                            }
+                                          },
+                                          child: SelectionArea(
+                                              child: Text(
+                                            listViewNotificationsRecord.content!
+                                                .maybeHandleOverflow(
+                                              maxChars: 32,
+                                              replacement: '…',
+                                            ),
+                                            maxLines: 2,
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                ),
+                                          )),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: FlutterFlowIconButton(
+                                          borderColor: Colors.transparent,
+                                          borderRadius: 30,
+                                          borderWidth: 1,
+                                          buttonSize: 48,
+                                          icon: Icon(
+                                            Icons.assignment_ind,
+                                            color: Color(0xA5F95A82),
+                                            size: 24,
+                                          ),
+                                          onPressed: () async {
+                                            final notificationsUpdateData =
+                                                createNotificationsRecordData(
+                                              isRead: true,
+                                            );
+                                            await listViewNotificationsRecord
+                                                .reference
+                                                .update(
+                                                    notificationsUpdateData);
+                                            if (listViewNotificationsRecord
+                                                    .type ==
+                                                'match') {
+                                              context.pushNamed(
+                                                'HomeDetailsView',
+                                                queryParams: {
+                                                  'userProfile': serializeParam(
+                                                    columnUsersRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'mode': serializeParam(
+                                                    listViewNotificationsRecord
+                                                        .type,
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'userProfile':
+                                                      columnUsersRecord,
+                                                },
+                                              );
+                                            } else {
+                                              if (listViewNotificationsRecord
+                                                      .type ==
+                                                  'like') {
+                                                context.pushNamed(
+                                                  'HomeDetailsView',
+                                                  queryParams: {
+                                                    'userProfile':
+                                                        serializeParam(
+                                                      columnUsersRecord,
+                                                      ParamType.Document,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'userProfile':
+                                                        columnUsersRecord,
+                                                  },
+                                                );
+                                              }
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                             ],
                           ),

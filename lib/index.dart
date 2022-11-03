@@ -88,3 +88,4 @@ export 'edit_body_type_view/edit_body_type_view_widget.dart'
     show EditBodyTypeViewWidget;
 export 'test_place_picker/test_place_picker_widget.dart'
     show TestPlacePickerWidget;
+export 'test_check_box/test_check_box_widget.dart' show TestCheckBoxWidget;

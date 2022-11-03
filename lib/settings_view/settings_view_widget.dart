@@ -1,4 +1,5 @@
 import '../auth/auth_util.dart';
+import '../components/dialog_remove_profile_widget.dart';
 import '../components/monthly_subscription_component_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -459,7 +460,8 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     size: 16,
                                   ),
                                   onPressed: () async {
-                                    context.pushNamed('LoginDetailsView');
+                                    await launchURL(
+                                        'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
                                   },
                                 ),
                               ),
@@ -539,6 +541,111 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                     ),
                                     onPressed: () async {
                                       context.pushNamed('LoginDetailsView');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          height: 16,
+                          thickness: 1,
+                          color: Color(0xFFEFEFEF),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                          child: InkWell(
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.of(context).viewInsets,
+                                    child: DialogRemoveProfileWidget(),
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 30,
+                                      height: 30,
+                                      child: Stack(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/Asset_1.png',
+                                            width: 28,
+                                            height: 28,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child:
+                                                    DialogRemoveProfileWidget(),
+                                              );
+                                            },
+                                          ).then((value) => setState(() {}));
+                                        },
+                                        child: Text(
+                                          'Completely remove profile',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: DialogRemoveProfileWidget(),
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
                                     },
                                   ),
                                 ),

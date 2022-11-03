@@ -124,106 +124,107 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                 if (FFAppState().advancedFilterName == 'Advanced2')
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      decoration: BoxDecoration(),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Text(
-                                    'Industry',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () async {
-                                    if (FFAppState().isSelectAllVisible) {
-                                      setState(() => FFAppState()
-                                          .isSelectAllVisible = false);
-                                      setState(() => FFAppState()
-                                              .currentIndustrySelection =
-                                          FFAppState().industryList.toList());
-                                    } else {
-                                      setState(() => FFAppState()
-                                          .isSelectAllVisible = true);
-                                      setState(() => FFAppState()
-                                          .currentIndustrySelection = []);
-                                    }
-                                  },
-                                  text: functions.getSelectAllButtonTitle(
-                                      FFAppState().isSelectAllVisible),
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 40,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
-                                    elevation: 0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            FutureBuilder<List<IndustriesRecord>>(
-                              future: queryIndustriesRecordOnce(
-                                queryBuilder: (industriesRecord) =>
-                                    industriesRecord.orderBy('industry'),
+                    child: FutureBuilder<List<IndustriesRecord>>(
+                      future: queryIndustriesRecordOnce(
+                        queryBuilder: (industriesRecord) =>
+                            industriesRecord.orderBy('industry'),
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: CircularProgressIndicator(
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
                               ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50,
-                                      height: 50,
-                                      child: CircularProgressIndicator(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
+                            ),
+                          );
+                        }
+                        List<IndustriesRecord> containerIndustriesRecordList =
+                            snapshot.data!;
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.8,
+                          decoration: BoxDecoration(),
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Text(
+                                        'Industry',
+                                        style: FlutterFlowTheme.of(context)
+                                            .title1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              fontSize: 32,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                       ),
                                     ),
-                                  );
-                                }
-                                List<IndustriesRecord>
-                                    myCheckBoxGroupIndustriesRecordList =
-                                    snapshot.data!;
-                                return Container(
+                                    FFButtonWidget(
+                                      onPressed: () async {
+                                        if (FFAppState().isSelectAllVisible) {
+                                          setState(() => FFAppState()
+                                              .isSelectAllVisible = false);
+                                          setState(() =>
+                                              FFAppState().fltrIndusrtries =
+                                                  containerIndustriesRecordList
+                                                      .map((e) => e.industry!)
+                                                      .toList());
+                                        } else {
+                                          setState(() => FFAppState()
+                                              .isSelectAllVisible = true);
+                                          setState(() => FFAppState()
+                                              .fltrIndusrtries = []);
+                                        }
+                                      },
+                                      text: functions.getSelectAllButtonTitle(
+                                          FFAppState().isSelectAllVisible),
+                                      options: FFButtonOptions(
+                                        width: 130,
+                                        height: 40,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                            ),
+                                        elevation: 0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
                                   width: MediaQuery.of(context).size.width,
                                   height: 700,
                                   child: custom_widgets.MyCheckBoxGroup(
                                     width: MediaQuery.of(context).size.width,
                                     height: 700,
-                                    buttonLabels:
-                                        myCheckBoxGroupIndustriesRecordList
-                                            .map((e) => e.industry!)
-                                            .toList(),
-                                    buttonValues:
-                                        myCheckBoxGroupIndustriesRecordList
-                                            .map((e) => e.industry!)
-                                            .toList(),
+                                    buttonLabels: containerIndustriesRecordList
+                                        .map((e) => e.industry!)
+                                        .toList(),
+                                    buttonValues: containerIndustriesRecordList
+                                        .map((e) => e.industry!)
+                                        .toList(),
                                     horizontal: true,
                                     buttonHeight: 40.0,
                                     defaultSelected:
@@ -236,12 +237,12 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                   .toList());
                                     },
                                   ),
-                                );
-                              },
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 Padding(

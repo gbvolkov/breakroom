@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/dialog_signup_complete_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -277,8 +278,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          context.pushNamed(
-                                              'PrivacyAndPolicyView');
+                                          await launchURL(
+                                              'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
                                         },
                                         child: Text(
                                           'Privacy ',
@@ -292,21 +293,27 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                               ),
                                         ),
                                       ),
-                                      Text(
-                                        'and ',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyText2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                            ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await launchURL(
+                                              'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
+                                        },
+                                        child: Text(
+                                          'and ',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                        ),
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          context.pushNamed(
-                                              'PrivacyAndPolicyView');
+                                          await launchURL(
+                                              'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
                                         },
                                         child: Text(
                                           'Policy',
@@ -820,9 +827,22 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                   [])
                                               .toList(),
                                         );
+                                        await showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          context: context,
+                                          builder: (context) {
+                                            return Padding(
+                                              padding: MediaQuery.of(context)
+                                                  .viewInsets,
+                                              child:
+                                                  DialogSignupCompleteWidget(),
+                                            );
+                                          },
+                                        ).then((value) => setState(() {}));
 
-                                        context.pushNamedAuth(
-                                            'CreateProfileView', mounted);
+                                        context.goNamedAuth(
+                                            'HomeView', mounted);
                                       },
                                       text: 'Create account',
                                       options: FFButtonOptions(

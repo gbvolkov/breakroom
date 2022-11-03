@@ -416,6 +416,7 @@ class _MonthlySubscriptionComponentWidgetState
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
                                               ),
+                                          elevation: 0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
                                             width: 1,

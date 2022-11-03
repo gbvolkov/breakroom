@@ -131,7 +131,7 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                                 iconColor: Colors.white,
                                 iconSize: 18,
                                 labelPadding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                    EdgeInsetsDirectional.fromSTEB(8, 6, 8, 6),
                                 elevation: 0,
                               ),
                               unselectedChipStyle: ChipStyle(
@@ -142,7 +142,7 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                                 iconColor: Color(0xFF323B45),
                                 iconSize: 18,
                                 labelPadding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                                    EdgeInsetsDirectional.fromSTEB(8, 6, 8, 6),
                                 elevation: 0,
                               ),
                               chipSpacing: 20,

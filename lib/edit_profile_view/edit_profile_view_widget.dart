@@ -280,16 +280,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 0),
-                                  child: Text(
-                                    FFAppState().usrBio.maybeHandleOverflow(
-                                          maxChars: 35,
-                                          replacement: '…',
-                                        ),
-                                    maxLines: 3,
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height: 62,
+                                  decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Align(
+                                    alignment: AlignmentDirectional(-1, -1),
+                                    child: Text(
+                                      FFAppState().usrBio.maybeHandleOverflow(
+                                            maxChars: 100,
+                                            replacement: '…',
+                                          ),
+                                      maxLines: 3,
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                    ),
                                   ),
                                 ),
                                 FlutterFlowIconButton(
