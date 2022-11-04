@@ -150,6 +150,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditGenderPrefsView': (data) async => EditGenderPrefsViewWidget(),
   'EditStatusView': (data) async => EditStatusViewWidget(),
   'EditSmokingPrefsView': (data) async => EditSmokingPrefsViewWidget(),
+  'testCheckBoxes': (data) async => TestCheckBoxesWidget(),
   'EditInterestsView': (data) async => EditInterestsViewWidget(),
   'EditBasicsView': (data) async => EditBasicsViewWidget(),
   'EditLookingForView': (data) async => EditLookingForViewWidget(),

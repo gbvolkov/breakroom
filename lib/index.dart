@@ -68,6 +68,8 @@ export 'edit_status_view/edit_status_view_widget.dart'
     show EditStatusViewWidget;
 export 'edit_smoking_prefs_view/edit_smoking_prefs_view_widget.dart'
     show EditSmokingPrefsViewWidget;
+export 'test_check_boxes/test_check_boxes_widget.dart'
+    show TestCheckBoxesWidget;
 export 'edit_interests_view/edit_interests_view_widget.dart'
     show EditInterestsViewWidget;
 export 'edit_basics_view/edit_basics_view_widget.dart'

@@ -259,22 +259,16 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                 FFAppState().agreeCheck = true);
                                           },
                                         ),
-                                      InkWell(
-                                        onTap: () async {
-                                          await launchURL(
-                                              'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
-                                        },
-                                        child: Text(
-                                          'I agree with ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                              ),
-                                        ),
+                                      Text(
+                                        'I agree with ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
                                       ),
                                       InkWell(
                                         onTap: () async {
@@ -293,22 +287,16 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                               ),
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: () async {
-                                          await launchURL(
-                                              'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
-                                        },
-                                        child: Text(
-                                          'and ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText2
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                              ),
-                                        ),
+                                      Text(
+                                        'and ',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
                                       ),
                                       InkWell(
                                         onTap: () async {

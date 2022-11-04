@@ -47,7 +47,7 @@ class _MyRadioButtonState extends State<MyRadioButton> {
     //String selValue = widget.defaultSelected ?? "";
     defaultValue = widget.defaultSelected ?? "";
     if (defaultValue.isEmpty) {
-      defaultValue = widget.buttonValues?[0] ?? "";
+      //defaultValue = widget.buttonValues?[0] ?? "";
     } else if (widget.buttonValues != null) {
       if (!widget.buttonValues!.contains(defaultValue)) {
         widget.buttonLabels?.add(defaultValue);

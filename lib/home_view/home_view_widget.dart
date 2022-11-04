@@ -38,6 +38,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (FFAppState().showIntroduction) {
+        setState(() => FFAppState().showIntroduction = false);
+
+        context.pushNamed('IntroductionView');
+
+        return;
+      }
       await Future.delayed(const Duration(milliseconds: 3000));
       if (!valueOrDefault<bool>(currentUserDocument?.isComplete, false)) {
         ScaffoldMessenger.of(context).showSnackBar(

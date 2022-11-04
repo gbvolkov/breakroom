@@ -16,6 +16,8 @@ class FFAppState {
     prefs = await SharedPreferences.getInstance();
     _genders = prefs.getStringList('ff_genders') ?? _genders;
     _intentions = prefs.getStringList('ff_intentions') ?? _intentions;
+    _showIntroduction =
+        prefs.getBool('ff_showIntroduction') ?? _showIntroduction;
   }
 
   late SharedPreferences prefs;
@@ -252,6 +254,13 @@ class FFAppState {
   int rangeSliderStart = 0;
 
   int rangeSliderEnd = 0;
+
+  bool _showIntroduction = false;
+  bool get showIntroduction => _showIntroduction;
+  set showIntroduction(bool _value) {
+    _showIntroduction = _value;
+    prefs.setBool('ff_showIntroduction', _value);
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
