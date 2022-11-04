@@ -33,10 +33,10 @@ Future initializeFilterState(
   FFAppState().fltrAgeRangeExt = false;
   FFAppState().fltrIndusrtries = filter?.industries?.asList() ?? [];
   FFAppState().fltrLocation = filter?.location ?? currentLocation;
-  if (filter?.address == null) {
-    String address = await getAddressFromLocation(FFAppState().fltrLocation!);
-    FFAppState().fltrAddress = address;
-  } else {
-    FFAppState().fltrAddress = filter!.address!;
-  }
+  //if (filter?.address == null) {
+  String address = await getAddressFromLocation(FFAppState().fltrLocation!);
+  FFAppState().fltrAddress = address;
+  //} else {
+  //	FFAppState().fltrAddress = filter!.address!;
+  //}
 }
