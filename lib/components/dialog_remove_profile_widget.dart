@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -121,44 +122,11 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'PLEASE TAP OK TO REMOVE PROFILE',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Roboto',
-                                color: FlutterFlowTheme.of(context).systemError,
-                              ),
-                        ),
-                        duration: Duration(milliseconds: 4000),
-                        backgroundColor:
-                            FlutterFlowTheme.of(context).secondaryBackground,
-                        action: SnackBarAction(
-                          label: 'OK',
-                          textColor: FlutterFlowTheme.of(context).trueBlack,
-                          onPressed: () async {
-                            await showDialog(
-                              context: context,
-                              builder: (alertDialogContext) {
-                                return AlertDialog(
-                                  title: Text('Done'),
-                                  content: Text('Your profile was deleted'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () =>
-                                          Navigator.pop(alertDialogContext),
-                                      child: Text('Ok'),
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    );
+                    GoRouter.of(context).prepareAuthEvent();
+                    await signOut();
+                    await deleteUser(context);
+
+                    context.goNamedAuth('WelcomeView', mounted);
                   },
                   text: 'yes, remove profile',
                   options: FFButtonOptions(
