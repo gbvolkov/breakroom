@@ -64,162 +64,191 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgLogin.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Login details',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              context.pushNamed('LoginDetailsView');
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgLogin.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('LoginDetailsView');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Login details',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      context.pushNamed('LoginDetailsView');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgSubscription.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Subscription',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.of(context).viewInsets,
+                                    child: Container(
+                                      height: 480,
+                                      child:
+                                          MonthlySubscriptionComponentWidget(),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.of(context).viewInsets,
-                                          child: Container(
-                                            height: 480,
-                                            child:
-                                                MonthlySubscriptionComponentWidget(),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => setState(() {}));
-                                  },
+                                  );
+                                },
+                              ).then((value) => setState(() {}));
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgSubscription.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Subscription',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: Container(
+                                              height: 480,
+                                              child:
+                                                  MonthlySubscriptionComponentWidget(),
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgNotifications.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Notifications and Sounds',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              context.pushNamed('NotificationSettingsView');
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgNotifications.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    context
-                                        .pushNamed('NotificationSettingsView');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Notifications and Sounds',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      context.pushNamed(
+                                          'NotificationSettingsView');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Divider(
@@ -229,243 +258,364 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgContacts.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Contact us',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Contact us'),
+                                    content: Text('Contact info link or page'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgContacts.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('LoginDetailsView');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Contact us',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Contact us'),
+                                            content: Text(
+                                                'Contact info link or page'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgAboutUs.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'About us',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              context.pushNamed('AboutUsView');
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgAboutUs.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('AboutUsView');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'About us',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      context.pushNamed('AboutUsView');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgRate.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Rate and Review',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Rate and review'),
+                                    content:
+                                        Text('Rate and review link or page'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgRate.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('LoginDetailsView');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Rate and Review',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Rate and review'),
+                                            content: Text(
+                                                'Rate and review link or page'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgCommunityGuide.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Community Guidlines',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Community Guidlines'),
+                                    content: Text(
+                                        'Community Guidlines link or page'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgCommunityGuide.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    context.pushNamed('LoginDetailsView');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Community Guidlines',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      await showDialog(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title: Text('Community Guidlines'),
+                                            content: Text(
+                                                'Community Guidlines link or page'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext),
+                                                child: Text('Ok'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/imgPrivacy.png',
-                                    width: 28,
-                                    height: 28,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
-                                    child: Text(
-                                      'Privacy and policy',
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                          child: InkWell(
+                            onTap: () async {
+                              await launchURL(
+                                  'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
+                            },
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/imgPrivacy.png',
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(1, 0),
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 32,
-                                  icon: Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () async {
-                                    await launchURL(
-                                        'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
-                                  },
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        'Privacy and policy',
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ],
+                                Align(
+                                  alignment: AlignmentDirectional(1, 0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor: Colors.transparent,
+                                    borderRadius: 30,
+                                    borderWidth: 1,
+                                    buttonSize: 32,
+                                    icon: Icon(
+                                      Icons.chevron_right_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                      size: 16,
+                                    ),
+                                    onPressed: () async {
+                                      await launchURL(
+                                          'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Divider(
@@ -540,7 +690,38 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
-                                      context.pushNamed('LoginDetailsView');
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Please confirm logout',
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle2
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryColor,
+                                                ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 4000),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          action: SnackBarAction(
+                                            label: 'YES',
+                                            textColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryColor,
+                                            onPressed: () async {
+                                              GoRouter.of(context)
+                                                  .prepareAuthEvent();
+                                              await signOut();
+                                            },
+                                          ),
+                                        ),
+                                      );
                                     },
                                   ),
                                 ),
