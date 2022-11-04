@@ -603,10 +603,53 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     alignment: AlignmentDirectional(-1, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        await pageViewController?.nextPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
-                                        );
+                                        if ((txtFirstNameController!.text == null ||
+                                                txtFirstNameController!.text ==
+                                                    '') ||
+                                            (txtSecondNameController!.text ==
+                                                    null ||
+                                                txtSecondNameController!.text ==
+                                                    '') ||
+                                            (userBDay == null) ||
+                                            (FFAppState().usrBDay! >=
+                                                functions.addYearsToDate(
+                                                    getCurrentTimestamp,
+                                                    18,
+                                                    -1,
+                                                    -1)) ||
+                                            (ddIndustryValue == null ||
+                                                ddIndustryValue == '') ||
+                                            (txtBioController!.text == null ||
+                                                txtBioController!.text == '') ||
+                                            (txtOccupationController!.text ==
+                                                    null ||
+                                                txtOccupationController!.text ==
+                                                    '')) {
+                                          await showDialog(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Input invalid.'),
+                                                content: Text(
+                                                    'Please check your input parameters. Only adult users are allowed'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext),
+                                                    child: Text('Ok'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        } else {
+                                          await pageViewController?.nextPage(
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.ease,
+                                          );
+                                        }
                                       },
                                       text: 'Next',
                                       options: FFButtonOptions(
@@ -747,10 +790,37 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if ((FFAppState().usrGender == null ||
+                                              FFAppState().usrGender == '') ||
+                                          (FFAppState().usrGenderPreference ==
+                                                  null ||
+                                              FFAppState()
+                                                      .usrGenderPreference ==
+                                                  '')) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -836,10 +906,32 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState().usrIntention == null ||
+                                          FFAppState().usrIntention == '') {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -930,10 +1022,34 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState().usrChildfreeStatus ==
+                                              null ||
+                                          FFAppState().usrChildfreeStatus ==
+                                              '') {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1015,10 +1131,32 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState().usrReligion == null ||
+                                          FFAppState().usrReligion == '') {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1107,10 +1245,32 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState().usrEducation == null ||
+                                          FFAppState().usrEducation == '') {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1199,10 +1359,32 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState().usrBodyType == null ||
+                                          FFAppState().usrBodyType == '') {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1354,10 +1536,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (choiceChipsValues!.length <= 0) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1447,21 +1650,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     onPressed: () async {
                                       if (FFAppState()
                                               .mcbSelectedValues
-                                              .length >
+                                              .length <=
                                           0) {
-                                        await pageViewController?.nextPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
-                                        );
-                                      } else {
                                         await showDialog(
                                           context: context,
                                           builder: (alertDialogContext) {
                                             return AlertDialog(
-                                              title:
-                                                  Text('Value is not selected'),
+                                              title: Text('Input invalid.'),
                                               content: Text(
-                                                  'Please make a selection'),
+                                                  'Please check your input parameters. '),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
@@ -1472,6 +1669,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                               ],
                                             );
                                           },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
                                         );
                                       }
                                     },
@@ -1561,10 +1763,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (FFAppState().usrHeight == null) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      }
                                     },
                                     text: 'Next',
                                     options: FFButtonOptions(
@@ -1804,47 +2027,83 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      final usersUpdateData = {
-                                        ...createUsersRecordData(
-                                          firstName:
-                                              txtFirstNameController!.text,
-                                          lastName:
-                                              txtSecondNameController!.text,
-                                          birthDay: FFAppState().usrBDay,
-                                          industry: ddIndustryValue,
-                                          occupation:
-                                              txtOccupationController!.text,
-                                          bio: txtBioController!.text,
-                                          gender: FFAppState().usrGender,
-                                          genderPreference:
-                                              FFAppState().usrGenderPreference,
-                                          intention: FFAppState().usrIntention,
-                                          childfreeStatus:
-                                              FFAppState().usrChildfreeStatus,
-                                          religion: FFAppState().usrReligion,
-                                          education: FFAppState().usrEducation,
-                                          bodyType: FFAppState().usrBodyType,
-                                          height: FFAppState().usrHeight,
-                                          weight: 70,
-                                          workoutStatus:
-                                              FFAppState().usrWorkoutStatus,
-                                          drinkingStatus:
-                                              FFAppState().usrDrinkingStatus,
-                                          smokingStatus:
-                                              FFAppState().usrSmokingStatus,
-                                          spiritualStatus:
-                                              FFAppState().usrSpiritualStatus,
-                                          displayName:
-                                              '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
-                                        ),
-                                        'interests': FFAppState().usrInterests,
-                                        'lookingFor':
-                                            FFAppState().usrLookingFor,
-                                      };
-                                      await currentUserReference!
-                                          .update(usersUpdateData);
+                                      if ((FFAppState().usrWorkoutStatus == null || FFAppState().usrWorkoutStatus == '') ||
+                                          (FFAppState().usrDrinkingStatus ==
+                                                  null ||
+                                              FFAppState().usrDrinkingStatus ==
+                                                  '') ||
+                                          (FFAppState().usrSmokingStatus ==
+                                                  null ||
+                                              FFAppState().usrSmokingStatus ==
+                                                  '') ||
+                                          (FFAppState().usrSpiritualStatus ==
+                                                  null ||
+                                              FFAppState().usrSpiritualStatus ==
+                                                  '')) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text('Input invalid.'),
+                                              content: Text(
+                                                  'Please check your input parameters. '),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Ok'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        final usersUpdateData = {
+                                          ...createUsersRecordData(
+                                            firstName:
+                                                txtFirstNameController!.text,
+                                            lastName:
+                                                txtSecondNameController!.text,
+                                            birthDay: FFAppState().usrBDay,
+                                            industry: ddIndustryValue,
+                                            occupation:
+                                                txtOccupationController!.text,
+                                            bio: txtBioController!.text,
+                                            gender: FFAppState().usrGender,
+                                            genderPreference: FFAppState()
+                                                .usrGenderPreference,
+                                            intention:
+                                                FFAppState().usrIntention,
+                                            childfreeStatus:
+                                                FFAppState().usrChildfreeStatus,
+                                            religion: FFAppState().usrReligion,
+                                            education:
+                                                FFAppState().usrEducation,
+                                            bodyType: FFAppState().usrBodyType,
+                                            height: FFAppState().usrHeight,
+                                            weight: 70,
+                                            workoutStatus:
+                                                FFAppState().usrWorkoutStatus,
+                                            drinkingStatus:
+                                                FFAppState().usrDrinkingStatus,
+                                            smokingStatus:
+                                                FFAppState().usrSmokingStatus,
+                                            spiritualStatus:
+                                                FFAppState().usrSpiritualStatus,
+                                            displayName:
+                                                '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
+                                          ),
+                                          'interests':
+                                              FFAppState().usrInterests,
+                                          'lookingFor':
+                                              FFAppState().usrLookingFor,
+                                        };
+                                        await currentUserReference!
+                                            .update(usersUpdateData);
 
-                                      context.pushNamed('ProfileView');
+                                        context.pushNamed('HomeView');
+                                      }
                                     },
                                     text: 'Save',
                                     options: FFButtonOptions(

@@ -125,7 +125,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 8),
                                     child: Text(
-                                      'Email / Phone number',
+                                      'Email',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2,
                                     ),
@@ -390,7 +390,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                   .update(usersUpdateData);
 
                                               context.pushNamedAuth(
-                                                  'ProfileView', mounted);
+                                                  'HomeView', mounted);
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(

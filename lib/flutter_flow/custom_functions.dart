@@ -224,8 +224,8 @@ double geoDistance(
   var a = 0.5 -
       c((lat2 - lat1) * p) / 2 +
       c(lat1 * p) * c(lat2 * p) * (1 - c((lng2 - lng1) * p)) / 2;
-  // Returns distance in Kilo-meters
-  var d = (12742 * math.asin(math.sqrt(a)));
+  // Returns distance in miles //Kilo-meters
+  var d = (12742 * math.asin(math.sqrt(a))) * 0.621371;
   String inString = d.toStringAsFixed(2); // '2.35'
   double inDouble = double.parse(inString);
   return inDouble;

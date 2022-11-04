@@ -389,7 +389,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                   size: 24,
                                 ),
                                 Text(
-                                  '${functions.geoDistance(widget.userProfile!.geoposition, currentUserLocationValue).toString()} kms from you',
+                                  '${functions.geoDistance(widget.userProfile!.geoposition, currentUserLocationValue).toString()} miles from you',
                                   style: FlutterFlowTheme.of(context).subtitle1,
                                 ),
                               ],
