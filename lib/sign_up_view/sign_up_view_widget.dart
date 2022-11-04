@@ -126,7 +126,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 64),
                                     child: Text(
-                                      'What is your \nEmail address or phone number?',
+                                      'What is your \nEmail address?',
                                       style: FlutterFlowTheme.of(context)
                                           .title1
                                           .override(
@@ -143,7 +143,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 8),
                                     child: Text(
-                                      'Email / Phone number',
+                                      'Email',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2,
                                     ),
@@ -754,6 +754,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             clearUnsetFields: false,
                                             create: true,
                                           ),
+                                          isComplete: false,
                                         );
                                         await UsersRecord.collection
                                             .doc(user.uid)

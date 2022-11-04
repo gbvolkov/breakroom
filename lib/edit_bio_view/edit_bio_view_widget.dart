@@ -3,7 +3,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -117,15 +116,6 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                             child: TextFormField(
                               controller: txtBioController,
-                              onChanged: (_) => EasyDebounce.debounce(
-                                'txtBioController',
-                                Duration(milliseconds: 0),
-                                () async {
-                                  setState(() => FFAppState().bioCharCounter =
-                                      functions.stringLength(
-                                          txtBioController!.text));
-                                },
-                              ),
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelStyle:
@@ -166,22 +156,6 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                               ),
                               style: FlutterFlowTheme.of(context).subtitle1,
                               maxLines: 8,
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(1, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                              child: Text(
-                                '${FFAppState().bioCharCounter.toString()}/150',
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 12,
-                                    ),
-                              ),
                             ),
                           ),
                         ],

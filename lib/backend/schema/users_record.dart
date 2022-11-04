@@ -79,6 +79,9 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   BuiltList<String>? get disliked;
 
+  @BuiltValueField(wireName: 'is_complete')
+  bool? get isComplete;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -113,7 +116,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..touched = ListBuilder()
     ..filter = FilterStructBuilder()
     ..liked = ListBuilder()
-    ..disliked = ListBuilder();
+    ..disliked = ListBuilder()
+    ..isComplete = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -164,6 +168,7 @@ Map<String, dynamic> createUsersRecordData({
   String? smokingStatus,
   String? spiritualStatus,
   FilterStruct? filter,
+  bool? isComplete,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -201,7 +206,8 @@ Map<String, dynamic> createUsersRecordData({
         ..touched = null
         ..filter = FilterStructBuilder()
         ..liked = null
-        ..disliked = null,
+        ..disliked = null
+        ..isComplete = isComplete,
     ),
   );
 

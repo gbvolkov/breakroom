@@ -53,8 +53,9 @@ class _MyRadioButtonState extends State<MyRadioButton> {
         widget.buttonLabels?.add(defaultValue);
         widget.buttonValues!.add(defaultValue);
       }
-      FFAppState().mrbSelectedValue = defaultValue;
     }
+    FFAppState().mrbSelectedValue = defaultValue;
+    widget.onValue();
     super.initState();
 
     /*if (!(widget.buttonValues ?? []).contains(widget.defaultSelected ?? "")) {

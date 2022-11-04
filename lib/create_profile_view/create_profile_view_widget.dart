@@ -11,7 +11,6 @@ import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateProfileViewWidget extends StatefulWidget {
@@ -36,11 +35,6 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().usrFirstName = FFAppState().usrFirstName);
-    });
-
     txtBioController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.bio, ''));
     txtFirstNameController = TextEditingController(
@@ -79,14 +73,45 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
             size: 30,
           ),
           onPressed: () async {
+            Function() _navigate = () {};
             if ((pageViewController?.page?.round() ?? 0) == 0) {
-              context.pop();
+              var confirmDialogResponse = await showDialog<bool>(
+                    context: context,
+                    builder: (alertDialogContext) {
+                      return AlertDialog(
+                        title: Text('Set up is not complete'),
+                        content: Text(
+                            'Do you really want to leave the app before seting up your account?'),
+                        actions: [
+                          TextButton(
+                            onPressed: () =>
+                                Navigator.pop(alertDialogContext, false),
+                            child: Text('Yes'),
+                          ),
+                          TextButton(
+                            onPressed: () =>
+                                Navigator.pop(alertDialogContext, true),
+                            child: Text('No'),
+                          ),
+                        ],
+                      );
+                    },
+                  ) ??
+                  false;
+              if (confirmDialogResponse) {
+                GoRouter.of(context).prepareAuthEvent();
+                await signOut();
+                _navigate = () => context.goNamedAuth('WelcomeView', mounted);
+                await deleteUser(context);
+              }
             } else {
               await pageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.ease,
               );
             }
+
+            _navigate();
           },
         ),
         title: Text(
@@ -558,23 +583,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   fillColor: Color(0xFFEFEFEF),
                                 ),
                                 style: FlutterFlowTheme.of(context).subtitle1,
-                                maxLines: 4,
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(1, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: Text(
-                                  '96/150',
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 12,
-                                      ),
-                                ),
+                                maxLines: 8,
                               ),
                             ),
                             Padding(
@@ -1822,7 +1831,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           Align(
                             alignment: AlignmentDirectional(-1, 0),
                             child: Text(
-                              'Your Basics',
+                              'Lifestyle',
                               style: FlutterFlowTheme.of(context).title1,
                             ),
                           ),
@@ -2093,6 +2102,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                                 FFAppState().usrSpiritualStatus,
                                             displayName:
                                                 '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
+                                            isComplete: true,
                                           ),
                                           'interests':
                                               FFAppState().usrInterests,
