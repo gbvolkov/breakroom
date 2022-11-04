@@ -10,12 +10,10 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
@@ -37,31 +35,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
   @override
   void initState() {
     super.initState();
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-      if (await getPermissionStatus(locationPermission)) {
-        if (currentUserLocationValue != null) {
-          final usersUpdateData = createUsersRecordData(
-            geoposition: currentUserLocationValue,
-          );
-          await currentUserReference!.update(usersUpdateData);
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Please permit Geoposition usage to find people around',
-              style: FlutterFlowTheme.of(context).subtitle2,
-            ),
-            duration: Duration(milliseconds: 4000),
-            backgroundColor: Color(0x00000000),
-          ),
-        );
-      }
-    });
-
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
         .then((loc) => setState(() => currentUserLocationValue = loc));
     swipeableStackController = SwipeableCardSectionController();
@@ -717,7 +690,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                             0),
                                                                         child:
                                                                             Text(
-                                                                          '${functions.geoDistance(matchedUsersItem.geoposition, currentUserLocationValue).toString()} kms',
+                                                                          '${functions.geoDistance(matchedUsersItem.geoposition, columnUsersRecord.geoposition).toString()} kms',
                                                                           style: FlutterFlowTheme.of(context)
                                                                               .bodyText2
                                                                               .override(

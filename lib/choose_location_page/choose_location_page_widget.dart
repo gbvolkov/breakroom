@@ -1,4 +1,3 @@
-import '../components/map_place_card_widget.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -27,6 +26,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
   FFPlace? place;
   LatLng? googleMapsCenter;
   final googleMapsController = Completer<GoogleMapController>();
+  String? address;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -81,73 +81,38 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
               children: [
                 Align(
                   alignment: AlignmentDirectional(0, 0),
-                  child: InkWell(
-                    onTap: () async {
-                      await showModalBottomSheet(
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        context: context,
-                        builder: (context) {
-                          return Padding(
-                            padding: MediaQuery.of(context).viewInsets,
-                            child: MapPlaceCardWidget(
-                              marker: googleMapsCenter,
-                            ),
-                          );
-                        },
-                      ).then((value) => setState(() {}));
-                    },
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 1,
-                      decoration: BoxDecoration(),
-                      child: Builder(builder: (context) {
-                        final _googleMapMarker = functions.getUserLocation(
-                            FFAppState().fltrLocation,
-                            FFAppState().fltrLocation);
-                        return FlutterFlowGoogleMap(
-                          controller: googleMapsController,
-                          onCameraIdle: (latLng) => googleMapsCenter = latLng,
-                          initialLocation: googleMapsCenter ??=
-                              functions.getUserLocation(
-                                  FFAppState().fltrLocation,
-                                  FFAppState().fltrLocation),
-                          markers: [
-                            FlutterFlowMarker(
-                              _googleMapMarker.serialize(),
-                              _googleMapMarker,
-                              () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding:
-                                          MediaQuery.of(context).viewInsets,
-                                      child: MapPlaceCardWidget(
-                                        marker: googleMapsCenter,
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => setState(() {}));
-                              },
-                            ),
-                          ],
-                          markerColor: GoogleMarkerColor.violet,
-                          mapType: MapType.normal,
-                          style: GoogleMapStyle.standard,
-                          initialZoom: 14,
-                          allowInteraction: true,
-                          allowZoom: true,
-                          showZoomControls: true,
-                          showLocation: true,
-                          showCompass: false,
-                          showMapToolbar: true,
-                          showTraffic: false,
-                          centerMapOnMarkerTap: true,
-                        );
-                      }),
-                    ),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 1,
+                    decoration: BoxDecoration(),
+                    child: Builder(builder: (context) {
+                      final _googleMapMarker = functions.getUserLocation(
+                          FFAppState().fltrLocation, FFAppState().fltrLocation);
+                      return FlutterFlowGoogleMap(
+                        controller: googleMapsController,
+                        onCameraIdle: (latLng) => googleMapsCenter = latLng,
+                        initialLocation: googleMapsCenter ??=
+                            functions.getUserLocation(FFAppState().fltrLocation,
+                                FFAppState().fltrLocation),
+                        markers: [
+                          FlutterFlowMarker(
+                            _googleMapMarker.serialize(),
+                            _googleMapMarker,
+                          ),
+                        ],
+                        markerColor: GoogleMarkerColor.violet,
+                        mapType: MapType.normal,
+                        style: GoogleMapStyle.standard,
+                        initialZoom: 14,
+                        allowInteraction: true,
+                        allowZoom: true,
+                        showZoomControls: true,
+                        showLocation: true,
+                        showCompass: false,
+                        showMapToolbar: true,
+                        showTraffic: false,
+                        centerMapOnMarkerTap: true,
+                      );
+                    }),
                   ),
                 ),
                 Align(
@@ -156,6 +121,12 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                     onPressed: () async {
                       setState(
                           () => FFAppState().fltrLocation = googleMapsCenter);
+                      address = await actions.getAddressFromLocation(
+                        FFAppState().fltrLocation!,
+                      );
+                      setState(() => FFAppState().fltrAddress = address!);
+
+                      setState(() {});
                     },
                     text: 'Set',
                     options: FFButtonOptions(
@@ -220,7 +191,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                                 icon: Icon(
                                   Icons.place,
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  size: 30,
+                                  size: 20,
                                 ),
                                 onPressed: () async {
                                   place = await actions.placePickerAction(

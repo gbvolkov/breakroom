@@ -56,6 +56,7 @@ dependencies:
   flutter_google_places: 0.3.0
   font_awesome_flutter: 10.1.0
   from_css_color: 2.0.0
+  geocoding: ^2.0.5
   geolocator: 9.0.1
   geolocator_android: 4.1.0
   geolocator_apple: 2.2.1

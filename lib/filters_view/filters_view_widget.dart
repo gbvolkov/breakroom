@@ -1039,25 +1039,86 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          final usersUpdateData = createUsersRecordData(
-                            filter: createFilterStruct(
-                              ageRangeExt: false,
-                              distance: sliderDistanceValue,
-                              location: FFAppState().fltrLocation,
-                              address: FFAppState().fltrAddress,
-                              ageRange: createIntRangeStruct(
-                                min: FFAppState().fltrAgeMin,
-                                max: FFAppState().fltrAgeMax,
+                          var confirmDialogResponse = await showDialog<bool>(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Seet your location'),
+                                    content: Text(
+                                        'Please confirm if we can use ${FFAppState().fltrAddress} as your location.(${FFAppState().fltrLocation?.toString()}'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, false),
+                                        child:
+                                            Text('No, use my device location'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(
+                                            alertDialogContext, true),
+                                        child: Text('Yep, please'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ) ??
+                              false;
+                          if (confirmDialogResponse) {
+                            final usersUpdateData = createUsersRecordData(
+                              filter: createFilterStruct(
+                                ageRangeExt: false,
+                                distance: sliderDistanceValue,
+                                location: FFAppState().fltrLocation,
+                                address: FFAppState().fltrAddress,
+                                ageRange: createIntRangeStruct(
+                                  min: FFAppState().fltrAgeMin,
+                                  max: FFAppState().fltrAgeMax,
+                                  clearUnsetFields: false,
+                                ),
+                                fieldValues: {
+                                  'lookingFor': FFAppState().fltrLookingFor,
+                                  'industries': FFAppState().fltrIndusrtries,
+                                },
                                 clearUnsetFields: false,
                               ),
-                              fieldValues: {
-                                'lookingFor': FFAppState().fltrLookingFor,
-                                'industries': FFAppState().fltrIndusrtries,
-                              },
-                              clearUnsetFields: false,
-                            ),
-                          );
-                          await currentUserReference!.update(usersUpdateData);
+                              geoposition: FFAppState().fltrLocation,
+                            );
+                            await currentUserReference!.update(usersUpdateData);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Done!',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor: Color(0x00000000),
+                              ),
+                            );
+                          } else {
+                            final usersUpdateData = createUsersRecordData(
+                              filter: createFilterStruct(
+                                ageRangeExt: false,
+                                distance: sliderDistanceValue,
+                                location: FFAppState().fltrLocation,
+                                address: FFAppState().fltrAddress,
+                                ageRange: createIntRangeStruct(
+                                  min: FFAppState().fltrAgeMin,
+                                  max: FFAppState().fltrAgeMax,
+                                  clearUnsetFields: false,
+                                ),
+                                fieldValues: {
+                                  'lookingFor': FFAppState().fltrLookingFor,
+                                  'industries': FFAppState().fltrIndusrtries,
+                                },
+                                clearUnsetFields: false,
+                              ),
+                            );
+                            await currentUserReference!.update(usersUpdateData);
+                          }
+
                           if (Navigator.of(context).canPop()) {
                             context.pop();
                           }

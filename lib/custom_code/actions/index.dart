@@ -6,3 +6,4 @@ export 'initialize_filter_state.dart' show initializeFilterState;
 export 'initialize_user_data_state.dart' show initializeUserDataState;
 export 'place_picker_action.dart' show placePickerAction;
 export 'get_users_list_element.dart' show getUsersListElement;
+export 'get_address_from_location.dart' show getAddressFromLocation;
