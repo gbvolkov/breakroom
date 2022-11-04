@@ -30,18 +30,18 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
+            Icons.chevron_left,
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
           onPressed: () async {
-            if ((pageViewController?.page?.round() ?? 0) > 1) {
+            if ((pageViewController?.page?.round() ?? 0) > 0) {
               await pageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.ease,
               );
             } else {
-              context.pop();
+              context.pushNamed('HomeView');
             }
           },
         ),
@@ -76,14 +76,22 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
                           children: [
                             Align(
                               alignment: AlignmentDirectional(0, -1),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(32),
-                                child: Image.network(
-                                  'https://www.shantimadanhospital.com/images/2sahaj-garg.jpg',
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.7,
-                                  fit: BoxFit.fitHeight,
+                              child: InkWell(
+                                onTap: () async {
+                                  await pageViewController?.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(32),
+                                  child: Image.network(
+                                    'https://www.shantimadanhospital.com/images/2sahaj-garg.jpg',
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
                             ),
@@ -247,14 +255,22 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
                           children: [
                             Align(
                               alignment: AlignmentDirectional(0, -1),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(32),
-                                child: Image.network(
-                                  'https://previews.agefotostock.com/previewimage/medibigoff/6b179625504a2b0276d32850b6785bc7/c71-454146.jpg',
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.7,
-                                  fit: BoxFit.fitHeight,
+                              child: InkWell(
+                                onTap: () async {
+                                  await pageViewController?.nextPage(
+                                    duration: Duration(milliseconds: 300),
+                                    curve: Curves.ease,
+                                  );
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(32),
+                                  child: Image.network(
+                                    'https://previews.agefotostock.com/previewimage/medibigoff/6b179625504a2b0276d32850b6785bc7/c71-454146.jpg',
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
                             ),
@@ -418,14 +434,19 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget> {
                           children: [
                             Align(
                               alignment: AlignmentDirectional(0, -1),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(32),
-                                child: Image.network(
-                                  'https://www.shantimadanhospital.com/images/2sahaj-garg.jpg',
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.7,
-                                  fit: BoxFit.fitHeight,
+                              child: InkWell(
+                                onTap: () async {
+                                  context.goNamed('HomeView');
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(32),
+                                  child: Image.network(
+                                    'https://www.shantimadanhospital.com/images/2sahaj-garg.jpg',
+                                    width: MediaQuery.of(context).size.width,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    fit: BoxFit.fitHeight,
+                                  ),
                                 ),
                               ),
                             ),

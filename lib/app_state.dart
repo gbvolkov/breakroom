@@ -255,7 +255,7 @@ class FFAppState {
 
   int rangeSliderEnd = 0;
 
-  bool _showIntroduction = false;
+  bool _showIntroduction = true;
   bool get showIntroduction => _showIntroduction;
   set showIntroduction(bool _value) {
     _showIntroduction = _value;
