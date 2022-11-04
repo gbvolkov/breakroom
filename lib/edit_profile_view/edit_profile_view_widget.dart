@@ -26,6 +26,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
 
   DateTime? userBDay1;
   DateTime? userBDay;
+  String? address;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -1082,6 +1083,9 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     defaultLocation: LatLng(0.0, 0.0));
                             if (await getPermissionStatus(locationPermission)) {
                               if (currentUserLocationValue != null) {
+                                address = await actions.getAddressFromLocation(
+                                  currentUserLocationValue!,
+                                );
                                 var confirmDialogResponse =
                                     await showDialog<bool>(
                                           context: context,
@@ -1089,7 +1093,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             return AlertDialog(
                                               title: Text('Location'),
                                               content: Text(
-                                                  'Do you want to update your location?'),
+                                                  'Do you want to update your location to ${address}?'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () =>
@@ -1270,6 +1274,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             }
 
                             context.pop();
+
+                            setState(() {});
                           },
                           text: 'Save',
                           options: FFButtonOptions(
