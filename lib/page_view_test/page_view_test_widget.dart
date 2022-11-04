@@ -150,10 +150,10 @@ class _PageViewTestWidgetState extends State<PageViewTestWidget> {
                 child: custom_widgets.CustomRangeSlider(
                   width: MediaQuery.of(context).size.width,
                   height: 100,
-                  minValue: 18.0,
-                  maxValue: 80.0,
-                  rangeStart: 30.0,
-                  rangeEnd: 50.0,
+                  minValue: 18,
+                  maxValue: 80,
+                  rangeStart: 30,
+                  rangeEnd: 50,
                   activeColor: FlutterFlowTheme.of(context).alternate,
                   onValueChanged: () async {
                     setState(() => FFAppState().option = 1);

@@ -745,9 +745,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           filter: createFilterStruct(
                                             ageRangeExt: false,
                                             distance: 50.0,
-                                            ageRange: createDoubleRangeStruct(
-                                              min: 18.0,
-                                              max: 75.0,
+                                            ageRange: createIntRangeStruct(
+                                              min: 18,
+                                              max: 150,
                                               clearUnsetFields: false,
                                               create: true,
                                             ),

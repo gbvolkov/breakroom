@@ -20,9 +20,9 @@ abstract class FilterStruct
 
   BuiltList<String>? get industries;
 
-  DoubleRangeStruct get ageRange;
-
   String? get address;
+
+  IntRangeStruct get ageRange;
 
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
@@ -32,8 +32,8 @@ abstract class FilterStruct
     ..ageRangeExt = false
     ..distance = 0.0
     ..industries = ListBuilder()
-    ..ageRange = DoubleRangeStructBuilder()
     ..address = ''
+    ..ageRange = IntRangeStructBuilder()
     ..firestoreUtilData = FirestoreUtilData();
 
   FilterStruct._();
@@ -45,8 +45,8 @@ FilterStruct createFilterStruct({
   bool? ageRangeExt,
   LatLng? location,
   double? distance,
-  DoubleRangeStruct? ageRange,
   String? address,
+  IntRangeStruct? ageRange,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -59,8 +59,8 @@ FilterStruct createFilterStruct({
         ..location = location
         ..distance = distance
         ..industries = null
-        ..ageRange = ageRange?.toBuilder() ?? DoubleRangeStructBuilder()
         ..address = address
+        ..ageRange = ageRange?.toBuilder() ?? IntRangeStructBuilder()
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,
@@ -117,7 +117,7 @@ Map<String, dynamic> getFilterFirestoreData(
       serializers.toFirestore(FilterStruct.serializer, filter);
 
   // Handle nested data for "ageRange" field.
-  addDoubleRangeStructData(
+  addIntRangeStructData(
       firestoreData, filter.ageRange, 'ageRange', forFieldValue);
 
   // Add any Firestore field values

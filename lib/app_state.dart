@@ -157,10 +157,6 @@ class FFAppState {
 
   List<String> interestedInList = ['Man', 'Woman', 'Everyone'];
 
-  double rangeSliderStart = 0.0;
-
-  double rangeSliderEnd = 0.0;
-
   String filterName = 'Filter';
 
   String advancedFilterName = '';
@@ -229,10 +225,6 @@ class FFAppState {
 
   List<String> fltrIndusrtries = [];
 
-  double fltrAgeMin = 0.0;
-
-  double fltrAgeMax = 0.0;
-
   String swipeAction = '';
 
   String loginDetailsContainerName = '';
@@ -252,6 +244,14 @@ class FFAppState {
   String tmpString = '';
 
   String fltrAddress = '';
+
+  int fltrAgeMin = 0;
+
+  int fltrAgeMax = 0;
+
+  int rangeSliderStart = 0;
+
+  int rangeSliderEnd = 0;
 }
 
 LatLng? _latLngFromString(String? val) {

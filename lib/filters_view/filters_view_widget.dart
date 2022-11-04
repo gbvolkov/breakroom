@@ -473,8 +473,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                 .size
                                                 .width,
                                             height: 50,
-                                            minValue: 18.0,
-                                            maxValue: 150.0,
+                                            minValue: 18,
+                                            maxValue: 150,
                                             rangeStart: FFAppState().fltrAgeMin,
                                             rangeEnd: FFAppState().fltrAgeMax,
                                             activeColor:
@@ -1039,13 +1039,13 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                           filter: createFilterStruct(
                                             ageRangeExt: false,
                                             distance: sliderDistanceValue,
-                                            ageRange: createDoubleRangeStruct(
+                                            location: FFAppState().fltrLocation,
+                                            address: FFAppState().fltrAddress,
+                                            ageRange: createIntRangeStruct(
                                               min: FFAppState().fltrAgeMin,
                                               max: FFAppState().fltrAgeMax,
                                               clearUnsetFields: false,
                                             ),
-                                            location: FFAppState().fltrLocation,
-                                            address: FFAppState().fltrAddress,
                                             fieldValues: {
                                               'lookingFor':
                                                   FFAppState().fltrLookingFor,

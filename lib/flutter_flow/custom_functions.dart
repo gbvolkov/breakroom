@@ -26,7 +26,24 @@ String stringifyList(
 }
 
 int getAge(DateTime? birthday) {
-  return (DateTime.now()).difference(birthday ?? DateTime.now()).inDays ~/ 365;
+  if (birthday == null) return 0;
+  int bdYear = birthday.year;
+  int bdMonth = birthday.month;
+  int bdDay = birthday.day;
+  int curYear = DateTime.now().year;
+  int curMonth = DateTime.now().month;
+  int curDay = DateTime.now().day;
+
+  int age = (curYear - bdYear);
+  if (bdMonth > curMonth) {
+    age--;
+  } else if (bdMonth == curMonth) {
+    if (bdDay > curDay) {
+      age--;
+    }
+  }
+
+  return age;
 }
 
 String getFullName(
@@ -83,11 +100,10 @@ String getSelectAllButtonTitle(bool isSelectAllVisible) {
 
 DateTime addYearsToDate(
   DateTime fromDate,
-  double years,
+  int years,
   int? direction,
 ) {
-  return fromDate
-      .add(Duration(days: years.toInt() * 365 * (direction ?? 1).sign));
+  return fromDate.add(Duration(days: years * 365 * (direction ?? 1).sign));
 }
 
 String isMatchedListValue(

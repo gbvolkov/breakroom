@@ -24,10 +24,10 @@ class CustomRangeSlider extends StatefulWidget {
 
   final double? width;
   final double? height;
-  final double minValue;
-  final double maxValue;
-  final double? rangeStart;
-  final double? rangeEnd;
+  final int minValue;
+  final int maxValue;
+  final int? rangeStart;
+  final int? rangeEnd;
   final Color? activeColor;
   final Color? inactiveColor;
   final Future<dynamic> Function() onValueChanged;
@@ -38,8 +38,8 @@ class CustomRangeSlider extends StatefulWidget {
 
 class _CustomRangeSliderState extends State<CustomRangeSlider> {
   RangeValues _currentRangeValues = RangeValues(0, 0);
-  double _minValue = 0;
-  double _maxValue = 0;
+  int _minValue = 0;
+  int _maxValue = 0;
   Color _activeColor = Color(0);
   Color _inactiveColor = Color(0);
 
@@ -51,7 +51,8 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
     _inactiveColor = widget.inactiveColor ??
         FlutterFlowTheme.of(context).secondaryBackground;
     _currentRangeValues = RangeValues(
-        widget.rangeStart ?? _minValue, widget.rangeEnd ?? _maxValue);
+        widget.rangeStart?.toDouble() ?? _minValue.toDouble(),
+        widget.rangeEnd?.toDouble() ?? _maxValue.toDouble());
     FFAppState().rangeSliderStart = _minValue;
     FFAppState().rangeSliderEnd = _maxValue;
     super.initState();
@@ -61,8 +62,8 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
   Widget build(BuildContext context) {
     return RangeSlider(
       values: _currentRangeValues,
-      max: _maxValue,
-      min: _minValue,
+      max: _maxValue.toDouble(),
+      min: _minValue.toDouble(),
       divisions: (_maxValue - _minValue).round(),
       activeColor: _activeColor,
       inactiveColor: _inactiveColor,
@@ -71,8 +72,8 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
         _currentRangeValues.end.round().toString(),
       ),
       onChanged: (RangeValues values) {
-        FFAppState().rangeSliderStart = values.start;
-        FFAppState().rangeSliderEnd = values.end;
+        FFAppState().rangeSliderStart = values.start.round();
+        FFAppState().rangeSliderEnd = values.end.round();
 
         setState(() {
           _currentRangeValues = values;

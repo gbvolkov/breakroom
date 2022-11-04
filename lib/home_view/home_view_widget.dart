@@ -229,20 +229,20 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       isLessThanOrEqualTo:
                                           functions.addYearsToDate(
                                               getCurrentTimestamp,
-                                              valueOrDefault<double>(
+                                              valueOrDefault<int>(
                                                 columnUsersRecord
                                                     .filter.ageRange?.min,
-                                                18.0,
+                                                18,
                                               ),
                                               -1))
                                   .where('birthDay',
                                       isGreaterThanOrEqualTo:
                                           functions.addYearsToDate(
                                               getCurrentTimestamp,
-                                              valueOrDefault<double>(
+                                              valueOrDefault<int>(
                                                 columnUsersRecord
                                                     .filter.ageRange?.max,
-                                                150.0,
+                                                150,
                                               ),
                                               -1)),
                             ),
@@ -958,26 +958,21 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                           0,
                                                                           0,
                                                                           6),
-                                                              child: InkWell(
-                                                                onTap:
-                                                                    () async {
-                                                                  context.pushNamed(
-                                                                      'IntroductionView');
-                                                                },
-                                                                child: Text(
-                                                                  '${matchedUsersItem.firstName}, ${functions.getAge(matchedUsersItem.birthDay).toString()}',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .title2
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            'Roboto',
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
-                                                                        fontWeight:
-                                                                            FontWeight.bold,
-                                                                      ),
-                                                                ),
+                                                              child: Text(
+                                                                '${matchedUsersItem.firstName}, ${functions.getAge(matchedUsersItem.birthDay).toString()}',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .title2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
                                                               ),
                                                             ),
                                                             Padding(
