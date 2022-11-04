@@ -103,7 +103,10 @@ DateTime addYearsToDate(
   int years,
   int? direction,
 ) {
-  return fromDate.add(Duration(days: years * 365 * (direction ?? 1).sign));
+  DateTime dt = DateTime(
+      fromDate.year + years * (direction ?? 1), fromDate.month, fromDate.day);
+  return dt;
+  //return fromDate.add(Duration(days: years * 365 * (direction ?? 1).sign));
 }
 
 String isMatchedListValue(
