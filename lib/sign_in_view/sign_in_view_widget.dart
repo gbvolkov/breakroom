@@ -381,6 +381,28 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                 return;
                                               }
 
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Welcome to Breakroom!',
+                                                    style: TextStyle(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                    ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 4000),
+                                                  backgroundColor:
+                                                      Color(0x00000000),
+                                                ),
+                                              );
+                                              await Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 3000));
+
                                               final usersUpdateData =
                                                   createUsersRecordData(
                                                 geoposition:
