@@ -612,12 +612,16 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     alignment: AlignmentDirectional(-1, 0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        if ((txtFirstNameController!.text == null ||
-                                                txtFirstNameController!.text ==
-                                                    '') ||
-                                            (txtSecondNameController!.text ==
+                                        if ((txtFirstNameController!.text ==
                                                     null ||
-                                                txtSecondNameController!.text ==
+                                                txtFirstNameController!
+                                                        .text ==
+                                                    '') ||
+                                            (txtSecondNameController!
+                                                        .text ==
+                                                    null ||
+                                                txtSecondNameController!
+                                                        .text ==
                                                     '') ||
                                             (userBDay == null) ||
                                             (FFAppState().usrBDay! >=
@@ -625,7 +629,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                                     getCurrentTimestamp,
                                                     18,
                                                     -1,
-                                                    -1)) ||
+                                                    0)) ||
                                             (ddIndustryValue == null ||
                                                 ddIndustryValue == '') ||
                                             (txtBioController!.text == null ||
@@ -1565,6 +1569,9 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           },
                                         );
                                       } else {
+                                        setState(() =>
+                                            FFAppState().usrInterests =
+                                                choiceChipsValues!.toList());
                                         await pageViewController?.nextPage(
                                           duration: Duration(milliseconds: 300),
                                           curve: Curves.ease,
