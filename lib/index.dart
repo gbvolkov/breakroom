@@ -6,10 +6,12 @@ export 'chat_view/chat_view_widget.dart' show ChatViewWidget;
 export 'profile_view/profile_view_widget.dart' show ProfileViewWidget;
 export 'notifications_view/notifications_view_widget.dart'
     show NotificationsViewWidget;
-export 'home_view/home_view_widget.dart' show HomeViewWidget;
 export 'sign_in_view/sign_in_view_widget.dart' show SignInViewWidget;
+export 'home_view/home_view_widget.dart' show HomeViewWidget;
 export 'welcome_view/welcome_view_widget.dart' show WelcomeViewWidget;
 export 'page_test/page_test_widget.dart' show PageTestWidget;
+export 'test_check_box/test_check_box_widget.dart' show TestCheckBoxWidget;
+export 'test_age/test_age_widget.dart' show TestAgeWidget;
 export 'end_drawer_test/end_drawer_test_widget.dart' show EndDrawerTestWidget;
 export 'page_view_test/page_view_test_widget.dart' show PageViewTestWidget;
 export 'forgot_password_view/forgot_password_view_widget.dart'
@@ -88,4 +90,3 @@ export 'edit_body_type_view/edit_body_type_view_widget.dart'
     show EditBodyTypeViewWidget;
 export 'test_place_picker/test_place_picker_widget.dart'
     show TestPlacePickerWidget;
-export 'test_check_box/test_check_box_widget.dart' show TestCheckBoxWidget;

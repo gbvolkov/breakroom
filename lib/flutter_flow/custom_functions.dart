@@ -102,9 +102,12 @@ DateTime addYearsToDate(
   DateTime fromDate,
   int years,
   int? direction,
+  int? correction,
 ) {
   DateTime dt = DateTime(
-      fromDate.year + years * (direction ?? 1), fromDate.month, fromDate.day);
+      fromDate.year + years * (direction ?? 1) + (correction ?? 0),
+      fromDate.month,
+      fromDate.day);
   return dt;
   //return fromDate.add(Duration(days: years * 365 * (direction ?? 1).sign));
 }

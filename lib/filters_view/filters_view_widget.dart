@@ -1007,91 +1007,84 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    width: double.infinity,
-                                    height: 48,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0xFFEE837B),
-                                          Color(0xFFF95A82),
-                                          Color(0xFFEA3C7D)
-                                        ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        final usersUpdateData =
-                                            createUsersRecordData(
-                                          filter: createFilterStruct(
-                                            ageRangeExt: false,
-                                            distance: sliderDistanceValue,
-                                            location: FFAppState().fltrLocation,
-                                            address: FFAppState().fltrAddress,
-                                            ageRange: createIntRangeStruct(
-                                              min: FFAppState().fltrAgeMin,
-                                              max: FFAppState().fltrAgeMax,
-                                              clearUnsetFields: false,
-                                            ),
-                                            fieldValues: {
-                                              'lookingFor':
-                                                  FFAppState().fltrLookingFor,
-                                              'industries':
-                                                  FFAppState().fltrIndusrtries,
-                                            },
-                                            clearUnsetFields: false,
-                                          ),
-                                        );
-                                        await currentUserReference!
-                                            .update(usersUpdateData);
-                                        if (Navigator.of(context).canPop()) {
-                                          context.pop();
-                                        }
-                                        context.pushNamed('HomeView');
-                                      },
-                                      text: 'Save',
-                                      options: FFButtonOptions(
-                                        width: double.infinity,
-                                        height: 48,
-                                        color: Colors.transparent,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                            ),
-                                        elevation: 0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
                       ],
                     ),
                   ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                child: Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFFEE837B),
+                            Color(0xFFF95A82),
+                            Color(0xFFEA3C7D)
+                          ],
+                          stops: [0, 0.6, 1],
+                          begin: AlignmentDirectional(0, -1),
+                          end: AlignmentDirectional(0, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          final usersUpdateData = createUsersRecordData(
+                            filter: createFilterStruct(
+                              ageRangeExt: false,
+                              distance: sliderDistanceValue,
+                              location: FFAppState().fltrLocation,
+                              address: FFAppState().fltrAddress,
+                              ageRange: createIntRangeStruct(
+                                min: FFAppState().fltrAgeMin,
+                                max: FFAppState().fltrAgeMax,
+                                clearUnsetFields: false,
+                              ),
+                              fieldValues: {
+                                'lookingFor': FFAppState().fltrLookingFor,
+                                'industries': FFAppState().fltrIndusrtries,
+                              },
+                              clearUnsetFields: false,
+                            ),
+                          );
+                          await currentUserReference!.update(usersUpdateData);
+                          if (Navigator.of(context).canPop()) {
+                            context.pop();
+                          }
+                          context.pushNamed('HomeView');
+                        },
+                        text: 'Save',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 48,
+                          color: Colors.transparent,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                          elevation: 0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

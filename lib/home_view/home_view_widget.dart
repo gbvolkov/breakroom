@@ -234,7 +234,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     .filter.ageRange?.min,
                                                 18,
                                               ),
-                                              -1))
+                                              -1,
+                                              0))
                                   .where('birthDay',
                                       isGreaterThanOrEqualTo:
                                           functions.addYearsToDate(
@@ -244,6 +245,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     .filter.ageRange?.max,
                                                 150,
                                               ),
+                                              -1,
                                               -1)),
                             ),
                             builder: (context, snapshot) {

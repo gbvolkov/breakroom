@@ -99,6 +99,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'PageTest': (data) async => PageTestWidget(
         swipeAction: getParameter(data, 'swipeAction'),
       ),
+  'testCheckBox': (data) async => TestCheckBoxWidget(),
+  'testAge': (data) async => TestAgeWidget(),
   'EndDrawerTest': (data) async => EndDrawerTestWidget(),
   'PageViewTest': (data) async => PageViewTestWidget(),
   'ForgotPasswordView': (data) async => ForgotPasswordViewWidget(),
@@ -159,7 +161,6 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditEducationView': (data) async => EditEducationViewWidget(),
   'EditBodyTypeView': (data) async => EditBodyTypeViewWidget(),
   'testPlacePicker': (data) async => TestPlacePickerWidget(),
-  'testCheckBox': (data) async => TestCheckBoxWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

@@ -117,17 +117,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : NotificationsViewWidget(),
             ),
             FFRoute(
+              name: 'SignInView',
+              path: 'signInView',
+              builder: (context, params) => SignInViewWidget(),
+            ),
+            FFRoute(
               name: 'HomeView',
               path: 'homeView',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'HomeView')
                   : HomeViewWidget(),
-            ),
-            FFRoute(
-              name: 'SignInView',
-              path: 'signInView',
-              builder: (context, params) => SignInViewWidget(),
             ),
             FFRoute(
               name: 'WelcomeView',
@@ -141,6 +141,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => PageTestWidget(
                 swipeAction: params.getParam('swipeAction', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'testCheckBox',
+              path: 'testCheckBox',
+              requireAuth: true,
+              builder: (context, params) => TestCheckBoxWidget(),
+            ),
+            FFRoute(
+              name: 'testAge',
+              path: 'testAge',
+              requireAuth: true,
+              builder: (context, params) => TestAgeWidget(),
             ),
             FFRoute(
               name: 'EndDrawerTest',
@@ -443,12 +455,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'testPlacePicker',
               requireAuth: true,
               builder: (context, params) => TestPlacePickerWidget(),
-            ),
-            FFRoute(
-              name: 'testCheckBox',
-              path: 'testCheckBox',
-              requireAuth: true,
-              builder: (context, params) => TestCheckBoxWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),
