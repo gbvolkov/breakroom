@@ -417,6 +417,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     AlignmentDirectional(-1, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
+                                                    var _shouldSetState = false;
                                                     isOK = await actions
                                                         .resetUserEmail(
                                                       currentUserEmail,
@@ -425,8 +426,8 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                       emailTextFieldController!
                                                           .text,
                                                     );
+                                                    _shouldSetState = true;
                                                     if (isOK!) {
-                                                      await sendEmailVerification();
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(
@@ -446,6 +447,20 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                               Color(0x00000000),
                                                         ),
                                                       );
+                                                      GoRouter.of(context)
+                                                          .prepareAuthEvent(
+                                                              true);
+                                                      await signOut();
+
+                                                      context.pushNamedAuth(
+                                                        'SignInView',
+                                                        mounted,
+                                                        ignoreRedirect: true,
+                                                      );
+
+                                                      if (_shouldSetState)
+                                                        setState(() {});
+                                                      return;
                                                     } else {
                                                       ScaffoldMessenger.of(
                                                               context)
@@ -471,8 +486,8 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     }
 
                                                     Navigator.pop(context);
-
-                                                    setState(() {});
+                                                    if (_shouldSetState)
+                                                      setState(() {});
                                                   },
                                                   text: 'Change your Email',
                                                   options: FFButtonOptions(
