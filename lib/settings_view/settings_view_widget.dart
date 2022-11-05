@@ -567,8 +567,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                           child: InkWell(
                             onTap: () async {
-                              await launchURL(
-                                  'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
+                              context.pushNamed('PrivacyAndPolicyView');
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -609,8 +608,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
-                                      await launchURL(
-                                          'https://georgys-team-2.adalo.com/gv-studio?target=a4d2il34i8pwi30zw9inr7s6h&params=%7B%7D');
+                                      context.pushNamed('PrivacyAndPolicyView');
                                     },
                                   ),
                                 ),
@@ -624,7 +622,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                           color: Color(0xFFEFEFEF),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                           child: InkWell(
                             onTap: () async {
                               var confirmDialogResponse =
@@ -632,10 +630,9 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                         context: context,
                                         builder: (alertDialogContext) {
                                           return AlertDialog(
-                                            title:
-                                                Text('Please confirm logout'),
-                                            content:
-                                                Text('Are you sure to leave?'),
+                                            title: Text('Logout'),
+                                            content: Text(
+                                                'Are you sure you want to logout?'),
                                             actions: [
                                               TextButton(
                                                 onPressed: () => Navigator.pop(
@@ -717,40 +714,35 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
-                                      setState(
-                                          () => FFAppState().tmpBool = false);
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Please confirm logout',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle2
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                ),
-                                          ),
-                                          duration:
-                                              Duration(milliseconds: 4000),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .alternate,
-                                          action: SnackBarAction(
-                                            label: 'YES',
-                                            textColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryColor,
-                                            onPressed: () async {
-                                              setState(() =>
-                                                  FFAppState().tmpBool = true);
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                      if (FFAppState().tmpBool) {
+                                      var confirmDialogResponse =
+                                          await showDialog<bool>(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('Logout'),
+                                                    content: Text(
+                                                        'Are you sure you want to logout?'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                false),
+                                                        child: Text('Cancel'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                true),
+                                                        child: Text('Confirm'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ) ??
+                                              false;
+                                      if (confirmDialogResponse) {
                                         GoRouter.of(context).prepareAuthEvent();
                                         await signOut();
 
@@ -763,11 +755,6 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                               ],
                             ),
                           ),
-                        ),
-                        Divider(
-                          height: 16,
-                          thickness: 1,
-                          color: Color(0xFFEFEFEF),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
@@ -828,7 +815,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                           ).then((value) => setState(() {}));
                                         },
                                         child: Text(
-                                          'Completely remove profile',
+                                          'Delete account',
                                           style: FlutterFlowTheme.of(context)
                                               .subtitle1,
                                         ),

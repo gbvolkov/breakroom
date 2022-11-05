@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -17,7 +18,7 @@ class ForgotPasswordViewWidget extends StatefulWidget {
 
 class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
   PageController? pageViewController;
-  TextEditingController? textController1;
+  TextEditingController? txtEmailController;
   TextEditingController? pinCodeController;
   TextEditingController? newPassword1TextFieldController;
 
@@ -35,14 +36,14 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
     newPassword2TextFieldController = TextEditingController();
     newPassword2TextFieldVisibility = false;
     pinCodeController = TextEditingController();
-    textController1 = TextEditingController();
+    txtEmailController = TextEditingController();
   }
 
   @override
   void dispose() {
     newPassword1TextFieldController?.dispose();
     newPassword2TextFieldController?.dispose();
-    textController1?.dispose();
+    txtEmailController?.dispose();
     super.dispose();
   }
 
@@ -147,7 +148,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 8),
                                     child: Text(
-                                      'Email / Phone number',
+                                      'Email',
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle2,
                                     ),
@@ -157,9 +158,9 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 16),
                                   child: TextFormField(
-                                    controller: textController1,
+                                    controller: txtEmailController,
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'textController1',
+                                      'txtEmailController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -205,10 +206,10 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           EdgeInsetsDirectional.fromSTEB(
                                               16, 0, 16, 0),
                                       suffixIcon:
-                                          textController1!.text.isNotEmpty
+                                          txtEmailController!.text.isNotEmpty
                                               ? InkWell(
                                                   onTap: () async {
-                                                    textController1?.clear();
+                                                    txtEmailController?.clear();
                                                     setState(() {});
                                                   },
                                                   child: Icon(
@@ -251,10 +252,21 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            await pageViewController?.nextPage(
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.ease,
+                                            if (txtEmailController!
+                                                .text.isEmpty) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Email required!',
+                                                  ),
+                                                ),
+                                              );
+                                              return;
+                                            }
+                                            await resetPassword(
+                                              email: txtEmailController!.text,
+                                              context: context,
                                             );
                                           },
                                           text: 'Next',

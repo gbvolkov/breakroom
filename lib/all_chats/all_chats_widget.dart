@@ -25,19 +25,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
-        title: InkWell(
-          onTap: () async {
-            context.pushNamed('PageTest');
-          },
-          child: Text(
-            'Chats',
-            style: FlutterFlowTheme.of(context).bodyText1.override(
-                  fontFamily: 'Roboto',
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
+        title: Text(
+          'Chats',
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Roboto',
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
         ),
         actions: [
           Visibility(

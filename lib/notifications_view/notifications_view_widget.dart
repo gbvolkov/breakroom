@@ -490,7 +490,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                         MainAxisAlignment.spaceAround,
                                     children: [
                                       Expanded(
-                                        flex: 4,
+                                        flex: 3,
                                         child: InkWell(
                                           onTap: () async {
                                             final notificationsUpdateData =
@@ -555,12 +555,13 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryText,
+                                                  fontSize: 12,
                                                 ),
                                           ),
                                         ),
                                       ),
                                       Expanded(
-                                        flex: 8,
+                                        flex: 10,
                                         child: InkWell(
                                           onTap: () async {
                                             final notificationsUpdateData =
@@ -635,7 +636,6 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                         flex: 2,
                                         child: FlutterFlowIconButton(
                                           borderColor: Colors.transparent,
-                                          borderRadius: 30,
                                           borderWidth: 1,
                                           buttonSize: 48,
                                           icon: Icon(
