@@ -627,34 +627,32 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                           child: InkWell(
                             onTap: () async {
-                              setState(() => FFAppState().tmpBool = false);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Please confirm logout',
-                                    style: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                        ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).alternate,
-                                  action: SnackBarAction(
-                                    label: 'YES',
-                                    textColor: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    onPressed: () async {
-                                      setState(
-                                          () => FFAppState().tmpBool = true);
-                                    },
-                                  ),
-                                ),
-                              );
-                              if (FFAppState().tmpBool) {
+                              var confirmDialogResponse =
+                                  await showDialog<bool>(
+                                        context: context,
+                                        builder: (alertDialogContext) {
+                                          return AlertDialog(
+                                            title:
+                                                Text('Please confirm logout'),
+                                            content:
+                                                Text('Are you sure to leave?'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, false),
+                                                child: Text('Cancel'),
+                                              ),
+                                              TextButton(
+                                                onPressed: () => Navigator.pop(
+                                                    alertDialogContext, true),
+                                                child: Text('Confirm'),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      ) ??
+                                      false;
+                              if (confirmDialogResponse) {
                                 GoRouter.of(context).prepareAuthEvent();
                                 await signOut();
 
