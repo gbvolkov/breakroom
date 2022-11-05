@@ -169,7 +169,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'ForgotPasswordView',
               path: 'forgotPasswordView',
-              requireAuth: true,
               builder: (context, params) => ForgotPasswordViewWidget(),
             ),
             FFRoute(
