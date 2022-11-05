@@ -122,11 +122,12 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                 child: FFButtonWidget(
                   onPressed: () async {
                     Navigator.pop(context);
+                    await Future.delayed(const Duration(milliseconds: 3000));
                     GoRouter.of(context).prepareAuthEvent();
                     await signOut();
                     await deleteUser(context);
 
-                    context.goNamedAuth('WelcomeView', mounted);
+                    context.pushNamedAuth('WelcomeView', mounted);
                   },
                   text: 'yes, remove profile',
                   options: FFButtonOptions(

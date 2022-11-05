@@ -261,6 +261,8 @@ class FFAppState {
     _showIntroduction = _value;
     prefs.setBool('ff_showIntroduction', _value);
   }
+
+  bool tmpBool = false;
 }
 
 LatLng? _latLngFromString(String? val) {
