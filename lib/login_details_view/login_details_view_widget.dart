@@ -41,14 +41,12 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   TextEditingController? newPassword2TextFieldController2;
 
   late bool newPassword2TextFieldVisibility2;
-  TextEditingController? currentEmailTextFieldController;
   TextEditingController? currentPasswordTextFieldController1;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    currentEmailTextFieldController = TextEditingController();
     currentPasswordTextFieldController1 = TextEditingController();
     currentPasswordTextFieldController2 = TextEditingController();
     currentPasswordTextFieldVisibility = false;
@@ -69,7 +67,6 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
 
   @override
   void dispose() {
-    currentEmailTextFieldController?.dispose();
     currentPasswordTextFieldController1?.dispose();
     currentPasswordTextFieldController2?.dispose();
     newPassword1TextFieldController1?.dispose();
@@ -113,7 +110,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                           scrollDirection: Axis.horizontal,
                           children: [
                             Column(
-                              mainAxisSize: MainAxisSize.max,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -325,8 +322,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                   onPressed: () async {
                                                     isOK = await actions
                                                         .resetUserEmail(
-                                                      currentEmailTextFieldController!
-                                                          .text,
+                                                      currentUserEmail,
                                                       currentPasswordTextFieldController2!
                                                           .text,
                                                       emailTextFieldController!
@@ -2678,72 +2674,9 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
                     child: Text(
-                      'Enter your current  Email and Password',
+                      'Enter your current password',
                       style: FlutterFlowTheme.of(context).title1,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
-                  child: TextFormField(
-                    controller: currentEmailTextFieldController,
-                    onChanged: (_) => EasyDebounce.debounce(
-                      'currentEmailTextFieldController',
-                      Duration(milliseconds: 2000),
-                      () => setState(() {}),
-                    ),
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelStyle: FlutterFlowTheme.of(context).subtitle2,
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFEFEFEF),
-                      suffixIcon:
-                          currentEmailTextFieldController!.text.isNotEmpty
-                              ? InkWell(
-                                  onTap: () async {
-                                    currentEmailTextFieldController?.clear();
-                                    setState(() {});
-                                  },
-                                  child: Icon(
-                                    Icons.clear,
-                                    color: Color(0xFF757575),
-                                    size: 22,
-                                  ),
-                                )
-                              : null,
-                    ),
-                    style: FlutterFlowTheme.of(context).subtitle1,
-                    keyboardType: TextInputType.emailAddress,
                   ),
                 ),
                 Padding(
@@ -2806,7 +2739,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                           : null,
                     ),
                     style: FlutterFlowTheme.of(context).subtitle1,
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.visiblePassword,
                   ),
                 ),
                 SingleChildScrollView(
