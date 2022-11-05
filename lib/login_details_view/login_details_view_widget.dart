@@ -18,6 +18,7 @@ class LoginDetailsViewWidget extends StatefulWidget {
 
 class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   PageController? changeEmailPageViewController;
+  TextEditingController? currentPasswordTextFieldController1;
   TextEditingController? emailTextFieldController;
   bool? isOK;
   TextEditingController? pinCodeController1;
@@ -41,13 +42,16 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   TextEditingController? newPassword2TextFieldController2;
 
   late bool newPassword2TextFieldVisibility2;
-  TextEditingController? currentPasswordTextFieldController1;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
     currentPasswordTextFieldController1 = TextEditingController();
+    emailTextFieldController = TextEditingController();
+    pinCodeController1 = TextEditingController();
+    newPhoneTextFieldController = TextEditingController();
+    pinCodeController2 = TextEditingController();
     currentPasswordTextFieldController2 = TextEditingController();
     currentPasswordTextFieldVisibility = false;
     newPassword1TextFieldController1 = TextEditingController();
@@ -59,22 +63,18 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
     newPassword1TextFieldVisibility2 = false;
     newPassword2TextFieldController2 = TextEditingController();
     newPassword2TextFieldVisibility2 = false;
-    emailTextFieldController = TextEditingController();
-    pinCodeController1 = TextEditingController();
-    newPhoneTextFieldController = TextEditingController();
-    pinCodeController2 = TextEditingController();
   }
 
   @override
   void dispose() {
     currentPasswordTextFieldController1?.dispose();
+    emailTextFieldController?.dispose();
+    newPhoneTextFieldController?.dispose();
     currentPasswordTextFieldController2?.dispose();
     newPassword1TextFieldController1?.dispose();
     newPassword2TextFieldController1?.dispose();
     newPassword1TextFieldController2?.dispose();
     newPassword2TextFieldController2?.dispose();
-    emailTextFieldController?.dispose();
-    newPhoneTextFieldController?.dispose();
     super.dispose();
   }
 
@@ -164,7 +164,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 0, 16, 0),
+                                        16, 0, 16, 64),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -180,7 +180,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 32, 0, 0),
                                                 child: Text(
-                                                  'New Email',
+                                                  'Enter new Email and your current password',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .title1,
@@ -202,6 +202,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                 autofocus: true,
                                                 obscureText: false,
                                                 decoration: InputDecoration(
+                                                  labelText: 'new email',
                                                   labelStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -277,6 +278,97 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     TextInputType.emailAddress,
                                               ),
                                             ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 16),
+                                              child: TextFormField(
+                                                controller:
+                                                    currentPasswordTextFieldController1,
+                                                onChanged: (_) =>
+                                                    EasyDebounce.debounce(
+                                                  'currentPasswordTextFieldController1',
+                                                  Duration(milliseconds: 2000),
+                                                  () => setState(() {}),
+                                                ),
+                                                autofocus: true,
+                                                obscureText: false,
+                                                decoration: InputDecoration(
+                                                  labelText: 'current password',
+                                                  labelStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .subtitle2,
+                                                  hintStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyText2,
+                                                  enabledBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  errorBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  focusedErrorBorder:
+                                                      UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color(0x00000000),
+                                                      width: 1,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  filled: true,
+                                                  fillColor: Color(0xFFEFEFEF),
+                                                  suffixIcon:
+                                                      currentPasswordTextFieldController1!
+                                                              .text.isNotEmpty
+                                                          ? InkWell(
+                                                              onTap: () async {
+                                                                currentPasswordTextFieldController1
+                                                                    ?.clear();
+                                                                setState(() {});
+                                                              },
+                                                              child: Icon(
+                                                                Icons.clear,
+                                                                color: Color(
+                                                                    0xFF757575),
+                                                                size: 22,
+                                                              ),
+                                                            )
+                                                          : null,
+                                                ),
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle1,
+                                                keyboardType: TextInputType
+                                                    .visiblePassword,
+                                              ),
+                                            ),
                                             Align(
                                               alignment:
                                                   AlignmentDirectional(-1, 0),
@@ -328,25 +420,51 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                       emailTextFieldController!
                                                           .text,
                                                     );
-                                                    await sendEmailVerification();
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          'Your email has been changed succesfully',
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
+                                                    if (isOK!) {
+                                                      await sendEmailVerification();
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Your email has been changed succesfully',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText,
+                                                            ),
                                                           ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              Color(0x00000000),
                                                         ),
-                                                        duration: Duration(
-                                                            milliseconds: 4000),
-                                                        backgroundColor:
-                                                            Color(0x00000000),
-                                                      ),
-                                                    );
+                                                      );
+                                                    } else {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'An error happened while changing an email',
+                                                            style: TextStyle(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryBtnText,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .alternate,
+                                                        ),
+                                                      );
+                                                    }
+
                                                     Navigator.pop(context);
 
                                                     setState(() {});
@@ -2677,69 +2795,6 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                       'Enter your current password',
                       style: FlutterFlowTheme.of(context).title1,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
-                  child: TextFormField(
-                    controller: currentPasswordTextFieldController1,
-                    onChanged: (_) => EasyDebounce.debounce(
-                      'currentPasswordTextFieldController1',
-                      Duration(milliseconds: 2000),
-                      () => setState(() {}),
-                    ),
-                    autofocus: true,
-                    obscureText: false,
-                    decoration: InputDecoration(
-                      labelStyle: FlutterFlowTheme.of(context).subtitle2,
-                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      errorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedErrorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Color(0x00000000),
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFEFEFEF),
-                      suffixIcon: currentPasswordTextFieldController1!
-                              .text.isNotEmpty
-                          ? InkWell(
-                              onTap: () async {
-                                currentPasswordTextFieldController1?.clear();
-                                setState(() {});
-                              },
-                              child: Icon(
-                                Icons.clear,
-                                color: Color(0xFF757575),
-                                size: 22,
-                              ),
-                            )
-                          : null,
-                    ),
-                    style: FlutterFlowTheme.of(context).subtitle1,
-                    keyboardType: TextInputType.visiblePassword,
                   ),
                 ),
                 SingleChildScrollView(

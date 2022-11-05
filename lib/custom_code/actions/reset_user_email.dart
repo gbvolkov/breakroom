@@ -17,11 +17,15 @@ Future<bool> resetUserEmail(
   if (currentUser == null) {
     return false;
   } else {
-    AuthCredential credential = EmailAuthProvider.credential(
-        email: currentEMail, password: currentPassword);
-    currentUser.reauthenticateWithCredential(credential);
-    currentUser.verifyBeforeUpdateEmail(newEMail);
-    currentUser.updateEmail(newEMail);
-    return true;
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(
+          email: currentEMail, password: currentPassword);
+      currentUser.reauthenticateWithCredential(credential);
+      currentUser.verifyBeforeUpdateEmail(newEMail);
+      currentUser.updateEmail(newEMail);
+      return true;
+    } catch (ex) {
+      return false;
+    }
   }
 }
