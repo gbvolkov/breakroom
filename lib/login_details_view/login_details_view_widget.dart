@@ -18,15 +18,17 @@ class LoginDetailsViewWidget extends StatefulWidget {
 
 class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   PageController? changeEmailPageViewController;
-  TextEditingController? currentPasswordTextFieldController1;
   TextEditingController? emailTextFieldController;
+  TextEditingController? passwordTextFieldController;
+
+  late bool passwordTextFieldVisibility;
   bool? isOK;
   TextEditingController? pinCodeController1;
   PageController? changePhonePageViewController;
   TextEditingController? newPhoneTextFieldController;
   TextEditingController? pinCodeController2;
   PageController? changePasswordPageViewController;
-  TextEditingController? currentPasswordTextFieldController2;
+  TextEditingController? currentPasswordTextFieldController;
 
   late bool currentPasswordTextFieldVisibility;
   TextEditingController? newPassword1TextFieldController1;
@@ -47,12 +49,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   @override
   void initState() {
     super.initState();
-    currentPasswordTextFieldController1 = TextEditingController();
-    emailTextFieldController = TextEditingController();
-    pinCodeController1 = TextEditingController();
-    newPhoneTextFieldController = TextEditingController();
-    pinCodeController2 = TextEditingController();
-    currentPasswordTextFieldController2 = TextEditingController();
+    currentPasswordTextFieldController = TextEditingController();
     currentPasswordTextFieldVisibility = false;
     newPassword1TextFieldController1 = TextEditingController();
     newPassword1TextFieldVisibility1 = false;
@@ -63,18 +60,24 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
     newPassword1TextFieldVisibility2 = false;
     newPassword2TextFieldController2 = TextEditingController();
     newPassword2TextFieldVisibility2 = false;
+    emailTextFieldController = TextEditingController();
+    passwordTextFieldController = TextEditingController();
+    passwordTextFieldVisibility = false;
+    pinCodeController1 = TextEditingController();
+    newPhoneTextFieldController = TextEditingController();
+    pinCodeController2 = TextEditingController();
   }
 
   @override
   void dispose() {
-    currentPasswordTextFieldController1?.dispose();
-    emailTextFieldController?.dispose();
-    newPhoneTextFieldController?.dispose();
-    currentPasswordTextFieldController2?.dispose();
+    currentPasswordTextFieldController?.dispose();
     newPassword1TextFieldController1?.dispose();
     newPassword2TextFieldController1?.dispose();
     newPassword1TextFieldController2?.dispose();
     newPassword2TextFieldController2?.dispose();
+    emailTextFieldController?.dispose();
+    passwordTextFieldController?.dispose();
+    newPhoneTextFieldController?.dispose();
     super.dispose();
   }
 
@@ -280,18 +283,13 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 16),
+                                                  .fromSTEB(0, 0, 0, 8),
                                               child: TextFormField(
                                                 controller:
-                                                    currentPasswordTextFieldController1,
-                                                onChanged: (_) =>
-                                                    EasyDebounce.debounce(
-                                                  'currentPasswordTextFieldController1',
-                                                  Duration(milliseconds: 2000),
-                                                  () => setState(() {}),
-                                                ),
+                                                    passwordTextFieldController,
                                                 autofocus: true,
-                                                obscureText: false,
+                                                obscureText:
+                                                    !passwordTextFieldVisibility,
                                                 decoration: InputDecoration(
                                                   labelText: 'current password',
                                                   labelStyle:
@@ -303,64 +301,71 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                               context)
                                                           .bodyText2,
                                                   enabledBorder:
-                                                      UnderlineInputBorder(
+                                                      OutlineInputBorder(
                                                     borderSide: BorderSide(
                                                       color: Color(0x00000000),
                                                       width: 1,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
+                                                            12),
                                                   ),
                                                   focusedBorder:
-                                                      UnderlineInputBorder(
+                                                      OutlineInputBorder(
                                                     borderSide: BorderSide(
                                                       color: Color(0x00000000),
                                                       width: 1,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
+                                                            12),
                                                   ),
                                                   errorBorder:
-                                                      UnderlineInputBorder(
+                                                      OutlineInputBorder(
                                                     borderSide: BorderSide(
                                                       color: Color(0x00000000),
                                                       width: 1,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
+                                                            12),
                                                   ),
                                                   focusedErrorBorder:
-                                                      UnderlineInputBorder(
+                                                      OutlineInputBorder(
                                                     borderSide: BorderSide(
                                                       color: Color(0x00000000),
                                                       width: 1,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
+                                                            12),
                                                   ),
                                                   filled: true,
-                                                  fillColor: Color(0xFFEFEFEF),
-                                                  suffixIcon:
-                                                      currentPasswordTextFieldController1!
-                                                              .text.isNotEmpty
-                                                          ? InkWell(
-                                                              onTap: () async {
-                                                                currentPasswordTextFieldController1
-                                                                    ?.clear();
-                                                                setState(() {});
-                                                              },
-                                                              child: Icon(
-                                                                Icons.clear,
-                                                                color: Color(
-                                                                    0xFF757575),
-                                                                size: 22,
-                                                              ),
-                                                            )
-                                                          : null,
+                                                  fillColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .textFieldBackground,
+                                                  contentPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(
+                                                              16, 0, 16, 0),
+                                                  suffixIcon: InkWell(
+                                                    onTap: () => setState(
+                                                      () => passwordTextFieldVisibility =
+                                                          !passwordTextFieldVisibility,
+                                                    ),
+                                                    focusNode: FocusNode(
+                                                        skipTraversal: true),
+                                                    child: Icon(
+                                                      passwordTextFieldVisibility
+                                                          ? Icons
+                                                              .visibility_outlined
+                                                          : Icons
+                                                              .visibility_off_outlined,
+                                                      color: Color(0xFF757575),
+                                                      size: 22,
+                                                    ),
+                                                  ),
                                                 ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -415,7 +420,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     isOK = await actions
                                                         .resetUserEmail(
                                                       currentUserEmail,
-                                                      currentPasswordTextFieldController2!
+                                                      passwordTextFieldController!
                                                           .text,
                                                       emailTextFieldController!
                                                           .text,
@@ -1574,7 +1579,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                   .fromSTEB(0, 16, 0, 8),
                                               child: TextFormField(
                                                 controller:
-                                                    currentPasswordTextFieldController2,
+                                                    currentPasswordTextFieldController,
                                                 autofocus: true,
                                                 obscureText:
                                                     !currentPasswordTextFieldVisibility,
