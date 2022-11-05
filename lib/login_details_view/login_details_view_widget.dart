@@ -2787,16 +2787,6 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                Align(
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
-                    child: Text(
-                      'Enter your current password',
-                      style: FlutterFlowTheme.of(context).title1,
-                    ),
-                  ),
-                ),
                 SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
