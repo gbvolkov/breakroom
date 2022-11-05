@@ -1,10 +1,12 @@
 import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/actions/index.dart' as actions;
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -417,7 +419,6 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     AlignmentDirectional(-1, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    var _shouldSetState = false;
                                                     isOK = await actions
                                                         .resetUserEmail(
                                                       currentUserEmail,
@@ -426,8 +427,16 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                       emailTextFieldController!
                                                           .text,
                                                     );
-                                                    _shouldSetState = true;
                                                     if (isOK!) {
+                                                      final usersUpdateData =
+                                                          createUsersRecordData(
+                                                        email:
+                                                            emailTextFieldController!
+                                                                .text,
+                                                      );
+                                                      await currentUserReference!
+                                                          .update(
+                                                              usersUpdateData);
                                                       ScaffoldMessenger.of(
                                                               context)
                                                           .showSnackBar(
@@ -447,20 +456,6 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                               Color(0x00000000),
                                                         ),
                                                       );
-                                                      GoRouter.of(context)
-                                                          .prepareAuthEvent(
-                                                              true);
-                                                      await signOut();
-
-                                                      context.pushNamedAuth(
-                                                        'SignInView',
-                                                        mounted,
-                                                        ignoreRedirect: true,
-                                                      );
-
-                                                      if (_shouldSetState)
-                                                        setState(() {});
-                                                      return;
                                                     } else {
                                                       ScaffoldMessenger.of(
                                                               context)
@@ -486,8 +481,8 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     }
 
                                                     Navigator.pop(context);
-                                                    if (_shouldSetState)
-                                                      setState(() {});
+
+                                                    setState(() {});
                                                   },
                                                   text: 'Change your Email',
                                                   options: FFButtonOptions(
