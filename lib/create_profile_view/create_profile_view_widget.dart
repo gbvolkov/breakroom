@@ -86,12 +86,12 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           TextButton(
                             onPressed: () =>
                                 Navigator.pop(alertDialogContext, false),
-                            child: Text('Yes'),
+                            child: Text('No'),
                           ),
                           TextButton(
                             onPressed: () =>
                                 Navigator.pop(alertDialogContext, true),
-                            child: Text('No'),
+                            child: Text('Yes'),
                           ),
                         ],
                       );

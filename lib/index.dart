@@ -50,6 +50,8 @@ export 'about_us_view/about_us_view_widget.dart' show AboutUsViewWidget;
 export 'settings_view/settings_view_widget.dart' show SettingsViewWidget;
 export 'login_details_view/login_details_view_widget.dart'
     show LoginDetailsViewWidget;
+export 'delete_account_view/delete_account_view_widget.dart'
+    show DeleteAccountViewWidget;
 export 'notification_settings_view/notification_settings_view_widget.dart'
     show NotificationSettingsViewWidget;
 export 'privacy_and_policy_view/privacy_and_policy_view_widget.dart'
