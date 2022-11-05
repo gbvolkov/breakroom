@@ -81,7 +81,7 @@ class _DialogSignupCompleteWidgetState
                     alignment: AlignmentDirectional(-1, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        context.goNamed('CreateProfileView');
+                        Navigator.pop(context);
                       },
                       text: 'let\'s get started',
                       options: FFButtonOptions(
