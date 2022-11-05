@@ -307,9 +307,6 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                     ),
                                     FFButtonWidget(
                                       onPressed: () async {
-                                        setState(() => FFAppState()
-                                            .backArrowVisible = false);
-
                                         context.pushNamed('ForgotPasswordView');
                                       },
                                       text: 'Forgot password?',
