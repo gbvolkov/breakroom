@@ -852,7 +852,18 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
-                                      context.pushNamed('DeleteAccountView');
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: MediaQuery.of(context)
+                                                .viewInsets,
+                                            child: DialogRemoveProfileWidget(),
+                                          );
+                                        },
+                                      ).then((value) => setState(() {}));
                                     },
                                   ),
                                 ),

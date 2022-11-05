@@ -141,7 +141,6 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'AboutUsView': (data) async => AboutUsViewWidget(),
   'SettingsView': (data) async => SettingsViewWidget(),
   'LoginDetailsView': (data) async => LoginDetailsViewWidget(),
-  'DeleteAccountView': (data) async => DeleteAccountViewWidget(),
   'NotificationSettingsView': (data) async => NotificationSettingsViewWidget(),
   'PrivacyAndPolicyView': (data) async => PrivacyAndPolicyViewWidget(),
   'EditIndustryView': (data) async => EditIndustryViewWidget(),

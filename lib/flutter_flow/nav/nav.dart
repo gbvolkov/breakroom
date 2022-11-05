@@ -337,12 +337,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => LoginDetailsViewWidget(),
             ),
             FFRoute(
-              name: 'DeleteAccountView',
-              path: 'deleteAccountView',
-              requireAuth: true,
-              builder: (context, params) => DeleteAccountViewWidget(),
-            ),
-            FFRoute(
               name: 'NotificationSettingsView',
               path: 'notificationSettingsView',
               requireAuth: true,

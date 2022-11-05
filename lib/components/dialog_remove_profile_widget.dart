@@ -121,11 +121,36 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    GoRouter.of(context).prepareAuthEvent();
-                    await signOut();
-                    await deleteUser(context);
+                    var confirmDialogResponse = await showDialog<bool>(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('We\'ll miss you!'),
+                              content: Text(
+                                  'You are going to completely remove your profile from BreakRoom App. All your photos, chats and matches will be deleted with no possibility of restore.  Are you really sure to do this?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext, false),
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext, true),
+                                  child: Text('Confirm'),
+                                ),
+                              ],
+                            );
+                          },
+                        ) ??
+                        false;
+                    if (confirmDialogResponse) {
+                      await deleteUser(context);
+                      GoRouter.of(context).prepareAuthEvent();
+                      await signOut();
 
-                    context.pushNamedAuth('WelcomeView', mounted);
+                      context.pushNamedAuth('WelcomeView', mounted);
+                    }
                   },
                   text: 'yes, remove profile',
                   options: FFButtonOptions(
