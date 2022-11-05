@@ -163,9 +163,6 @@ class _DeleteAccountViewWidgetState extends State<DeleteAccountViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              Navigator.pop(context);
-                              await Future.delayed(
-                                  const Duration(milliseconds: 3000));
                               GoRouter.of(context).prepareAuthEvent();
                               await signOut();
                               await deleteUser(context);
