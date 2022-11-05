@@ -482,23 +482,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                           child: InkWell(
                             onTap: () async {
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Community Guidlines'),
-                                    content: Text(
-                                        'Community Guidlines link or page'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Ok'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              context.pushNamed('CommunityGuidlinesView');
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -539,23 +523,8 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
-                                      await showDialog(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Community Guidlines'),
-                                            content: Text(
-                                                'Community Guidlines link or page'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext),
-                                                child: Text('Ok'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
+                                      context
+                                          .pushNamed('CommunityGuidlinesView');
                                     },
                                   ),
                                 ),

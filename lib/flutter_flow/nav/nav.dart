@@ -320,7 +320,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'AboutUsView',
               path: 'aboutUsView',
-              requireAuth: true,
               builder: (context, params) => AboutUsViewWidget(),
             ),
             FFRoute(
@@ -344,7 +343,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'PrivacyAndPolicyView',
               path: 'privacyAndPolicyView',
-              requireAuth: true,
               builder: (context, params) => PrivacyAndPolicyViewWidget(),
             ),
             FFRoute(
@@ -460,6 +458,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'testPlacePicker',
               requireAuth: true,
               builder: (context, params) => TestPlacePickerWidget(),
+            ),
+            FFRoute(
+              name: 'CommunityGuidlinesView',
+              path: 'communityGuidlinesView',
+              builder: (context, params) => CommunityGuidlinesViewWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

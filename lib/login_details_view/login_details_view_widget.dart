@@ -1,7 +1,9 @@
+import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +19,13 @@ class LoginDetailsViewWidget extends StatefulWidget {
 class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   PageController? changeEmailPageViewController;
   TextEditingController? emailTextFieldController;
+  bool? isOK;
   TextEditingController? pinCodeController1;
   PageController? changePhonePageViewController;
   TextEditingController? newPhoneTextFieldController;
   TextEditingController? pinCodeController2;
   PageController? changePasswordPageViewController;
-  TextEditingController? currentPasswordTextFieldController;
+  TextEditingController? currentPasswordTextFieldController2;
 
   late bool currentPasswordTextFieldVisibility;
   TextEditingController? newPassword1TextFieldController1;
@@ -38,12 +41,16 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   TextEditingController? newPassword2TextFieldController2;
 
   late bool newPassword2TextFieldVisibility2;
+  TextEditingController? currentEmailTextFieldController;
+  TextEditingController? currentPasswordTextFieldController1;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    currentPasswordTextFieldController = TextEditingController();
+    currentEmailTextFieldController = TextEditingController();
+    currentPasswordTextFieldController1 = TextEditingController();
+    currentPasswordTextFieldController2 = TextEditingController();
     currentPasswordTextFieldVisibility = false;
     newPassword1TextFieldController1 = TextEditingController();
     newPassword1TextFieldVisibility1 = false;
@@ -62,7 +69,9 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
 
   @override
   void dispose() {
-    currentPasswordTextFieldController?.dispose();
+    currentEmailTextFieldController?.dispose();
+    currentPasswordTextFieldController1?.dispose();
+    currentPasswordTextFieldController2?.dispose();
     newPassword1TextFieldController1?.dispose();
     newPassword2TextFieldController1?.dispose();
     newPassword1TextFieldController2?.dispose();
@@ -314,14 +323,39 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     AlignmentDirectional(-1, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    await changeEmailPageViewController
-                                                        ?.nextPage(
-                                                      duration: Duration(
-                                                          milliseconds: 300),
-                                                      curve: Curves.ease,
+                                                    isOK = await actions
+                                                        .resetUserEmail(
+                                                      currentEmailTextFieldController!
+                                                          .text,
+                                                      currentPasswordTextFieldController2!
+                                                          .text,
+                                                      emailTextFieldController!
+                                                          .text,
                                                     );
+                                                    await sendEmailVerification();
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Your email has been changed succesfully',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                          ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 4000),
+                                                        backgroundColor:
+                                                            Color(0x00000000),
+                                                      ),
+                                                    );
+                                                    Navigator.pop(context);
+
+                                                    setState(() {});
                                                   },
-                                                  text: 'Next',
+                                                  text: 'Change your Email',
                                                   options: FFButtonOptions(
                                                     width: double.infinity,
                                                     height: 48,
@@ -1426,7 +1460,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                   .fromSTEB(0, 16, 0, 8),
                                               child: TextFormField(
                                                 controller:
-                                                    currentPasswordTextFieldController,
+                                                    currentPasswordTextFieldController2,
                                                 autofocus: true,
                                                 obscureText:
                                                     !currentPasswordTextFieldVisibility,
@@ -2639,6 +2673,142 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                Align(
+                  alignment: AlignmentDirectional(-1, 0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                    child: Text(
+                      'Enter your current  Email and Password',
+                      style: FlutterFlowTheme.of(context).title1,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                  child: TextFormField(
+                    controller: currentEmailTextFieldController,
+                    onChanged: (_) => EasyDebounce.debounce(
+                      'currentEmailTextFieldController',
+                      Duration(milliseconds: 2000),
+                      () => setState(() {}),
+                    ),
+                    autofocus: true,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelStyle: FlutterFlowTheme.of(context).subtitle2,
+                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEFEFEF),
+                      suffixIcon:
+                          currentEmailTextFieldController!.text.isNotEmpty
+                              ? InkWell(
+                                  onTap: () async {
+                                    currentEmailTextFieldController?.clear();
+                                    setState(() {});
+                                  },
+                                  child: Icon(
+                                    Icons.clear,
+                                    color: Color(0xFF757575),
+                                    size: 22,
+                                  ),
+                                )
+                              : null,
+                    ),
+                    style: FlutterFlowTheme.of(context).subtitle1,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                  child: TextFormField(
+                    controller: currentPasswordTextFieldController1,
+                    onChanged: (_) => EasyDebounce.debounce(
+                      'currentPasswordTextFieldController1',
+                      Duration(milliseconds: 2000),
+                      () => setState(() {}),
+                    ),
+                    autofocus: true,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      labelStyle: FlutterFlowTheme.of(context).subtitle2,
+                      hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Color(0x00000000),
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFEFEFEF),
+                      suffixIcon: currentPasswordTextFieldController1!
+                              .text.isNotEmpty
+                          ? InkWell(
+                              onTap: () async {
+                                currentPasswordTextFieldController1?.clear();
+                                setState(() {});
+                              },
+                              child: Icon(
+                                Icons.clear,
+                                color: Color(0xFF757575),
+                                size: 22,
+                              ),
+                            )
+                          : null,
+                    ),
+                    style: FlutterFlowTheme.of(context).subtitle1,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                ),
                 SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
@@ -2693,56 +2863,57 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  'assets/images/imgPhone.png',
-                                  width: 28,
-                                  height: 28,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
-                                  child: Text(
-                                    'Change Phone Number',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                      if (FFAppState().falseconst)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/imgPhone.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
-                                ),
-                              ],
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(1, 0),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 32,
-                                icon: Icon(
-                                  Icons.chevron_right_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 16,
-                                ),
-                                onPressed: () async {
-                                  setState(() => FFAppState()
-                                      .loginDetailsContainerName = 'phone');
-                                  scaffoldKey.currentState!.openEndDrawer();
-                                },
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 0, 0),
+                                    child: Text(
+                                      'Change Phone Number',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              Align(
+                                alignment: AlignmentDirectional(1, 0),
+                                child: FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 32,
+                                  icon: Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 16,
+                                  ),
+                                  onPressed: () async {
+                                    setState(() => FFAppState()
+                                        .loginDetailsContainerName = 'phone');
+                                    scaffoldKey.currentState!.openEndDrawer();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                         child: Row(
