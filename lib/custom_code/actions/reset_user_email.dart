@@ -20,9 +20,9 @@ Future<bool> resetUserEmail(
     try {
       AuthCredential credential = EmailAuthProvider.credential(
           email: currentEMail, password: currentPassword);
-      currentUser.reauthenticateWithCredential(credential);
-      currentUser.verifyBeforeUpdateEmail(newEMail);
-      currentUser.updateEmail(newEMail);
+      await currentUser.reauthenticateWithCredential(credential);
+      await currentUser.verifyBeforeUpdateEmail(newEMail);
+      await currentUser.updateEmail(newEMail);
       return true;
     } catch (ex) {
       return false;
