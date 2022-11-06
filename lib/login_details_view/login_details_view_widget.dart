@@ -1975,7 +1975,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              'Your email has been changed succesfully',
+                                                              'Your password has been changed succesfully',
                                                               style: TextStyle(
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
@@ -1996,7 +1996,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              'An error happened while changing an email',
+                                                              'An error happened while changing yout password',
                                                               style: TextStyle(
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
