@@ -58,179 +58,202 @@ class _FilterIndustriesViewWidgetState
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                child: FutureBuilder<List<IndustriesRecord>>(
-                  future: queryIndustriesRecordOnce(
-                    queryBuilder: (industriesRecord) =>
-                        industriesRecord.orderBy('industry'),
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Industry',
+                        style: FlutterFlowTheme.of(context).title1.override(
+                              fontFamily: 'Roboto',
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      FFButtonWidget(
+                        onPressed: () async {
+                          if (FFAppState().isSelectAllVisible) {
+                            setState(
+                                () => FFAppState().isSelectAllVisible = false);
+                            setState(() => ccIndustriesValues.value = List.from(
+                                ccIndustriesIndustriesRecordList
+                                    .map((e) => e.industry!)
+                                    .toList()));
+                          } else {
+                            setState(
+                                () => FFAppState().isSelectAllVisible = true);
+                            setState(() => ccIndustriesValues.value = []);
+                          }
+                        },
+                        text: functions.getSelectAllButtonTitle(
+                            FFAppState().isSelectAllVisible),
+                        options: FFButtonOptions(
+                          width: 130,
+                          height: 40,
+                          color: FlutterFlowTheme.of(context).primaryColor,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle2
+                              .override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).alternate,
+                              ),
+                          elevation: 0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
                           ),
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                      );
-                    }
-                    List<IndustriesRecord> containerIndustriesRecordList =
-                        snapshot.data!;
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      decoration: BoxDecoration(),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Text(
-                                    'Industry',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                                FFButtonWidget(
-                                  onPressed: () async {
-                                    if (FFAppState().isSelectAllVisible) {
-                                      setState(() => FFAppState()
-                                          .isSelectAllVisible = false);
-                                      setState(() => ccIndustriesValues.value =
-                                          List.from(
-                                              FFAppState().fltrIndusrtries));
-                                    } else {
-                                      setState(() => FFAppState()
-                                          .isSelectAllVisible = true);
-                                      setState(
-                                          () => ccIndustriesValues.value = []);
-                                    }
-                                  },
-                                  text: functions.getSelectAllButtonTitle(
-                                      FFAppState().isSelectAllVisible),
-                                  options: FFButtonOptions(
-                                    width: 130,
-                                    height: 40,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: AlignmentDirectional(-1, -1),
+                    child: Wrap(
+                      spacing: 0,
+                      runSpacing: 0,
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      runAlignment: WrapAlignment.start,
+                      verticalDirection: VerticalDirection.down,
+                      clipBehavior: Clip.none,
+                      children: [
+                        FutureBuilder<List<IndustriesRecord>>(
+                          future: queryIndustriesRecordOnce(
+                            queryBuilder: (industriesRecord) =>
+                                industriesRecord.orderBy('industry'),
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CircularProgressIndicator(
                                     color: FlutterFlowTheme.of(context)
                                         .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
-                                    elevation: 0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                              child: FlutterFlowChoiceChips(
-                                initiallySelected: FFAppState().fltrIndusrtries,
-                                options: FFAppState()
-                                    .fltrIndusrtries
-                                    .map((label) => ChipData(label))
-                                    .toList(),
-                                onChanged: (val) => setState(
-                                    () => ccIndustriesValues.value = val),
-                                selectedChipStyle: ChipStyle(
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).alternate,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                  iconColor: Colors.white,
-                                  iconSize: 18,
-                                  labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 6, 8, 6),
-                                  elevation: 0,
-                                ),
-                                unselectedChipStyle: ChipStyle(
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).subtitle1,
-                                  iconColor: Color(0xFF323B45),
-                                  iconSize: 18,
-                                  labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 6, 8, 6),
-                                  elevation: 0,
-                                ),
-                                chipSpacing: 20,
-                                rowSpacing: 8,
-                                multiselect: true,
-                                initialized: ccIndustriesValues.value != null,
-                                alignment: WrapAlignment.start,
-                                selectedValuesVariable: ccIndustriesValues,
+                              );
+                            }
+                            List<IndustriesRecord>
+                                ccIndustriesIndustriesRecordList =
+                                snapshot.data!;
+                            return FlutterFlowChoiceChips(
+                              initiallySelected: FFAppState().fltrIndusrtries,
+                              options: ccIndustriesIndustriesRecordList
+                                  .map((e) => e.industry!)
+                                  .toList()
+                                  .map((label) => ChipData(label))
+                                  .toList(),
+                              onChanged: (val) => setState(
+                                  () => ccIndustriesValues.value = val),
+                              selectedChipStyle: ChipStyle(
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle1
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                                iconColor: Colors.white,
+                                iconSize: 18,
+                                labelPadding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 6, 8, 6),
+                                elevation: 0,
                               ),
-                            ),
-                          ],
+                              unselectedChipStyle: ChipStyle(
+                                backgroundColor: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                textStyle:
+                                    FlutterFlowTheme.of(context).subtitle1,
+                                iconColor: Color(0xFF323B45),
+                                iconSize: 18,
+                                labelPadding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 6, 8, 6),
+                                elevation: 0,
+                              ),
+                              chipSpacing: 20,
+                              rowSpacing: 8,
+                              multiselect: true,
+                              initialized: ccIndustriesValues.value != null,
+                              alignment: WrapAlignment.start,
+                              selectedValuesVariable: ccIndustriesValues,
+                            );
+                          },
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-1, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
-                  child: FFButtonWidget(
-                    onPressed: () async {
-                      setState(() => FFAppState().fltrIndusrtries =
-                          ccIndustriesValues.value!.toList());
-                      context.pop();
-                    },
-                    text: 'Save',
-                    options: FFButtonOptions(
-                      width: double.infinity,
-                      height: 48,
-                      color: FlutterFlowTheme.of(context).alternate,
-                      textStyle: FlutterFlowTheme.of(context)
-                          .subtitle1
-                          .override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
+                      ],
                     ),
                   ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFFEE837B),
+                              Color(0xFFF95A82),
+                              Color(0xFFEA3C7D)
+                            ],
+                            stops: [0, 0.6, 1],
+                            begin: AlignmentDirectional(0, -1),
+                            end: AlignmentDirectional(0, 1),
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            setState(() => FFAppState().fltrIndusrtries =
+                                ccIndustriesValues.value!.toList());
+                            context.pop();
+                          },
+                          text: 'Save',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 48,
+                            color: Colors.transparent,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle1
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 0,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
