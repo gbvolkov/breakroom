@@ -8,3 +8,4 @@ export 'place_picker_action.dart' show placePickerAction;
 export 'get_users_list_element.dart' show getUsersListElement;
 export 'get_address_from_location.dart' show getAddressFromLocation;
 export 'reset_user_email.dart' show resetUserEmail;
+export 'reset_user_password.dart' show resetUserPassword;

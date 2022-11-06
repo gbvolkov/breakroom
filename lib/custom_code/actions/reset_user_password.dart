@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future<bool> resetUserEmail(
+Future<bool> resetUserPassword(
   String currentEMail,
   String currentPassword,
-  String newEMail,
+  String newPassword,
 ) async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   if (currentUser == null) {
@@ -21,8 +21,7 @@ Future<bool> resetUserEmail(
       AuthCredential credential = EmailAuthProvider.credential(
           email: currentUser.email ?? currentEMail, password: currentPassword);
       await currentUser.reauthenticateWithCredential(credential);
-      await currentUser.verifyBeforeUpdateEmail(newEMail);
-      await currentUser.updateEmail(newEMail);
+      await currentUser.updatePassword(newPassword);
       return true;
     } catch (ex) {
       return false;

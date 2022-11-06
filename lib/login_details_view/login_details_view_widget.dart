@@ -185,7 +185,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 32, 0, 0),
                                                 child: Text(
-                                                  'Enter new Email and your current password',
+                                                  'Enter new email and your current password',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .title1,
@@ -1894,8 +1894,9 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                               alignment:
                                                   AlignmentDirectional(1, 0),
                                               child: FFButtonWidget(
-                                                onPressed: () {
-                                                  print('Button pressed ...');
+                                                onPressed: () async {
+                                                  context.pushNamed(
+                                                      'ForgotPasswordView');
                                                 },
                                                 text:
                                                     'I forgot my old password',
@@ -1954,25 +1955,87 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     AlignmentDirectional(-1, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text('Done'),
-                                                          content: Text(
-                                                              'Password was changed'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext),
-                                                              child: Text('Ok'),
+                                                    if (newPassword1TextFieldController2!
+                                                            .text ==
+                                                        newPassword2TextFieldController2!
+                                                            .text) {
+                                                      await actions
+                                                          .resetUserPassword(
+                                                        currentUserEmail,
+                                                        currentPasswordTextFieldController!
+                                                            .text,
+                                                        newPassword1TextFieldController2!
+                                                            .text,
+                                                      );
+                                                      if (isOK!) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Your email has been changed succesfully',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
                                                             ),
-                                                          ],
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0x00000000),
+                                                          ),
                                                         );
-                                                      },
-                                                    );
+                                                      } else {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'An error happened while changing an email',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBtnText,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      Navigator.pop(context);
+                                                    } else {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title: Text(
+                                                                'Passwords does not match'),
+                                                            content: Text(
+                                                                'Please confirm your password'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    Text('Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    }
                                                   },
                                                   text: 'Save new password',
                                                   options: FFButtonOptions(
