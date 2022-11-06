@@ -77,6 +77,40 @@ class _FilterIndustriesViewWidgetState
                               fontWeight: FontWeight.bold,
                             ),
                       ),
+                      Align(
+                        alignment: AlignmentDirectional(0.7, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if (FFAppState().isSelectAllVisible) {
+                              setState(() =>
+                                  FFAppState().isSelectAllVisible = false);
+                            } else {
+                              setState(
+                                  () => FFAppState().isSelectAllVisible = true);
+                              setState(() => ccIndustriesValues.value = []);
+                            }
+                          },
+                          text: functions.getSelectAllButtonTitle(
+                              FFAppState().isSelectAllVisible),
+                          options: FFButtonOptions(
+                            width: 130,
+                            height: 40,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle2
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                ),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -93,45 +127,6 @@ class _FilterIndustriesViewWidgetState
                       verticalDirection: VerticalDirection.down,
                       clipBehavior: Clip.none,
                       children: [
-                        Align(
-                          alignment: AlignmentDirectional(0.7, 0),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              if (FFAppState().isSelectAllVisible) {
-                                setState(() =>
-                                    FFAppState().isSelectAllVisible = false);
-                                setState(() => ccIndustriesValues.value =
-                                    List.from(ccIndustriesIndustriesRecordList
-                                        .map((e) => e.industry!)
-                                        .toList()));
-                              } else {
-                                setState(() =>
-                                    FFAppState().isSelectAllVisible = true);
-                                setState(() => ccIndustriesValues.value = []);
-                              }
-                            },
-                            text: functions.getSelectAllButtonTitle(
-                                FFAppState().isSelectAllVisible),
-                            options: FFButtonOptions(
-                              width: 130,
-                              height: 40,
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle2
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                  ),
-                              elevation: 0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
                         FutureBuilder<List<IndustriesRecord>>(
                           future: queryIndustriesRecordOnce(
                             queryBuilder: (industriesRecord) =>
