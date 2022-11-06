@@ -75,104 +75,113 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                     style: FlutterFlowTheme.of(context).bodyText2,
                   )),
                 ),
-                PagedListView<DocumentSnapshot<Object?>?, NotificationsRecord>(
-                  pagingController: () {
-                    final Query<Object?> Function(Query<Object?>) queryBuilder =
-                        (notificationsRecord) => notificationsRecord
-                            .where('receiver', isEqualTo: currentUserReference)
-                            .where('timestamp',
-                                isGreaterThanOrEqualTo:
-                                    functions.getToday(getCurrentTimestamp))
-                            .where('timestamp',
-                                isLessThan:
-                                    functions.getTomorrow(getCurrentTimestamp))
-                            .orderBy('timestamp', descending: true);
-                    if (_pagingController != null) {
-                      final query =
-                          queryBuilder(NotificationsRecord.collection);
-                      if (query != _pagingQuery) {
-                        // The query has changed
-                        _pagingQuery = query;
-                        _streamSubscriptions.forEach((s) => s?.cancel());
-                        _streamSubscriptions.clear();
-                        _pagingController!.refresh();
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: PagedListView<DocumentSnapshot<Object?>?,
+                      NotificationsRecord>(
+                    pagingController: () {
+                      final Query<Object?> Function(Query<Object?>)
+                          queryBuilder =
+                          (notificationsRecord) => notificationsRecord
+                              .where('receiver',
+                                  isEqualTo: currentUserReference)
+                              .where('timestamp',
+                                  isGreaterThanOrEqualTo:
+                                      functions.getToday(getCurrentTimestamp))
+                              .where('timestamp',
+                                  isLessThan: functions
+                                      .getTomorrow(getCurrentTimestamp))
+                              .orderBy('timestamp', descending: true);
+                      if (_pagingController != null) {
+                        final query =
+                            queryBuilder(NotificationsRecord.collection);
+                        if (query != _pagingQuery) {
+                          // The query has changed
+                          _pagingQuery = query;
+                          _streamSubscriptions.forEach((s) => s?.cancel());
+                          _streamSubscriptions.clear();
+                          _pagingController!.refresh();
+                        }
+                        return _pagingController!;
                       }
-                      return _pagingController!;
-                    }
 
-                    _pagingController = PagingController(firstPageKey: null);
-                    _pagingQuery = queryBuilder(NotificationsRecord.collection);
-                    _pagingController!.addPageRequestListener((nextPageMarker) {
-                      queryNotificationsRecordPage(
-                        queryBuilder: (notificationsRecord) =>
-                            notificationsRecord
-                                .where('receiver',
-                                    isEqualTo: currentUserReference)
-                                .where('timestamp',
-                                    isGreaterThanOrEqualTo:
-                                        functions.getToday(getCurrentTimestamp))
-                                .where('timestamp',
-                                    isLessThan: functions
-                                        .getTomorrow(getCurrentTimestamp))
-                                .orderBy('timestamp', descending: true),
-                        nextPageMarker: nextPageMarker,
-                        pageSize: 25,
-                        isStream: true,
-                      ).then((page) {
-                        _pagingController!.appendPage(
-                          page.data,
-                          page.nextPageMarker,
-                        );
-                        final streamSubscription =
-                            page.dataStream?.listen((data) {
-                          final itemIndexes = _pagingController!.itemList!
-                              .asMap()
-                              .map((k, v) => MapEntry(v.reference.id, k));
-                          data.forEach((item) {
-                            final index = itemIndexes[item.reference.id];
-                            final items = _pagingController!.itemList!;
-                            if (index != null) {
-                              items.replaceRange(index, index + 1, [item]);
-                              _pagingController!.itemList = {
-                                for (var item in items) item.reference: item
-                              }.values.toList();
-                            }
+                      _pagingController = PagingController(firstPageKey: null);
+                      _pagingQuery =
+                          queryBuilder(NotificationsRecord.collection);
+                      _pagingController!
+                          .addPageRequestListener((nextPageMarker) {
+                        queryNotificationsRecordPage(
+                          queryBuilder:
+                              (notificationsRecord) =>
+                                  notificationsRecord
+                                      .where('receiver',
+                                          isEqualTo: currentUserReference)
+                                      .where('timestamp',
+                                          isGreaterThanOrEqualTo: functions
+                                              .getToday(getCurrentTimestamp))
+                                      .where('timestamp',
+                                          isLessThan: functions
+                                              .getTomorrow(getCurrentTimestamp))
+                                      .orderBy('timestamp', descending: true),
+                          nextPageMarker: nextPageMarker,
+                          pageSize: 25,
+                          isStream: true,
+                        ).then((page) {
+                          _pagingController!.appendPage(
+                            page.data,
+                            page.nextPageMarker,
+                          );
+                          final streamSubscription =
+                              page.dataStream?.listen((data) {
+                            final itemIndexes = _pagingController!.itemList!
+                                .asMap()
+                                .map((k, v) => MapEntry(v.reference.id, k));
+                            data.forEach((item) {
+                              final index = itemIndexes[item.reference.id];
+                              final items = _pagingController!.itemList!;
+                              if (index != null) {
+                                items.replaceRange(index, index + 1, [item]);
+                                _pagingController!.itemList = {
+                                  for (var item in items) item.reference: item
+                                }.values.toList();
+                              }
+                            });
+                            setState(() {});
                           });
-                          setState(() {});
+                          _streamSubscriptions.add(streamSubscription);
                         });
-                        _streamSubscriptions.add(streamSubscription);
                       });
-                    });
-                    return _pagingController!;
-                  }(),
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  builderDelegate:
-                      PagedChildBuilderDelegate<NotificationsRecord>(
-                    // Customize what your widget looks like when it's loading the first page.
-                    firstPageProgressIndicatorBuilder: (_) => Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                      return _pagingController!;
+                    }(),
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    builderDelegate:
+                        PagedChildBuilderDelegate<NotificationsRecord>(
+                      // Customize what your widget looks like when it's loading the first page.
+                      firstPageProgressIndicatorBuilder: (_) => Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                          ),
                         ),
                       ),
+                      noItemsFoundIndicatorBuilder: (_) => Center(
+                        child: EmptyListWidgetWidget(),
+                      ),
+                      itemBuilder: (context, _, listViewIndex) {
+                        final listViewNotificationsRecord =
+                            _pagingController!.itemList![listViewIndex];
+                        return Container(
+                          decoration: BoxDecoration(),
+                          child: NotificationMessageComponentWidget(
+                            notification: listViewNotificationsRecord,
+                          ),
+                        );
+                      },
                     ),
-                    noItemsFoundIndicatorBuilder: (_) => Center(
-                      child: EmptyListWidgetWidget(),
-                    ),
-                    itemBuilder: (context, _, listViewIndex) {
-                      final listViewNotificationsRecord =
-                          _pagingController!.itemList![listViewIndex];
-                      return Container(
-                        height: 200,
-                        child: NotificationMessageComponentWidget(
-                          notification: listViewNotificationsRecord,
-                        ),
-                      );
-                    },
                   ),
                 ),
                 Padding(
@@ -223,16 +232,21 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                         snapshot.data!;
                     return ListView.builder(
                       padding: EdgeInsets.zero,
+                      primary: false,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: listViewNotificationsRecordList.length,
                       itemBuilder: (context, listViewIndex) {
                         final listViewNotificationsRecord =
                             listViewNotificationsRecordList[listViewIndex];
-                        return NotificationMessageComponentWidget(
-                          key: Key(
-                              'NotificationMessageComponent_${listViewIndex}'),
-                          notification: listViewNotificationsRecord,
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: NotificationMessageComponentWidget(
+                            notification: listViewNotificationsRecord,
+                          ),
                         );
                       },
                     );
@@ -284,6 +298,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                         snapshot.data!;
                     return ListView.builder(
                       padding: EdgeInsets.zero,
+                      primary: false,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       itemCount: listViewNotificationsRecordList.length,
@@ -291,7 +306,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                         final listViewNotificationsRecord =
                             listViewNotificationsRecordList[listViewIndex];
                         return Container(
-                          height: 200,
+                          decoration: BoxDecoration(),
                           child: NotificationMessageComponentWidget(
                             notification: listViewNotificationsRecord,
                           ),
