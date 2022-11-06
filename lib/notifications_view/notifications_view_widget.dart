@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/empty_list_widget_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -160,7 +161,8 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                         ),
                       ),
                     ),
-
+                    noItemsFoundIndicatorBuilder: (_) =>
+                        EmptyListWidgetWidget(),
                     itemBuilder: (context, _, listViewIndex) {
                       final listViewNotificationsRecord =
                           _pagingController!.itemList![listViewIndex];
