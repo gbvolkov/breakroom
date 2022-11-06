@@ -64,7 +64,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                   controller: textController,
                   onChanged: (_) => EasyDebounce.debounce(
                     'textController',
-                    Duration(milliseconds: 2000),
+                    Duration(milliseconds: 3000),
                     () => setState(() {}),
                   ),
                   obscureText: false,
@@ -166,7 +166,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                           (currentUserDocument?.liked
                                                       ?.toList() ??
                                                   [])
-                                              .toList())
+                                              .toList(),
+                                          textController!.text)
                                       .map((e) => e)
                                       .toList();
                                   if (matches.isEmpty) {

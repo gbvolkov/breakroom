@@ -140,6 +140,7 @@ List<DocumentReference> concatUsersList(
 List<UsersRecord> filterMatches(
   List<UsersRecord> fans,
   List<String>? liked,
+  String? pattern,
 ) {
   List<UsersRecord> result = [];
   if (liked == null) {
@@ -147,7 +148,15 @@ List<UsersRecord> filterMatches(
   }
   for (var fan in fans) {
     if (liked.contains(fan.uid)) {
-      result.add(fan);
+      if (pattern != null && pattern.isNotEmpty) {
+        String tocompare =
+            "${(fan.firstName ?? "")}  ${(fan.lastName ?? "")}  ${(fan.email ?? "")}";
+        if (tocompare.contains(pattern)) {
+          result.add(fan);
+        }
+      } else {
+        result.add(fan);
+      }
     }
   }
   return result;
