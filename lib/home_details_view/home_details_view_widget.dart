@@ -2,7 +2,6 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../flutter_flow/chat/index.dart';
-import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -30,7 +29,6 @@ class HomeDetailsViewWidget extends StatefulWidget {
 
 class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
   ChatsRecord? groupChat;
-  List<String>? choiceChipsValues;
   PageController? pageViewController;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -568,78 +566,49 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                       ),
                             ),
                           ),
-                          FutureBuilder<List<InterestsRecord>>(
-                            future: queryInterestsRecordOnce(
-                              queryBuilder: (interestsRecord) =>
-                                  interestsRecord.orderBy('interest'),
-                              singleRecord: true,
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<InterestsRecord>
-                                  choiceChipsInterestsRecordList =
-                                  snapshot.data!;
-                              // Return an empty Container when the document does not exist.
-                              if (snapshot.data!.isEmpty) {
-                                return Container();
-                              }
-                              final choiceChipsInterestsRecord =
-                                  choiceChipsInterestsRecordList.isNotEmpty
-                                      ? choiceChipsInterestsRecordList.first
-                                      : null;
-                              return FlutterFlowChoiceChips(
-                                initiallySelected:
-                                    widget.userProfile!.interests!.toList(),
-                                options: widget.userProfile!.interests!
-                                    .toList()
-                                    .map((label) => ChipData(label))
-                                    .toList(),
-                                onChanged: (val) =>
-                                    setState(() => choiceChipsValues = val),
-                                selectedChipStyle: ChipStyle(
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .backgroundGrey,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                      ),
-                                  iconColor:
-                                      FlutterFlowTheme.of(context).alternate,
-                                  iconSize: 18,
-                                  labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 8, 8, 8),
-                                  elevation: 0,
-                                ),
-                                unselectedChipStyle: ChipStyle(
-                                  backgroundColor: Colors.white,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).subtitle2,
-                                  iconColor: Color(0xFF323B45),
-                                  iconSize: 18,
-                                  labelPadding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 8, 8, 8),
-                                  elevation: 0,
-                                ),
-                                chipSpacing: 20,
-                                rowSpacing: 8,
-                                multiselect: true,
-                                initialized: choiceChipsValues != null,
+                          Builder(
+                            builder: (context) {
+                              final interests =
+                                  widget.userProfile!.interests!.toList();
+                              return Wrap(
+                                spacing: 0,
+                                runSpacing: 0,
                                 alignment: WrapAlignment.start,
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                direction: Axis.horizontal,
+                                runAlignment: WrapAlignment.start,
+                                verticalDirection: VerticalDirection.down,
+                                clipBehavior: Clip.none,
+                                children: List.generate(interests.length,
+                                    (interestsIndex) {
+                                  final interestsItem =
+                                      interests[interestsIndex];
+                                  return FFButtonWidget(
+                                    onPressed: () {
+                                      print('Button pressed ...');
+                                    },
+                                    text: interestsItem,
+                                    options: FFButtonOptions(
+                                      height: 32,
+                                      color: FlutterFlowTheme.of(context)
+                                          .backgroundGrey,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle2
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                      elevation: 0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  );
+                                }),
                               );
                             },
                           ),
