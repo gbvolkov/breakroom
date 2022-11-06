@@ -18,11 +18,14 @@ class _EmptyListWidgetWidgetState extends State<EmptyListWidgetWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Image.asset(
-            'assets/images/m12_Artboard_1.png',
-            width: 100,
-            height: 100,
-            fit: BoxFit.cover,
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+            child: Image.asset(
+              'assets/images/m12_Artboard_1.png',
+              width: 100,
+              height: 100,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
@@ -37,7 +40,7 @@ class _EmptyListWidgetWidgetState extends State<EmptyListWidgetWidget> {
             ),
           ),
           Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 32, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16, 32, 16, 32),
             child: Text(
               'All your correspondence and requests to send a message will be here.',
               textAlign: TextAlign.center,
