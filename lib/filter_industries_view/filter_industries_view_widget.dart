@@ -115,9 +115,7 @@ class _FilterIndustriesViewWidgetState
                                           .isSelectAllVisible = false);
                                       setState(() => ccIndustriesValues.value =
                                           List.from(
-                                              containerIndustriesRecordList
-                                                  .map((e) => e.industry!)
-                                                  .toList()));
+                                              FFAppState().fltrIndusrtries));
                                     } else {
                                       setState(() => FFAppState()
                                           .isSelectAllVisible = true);
@@ -154,9 +152,8 @@ class _FilterIndustriesViewWidgetState
                                   EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                               child: FlutterFlowChoiceChips(
                                 initiallySelected: FFAppState().fltrIndusrtries,
-                                options: containerIndustriesRecordList
-                                    .map((e) => e.industry!)
-                                    .toList()
+                                options: FFAppState()
+                                    .fltrIndusrtries
                                     .map((label) => ChipData(label))
                                     .toList(),
                                 onChanged: (val) => setState(
