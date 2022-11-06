@@ -209,12 +209,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => EditProfileViewWidget(),
             ),
             FFRoute(
-              name: 'FiltersView',
-              path: 'filtersView',
-              requireAuth: true,
-              builder: (context, params) => FiltersViewWidget(),
-            ),
-            FFRoute(
               name: 'EditBioView',
               path: 'editBioView',
               requireAuth: true,
@@ -225,6 +219,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'getPremiumView',
               requireAuth: true,
               builder: (context, params) => GetPremiumViewWidget(),
+            ),
+            FFRoute(
+              name: 'FiltersView',
+              path: 'filtersView',
+              requireAuth: true,
+              builder: (context, params) => FiltersViewWidget(),
+            ),
+            FFRoute(
+              name: 'FilterIndustriesView',
+              path: 'filterIndustriesView',
+              requireAuth: true,
+              builder: (context, params) => FilterIndustriesViewWidget(),
             ),
             FFRoute(
               name: 'ChooseLocationPage',

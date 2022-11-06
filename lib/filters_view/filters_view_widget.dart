@@ -948,9 +948,9 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                               FFAppState()
                                                                       .advancedFilterName =
                                                                   'Advanced2');
-                                                          scaffoldKey
-                                                              .currentState!
-                                                              .openEndDrawer();
+
+                                                          context.pushNamed(
+                                                              'FilterIndustriesView');
                                                         },
                                                       ),
                                                     ],

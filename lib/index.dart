@@ -24,10 +24,12 @@ export 'home_details_view/home_details_view_widget.dart'
 export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
 export 'edit_profile_view/edit_profile_view_widget.dart'
     show EditProfileViewWidget;
-export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
 export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
 export 'get_premium_view/get_premium_view_widget.dart'
     show GetPremiumViewWidget;
+export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
+export 'filter_industries_view/filter_industries_view_widget.dart'
+    show FilterIndustriesViewWidget;
 export 'choose_location_page/choose_location_page_widget.dart'
     show ChooseLocationPageWidget;
 export 'login_set_new_password_view/login_set_new_password_view_widget.dart'
