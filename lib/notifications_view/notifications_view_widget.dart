@@ -62,18 +62,21 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Container(
-                  width: 60,
+                  width: 80,
                   height: 30,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   alignment: AlignmentDirectional(0, 0),
-                  child: SelectionArea(
-                      child: AutoSizeText(
-                    'Today',
-                    style: FlutterFlowTheme.of(context).bodyText2,
-                  )),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
+                    child: SelectionArea(
+                        child: AutoSizeText(
+                      'Today',
+                      style: FlutterFlowTheme.of(context).bodyText2,
+                    )),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -187,7 +190,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                   child: Container(
-                    width: 60,
+                    width: 80,
                     height: 30,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -195,7 +198,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                     ),
                     alignment: AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
                       child: SelectionArea(
                           child: AutoSizeText(
                         'Yesterday',
@@ -204,58 +207,62 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                     ),
                   ),
                 ),
-                StreamBuilder<List<NotificationsRecord>>(
-                  stream: queryNotificationsRecord(
-                    queryBuilder: (notificationsRecord) => notificationsRecord
-                        .where('receiver', isEqualTo: currentUserReference)
-                        .where('timestamp',
-                            isGreaterThanOrEqualTo: functions.getEarlierDate(
-                                getCurrentTimestamp, 1))
-                        .where('timestamp',
-                            isLessThan: functions.getToday(getCurrentTimestamp))
-                        .orderBy('timestamp', descending: true),
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-                    List<NotificationsRecord> listViewNotificationsRecordList =
-                        snapshot.data!;
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: listViewNotificationsRecordList.length,
-                      itemBuilder: (context, listViewIndex) {
-                        final listViewNotificationsRecord =
-                            listViewNotificationsRecordList[listViewIndex];
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                          ),
-                          child: NotificationMessageComponentWidget(
-                            notification: listViewNotificationsRecord,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: StreamBuilder<List<NotificationsRecord>>(
+                    stream: queryNotificationsRecord(
+                      queryBuilder: (notificationsRecord) => notificationsRecord
+                          .where('receiver', isEqualTo: currentUserReference)
+                          .where('timestamp',
+                              isGreaterThanOrEqualTo: functions.getEarlierDate(
+                                  getCurrentTimestamp, 1))
+                          .where('timestamp',
+                              isLessThan:
+                                  functions.getToday(getCurrentTimestamp))
+                          .orderBy('timestamp', descending: true),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
                           ),
                         );
-                      },
-                    );
-                  },
+                      }
+                      List<NotificationsRecord>
+                          listViewNotificationsRecordList = snapshot.data!;
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        primary: false,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listViewNotificationsRecordList.length,
+                        itemBuilder: (context, listViewIndex) {
+                          final listViewNotificationsRecord =
+                              listViewNotificationsRecordList[listViewIndex];
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            child: NotificationMessageComponentWidget(
+                              notification: listViewNotificationsRecord,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                   child: Container(
-                    width: 60,
+                    width: 80,
                     height: 30,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
@@ -263,7 +270,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                     ),
                     alignment: AlignmentDirectional(0, 0),
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 4, 0),
                       child: SelectionArea(
                           child: AutoSizeText(
                         'Older',
@@ -272,48 +279,51 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                     ),
                   ),
                 ),
-                StreamBuilder<List<NotificationsRecord>>(
-                  stream: queryNotificationsRecord(
-                    queryBuilder: (notificationsRecord) => notificationsRecord
-                        .where('receiver', isEqualTo: currentUserReference)
-                        .where('timestamp',
-                            isLessThan: functions.getEarlierDate(
-                                getCurrentTimestamp, 1))
-                        .orderBy('timestamp', descending: true),
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-                    List<NotificationsRecord> listViewNotificationsRecordList =
-                        snapshot.data!;
-                    return ListView.builder(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: listViewNotificationsRecordList.length,
-                      itemBuilder: (context, listViewIndex) {
-                        final listViewNotificationsRecord =
-                            listViewNotificationsRecordList[listViewIndex];
-                        return Container(
-                          decoration: BoxDecoration(),
-                          child: NotificationMessageComponentWidget(
-                            notification: listViewNotificationsRecord,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  child: StreamBuilder<List<NotificationsRecord>>(
+                    stream: queryNotificationsRecord(
+                      queryBuilder: (notificationsRecord) => notificationsRecord
+                          .where('receiver', isEqualTo: currentUserReference)
+                          .where('timestamp',
+                              isLessThan: functions.getEarlierDate(
+                                  getCurrentTimestamp, 1))
+                          .orderBy('timestamp', descending: true),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
                           ),
                         );
-                      },
-                    );
-                  },
+                      }
+                      List<NotificationsRecord>
+                          listViewNotificationsRecordList = snapshot.data!;
+                      return ListView.builder(
+                        padding: EdgeInsets.zero,
+                        primary: false,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: listViewNotificationsRecordList.length,
+                        itemBuilder: (context, listViewIndex) {
+                          final listViewNotificationsRecord =
+                              listViewNotificationsRecordList[listViewIndex];
+                          return Container(
+                            decoration: BoxDecoration(),
+                            child: NotificationMessageComponentWidget(
+                              notification: listViewNotificationsRecord,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

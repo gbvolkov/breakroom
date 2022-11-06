@@ -295,7 +295,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'NewMatchView',
               path: 'newMatchView',
               requireAuth: true,
-              builder: (context, params) => NewMatchViewWidget(),
+              asyncParams: {
+                'me': getDoc('users', UsersRecord.serializer),
+                'match': getDoc('users', UsersRecord.serializer),
+              },
+              builder: (context, params) => NewMatchViewWidget(
+                me: params.getParam('me', ParamType.Document),
+                match: params.getParam('match', ParamType.Document),
+              ),
             ),
             FFRoute(
               name: 'MatchesView',

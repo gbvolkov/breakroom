@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -6,7 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NewMatchViewWidget extends StatefulWidget {
-  const NewMatchViewWidget({Key? key}) : super(key: key);
+  const NewMatchViewWidget({
+    Key? key,
+    this.me,
+    this.match,
+  }) : super(key: key);
+
+  final UsersRecord? me;
+  final UsersRecord? match;
 
   @override
   _NewMatchViewWidgetState createState() => _NewMatchViewWidgetState();
@@ -34,7 +42,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            context.pop();
+            context.pushNamed('HomeView');
           },
         ),
         title: Text(
@@ -102,13 +110,36 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget> {
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 32, 0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(32),
-                                      child: Image.network(
-                                        'https://www.shantimadanhospital.com/images/2sahaj-garg.jpg',
-                                        width: 150,
-                                        height: 250,
-                                        fit: BoxFit.fitHeight,
+                                    child: InkWell(
+                                      onTap: () async {
+                                        context.pushNamed(
+                                          'HomeDetailsView',
+                                          queryParams: {
+                                            'userProfile': serializeParam(
+                                              widget.match,
+                                              ParamType.Document,
+                                            ),
+                                            'mode': serializeParam(
+                                              'match',
+                                              ParamType.String,
+                                            ),
+                                          }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'userProfile': widget.match,
+                                          },
+                                        );
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(32),
+                                        child: Image.network(
+                                          valueOrDefault<String>(
+                                            widget.match!.photoUrl,
+                                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                          ),
+                                          width: 150,
+                                          height: 250,
+                                          fit: BoxFit.fitHeight,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -121,7 +152,10 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget> {
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(32),
                                       child: Image.network(
-                                        'https://previews.agefotostock.com/previewimage/medibigoff/6b179625504a2b0276d32850b6785bc7/c71-454146.jpg',
+                                        valueOrDefault<String>(
+                                          widget.me!.photoUrl,
+                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                        ),
                                         width: 150,
                                         height: 250,
                                         fit: BoxFit.cover,
@@ -190,8 +224,22 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget> {
                   Align(
                     alignment: AlignmentDirectional(-1, 0),
                     child: FFButtonWidget(
-                      onPressed: () {
-                        print('btnStartChat pressed ...');
+                      onPressed: () async {
+                        if (Navigator.of(context).canPop()) {
+                          context.pop();
+                        }
+                        context.pushNamed(
+                          'Chat',
+                          queryParams: {
+                            'chatUser': serializeParam(
+                              widget.match,
+                              ParamType.Document,
+                            ),
+                          }.withoutNulls,
+                          extra: <String, dynamic>{
+                            'chatUser': widget.match,
+                          },
+                        );
                       },
                       text: 'Start chat',
                       options: FFButtonOptions(

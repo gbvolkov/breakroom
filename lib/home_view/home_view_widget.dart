@@ -441,27 +441,24 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     .doc()
                                                     .set(
                                                         notificationsCreateData);
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Congrats! You have a match!',
-                                                      style: TextStyle(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
+
+                                                context.pushNamed(
+                                                  'NewMatchView',
+                                                  queryParams: {
+                                                    'me': serializeParam(
+                                                      columnUsersRecord,
+                                                      ParamType.Document,
                                                     ),
-                                                    duration: Duration(
-                                                        milliseconds: 4000),
-                                                    backgroundColor:
-                                                        Color(0x00000000),
-                                                  ),
+                                                    'match': serializeParam(
+                                                      matchedUser,
+                                                      ParamType.Document,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'me': columnUsersRecord,
+                                                    'match': matchedUser,
+                                                  },
                                                 );
-                                                await Future.delayed(
-                                                    const Duration(
-                                                        milliseconds: 3000));
                                               } else {
                                                 triggerPushNotification(
                                                   notificationTitle:
@@ -515,25 +512,25 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     .doc()
                                                     .set(
                                                         notificationsCreateData);
+                                                if (Navigator.of(context)
+                                                    .canPop()) {
+                                                  context.pop();
+                                                }
+                                                context.pushNamed(
+                                                  'HomeView',
+                                                  extra: <String, dynamic>{
+                                                    kTransitionInfoKey:
+                                                        TransitionInfo(
+                                                      hasTransition: true,
+                                                      transitionType:
+                                                          PageTransitionType
+                                                              .fade,
+                                                      duration: Duration(
+                                                          milliseconds: 0),
+                                                    ),
+                                                  },
+                                                );
                                               }
-
-                                              if (Navigator.of(context)
-                                                  .canPop()) {
-                                                context.pop();
-                                              }
-                                              context.pushNamed(
-                                                'HomeView',
-                                                extra: <String, dynamic>{
-                                                  kTransitionInfoKey:
-                                                      TransitionInfo(
-                                                    hasTransition: true,
-                                                    transitionType:
-                                                        PageTransitionType.fade,
-                                                    duration: Duration(
-                                                        milliseconds: 0),
-                                                  ),
-                                                },
-                                              );
 
                                               setState(() {});
                                             },

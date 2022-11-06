@@ -134,7 +134,11 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'AddUsersToGroup': (data) async => AddUsersToGroupWidget(
         chat: await getDocumentParameter(data, 'chat', ChatsRecord.serializer),
       ),
-  'NewMatchView': (data) async => NewMatchViewWidget(),
+  'NewMatchView': (data) async => NewMatchViewWidget(
+        me: await getDocumentParameter(data, 'me', UsersRecord.serializer),
+        match:
+            await getDocumentParameter(data, 'match', UsersRecord.serializer),
+      ),
   'MatchesView': (data) async => NavBarPage(initialPage: 'MatchesView'),
   'GetPremium1View': (data) async => GetPremium1ViewWidget(),
   'YouHavePaidView': (data) async => YouHavePaidViewWidget(),
