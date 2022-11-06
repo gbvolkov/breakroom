@@ -9,7 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class FilterIndustriesViewWidget extends StatefulWidget {
-  const FilterIndustriesViewWidget({Key? key}) : super(key: key);
+  const FilterIndustriesViewWidget({
+    Key? key,
+    this.selectedIndustries,
+  }) : super(key: key);
+
+  final List<String>? selectedIndustries;
 
   @override
   _FilterIndustriesViewWidgetState createState() =>
@@ -158,6 +163,7 @@ class _FilterIndustriesViewWidgetState
                             clipBehavior: Clip.none,
                             children: [
                               FlutterFlowChoiceChips(
+                                initiallySelected: widget.selectedIndustries,
                                 options: containerIndustriesRecordList
                                     .map((e) => e.industry!)
                                     .toList()

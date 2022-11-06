@@ -950,7 +950,20 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                                   'Advanced2');
 
                                                           context.pushNamed(
-                                                              'FilterIndustriesView');
+                                                            'FilterIndustriesView',
+                                                            queryParams: {
+                                                              'selectedIndustries':
+                                                                  serializeParam(
+                                                                currentUserDocument!
+                                                                    .filter
+                                                                    .industries
+                                                                    .toList(),
+                                                                ParamType
+                                                                    .String,
+                                                                true,
+                                                              ),
+                                                            }.withoutNulls,
+                                                          );
                                                         },
                                                       ),
                                                     ],

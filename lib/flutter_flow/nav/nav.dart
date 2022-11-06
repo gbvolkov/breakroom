@@ -230,7 +230,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'FilterIndustriesView',
               path: 'filterIndustriesView',
               requireAuth: true,
-              builder: (context, params) => FilterIndustriesViewWidget(),
+              builder: (context, params) => FilterIndustriesViewWidget(
+                selectedIndustries: params.getParam<String>(
+                    'selectedIndustries', ParamType.String, true),
+              ),
             ),
             FFRoute(
               name: 'ChooseLocationPage',
