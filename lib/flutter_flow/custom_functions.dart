@@ -330,3 +330,21 @@ int stringLength(String? strVal) {
   }
   return length;
 }
+
+DateTime getToday(DateTime current) {
+  DateTime dt = DateTime(current.year, current.month, current.day);
+  return dt;
+}
+
+DateTime getTomorrow(DateTime current) {
+  DateTime dt = DateTime(current.year, current.month, current.day);
+  return dt.add(const Duration(days: 1));
+}
+
+DateTime getEarlierDate(
+  DateTime current,
+  int cdays,
+) {
+  DateTime dt = DateTime(current.year, current.month, current.day);
+  return dt.subtract(Duration(days: cdays));
+}
