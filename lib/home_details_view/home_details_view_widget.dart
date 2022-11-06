@@ -566,51 +566,60 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                       ),
                             ),
                           ),
-                          Builder(
-                            builder: (context) {
-                              final interests =
-                                  widget.userProfile!.interests!.toList();
-                              return Wrap(
-                                spacing: 0,
-                                runSpacing: 0,
-                                alignment: WrapAlignment.start,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                direction: Axis.horizontal,
-                                runAlignment: WrapAlignment.start,
-                                verticalDirection: VerticalDirection.down,
-                                clipBehavior: Clip.none,
-                                children: List.generate(interests.length,
-                                    (interestsIndex) {
-                                  final interestsItem =
-                                      interests[interestsIndex];
-                                  return FFButtonWidget(
-                                    onPressed: () {
-                                      print('Button pressed ...');
-                                    },
-                                    text: interestsItem,
-                                    options: FFButtonOptions(
-                                      height: 32,
-                                      color: FlutterFlowTheme.of(context)
-                                          .backgroundGrey,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                      elevation: 0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
+                          Container(
+                            width: double.infinity,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                            child: Builder(
+                              builder: (context) {
+                                final interests =
+                                    widget.userProfile!.interests!.toList();
+                                return Wrap(
+                                  spacing: 0,
+                                  runSpacing: 0,
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  direction: Axis.horizontal,
+                                  runAlignment: WrapAlignment.start,
+                                  verticalDirection: VerticalDirection.down,
+                                  clipBehavior: Clip.none,
+                                  children: List.generate(interests.length,
+                                      (interestsIndex) {
+                                    final interestsItem =
+                                        interests[interestsIndex];
+                                    return FFButtonWidget(
+                                      onPressed: () {
+                                        print('Button pressed ...');
+                                      },
+                                      text: interestsItem,
+                                      options: FFButtonOptions(
+                                        height: 32,
+                                        color: FlutterFlowTheme.of(context)
+                                            .backgroundGrey,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                        elevation: 0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  );
-                                }),
-                              );
-                            },
+                                    );
+                                  }),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       ),
