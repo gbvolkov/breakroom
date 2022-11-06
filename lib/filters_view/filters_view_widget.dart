@@ -215,45 +215,87 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ),
                                   ],
                                 ),
-                                FlutterFlowChoiceChips(
-                                  initiallySelected:
-                                      FFAppState().fltrIndusrtries,
-                                  options: containerIndustriesRecordList
-                                      .map((e) => e.industry!)
-                                      .toList()
-                                      .map((label) => ChipData(label))
-                                      .toList(),
-                                  onChanged: (val) => setState(
-                                      () => ccIndustriesValues.value = val),
-                                  selectedChipStyle: ChipStyle(
-                                    backgroundColor: Color(0xFF323B45),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyText1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: Colors.white,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: FutureBuilder<List<InterestsRecord>>(
+                                    future: queryInterestsRecordOnce(
+                                      queryBuilder: (interestsRecord) =>
+                                          interestsRecord.orderBy('interest'),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<InterestsRecord>
+                                          ccIndustriesInterestsRecordList =
+                                          snapshot.data!;
+                                      return FlutterFlowChoiceChips(
+                                        initiallySelected:
+                                            FFAppState().fltrIndusrtries,
+                                        options: containerIndustriesRecordList
+                                            .map((e) => e.industry!)
+                                            .toList()
+                                            .map((label) => ChipData(label))
+                                            .toList(),
+                                        onChanged: (val) => setState(() =>
+                                            ccIndustriesValues.value = val),
+                                        selectedChipStyle: ChipStyle(
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .alternate,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                          iconColor: Colors.white,
+                                          iconSize: 18,
+                                          labelPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8, 6, 8, 6),
+                                          elevation: 0,
                                         ),
-                                    iconColor: Colors.white,
-                                    iconSize: 18,
-                                    elevation: 4,
-                                  ),
-                                  unselectedChipStyle: ChipStyle(
-                                    backgroundColor: Colors.white,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: Color(0xFF323B45),
+                                        unselectedChipStyle: ChipStyle(
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .subtitle1,
+                                          iconColor: Color(0xFF323B45),
+                                          iconSize: 18,
+                                          labelPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  8, 6, 8, 6),
+                                          elevation: 0,
                                         ),
-                                    iconColor: Color(0xFF323B45),
-                                    iconSize: 18,
-                                    elevation: 4,
+                                        chipSpacing: 20,
+                                        rowSpacing: 8,
+                                        multiselect: true,
+                                        initialized:
+                                            ccIndustriesValues.value != null,
+                                        alignment: WrapAlignment.start,
+                                        selectedValuesVariable:
+                                            ccIndustriesValues,
+                                      );
+                                    },
                                   ),
-                                  chipSpacing: 20,
-                                  multiselect: true,
-                                  initialized: ccIndustriesValues.value != null,
-                                  alignment: WrapAlignment.start,
-                                  selectedValuesVariable: ccIndustriesValues,
                                 ),
                               ],
                             ),
