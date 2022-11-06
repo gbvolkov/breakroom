@@ -39,8 +39,8 @@ class _FilterIndustriesViewWidgetState
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            context.pop();
           },
         ),
         title: Text(
@@ -158,7 +158,6 @@ class _FilterIndustriesViewWidgetState
                             clipBehavior: Clip.none,
                             children: [
                               FlutterFlowChoiceChips(
-                                initiallySelected: FFAppState().fltrIndusrtries,
                                 options: containerIndustriesRecordList
                                     .map((e) => e.industry!)
                                     .toList()
