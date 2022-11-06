@@ -24,6 +24,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
   PageController? pageViewController;
   double? sliderDistanceValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  ValueNotifier<List<String>?> ccIndustriesValues = ValueNotifier(null);
 
   @override
   void initState() {
@@ -176,16 +177,17 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         if (FFAppState().isSelectAllVisible) {
                                           setState(() => FFAppState()
                                               .isSelectAllVisible = false);
-                                          setState(() =>
-                                              FFAppState().fltrIndusrtries =
+                                          setState(() => ccIndustriesValues
+                                                  .value =
+                                              List.from(
                                                   containerIndustriesRecordList
                                                       .map((e) => e.industry!)
-                                                      .toList());
+                                                      .toList()));
                                         } else {
                                           setState(() => FFAppState()
                                               .isSelectAllVisible = true);
-                                          setState(() => FFAppState()
-                                              .fltrIndusrtries = []);
+                                          setState(() =>
+                                              ccIndustriesValues.value = []);
                                         }
                                       },
                                       text: functions.getSelectAllButtonTitle(
@@ -213,30 +215,45 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ),
                                   ],
                                 ),
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 700,
-                                  child: custom_widgets.MyCheckBoxGroup(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 700,
-                                    buttonLabels: containerIndustriesRecordList
-                                        .map((e) => e.industry!)
-                                        .toList(),
-                                    buttonValues: containerIndustriesRecordList
-                                        .map((e) => e.industry!)
-                                        .toList(),
-                                    horizontal: true,
-                                    buttonHeight: 40.0,
-                                    defaultSelected:
-                                        FFAppState().fltrIndusrtries.toList(),
-                                    onValue: () async {
-                                      setState(() =>
-                                          FFAppState().fltrIndusrtries =
-                                              FFAppState()
-                                                  .mcbSelectedValues
-                                                  .toList());
-                                    },
+                                FlutterFlowChoiceChips(
+                                  initiallySelected:
+                                      FFAppState().fltrIndusrtries,
+                                  options: containerIndustriesRecordList
+                                      .map((e) => e.industry!)
+                                      .toList()
+                                      .map((label) => ChipData(label))
+                                      .toList(),
+                                  onChanged: (val) => setState(
+                                      () => ccIndustriesValues.value = val),
+                                  selectedChipStyle: ChipStyle(
+                                    backgroundColor: Color(0xFF323B45),
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyText1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: Colors.white,
+                                        ),
+                                    iconColor: Colors.white,
+                                    iconSize: 18,
+                                    elevation: 4,
                                   ),
+                                  unselectedChipStyle: ChipStyle(
+                                    backgroundColor: Colors.white,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: Color(0xFF323B45),
+                                        ),
+                                    iconColor: Color(0xFF323B45),
+                                    iconSize: 18,
+                                    elevation: 4,
+                                  ),
+                                  chipSpacing: 20,
+                                  multiselect: true,
+                                  initialized: ccIndustriesValues.value != null,
+                                  alignment: WrapAlignment.start,
+                                  selectedValuesVariable: ccIndustriesValues,
                                 ),
                               ],
                             ),
@@ -257,6 +274,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              setState(() => FFAppState().fltrIndusrtries =
+                                  ccIndustriesValues.value!.toList());
                               if (scaffoldKey.currentState!.isDrawerOpen ||
                                   scaffoldKey.currentState!.isEndDrawerOpen) {
                                 Navigator.pop(context);
