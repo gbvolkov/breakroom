@@ -499,6 +499,8 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                           flex: 14,
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
@@ -632,32 +634,40 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                           fontSize: 12,
                                                         ),
                                                   )),
-                                                  SelectionArea(
-                                                      child: Text(
-                                                    valueOrDefault<String>(
-                                                      () {
-                                                        if (listViewNotificationsRecord
-                                                                .type ==
-                                                            'like') {
-                                                          return 'liked you';
-                                                        } else if (listViewNotificationsRecord
-                                                                .type ==
-                                                            'match') {
-                                                          return 'liked you back';
-                                                        } else {
-                                                          return 'sent you a message';
-                                                        }
-                                                      }(),
-                                                      'sent you a message',
-                                                    ),
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontSize: 12,
-                                                        ),
-                                                  )),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                8, 0, 0, 0),
+                                                    child: SelectionArea(
+                                                        child: Text(
+                                                      valueOrDefault<String>(
+                                                        () {
+                                                          if (listViewNotificationsRecord
+                                                                  .type ==
+                                                              'like') {
+                                                            return 'liked you';
+                                                          } else if (listViewNotificationsRecord
+                                                                  .type ==
+                                                              'match') {
+                                                            return 'liked you back';
+                                                          } else {
+                                                            return 'sent you a message';
+                                                          }
+                                                        }(),
+                                                        'sent you a message',
+                                                      ),
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                fontSize: 12,
+                                                              ),
+                                                    )),
+                                                  ),
                                                 ],
                                               ),
                                             ],
@@ -732,7 +742,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                         .subtitle2
                                                         .override(
                                                           fontFamily: 'Roboto',
-                                                          fontSize: 12,
+                                                          fontSize: 10,
                                                         ),
                                               ),
                                             ),
