@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -91,58 +90,31 @@ class _NotificationMessageComponentWidgetState
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     if (widget.notification!.type == 'like')
-                      Expanded(
-                        flex: 2,
-                        child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 48,
-                          icon: Icon(
-                            Icons.favorite,
-                            color: FlutterFlowTheme.of(context).alternate,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        child: Icon(
+                          Icons.favorite,
+                          color: FlutterFlowTheme.of(context).alternate,
+                          size: 24,
                         ),
                       ),
                     if (widget.notification!.type == 'match')
-                      Expanded(
-                        flex: 2,
-                        child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 48,
-                          icon: FaIcon(
-                            FontAwesomeIcons.handHoldingHeart,
-                            color: FlutterFlowTheme.of(context).alternate,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        child: FaIcon(
+                          FontAwesomeIcons.handHoldingHeart,
+                          color: FlutterFlowTheme.of(context).alternate,
+                          size: 24,
                         ),
                       ),
                     if ((widget.notification!.type != 'like') &&
                         (widget.notification!.type != 'match'))
-                      Expanded(
-                        flex: 2,
-                        child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 48,
-                          icon: Icon(
-                            FFIcons.kicChat,
-                            color: FlutterFlowTheme.of(context).alternate,
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        child: Icon(
+                          FFIcons.kicChat,
+                          color: FlutterFlowTheme.of(context).alternate,
+                          size: 24,
                         ),
                       ),
                     Expanded(
@@ -286,58 +258,31 @@ class _NotificationMessageComponentWidgetState
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     if (widget.notification!.type == 'like')
-                      Expanded(
-                        flex: 2,
-                        child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 48,
-                          icon: Icon(
-                            Icons.favorite,
-                            color: Color(0xA5F95A82),
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        child: Icon(
+                          Icons.favorite,
+                          color: Color(0xA5F95A82),
+                          size: 24,
                         ),
                       ),
                     if (widget.notification!.type == 'match')
-                      Expanded(
-                        flex: 2,
-                        child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 48,
-                          icon: FaIcon(
-                            FontAwesomeIcons.handHoldingHeart,
-                            color: Color(0xA5F95A82),
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        child: FaIcon(
+                          FontAwesomeIcons.handHoldingHeart,
+                          color: Color(0xA5F95A82),
+                          size: 24,
                         ),
                       ),
                     if ((widget.notification!.type != 'like') &&
                         (widget.notification!.type != 'match'))
-                      Expanded(
-                        flex: 2,
-                        child: FlutterFlowIconButton(
-                          borderColor: Colors.transparent,
-                          borderRadius: 30,
-                          borderWidth: 1,
-                          buttonSize: 48,
-                          icon: Icon(
-                            FFIcons.kicChat,
-                            color: Color(0xA5F95A82),
-                            size: 24,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
+                        child: Icon(
+                          FFIcons.kicChat,
+                          color: Color(0xA5F95A82),
+                          size: 24,
                         ),
                       ),
                     Expanded(
