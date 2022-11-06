@@ -954,10 +954,12 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                             queryParams: {
                                                               'selectedIndustries':
                                                                   serializeParam(
-                                                                currentUserDocument!
-                                                                    .filter
-                                                                    .industries
-                                                                    .toList(),
+                                                                functions.nLStringList(
+                                                                    currentUserDocument!
+                                                                        .filter
+                                                                        .industries
+                                                                        .toList()
+                                                                        ?.toList()),
                                                                 ParamType
                                                                     .String,
                                                                 true,

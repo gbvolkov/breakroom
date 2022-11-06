@@ -348,3 +348,7 @@ DateTime getEarlierDate(
   DateTime dt = DateTime(current.year, current.month, current.day);
   return dt.subtract(Duration(days: cdays));
 }
+
+List<String> nLStringList(List<String>? nullableStringList) {
+  return nullableStringList ?? [];
+}
