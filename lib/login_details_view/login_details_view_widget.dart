@@ -39,6 +39,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   TextEditingController? newPassword2TextFieldController1;
 
   late bool newPassword2TextFieldVisibility1;
+  bool? isPwdChanged;
   TextEditingController? passportVerificationPinCode;
   TextEditingController? newPassword1TextFieldController2;
 
@@ -1959,15 +1960,16 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                             .text ==
                                                         newPassword2TextFieldController2!
                                                             .text) {
-                                                      await actions
-                                                          .resetUserPassword(
+                                                      isPwdChanged =
+                                                          await actions
+                                                              .resetUserPassword(
                                                         currentUserEmail,
                                                         currentPasswordTextFieldController!
                                                             .text,
                                                         newPassword1TextFieldController2!
                                                             .text,
                                                       );
-                                                      if (isOK!) {
+                                                      if (isPwdChanged!) {
                                                         ScaffoldMessenger.of(
                                                                 context)
                                                             .showSnackBar(
@@ -2036,6 +2038,8 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                         },
                                                       );
                                                     }
+
+                                                    setState(() {});
                                                   },
                                                   text: 'Save new password',
                                                   options: FFButtonOptions(
@@ -2871,52 +2875,59 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  'assets/images/imgEmail.png',
-                                  width: 28,
-                                  height: 28,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
-                                  child: Text(
-                                    'Change Email',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                        child: InkWell(
+                          onTap: () async {
+                            setState(() => FFAppState()
+                                .loginDetailsContainerName = 'email');
+                            scaffoldKey.currentState!.openEndDrawer();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/imgEmail.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
-                                ),
-                              ],
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(1, 0),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 32,
-                                icon: Icon(
-                                  Icons.chevron_right_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 16,
-                                ),
-                                onPressed: () async {
-                                  setState(() => FFAppState()
-                                      .loginDetailsContainerName = 'email');
-                                  scaffoldKey.currentState!.openEndDrawer();
-                                },
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 0, 0),
+                                    child: Text(
+                                      'Change Email',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              Align(
+                                alignment: AlignmentDirectional(1, 0),
+                                child: FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 32,
+                                  icon: Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 16,
+                                  ),
+                                  onPressed: () async {
+                                    setState(() => FFAppState()
+                                        .loginDetailsContainerName = 'email');
+                                    scaffoldKey.currentState!.openEndDrawer();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       if (FFAppState().falseconst)
@@ -2972,52 +2983,60 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                         ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Image.asset(
-                                  'assets/images/imgChangePassword.png',
-                                  width: 28,
-                                  height: 28,
-                                  fit: BoxFit.cover,
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
-                                  child: Text(
-                                    'Change Password',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                        child: InkWell(
+                          onTap: () async {
+                            setState(() => FFAppState()
+                                .loginDetailsContainerName = 'password');
+                            scaffoldKey.currentState!.openEndDrawer();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/imgChangePassword.png',
+                                    width: 28,
+                                    height: 28,
+                                    fit: BoxFit.cover,
                                   ),
-                                ),
-                              ],
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(1, 0),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 30,
-                                borderWidth: 1,
-                                buttonSize: 32,
-                                icon: Icon(
-                                  Icons.chevron_right_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 16,
-                                ),
-                                onPressed: () async {
-                                  setState(() => FFAppState()
-                                      .loginDetailsContainerName = 'password');
-                                  scaffoldKey.currentState!.openEndDrawer();
-                                },
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 0, 0),
+                                    child: Text(
+                                      'Change Password',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              Align(
+                                alignment: AlignmentDirectional(1, 0),
+                                child: FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 32,
+                                  icon: Icon(
+                                    Icons.chevron_right_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 16,
+                                  ),
+                                  onPressed: () async {
+                                    setState(() =>
+                                        FFAppState().loginDetailsContainerName =
+                                            'password');
+                                    scaffoldKey.currentState!.openEndDrawer();
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
