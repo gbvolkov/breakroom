@@ -46,36 +46,11 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
 
         return;
       }
-      await Future.delayed(const Duration(milliseconds: 3000));
       isComplete = await actions.isUserComplete(
         currentUserReference!,
       );
-      if (isComplete!) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Complete!!!!',
-              style: TextStyle(
-                color: FlutterFlowTheme.of(context).secondaryColor,
-              ),
-            ),
-            duration: Duration(milliseconds: 4000),
-            backgroundColor: Color(0x00000000),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'In complete:(L:(',
-              style: TextStyle(
-                color: FlutterFlowTheme.of(context).alternate,
-              ),
-            ),
-            duration: Duration(milliseconds: 4000),
-            backgroundColor: Color(0x00000000),
-          ),
-        );
+      if (!isComplete!) {
+        context.pushNamed('CreateProfileView');
       }
     });
 
