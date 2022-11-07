@@ -32,7 +32,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
   String? choiceChipsValue;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  bool? isComplete;
+  UsersRecord? userDoc;
 
   @override
   void initState() {
@@ -45,12 +45,41 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
         context.pushNamed('IntroductionView');
 
         return;
-      }
-      isComplete = await actions.isUserComplete(
-        currentUserReference!,
-      );
-      if (!isComplete!) {
-        context.pushNamed('CreateProfileView');
+      } else {
+        userDoc = await actions.getUserDocument(
+          currentUserReference!,
+        );
+        if (userDoc != null) {
+          if (!userDoc!.isComplete!) {
+            await actions.initializeUserDataState(
+              userDoc!.bodyType,
+              userDoc!.childfreeStatus,
+              userDoc!.drinkingStatus,
+              userDoc!.education,
+              userDoc!.gender,
+              userDoc!.genderPreference,
+              userDoc!.height,
+              userDoc!.weight,
+              userDoc!.intention,
+              userDoc!.lookingFor!.toList().toList(),
+              userDoc!.religion,
+              userDoc!.smokingStatus,
+              userDoc!.spiritualStatus,
+              userDoc!.workoutStatus,
+              userDoc!.firstName,
+              userDoc!.lastName,
+              userDoc!.birthDay,
+              userDoc!.bio,
+              userDoc!.industry,
+              userDoc!.occupation,
+              userDoc!.interests!.toList().toList(),
+            );
+
+            context.pushNamed('CreateProfileView');
+
+            return;
+          }
+        }
       }
     });
 
