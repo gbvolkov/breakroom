@@ -10,3 +10,4 @@ export 'get_address_from_location.dart' show getAddressFromLocation;
 export 'reset_user_email.dart' show resetUserEmail;
 export 'reset_user_password.dart' show resetUserPassword;
 export 'is_user_complete.dart' show isUserComplete;
+export 'get_user_document.dart' show getUserDocument;
