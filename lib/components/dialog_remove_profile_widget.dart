@@ -152,7 +152,7 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                       context.pushNamedAuth('WelcomeView', mounted);
                     }
                   },
-                  text: 'yes, remove profile',
+                  text: 'Yes, delete my account',
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 48,

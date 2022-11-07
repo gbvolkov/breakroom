@@ -404,10 +404,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => EditSmokingPrefsViewWidget(),
             ),
             FFRoute(
-              name: 'testCheckBoxes',
-              path: 'testCheckBoxes',
-              requireAuth: true,
-              builder: (context, params) => TestCheckBoxesWidget(),
+              name: 'testAnythingYouWant',
+              path: 'testAnythingYouWant',
+              builder: (context, params) => TestAnythingYouWantWidget(),
             ),
             FFRoute(
               name: 'EditInterestsView',
