@@ -74,7 +74,7 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                                 child: SelectionArea(
                                     child: Text(
-                                  'Your basics',
+                                  'Lifestyle',
                                   style: FlutterFlowTheme.of(context).title1,
                                 )),
                               ),

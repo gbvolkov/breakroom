@@ -99,7 +99,6 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                   ) ??
                   false;
               if (confirmDialogResponse) {
-                await deleteUser(context);
                 GoRouter.of(context).prepareAuthEvent();
                 await signOut();
                 _navigate = () => context.goNamedAuth('WelcomeView', mounted);

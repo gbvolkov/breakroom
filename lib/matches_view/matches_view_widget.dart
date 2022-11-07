@@ -219,7 +219,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                           child: Stack(
                                             children: [
                                               Image.network(
-                                                matchesItem.photoUrl!,
+                                                valueOrDefault<String>(
+                                                  matchesItem.photoUrl,
+                                                  'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                ),
                                                 width: double.infinity,
                                                 height: double.infinity,
                                                 fit: BoxFit.cover,

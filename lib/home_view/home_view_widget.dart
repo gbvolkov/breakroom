@@ -32,6 +32,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
   String? choiceChipsValue;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool? isComplete;
 
   @override
   void initState() {
@@ -46,21 +47,35 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
         return;
       }
       await Future.delayed(const Duration(milliseconds: 3000));
-      if (!valueOrDefault<bool>(currentUserDocument?.isComplete, false)) {
+      isComplete = await actions.isUserComplete(
+        currentUserReference!,
+      );
+      if (isComplete!) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Please complete your account',
+              'Complete!!!!',
               style: TextStyle(
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FlutterFlowTheme.of(context).secondaryColor,
               ),
             ),
             duration: Duration(milliseconds: 4000),
             backgroundColor: Color(0x00000000),
           ),
         );
-
-        context.pushNamed('CreateProfileView');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'In complete:(L:(',
+              style: TextStyle(
+                color: FlutterFlowTheme.of(context).alternate,
+              ),
+            ),
+            duration: Duration(milliseconds: 4000),
+            backgroundColor: Color(0x00000000),
+          ),
+        );
       }
     });
 
@@ -168,6 +183,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
                                 child: Align(
@@ -225,7 +241,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                     chipSpacing: 4,
                                     multiselect: false,
                                     initialized: choiceChipsValue != null,
-                                    alignment: WrapAlignment.spaceEvenly,
+                                    alignment: WrapAlignment.spaceBetween,
                                   ),
                                 ),
                               ),
