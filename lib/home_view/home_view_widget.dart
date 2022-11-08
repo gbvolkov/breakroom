@@ -39,8 +39,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().showIntroduction) {
-        setState(() => FFAppState().showIntroduction = false);
+      if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
+        setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
 
         context.pushNamed('IntroductionView');
 

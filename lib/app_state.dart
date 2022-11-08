@@ -18,6 +18,8 @@ class FFAppState {
     _intentions = prefs.getStringList('ff_intentions') ?? _intentions;
     _showIntroduction =
         prefs.getBool('ff_showIntroduction') ?? _showIntroduction;
+    _whoViewedIntro =
+        prefs.getStringList('ff_whoViewedIntro') ?? _whoViewedIntro;
   }
 
   late SharedPreferences prefs;
@@ -263,6 +265,25 @@ class FFAppState {
   }
 
   bool tmpBool = false;
+
+  int tmpInteger = 0;
+
+  List<String> _whoViewedIntro = [];
+  List<String> get whoViewedIntro => _whoViewedIntro;
+  set whoViewedIntro(List<String> _value) {
+    _whoViewedIntro = _value;
+    prefs.setStringList('ff_whoViewedIntro', _value);
+  }
+
+  void addToWhoViewedIntro(String _value) {
+    _whoViewedIntro.add(_value);
+    prefs.setStringList('ff_whoViewedIntro', _whoViewedIntro);
+  }
+
+  void removeFromWhoViewedIntro(String _value) {
+    _whoViewedIntro.remove(_value);
+    prefs.setStringList('ff_whoViewedIntro', _whoViewedIntro);
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

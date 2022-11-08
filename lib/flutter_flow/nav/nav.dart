@@ -253,7 +253,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'IntroductionView',
               path: 'introductionView',
-              requireAuth: true,
               builder: (context, params) => IntroductionViewWidget(),
             ),
             FFRoute(

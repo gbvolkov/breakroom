@@ -34,7 +34,7 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                     child: InkWell(
                       onTap: () async {
-                        context.pushNamed('testAnythingYouWant');
+                        context.pushNamed('IntroductionView');
                       },
                       child: Image.asset(
                         'assets/images/WelcomeImage.png',
