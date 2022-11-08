@@ -258,6 +258,13 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.notiffReadTS;
+    if (value != null) {
+      result
+        ..add('notiffReadTS')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -428,6 +435,10 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.isComplete = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'notiffReadTS':
+          result.notiffReadTS = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -511,6 +522,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final bool? isComplete;
   @override
+  final DateTime? notiffReadTS;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -551,6 +564,7 @@ class _$UsersRecord extends UsersRecord {
       this.liked,
       this.disliked,
       this.isComplete,
+      this.notiffReadTS,
       this.ffRef})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(filter, r'UsersRecord', 'filter');
@@ -601,6 +615,7 @@ class _$UsersRecord extends UsersRecord {
         liked == other.liked &&
         disliked == other.disliked &&
         isComplete == other.isComplete &&
+        notiffReadTS == other.notiffReadTS &&
         ffRef == other.ffRef;
   }
 
@@ -624,25 +639,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode),
-                                                                                childfreeStatus.hashCode),
-                                                                            religion.hashCode),
-                                                                        education.hashCode),
-                                                                    bodyType.hashCode),
-                                                                interests.hashCode),
-                                                            lookingFor.hashCode),
-                                                        height.hashCode),
-                                                    weight.hashCode),
-                                                workoutStatus.hashCode),
-                                            drinkingStatus.hashCode),
-                                        smokingStatus.hashCode),
-                                    spiritualStatus.hashCode),
-                                photos.hashCode),
-                            touched.hashCode),
-                        filter.hashCode),
-                    liked.hashCode),
-                disliked.hashCode),
-            isComplete.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode),
+                                                                                religion.hashCode),
+                                                                            education.hashCode),
+                                                                        bodyType.hashCode),
+                                                                    interests.hashCode),
+                                                                lookingFor.hashCode),
+                                                            height.hashCode),
+                                                        weight.hashCode),
+                                                    workoutStatus.hashCode),
+                                                drinkingStatus.hashCode),
+                                            smokingStatus.hashCode),
+                                        spiritualStatus.hashCode),
+                                    photos.hashCode),
+                                touched.hashCode),
+                            filter.hashCode),
+                        liked.hashCode),
+                    disliked.hashCode),
+                isComplete.hashCode),
+            notiffReadTS.hashCode),
         ffRef.hashCode));
   }
 
@@ -683,6 +698,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('liked', liked)
           ..add('disliked', disliked)
           ..add('isComplete', isComplete)
+          ..add('notiffReadTS', notiffReadTS)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -841,6 +857,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   bool? get isComplete => _$this._isComplete;
   set isComplete(bool? isComplete) => _$this._isComplete = isComplete;
 
+  DateTime? _notiffReadTS;
+  DateTime? get notiffReadTS => _$this._notiffReadTS;
+  set notiffReadTS(DateTime? notiffReadTS) =>
+      _$this._notiffReadTS = notiffReadTS;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -886,6 +907,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _liked = $v.liked?.toBuilder();
       _disliked = $v.disliked?.toBuilder();
       _isComplete = $v.isComplete;
+      _notiffReadTS = $v.notiffReadTS;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -945,6 +967,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               liked: _liked?.build(),
               disliked: _disliked?.build(),
               isComplete: isComplete,
+              notiffReadTS: notiffReadTS,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
