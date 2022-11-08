@@ -227,7 +227,7 @@ class _NotificationMessageComponentWidgetState
                               child: Visibility(
                                 visible: !widget.notification!.isRead! &&
                                     (columnUsersRecord.notiffReadTS == null
-                                        ? false
+                                        ? true
                                         : (widget.notification!.timestamp! >=
                                             columnUsersRecord.notiffReadTS!)),
                                 child: Icon(
@@ -400,7 +400,7 @@ class _NotificationMessageComponentWidgetState
                               child: Visibility(
                                 visible: !widget.notification!.isRead! &&
                                     (columnUsersRecord.notiffReadTS == null
-                                        ? false
+                                        ? true
                                         : (widget.notification!.timestamp! >=
                                             columnUsersRecord.notiffReadTS!)),
                                 child: Icon(
