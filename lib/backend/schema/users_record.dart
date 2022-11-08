@@ -82,6 +82,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
   @BuiltValueField(wireName: 'is_complete')
   bool? get isComplete;
 
+  DateTime? get notiffReadTS;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -169,6 +171,7 @@ Map<String, dynamic> createUsersRecordData({
   String? spiritualStatus,
   FilterStruct? filter,
   bool? isComplete,
+  DateTime? notiffReadTS,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -207,7 +210,8 @@ Map<String, dynamic> createUsersRecordData({
         ..filter = FilterStructBuilder()
         ..liked = null
         ..disliked = null
-        ..isComplete = isComplete,
+        ..isComplete = isComplete
+        ..notiffReadTS = notiffReadTS,
     ),
   );
 

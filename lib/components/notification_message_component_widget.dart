@@ -225,7 +225,9 @@ class _NotificationMessageComponentWidgetState
                               height: 8,
                               decoration: BoxDecoration(),
                               child: Visibility(
-                                visible: !widget.notification!.isRead!,
+                                visible: !widget.notification!.isRead! ||
+                                    (widget.notification!.timestamp! >=
+                                        columnUsersRecord.notiffReadTS!),
                                 child: Icon(
                                   Icons.brightness_1,
                                   color: FlutterFlowTheme.of(context).alternate,
@@ -394,7 +396,9 @@ class _NotificationMessageComponentWidgetState
                               height: 8,
                               decoration: BoxDecoration(),
                               child: Visibility(
-                                visible: !widget.notification!.isRead!,
+                                visible: !(!widget.notification!.isRead! ||
+                                    (widget.notification!.timestamp! >=
+                                        columnUsersRecord.notiffReadTS!)),
                                 child: Icon(
                                   Icons.brightness_1,
                                   color: FlutterFlowTheme.of(context).alternate,

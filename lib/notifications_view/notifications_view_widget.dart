@@ -4,8 +4,10 @@ import '../components/empty_list_widget_widget.dart';
 import '../components/notification_message_component_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,6 +52,33 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                Align(
+                  alignment: AlignmentDirectional(1, 0),
+                  child: FFButtonWidget(
+                    onPressed: () async {
+                      final usersUpdateData = createUsersRecordData(
+                        notiffReadTS: getCurrentTimestamp,
+                      );
+                      await currentUserReference!.update(usersUpdateData);
+                    },
+                    text: 'Mark as read',
+                    options: FFButtonOptions(
+                      width: 130,
+                      height: 40,
+                      color: FlutterFlowTheme.of(context).primaryColor,
+                      textStyle:
+                          FlutterFlowTheme.of(context).subtitle2.override(
+                                fontFamily: 'Roboto',
+                                color: FlutterFlowTheme.of(context).alternate,
+                              ),
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
                 StreamBuilder<List<NotificationsRecord>>(
                   stream: queryNotificationsRecord(
                     queryBuilder: (notificationsRecord) => notificationsRecord
