@@ -53,6 +53,7 @@ dependencies:
   firebase_storage_platform_interface: 4.1.10
   firebase_storage_web: 3.2.19
   flutter_animate: 1.0.0
+  flutter_cache_manager: 3.3.0
   flutter_google_places: 0.3.0
   font_awesome_flutter: 10.1.0
   from_css_color: 2.0.0
@@ -66,6 +67,8 @@ dependencies:
   google_fonts: 3.0.1
   google_maps: 6.2.0
   google_maps_flutter: 2.1.8
+  google_maps_flutter_android: 2.3.2
+  google_maps_flutter_ios: 2.1.12
   google_maps_flutter_platform_interface: 2.2.1
   google_maps_flutter_web: 0.4.0+1
   google_sign_in: 5.4.0
@@ -91,6 +94,7 @@ dependencies:
   sign_in_with_apple_platform_interface: 1.0.0
   sign_in_with_apple_web: 1.0.1
   smooth_page_indicator: 1.0.0+2
+  sqflite: 2.2.0+2
   swipeable_card_stack: ^0.0.5
   table_calendar: 3.0.6
   timeago: 3.2.2
