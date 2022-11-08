@@ -11,9 +11,11 @@ class NotificationMessageComponentWidget extends StatefulWidget {
   const NotificationMessageComponentWidget({
     Key? key,
     this.notification,
+    this.noriffTS,
   }) : super(key: key);
 
   final NotificationsRecord? notification;
+  final DateTime? noriffTS;
 
   @override
   _NotificationMessageComponentWidgetState createState() =>
@@ -226,10 +228,10 @@ class _NotificationMessageComponentWidgetState
                               decoration: BoxDecoration(),
                               child: Visibility(
                                 visible: !widget.notification!.isRead! &&
-                                    (columnUsersRecord.notiffReadTS == null
+                                    (widget.noriffTS == null
                                         ? true
                                         : (widget.notification!.timestamp! >=
-                                            columnUsersRecord.notiffReadTS!)),
+                                            widget.noriffTS!)),
                                 child: Icon(
                                   Icons.brightness_1,
                                   color: FlutterFlowTheme.of(context).alternate,
@@ -399,10 +401,10 @@ class _NotificationMessageComponentWidgetState
                               decoration: BoxDecoration(),
                               child: Visibility(
                                 visible: !widget.notification!.isRead! &&
-                                    (columnUsersRecord.notiffReadTS == null
+                                    (widget.noriffTS == null
                                         ? true
                                         : (widget.notification!.timestamp! >=
-                                            columnUsersRecord.notiffReadTS!)),
+                                            widget.noriffTS!)),
                                 child: Icon(
                                   Icons.brightness_1,
                                   color: FlutterFlowTheme.of(context).alternate,
