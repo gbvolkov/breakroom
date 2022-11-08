@@ -225,7 +225,7 @@ class _NotificationMessageComponentWidgetState
                               height: 8,
                               decoration: BoxDecoration(),
                               child: Visibility(
-                                visible: !widget.notification!.isRead! ||
+                                visible: !widget.notification!.isRead! &&
                                     (columnUsersRecord.notiffReadTS == null
                                         ? false
                                         : (widget.notification!.timestamp! >=
@@ -398,7 +398,7 @@ class _NotificationMessageComponentWidgetState
                               height: 8,
                               decoration: BoxDecoration(),
                               child: Visibility(
-                                visible: !(!widget.notification!.isRead! ||
+                                visible: !(!widget.notification!.isRead! &&
                                     (columnUsersRecord.notiffReadTS == null
                                         ? false
                                         : (widget.notification!.timestamp! >=
