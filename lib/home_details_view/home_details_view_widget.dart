@@ -251,7 +251,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                         shape: BoxShape.circle,
                                       ),
                                       child: Image.network(
-                                        widget.userProfile!.photoUrl!,
+                                        valueOrDefault<String>(
+                                          widget.userProfile!.photoUrl,
+                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                        ),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
