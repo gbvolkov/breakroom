@@ -226,8 +226,10 @@ class _NotificationMessageComponentWidgetState
                               decoration: BoxDecoration(),
                               child: Visibility(
                                 visible: !widget.notification!.isRead! ||
-                                    (widget.notification!.timestamp! >=
-                                        columnUsersRecord.notiffReadTS!),
+                                    (columnUsersRecord.notiffReadTS == null
+                                        ? false
+                                        : (widget.notification!.timestamp! >=
+                                            columnUsersRecord.notiffReadTS!)),
                                 child: Icon(
                                   Icons.brightness_1,
                                   color: FlutterFlowTheme.of(context).alternate,
