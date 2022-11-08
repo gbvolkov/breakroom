@@ -398,11 +398,11 @@ class _NotificationMessageComponentWidgetState
                               height: 8,
                               decoration: BoxDecoration(),
                               child: Visibility(
-                                visible: !(!widget.notification!.isRead! &&
+                                visible: !widget.notification!.isRead! &&
                                     (columnUsersRecord.notiffReadTS == null
                                         ? false
                                         : (widget.notification!.timestamp! >=
-                                            columnUsersRecord.notiffReadTS!))),
+                                            columnUsersRecord.notiffReadTS!)),
                                 child: Icon(
                                   Icons.brightness_1,
                                   color: FlutterFlowTheme.of(context).alternate,
