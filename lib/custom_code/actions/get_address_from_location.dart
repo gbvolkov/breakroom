@@ -9,10 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 
 Future<String> getAddressFromLocation(LatLng location) async {
-  List<geo.Placemark> placemarks =
-      await geo.placemarkFromCoordinates(location.latitude, location.longitude);
-  geo.Placemark place = placemarks[0];
-  String address =
-      '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-  return address;
+  try {
+    List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
+        location.latitude, location.longitude);
+    geo.Placemark place = placemarks[0];
+    String address =
+        '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+    return address;
+  } catch (ex) {
+    return "N/D";
+  }
 }
