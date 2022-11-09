@@ -291,6 +291,20 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                           GenderIconWidget(
                                                             gender: matchesItem
                                                                 .gender,
+                                                            maleIcon: Icon(
+                                                              FFIcons.kmale,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              size: 16,
+                                                            ),
+                                                            femaleIcon: Icon(
+                                                              FFIcons.kfemale,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              size: 16,
+                                                            ),
                                                           ),
                                                           Padding(
                                                             padding:

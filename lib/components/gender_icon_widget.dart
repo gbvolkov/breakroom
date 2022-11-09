@@ -7,9 +7,13 @@ class GenderIconWidget extends StatefulWidget {
   const GenderIconWidget({
     Key? key,
     this.gender,
+    this.maleIcon,
+    this.femaleIcon,
   }) : super(key: key);
 
   final String? gender;
+  final Widget? maleIcon;
+  final Widget? femaleIcon;
 
   @override
   _GenderIconWidgetState createState() => _GenderIconWidgetState();
@@ -24,18 +28,9 @@ class _GenderIconWidgetState extends State<GenderIconWidget> {
         if (widget.gender == 'Male')
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-            child: Icon(
-              FFIcons.kmale,
-              color: FlutterFlowTheme.of(context).secondaryText,
-              size: 20,
-            ),
+            child: widget.maleIcon!,
           ),
-        if (widget.gender != 'Male')
-          Icon(
-            FFIcons.kfemale,
-            color: FlutterFlowTheme.of(context).secondaryText,
-            size: 20,
-          ),
+        if (widget.gender != 'Male') widget.femaleIcon!,
       ],
     );
   }

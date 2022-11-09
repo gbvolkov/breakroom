@@ -321,6 +321,20 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               GenderIconWidget(
                                                 gender:
                                                     columnUsersRecord.gender,
+                                                maleIcon: Icon(
+                                                  FFIcons.kmale,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  size: 20,
+                                                ),
+                                                femaleIcon: Icon(
+                                                  FFIcons.kfemale,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                  size: 20,
+                                                ),
                                               ),
                                               Text(
                                                 valueOrDefault<String>(
