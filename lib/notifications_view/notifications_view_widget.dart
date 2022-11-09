@@ -121,303 +121,335 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                               ),
                             ),
                           ),
-                          StreamBuilder<List<NotificationsRecord>>(
-                            stream: queryNotificationsRecord(
-                              queryBuilder: (notificationsRecord) =>
-                                  notificationsRecord
-                                      .where(
-                                          'receiver',
-                                          isEqualTo: currentUserReference)
-                                      .where(
-                                          'timestamp',
-                                          isGreaterThanOrEqualTo: functions
-                                              .getToday(getCurrentTimestamp))
-                                      .where('timestamp',
-                                          isLessThan: functions
-                                              .getTomorrow(getCurrentTimestamp))
-                                      .orderBy('timestamp', descending: true),
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                            child: StreamBuilder<List<NotificationsRecord>>(
+                              stream: queryNotificationsRecord(
+                                queryBuilder: (notificationsRecord) =>
+                                    notificationsRecord
+                                        .where('receiver',
+                                            isEqualTo: currentUserReference)
+                                        .where('timestamp',
+                                            isGreaterThanOrEqualTo: functions
+                                                .getToday(getCurrentTimestamp))
+                                        .where('timestamp',
+                                            isLessThan: functions.getTomorrow(
+                                                getCurrentTimestamp))
+                                        .orderBy('timestamp', descending: true),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }
-                              List<NotificationsRecord>
-                                  contTodayNotificationsRecordList =
-                                  snapshot.data!;
-                              return Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    if (contTodayNotificationsRecordList
-                                            .length >
-                                        0)
-                                      Container(
-                                        width: 80,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Padding(
+                                  );
+                                }
+                                List<NotificationsRecord>
+                                    contTodayNotificationsRecordList =
+                                    snapshot.data!;
+                                return Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      if (contTodayNotificationsRecordList
+                                              .length >
+                                          0)
+                                        Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  4, 0, 4, 0),
-                                          child: SelectionArea(
-                                              child: AutoSizeText(
-                                            'Today',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2,
-                                          )),
+                                                  0, 0, 0, 16),
+                                          child: Container(
+                                            width: 80,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 0, 4, 0),
+                                              child: SelectionArea(
+                                                  child: AutoSizeText(
+                                                'Today',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 16, 0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final todayMsgs =
+                                                contTodayNotificationsRecordList
+                                                    .toList();
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: todayMsgs.length,
+                                              itemBuilder:
+                                                  (context, todayMsgsIndex) {
+                                                final todayMsgsItem =
+                                                    todayMsgs[todayMsgsIndex];
+                                                return Container(
+                                                  decoration: BoxDecoration(),
+                                                  child:
+                                                      NotificationMessageComponentWidget(
+                                                    notification: todayMsgsItem,
+                                                    noriffTS: columnUsersRecord
+                                                        .notiffReadTS,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 0, 16, 0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          final todayMsgs =
-                                              contTodayNotificationsRecordList
-                                                  .toList();
-                                          return ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: todayMsgs.length,
-                                            itemBuilder:
-                                                (context, todayMsgsIndex) {
-                                              final todayMsgsItem =
-                                                  todayMsgs[todayMsgsIndex];
-                                              return Container(
-                                                decoration: BoxDecoration(),
-                                                child:
-                                                    NotificationMessageComponentWidget(
-                                                  notification: todayMsgsItem,
-                                                  noriffTS: columnUsersRecord
-                                                      .notiffReadTS,
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                          StreamBuilder<List<NotificationsRecord>>(
-                            stream: queryNotificationsRecord(
-                              queryBuilder: (notificationsRecord) =>
-                                  notificationsRecord
-                                      .where(
-                                          'receiver',
-                                          isEqualTo: currentUserReference)
-                                      .where(
-                                          'timestamp',
-                                          isGreaterThanOrEqualTo:
-                                              functions.getEarlierDate(
-                                                  getCurrentTimestamp, 1))
-                                      .where('timestamp',
-                                          isLessThan: functions
-                                              .getToday(getCurrentTimestamp))
-                                      .orderBy('timestamp', descending: true),
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                            child: StreamBuilder<List<NotificationsRecord>>(
+                              stream: queryNotificationsRecord(
+                                queryBuilder: (notificationsRecord) =>
+                                    notificationsRecord
+                                        .where('receiver',
+                                            isEqualTo: currentUserReference)
+                                        .where('timestamp',
+                                            isGreaterThanOrEqualTo:
+                                                functions.getEarlierDate(
+                                                    getCurrentTimestamp, 1))
+                                        .where('timestamp',
+                                            isLessThan: functions
+                                                .getToday(getCurrentTimestamp))
+                                        .orderBy('timestamp', descending: true),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }
-                              List<NotificationsRecord>
-                                  contYesterdayNotificationsRecordList =
-                                  snapshot.data!;
-                              return Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    if (contYesterdayNotificationsRecordList
-                                            .length >
-                                        0)
-                                      Container(
-                                        width: 80,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Padding(
+                                  );
+                                }
+                                List<NotificationsRecord>
+                                    contYesterdayNotificationsRecordList =
+                                    snapshot.data!;
+                                return Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      if (contYesterdayNotificationsRecordList
+                                              .length >
+                                          0)
+                                        Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  4, 0, 4, 0),
-                                          child: SelectionArea(
-                                              child: AutoSizeText(
-                                            'Yesterday',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2,
-                                          )),
+                                                  0, 0, 0, 16),
+                                          child: Container(
+                                            width: 80,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 0, 4, 0),
+                                              child: SelectionArea(
+                                                  child: AutoSizeText(
+                                                'Yesterday',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 16, 0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final yesterdayMsgs =
+                                                contYesterdayNotificationsRecordList
+                                                    .toList();
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: yesterdayMsgs.length,
+                                              itemBuilder: (context,
+                                                  yesterdayMsgsIndex) {
+                                                final yesterdayMsgsItem =
+                                                    yesterdayMsgs[
+                                                        yesterdayMsgsIndex];
+                                                return Container(
+                                                  decoration: BoxDecoration(),
+                                                  child:
+                                                      NotificationMessageComponentWidget(
+                                                    notification:
+                                                        yesterdayMsgsItem,
+                                                    noriffTS: columnUsersRecord
+                                                        .notiffReadTS,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 0, 16, 0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          final yesterdayMsgs =
-                                              contYesterdayNotificationsRecordList
-                                                  .toList();
-                                          return ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: yesterdayMsgs.length,
-                                            itemBuilder:
-                                                (context, yesterdayMsgsIndex) {
-                                              final yesterdayMsgsItem =
-                                                  yesterdayMsgs[
-                                                      yesterdayMsgsIndex];
-                                              return Container(
-                                                decoration: BoxDecoration(),
-                                                child:
-                                                    NotificationMessageComponentWidget(
-                                                  notification:
-                                                      yesterdayMsgsItem,
-                                                  noriffTS: columnUsersRecord
-                                                      .notiffReadTS,
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
-                          StreamBuilder<List<NotificationsRecord>>(
-                            stream: queryNotificationsRecord(
-                              queryBuilder: (notificationsRecord) =>
-                                  notificationsRecord
-                                      .where('receiver',
-                                          isEqualTo: currentUserReference)
-                                      .where('timestamp',
-                                          isLessThan: functions.getEarlierDate(
-                                              getCurrentTimestamp, 1))
-                                      .orderBy('timestamp', descending: true),
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                            child: StreamBuilder<List<NotificationsRecord>>(
+                              stream: queryNotificationsRecord(
+                                queryBuilder: (notificationsRecord) =>
+                                    notificationsRecord
+                                        .where('receiver',
+                                            isEqualTo: currentUserReference)
+                                        .where('timestamp',
+                                            isLessThan:
+                                                functions.getEarlierDate(
+                                                    getCurrentTimestamp, 1))
+                                        .orderBy('timestamp', descending: true),
+                              ),
+                              builder: (context, snapshot) {
+                                // Customize what your widget looks like when it's loading.
+                                if (!snapshot.hasData) {
+                                  return Center(
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircularProgressIndicator(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }
-                              List<NotificationsRecord>
-                                  contEarlierNotificationsRecordList =
-                                  snapshot.data!;
-                              return Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    if (contEarlierNotificationsRecordList
-                                            .length >
-                                        0)
-                                      Container(
-                                        width: 80,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                        ),
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Padding(
+                                  );
+                                }
+                                List<NotificationsRecord>
+                                    contEarlierNotificationsRecordList =
+                                    snapshot.data!;
+                                return Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      if (contEarlierNotificationsRecordList
+                                              .length >
+                                          0)
+                                        Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  4, 0, 4, 0),
-                                          child: SelectionArea(
-                                              child: AutoSizeText(
-                                            'Earlier',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText2,
-                                          )),
+                                                  0, 0, 0, 16),
+                                          child: Container(
+                                            width: 80,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            alignment:
+                                                AlignmentDirectional(0, 0),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 0, 4, 0),
+                                              child: SelectionArea(
+                                                  child: AutoSizeText(
+                                                'Earlier',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText2,
+                                              )),
+                                            ),
+                                          ),
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16, 0, 16, 0),
+                                        child: Builder(
+                                          builder: (context) {
+                                            final earlierMsgs =
+                                                contEarlierNotificationsRecordList
+                                                    .toList();
+                                            return ListView.builder(
+                                              padding: EdgeInsets.zero,
+                                              shrinkWrap: true,
+                                              scrollDirection: Axis.vertical,
+                                              itemCount: earlierMsgs.length,
+                                              itemBuilder:
+                                                  (context, earlierMsgsIndex) {
+                                                final earlierMsgsItem =
+                                                    earlierMsgs[
+                                                        earlierMsgsIndex];
+                                                return Container(
+                                                  decoration: BoxDecoration(),
+                                                  child:
+                                                      NotificationMessageComponentWidget(
+                                                    notification:
+                                                        earlierMsgsItem,
+                                                    noriffTS: columnUsersRecord
+                                                        .notiffReadTS,
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          },
                                         ),
                                       ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 0, 16, 0),
-                                      child: Builder(
-                                        builder: (context) {
-                                          final earlierMsgs =
-                                              contEarlierNotificationsRecordList
-                                                  .toList();
-                                          return ListView.builder(
-                                            padding: EdgeInsets.zero,
-                                            shrinkWrap: true,
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: earlierMsgs.length,
-                                            itemBuilder:
-                                                (context, earlierMsgsIndex) {
-                                              final earlierMsgsItem =
-                                                  earlierMsgs[earlierMsgsIndex];
-                                              return Container(
-                                                decoration: BoxDecoration(),
-                                                child:
-                                                    NotificationMessageComponentWidget(
-                                                  notification: earlierMsgsItem,
-                                                  noriffTS: columnUsersRecord
-                                                      .notiffReadTS,
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                           if (containerNotificationsRecordList.length == 0)
                             Container(
