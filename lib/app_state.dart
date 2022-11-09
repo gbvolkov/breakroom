@@ -20,6 +20,7 @@ class FFAppState {
         prefs.getBool('ff_showIntroduction') ?? _showIntroduction;
     _whoViewedIntro =
         prefs.getStringList('ff_whoViewedIntro') ?? _whoViewedIntro;
+    _build = prefs.getString('ff_build') ?? _build;
   }
 
   late SharedPreferences prefs;
@@ -283,6 +284,13 @@ class FFAppState {
   void removeFromWhoViewedIntro(String _value) {
     _whoViewedIntro.remove(_value);
     prefs.setStringList('ff_whoViewedIntro', _whoViewedIntro);
+  }
+
+  String _build = '20221108.1120.1';
+  String get build => _build;
+  set build(String _value) {
+    _build = _value;
+    prefs.setString('ff_build', _value);
   }
 }
 

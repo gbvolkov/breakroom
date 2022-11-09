@@ -829,6 +829,20 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                     ),
                   ),
                 ),
+                Align(
+                  alignment: AlignmentDirectional(1, 0),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
+                    child: Text(
+                      FFAppState().build,
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            fontSize: 12,
+                          ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
