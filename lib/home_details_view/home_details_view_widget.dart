@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../components/gender_icon_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -286,34 +287,23 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                             FontWeight.bold,
                                                       ),
                                                 ),
-                                                if (widget
-                                                        .userProfile!.gender ==
-                                                    'Male')
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                8, 0, 0, 0),
-                                                    child: Icon(
+                                                Container(
+                                                  decoration: BoxDecoration(),
+                                                  child: GenderIconWidget(
+                                                    gender: widget
+                                                        .userProfile!.gender,
+                                                    maleIcon: Icon(
                                                       FFIcons.kmale,
                                                       color: Colors.black,
                                                       size: 24,
                                                     ),
-                                                  ),
-                                                if (widget
-                                                        .userProfile!.gender !=
-                                                    'Male')
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                8, 0, 0, 0),
-                                                    child: Icon(
+                                                    femaleIcon: Icon(
                                                       FFIcons.kfemale,
                                                       color: Colors.black,
                                                       size: 24,
                                                     ),
                                                   ),
+                                                ),
                                               ],
                                             ),
                                           ),

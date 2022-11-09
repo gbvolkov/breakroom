@@ -82,7 +82,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                       controller: textController,
                       onChanged: (_) => EasyDebounce.debounce(
                         'textController',
-                        Duration(milliseconds: 3000),
+                        Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
                       obscureText: false,
@@ -291,21 +291,21 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                           GenderIconWidget(
                                                             gender: matchesItem
                                                                 .gender,
-                                                          ),
-                                                          if (columnUsersRecord
-                                                              .liked!
-                                                              .toList()
-                                                              .contains(
-                                                                  matchesItem
-                                                                      .uid))
-                                                            FaIcon(
-                                                              FontAwesomeIcons
-                                                                  .handHoldingHeart,
+                                                            maleIcon: Icon(
+                                                              FFIcons.kmale,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .alternate,
-                                                              size: 24,
+                                                                  .secondaryBackground,
+                                                              size: 16,
                                                             ),
+                                                            femaleIcon: Icon(
+                                                              FFIcons.kfemale,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryBackground,
+                                                              size: 16,
+                                                            ),
+                                                          ),
                                                           Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
@@ -427,6 +427,23 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                     },
                                                   ),
                                                 ),
+                                                if (columnUsersRecord.liked!
+                                                    .toList()
+                                                    .contains(matchesItem.uid))
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -0.77, -0.82),
+                                                    child: FaIcon(
+                                                      FontAwesomeIcons
+                                                          .handHoldingHeart,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      size: 16,
+                                                    ),
+                                                  ),
                                               ],
                                             ),
                                           ),
