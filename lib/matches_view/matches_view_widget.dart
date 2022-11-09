@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/gender_icon_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -7,6 +8,7 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MatchesViewWidget extends StatefulWidget {
@@ -286,14 +288,24 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                         mainAxisSize:
                                                             MainAxisSize.max,
                                                         children: [
-                                                          Icon(
-                                                            Icons
-                                                                .person_outlined,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryColor,
-                                                            size: 16,
+                                                          GenderIconWidget(
+                                                            gender: matchesItem
+                                                                .gender,
                                                           ),
+                                                          if (columnUsersRecord
+                                                              .liked!
+                                                              .toList()
+                                                              .contains(
+                                                                  matchesItem
+                                                                      .uid))
+                                                            FaIcon(
+                                                              FontAwesomeIcons
+                                                                  .handHoldingHeart,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
+                                                              size: 24,
+                                                            ),
                                                           Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional

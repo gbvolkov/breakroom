@@ -318,7 +318,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              GenderIconWidget(),
+                                              GenderIconWidget(
+                                                gender:
+                                                    columnUsersRecord.gender,
+                                              ),
                                               Text(
                                                 valueOrDefault<String>(
                                                   '${columnUsersRecord.industry}, ${columnUsersRecord.occupation}',
