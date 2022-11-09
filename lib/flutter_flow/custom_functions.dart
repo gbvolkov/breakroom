@@ -147,17 +147,17 @@ List<UsersRecord> filterMatches(
     return result;
   }
   for (var fan in fans) {
-    if (liked.contains(fan.uid)) {
-      if (pattern != null && pattern.isNotEmpty) {
-        String tocompare =
-            "${(fan.firstName ?? "")}  ${(fan.lastName ?? "")}  ${(fan.email ?? "")}";
-        if (tocompare.contains(pattern)) {
-          result.add(fan);
-        }
-      } else {
+    //if (liked.contains(fan.uid)) {
+    if (pattern != null && pattern.isNotEmpty) {
+      String tocompare =
+          "${(fan.firstName ?? "")}  ${(fan.lastName ?? "")}  ${(fan.email ?? "")}";
+      if (tocompare.contains(pattern)) {
         result.add(fan);
       }
+    } else {
+      result.add(fan);
     }
+    //}
   }
   return result;
 }

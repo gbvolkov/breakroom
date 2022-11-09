@@ -627,7 +627,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                         ],
                       ),
                     ),
-                    if (widget.mode == null || widget.mode == '')
+                    if ((widget.mode == null || widget.mode == '') ||
+                        (widget.mode == 'like'))
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                         child: Row(

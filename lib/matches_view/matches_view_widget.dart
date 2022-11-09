@@ -57,349 +57,381 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                TextFormField(
-                  controller: textController,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'textController',
-                    Duration(milliseconds: 3000),
-                    () => setState(() {}),
-                  ),
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
+            child: StreamBuilder<UsersRecord>(
+              stream: UsersRecord.getDocument(currentUserReference!),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).primaryColor,
                       ),
-                      borderRadius: BorderRadius.circular(16),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
+                  );
+                }
+                final columnUsersRecord = snapshot.data!;
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    TextFormField(
+                      controller: textController,
+                      onChanged: (_) => EasyDebounce.debounce(
+                        'textController',
+                        Duration(milliseconds: 3000),
+                        () => setState(() {}),
                       ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    filled: true,
-                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 18,
-                    ),
-                    suffixIcon: textController!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () async {
-                              textController?.clear();
-                              setState(() {});
-                            },
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
-                  ),
-                  style: FlutterFlowTheme.of(context).subtitle2,
-                ),
-                Expanded(
-                  child: StreamBuilder<List<UsersRecord>>(
-                    stream: queryUsersRecord(
-                      queryBuilder: (usersRecord) => usersRecord.where('liked',
-                          arrayContains:
-                              currentUserUid != '' ? currentUserUid : null),
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
                           ),
-                        );
-                      }
-                      List<UsersRecord> containerUsersRecordList = snapshot
-                          .data!
-                          .where((u) => u.uid != currentUserUid)
-                          .toList();
-                      return Material(
-                        color: Colors.transparent,
-                        elevation: 0,
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 18,
+                        ),
+                        suffixIcon: textController!.text.isNotEmpty
+                            ? InkWell(
+                                onTap: () async {
+                                  textController?.clear();
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF757575),
+                                  size: 22,
+                                ),
+                              )
+                            : null,
+                      ),
+                      style: FlutterFlowTheme.of(context).subtitle2,
+                    ),
+                    Expanded(
+                      child: StreamBuilder<List<UsersRecord>>(
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord.where(
+                              'liked',
+                              arrayContains:
+                                  currentUserUid != '' ? currentUserUid : null),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                              ),
+                            );
+                          }
+                          List<UsersRecord> containerUsersRecordList = snapshot
+                              .data!
+                              .where((u) => u.uid != currentUserUid)
+                              .toList();
+                          return Material(
                             color: Colors.transparent,
-                          ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                            child: AuthUserStreamWidget(
-                              child: Builder(
-                                builder: (context) {
-                                  final matches = functions
-                                      .filterMatches(
-                                          containerUsersRecordList.toList(),
-                                          (currentUserDocument?.liked
-                                                      ?.toList() ??
-                                                  [])
-                                              .toList(),
-                                          textController!.text)
-                                      .map((e) => e)
-                                      .toList();
-                                  if (matches.isEmpty) {
-                                    return CachedNetworkImage(
-                                      imageUrl:
-                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                    );
-                                  }
-                                  return GridView.builder(
-                                    padding: EdgeInsets.zero,
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: 4,
-                                      mainAxisSpacing: 4,
-                                      childAspectRatio: 0.75,
-                                    ),
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: matches.length,
-                                    itemBuilder: (context, matchesIndex) {
-                                      final matchesItem = matches[matchesIndex];
-                                      return InkWell(
-                                        onTap: () async {
-                                          context.pushNamed(
-                                            'HomeDetailsView',
-                                            queryParams: {
-                                              'userProfile': serializeParam(
-                                                matchesItem,
-                                                ParamType.Document,
-                                              ),
-                                              'mode': serializeParam(
-                                                'match',
-                                                ParamType.String,
-                                              ),
-                                            }.withoutNulls,
-                                            extra: <String, dynamic>{
-                                              'userProfile': matchesItem,
-                                            },
-                                          );
-                                        },
-                                        child: Card(
-                                          clipBehavior:
-                                              Clip.antiAliasWithSaveLayer,
-                                          color: Color(0xFFF5F5F5),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Image.network(
-                                                valueOrDefault<String>(
-                                                  matchesItem.photoUrl,
-                                                  'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                            elevation: 0,
+                            child: Container(
+                              width: double.infinity,
+                              height: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                              ),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                                child: Builder(
+                                  builder: (context) {
+                                    final matches = functions
+                                        .filterMatches(
+                                            containerUsersRecordList.toList(),
+                                            columnUsersRecord.liked!.toList(),
+                                            textController!.text)
+                                        .map((e) => e)
+                                        .toList();
+                                    if (matches.isEmpty) {
+                                      return CachedNetworkImage(
+                                        imageUrl:
+                                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                      );
+                                    }
+                                    return GridView.builder(
+                                      padding: EdgeInsets.zero,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 4,
+                                        mainAxisSpacing: 4,
+                                        childAspectRatio: 0.75,
+                                      ),
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: matches.length,
+                                      itemBuilder: (context, matchesIndex) {
+                                        final matchesItem =
+                                            matches[matchesIndex];
+                                        return InkWell(
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              'HomeDetailsView',
+                                              queryParams: {
+                                                'userProfile': serializeParam(
+                                                  matchesItem,
+                                                  ParamType.Document,
                                                 ),
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              Container(
-                                                width: double.infinity,
-                                                height: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: Image.network(
-                                                      '',
-                                                    ).image,
+                                                'mode': serializeParam(
+                                                  columnUsersRecord.liked!
+                                                          .toList()
+                                                          .contains(
+                                                              matchesItem.uid)
+                                                      ? 'match'
+                                                      : 'like',
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                              extra: <String, dynamic>{
+                                                'userProfile': matchesItem,
+                                              },
+                                            );
+                                          },
+                                          child: Card(
+                                            clipBehavior:
+                                                Clip.antiAliasWithSaveLayer,
+                                            color: Color(0xFFF5F5F5),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
+                                            child: Stack(
+                                              children: [
+                                                Image.network(
+                                                  valueOrDefault<String>(
+                                                    matchesItem.photoUrl,
+                                                    'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                   ),
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      Color(0x00C4C4C4),
-                                                      Color(0xC9000000)
-                                                    ],
-                                                    stops: [0, 1],
-                                                    begin: AlignmentDirectional(
-                                                        0, -1),
-                                                    end: AlignmentDirectional(
-                                                        0, 1),
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                Container(
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: Image.network(
+                                                        '',
+                                                      ).image,
+                                                    ),
+                                                    gradient: LinearGradient(
+                                                      colors: [
+                                                        Color(0x00C4C4C4),
+                                                        Color(0xC9000000)
+                                                      ],
+                                                      stops: [0, 1],
+                                                      begin:
+                                                          AlignmentDirectional(
+                                                              0, -1),
+                                                      end: AlignmentDirectional(
+                                                          0, 1),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(8, 0, 8, 8),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.person_outlined,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryColor,
-                                                          size: 16,
-                                                        ),
-                                                        Padding(
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 0, 8, 8),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        children: [
+                                                          Icon(
+                                                            Icons
+                                                                .person_outlined,
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryColor,
+                                                            size: 16,
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        4,
+                                                                        0,
+                                                                        0,
+                                                                        0),
+                                                            child: Text(
+                                                              '${matchesItem.firstName}, ${functions.getAge(matchesItem.birthDay).toString()}',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .subtitle2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    fontSize:
+                                                                        14,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                  ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                -1, 0),
+                                                        child: Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
-                                                                  .fromSTEB(4,
-                                                                      0, 0, 0),
+                                                                  .fromSTEB(0,
+                                                                      4, 0, 0),
                                                           child: Text(
-                                                            '${matchesItem.firstName}, ${functions.getAge(matchesItem.birthDay).toString()}',
+                                                            matchesItem
+                                                                .education!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .subtitle2
+                                                                .bodyText1
                                                                 .override(
                                                                   fontFamily:
                                                                       'Roboto',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .primaryColor,
-                                                                  fontSize: 14,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
+                                                                  fontSize: 12,
                                                                 ),
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -1, 0),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                        child: Text(
-                                                          matchesItem
-                                                              .education!,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText1
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontSize: 12,
-                                                              ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                -1, 0),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      4, 0, 0),
+                                                          child: Text(
+                                                            matchesItem.bio!,
+                                                            maxLines: 2,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText2
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryColor,
+                                                                  fontSize: 8,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -1, 0),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 4, 0, 0),
-                                                        child: Text(
-                                                          matchesItem.bio!,
-                                                          maxLines: 2,
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyText2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontSize: 8,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
-                                                              ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: AlignmentDirectional(
-                                                    1.1, 0.95),
-                                                child: FlutterFlowIconButton(
-                                                  borderColor:
-                                                      Colors.transparent,
-                                                  borderRadius: 30,
-                                                  borderWidth: 1,
-                                                  buttonSize: 60,
-                                                  icon: Icon(
-                                                    Icons.chat,
-                                                    color: Color(0xA3F5F5F5),
-                                                    size: 30,
+                                                    ],
                                                   ),
-                                                  onPressed: () async {
-                                                    context.pushNamed(
-                                                      'Chat',
-                                                      queryParams: {
-                                                        'chatUser':
-                                                            serializeParam(
-                                                          matchesItem,
-                                                          ParamType.Document,
-                                                        ),
-                                                      }.withoutNulls,
-                                                      extra: <String, dynamic>{
-                                                        'chatUser': matchesItem,
-                                                      },
-                                                    );
-                                                  },
                                                 ),
-                                              ),
-                                            ],
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          1.1, 0.95),
+                                                  child: FlutterFlowIconButton(
+                                                    borderColor:
+                                                        Colors.transparent,
+                                                    borderRadius: 30,
+                                                    borderWidth: 1,
+                                                    buttonSize: 60,
+                                                    icon: Icon(
+                                                      Icons.chat,
+                                                      color: Color(0xA3F5F5F5),
+                                                      size: 30,
+                                                    ),
+                                                    onPressed: () async {
+                                                      context.pushNamed(
+                                                        'Chat',
+                                                        queryParams: {
+                                                          'chatUser':
+                                                              serializeParam(
+                                                            matchesItem,
+                                                            ParamType.Document,
+                                                          ),
+                                                        }.withoutNulls,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          'chatUser':
+                                                              matchesItem,
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                },
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ),
