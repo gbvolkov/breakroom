@@ -116,7 +116,6 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                     ),
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
-                                  width: 1,
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),

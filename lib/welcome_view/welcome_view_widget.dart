@@ -32,16 +32,11 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                   alignment: AlignmentDirectional(0, -1),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                    child: InkWell(
-                      onTap: () async {
-                        context.pushNamed('IntroductionView');
-                      },
-                      child: Image.asset(
-                        'assets/images/WelcomeImage.png',
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.45,
-                        fit: BoxFit.cover,
-                      ),
+                    child: Image.asset(
+                      'assets/images/WelcomeImage.png',
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

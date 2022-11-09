@@ -321,6 +321,12 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                 emailTextFieldController!
                                                     .text)) {
                                               if (FFAppState().agreeCheck) {
+                                                setState(() {
+                                                  passwordTextFieldController
+                                                      ?.clear();
+                                                  confirmPasswordTextFieldController
+                                                      ?.clear();
+                                                });
                                                 await signUpPageViewController
                                                     ?.nextPage(
                                                   duration: Duration(
@@ -802,7 +808,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           },
                                         ).then((value) => setState(() {}));
 
-                                        context.pushNamedAuth(
+                                        context.goNamedAuth(
                                             'CreateProfileView', mounted);
                                       },
                                       text: 'Create account',
