@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../components/gender_icon_widget.dart';
 import '../components/profile_bottom_sheet_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
@@ -985,36 +986,27 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                             ],
                                                                           ),
                                                                         ),
-                                                                        if (matchedUsersItem.gender ==
-                                                                            'Male')
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
+                                                                        Container(
+                                                                          decoration:
+                                                                              BoxDecoration(),
+                                                                          child:
+                                                                              GenderIconWidget(
+                                                                            gender:
+                                                                                matchedUsersItem.gender,
+                                                                            maleIcon:
                                                                                 Icon(
                                                                               FFIcons.kmale,
                                                                               color: FlutterFlowTheme.of(context).primaryColor,
                                                                               size: 24,
                                                                             ),
-                                                                          ),
-                                                                        if (matchedUsersItem.gender !=
-                                                                            'Male')
-                                                                          Padding(
-                                                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                                                4,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            child:
+                                                                            femaleIcon:
                                                                                 Icon(
                                                                               FFIcons.kfemale,
                                                                               color: FlutterFlowTheme.of(context).primaryColor,
                                                                               size: 24,
                                                                             ),
                                                                           ),
+                                                                        ),
                                                                       ],
                                                                     ),
                                                                   ),
