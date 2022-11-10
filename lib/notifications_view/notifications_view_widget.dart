@@ -210,13 +210,19 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                   (context, todayMsgsIndex) {
                                                 final todayMsgsItem =
                                                     todayMsgs[todayMsgsIndex];
-                                                return Container(
-                                                  decoration: BoxDecoration(),
-                                                  child:
-                                                      NotificationMessageComponentWidget(
-                                                    notification: todayMsgsItem,
-                                                    noriffTS: columnUsersRecord
-                                                        .notiffReadTS,
+                                                return Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 0, 0, 8),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(),
+                                                    child:
+                                                        NotificationMessageComponentWidget(
+                                                      notification:
+                                                          todayMsgsItem,
+                                                      noriffTS:
+                                                          columnUsersRecord
+                                                              .notiffReadTS,
+                                                    ),
                                                   ),
                                                 );
                                               },
