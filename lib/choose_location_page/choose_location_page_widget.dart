@@ -81,38 +81,43 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
               children: [
                 Align(
                   alignment: AlignmentDirectional(0, 0),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 1,
-                    decoration: BoxDecoration(),
-                    child: Builder(builder: (context) {
-                      final _googleMapMarker = functions.getUserLocation(
-                          FFAppState().fltrLocation, FFAppState().fltrLocation);
-                      return FlutterFlowGoogleMap(
-                        controller: googleMapsController,
-                        onCameraIdle: (latLng) => googleMapsCenter = latLng,
-                        initialLocation: googleMapsCenter ??=
-                            functions.getUserLocation(FFAppState().fltrLocation,
-                                FFAppState().fltrLocation),
-                        markers: [
-                          FlutterFlowMarker(
-                            _googleMapMarker.serialize(),
-                            _googleMapMarker,
-                          ),
-                        ],
-                        markerColor: GoogleMarkerColor.violet,
-                        mapType: MapType.normal,
-                        style: GoogleMapStyle.standard,
-                        initialZoom: 14,
-                        allowInteraction: true,
-                        allowZoom: true,
-                        showZoomControls: true,
-                        showLocation: true,
-                        showCompass: false,
-                        showMapToolbar: true,
-                        showTraffic: false,
-                        centerMapOnMarkerTap: true,
-                      );
-                    }),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 86),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 1,
+                      decoration: BoxDecoration(),
+                      child: Builder(builder: (context) {
+                        final _googleMapMarker = functions.getUserLocation(
+                            FFAppState().fltrLocation,
+                            FFAppState().fltrLocation);
+                        return FlutterFlowGoogleMap(
+                          controller: googleMapsController,
+                          onCameraIdle: (latLng) => googleMapsCenter = latLng,
+                          initialLocation: googleMapsCenter ??=
+                              functions.getUserLocation(
+                                  FFAppState().fltrLocation,
+                                  FFAppState().fltrLocation),
+                          markers: [
+                            FlutterFlowMarker(
+                              _googleMapMarker.serialize(),
+                              _googleMapMarker,
+                            ),
+                          ],
+                          markerColor: GoogleMarkerColor.violet,
+                          mapType: MapType.normal,
+                          style: GoogleMapStyle.standard,
+                          initialZoom: 14,
+                          allowInteraction: true,
+                          allowZoom: true,
+                          showZoomControls: true,
+                          showLocation: true,
+                          showCompass: false,
+                          showMapToolbar: true,
+                          showTraffic: false,
+                          centerMapOnMarkerTap: true,
+                        );
+                      }),
+                    ),
                   ),
                 ),
                 Align(
