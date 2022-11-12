@@ -713,7 +713,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             distance: 50.0,
                                             ageRange: createIntRangeStruct(
                                               min: 0,
-                                              max: 2022,
+                                              max: 2000,
                                               clearUnsetFields: false,
                                               create: true,
                                             ),
@@ -721,8 +721,6 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             create: true,
                                           ),
                                           isComplete: false,
-                                          birthDay: functions.addYearsToDate(
-                                              getCurrentTimestamp, 18, -1, 0),
                                         );
                                         await UsersRecord.collection
                                             .doc(user.uid)
