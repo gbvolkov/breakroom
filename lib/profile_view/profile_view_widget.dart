@@ -10,6 +10,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/permissions_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,33 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
   bool isMediaUploading1 = false;
   String uploadedFileUrl1 = '';
 
+  String? address;
   bool isMediaUploading2 = false;
   String uploadedFileUrl2 = '';
 
+  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
+        .then((loc) => setState(() => currentUserLocationValue = loc));
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (currentUserLocationValue == null) {
+      return Center(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CircularProgressIndicator(
+            color: FlutterFlowTheme.of(context).primaryColor,
+          ),
+        ),
+      );
+    }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -801,6 +822,95 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                     ),
+                                    if (columnUsersRecord.isPremium ?? true)
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SelectionArea(
+                                              child: Text(
+                                            functions
+                                                .getUserGeoPosition(
+                                                    columnUsersRecord,
+                                                    currentUserLocationValue)
+                                                .toString(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText2,
+                                          )),
+                                          FlutterFlowIconButton(
+                                            borderColor: Colors.transparent,
+                                            borderRadius: 30,
+                                            borderWidth: 1,
+                                            buttonSize: 60,
+                                            icon: Icon(
+                                              Icons.edit_location_rounded,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 30,
+                                            ),
+                                            onPressed: () async {
+                                              currentUserLocationValue =
+                                                  await getCurrentUserLocation(
+                                                      defaultLocation:
+                                                          LatLng(0.0, 0.0));
+                                              if ((await getPermissionStatus(
+                                                      locationPermission)) &&
+                                                  functions.isLocationSet(
+                                                      currentUserLocationValue)) {
+                                                address = await actions
+                                                    .getAddressFromLocation(
+                                                  currentUserLocationValue!,
+                                                );
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  'Please, confirm your location.'),
+                                                              content: Text(
+                                                                  'Your location will be set to address.'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: Text(
+                                                                      'Cancel'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child: Text(
+                                                                      'Confirm'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                                if (confirmDialogResponse) {
+                                                  final usersUpdateData =
+                                                      createUsersRecordData(
+                                                    geoposition:
+                                                        currentUserLocationValue,
+                                                  );
+                                                  await currentUserReference!
+                                                      .update(usersUpdateData);
+                                                }
+                                              }
+
+                                              setState(() {});
+                                            },
+                                          ),
+                                        ],
+                                      ),
                                     Align(
                                       alignment: AlignmentDirectional(-1, 0),
                                       child: Padding(
