@@ -160,7 +160,18 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                               currentUserLocationValue,
                             );
 
-                            context.pushNamed('FiltersView');
+                            context.pushNamed(
+                              'FiltersView',
+                              queryParams: {
+                                'user': serializeParam(
+                                  columnUsersRecord,
+                                  ParamType.Document,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'user': columnUsersRecord,
+                              },
+                            );
                           },
                           child: Image.asset(
                             'assets/images/imgFilter.png',
