@@ -20,15 +20,15 @@ Future initializeFilterState(
   FFAppState().fltrName = "Filter";
   if (filter?.ageRange.min == null) {
     FFAppState().fltrAgeMin =
-        25; //getAge(userProfile.birthDay ?? DateTime.now())-10;
+        0; //getAge(userProfile.birthDay ?? DateTime.now())-10;
   } else {
     FFAppState().fltrAgeMin = filter?.ageRange.min ?? 0;
   }
   if (filter?.ageRange.max == null) {
     FFAppState().fltrAgeMax =
-        60; //getAge(userProfile.birthDay ?? DateTime.now())+10;
+        2022; //getAge(userProfile.birthDay ?? DateTime.now())+10;
   } else {
-    FFAppState().fltrAgeMax = filter?.ageRange.max ?? 0;
+    FFAppState().fltrAgeMax = filter?.ageRange.max ?? 2022;
   }
   FFAppState().fltrAgeRangeExt = false;
   FFAppState().fltrIndusrtries = filter?.industries?.asList() ?? [];

@@ -1,6 +1,5 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_checkbox_group.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -21,12 +20,11 @@ class SignInViewWidget extends StatefulWidget {
 class _SignInViewWidgetState extends State<SignInViewWidget> {
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  List<String>? checkboxGroupValues;
+  PageController? signInPageViewController;
   TextEditingController? emailTextFieldController;
   TextEditingController? passwordTextFieldController;
 
   late bool passwordTextFieldVisibility;
-  PageController? signInPageViewController;
 
   @override
   void initState() {
@@ -284,27 +282,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    Expanded(
-                                      child: FlutterFlowCheckboxGroup(
-                                        options: ['Remember me'],
-                                        onChanged: (val) => setState(
-                                            () => checkboxGroupValues = val),
-                                        activeColor:
-                                            FlutterFlowTheme.of(context)
-                                                .alternate,
-                                        checkColor: Colors.white,
-                                        checkboxBorderColor: Color(0xFF95A1AC),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyText1,
-                                        checkboxBorderRadius:
-                                            BorderRadius.circular(5),
-                                        initialized:
-                                            checkboxGroupValues != null,
-                                      ),
-                                    ),
                                     FFButtonWidget(
                                       onPressed: () async {
                                         context.pushNamed('ForgotPasswordView');

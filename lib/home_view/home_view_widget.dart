@@ -5,7 +5,6 @@ import '../components/gender_icon_widget.dart';
 import '../components/profile_bottom_sheet_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_choice_chips.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -1100,58 +1099,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                     ),
                                   );
                                 },
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0, 1),
-                                child: Container(
-                                  width: 115,
-                                  height: 115,
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Container(
-                                          width: 110,
-                                          height: 110,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Container(
-                                          width: 84,
-                                          height: 84,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 60,
-                                            icon: Icon(
-                                              Icons.favorite_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              size: 35,
-                                            ),
-                                            onPressed: () async {
-                                              swipeableStackController
-                                                  .triggerSwipeUp();
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ),
                             ],
                           ),

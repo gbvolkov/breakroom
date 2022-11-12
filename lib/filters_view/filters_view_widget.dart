@@ -21,8 +21,8 @@ class FiltersViewWidget extends StatefulWidget {
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
   List<String>? choiceChipsValues;
   bool? switchListTileValue;
-  PageController? pageViewController;
   double? sliderDistanceValue;
+  PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ValueNotifier<List<String>?> ccIndustriesValues = ValueNotifier(null);
 
@@ -453,116 +453,229 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ),
                               ),
                             ),
-                            Stack(
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
                               children: [
-                                Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFF5F5F5),
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16, 16, 16, 0),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 8),
-                                              child: Text(
-                                                'Between ${formatNumber(
-                                                  FFAppState().fltrAgeMin,
-                                                  formatType: FormatType.custom,
-                                                  format: '###',
-                                                  locale: '',
-                                                )} and ${formatNumber(
-                                                  FFAppState().fltrAgeMax,
-                                                  formatType: FormatType.custom,
-                                                  format: '###',
-                                                  locale: '',
-                                                )}',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                              ),
-                                            ),
-                                          ],
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 150,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFF5F5F5),
+                                          borderRadius:
+                                              BorderRadius.circular(16),
                                         ),
-                                        Container(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  16, 16, 16, 0),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 0, 8),
+                                                    child: Text(
+                                                      'Between ${formatNumber(
+                                                        FFAppState().fltrAgeMin,
+                                                        formatType:
+                                                            FormatType.custom,
+                                                        format: '###',
+                                                        locale: '',
+                                                      )} and ${formatNumber(
+                                                        FFAppState().fltrAgeMax,
+                                                        formatType:
+                                                            FormatType.custom,
+                                                        format: '###',
+                                                        locale: '',
+                                                      )}',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle1,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 50,
+                                                child: custom_widgets
+                                                    .CustomRangeSlider(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 50,
+                                                  minValue: 18,
+                                                  maxValue: 100,
+                                                  rangeStart:
+                                                      FFAppState().fltrAgeMin,
+                                                  rangeEnd:
+                                                      FFAppState().fltrAgeMax,
+                                                  activeColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
+                                                  inactiveColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondaryText,
+                                                  onValueChanged: () async {
+                                                    setState(() => FFAppState()
+                                                            .fltrAgeMin =
+                                                        FFAppState()
+                                                            .rangeSliderStart);
+                                                    setState(() => FFAppState()
+                                                            .fltrAgeMax =
+                                                        FFAppState()
+                                                            .rangeSliderEnd);
+                                                  },
+                                                ),
+                                              ),
+                                              if (FFAppState().falseconst)
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'See people 2 years either\nside if I run out',
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1,
+                                                    ),
+                                                    Expanded(
+                                                      child: SwitchListTile(
+                                                        value: switchListTileValue ??=
+                                                            FFAppState()
+                                                                .fltrAgeRangeExt,
+                                                        onChanged:
+                                                            (newValue) async {
+                                                          setState(() =>
+                                                              switchListTileValue =
+                                                                  newValue!);
+                                                        },
+                                                        tileColor:
+                                                            Color(0xFFF5F5F5),
+                                                        activeColor:
+                                                            Color(0xFF27AE60),
+                                                        activeTrackColor:
+                                                            Color(0xFFA0E0BC),
+                                                        dense: false,
+                                                        controlAffinity:
+                                                            ListTileControlAffinity
+                                                                .trailing,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Stack(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: Container(
                                           width:
                                               MediaQuery.of(context).size.width,
-                                          height: 50,
-                                          child:
-                                              custom_widgets.CustomRangeSlider(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 50,
-                                            minValue: 18,
-                                            maxValue: 150,
-                                            rangeStart: FFAppState().fltrAgeMin,
-                                            rangeEnd: FFAppState().fltrAgeMax,
+                                          height: 90,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 8, 8, 8),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Distance Preference',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1,
+                                                ),
+                                                Text(
+                                                  formatNumber(
+                                                    sliderDistanceValue,
+                                                    formatType:
+                                                        FormatType.custom,
+                                                    format: '###',
+                                                    locale: '',
+                                                  ),
+                                                  maxLines: 2,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Slider(
                                             activeColor:
                                                 FlutterFlowTheme.of(context)
                                                     .alternate,
-                                            inactiveColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryText,
-                                            onValueChanged: () async {
+                                            inactiveColor: Color(0xFFC0C0C0),
+                                            min: 0,
+                                            max: 100,
+                                            value: sliderDistanceValue ??=
+                                                FFAppState().fltrDistance,
+                                            onChanged: (newValue) async {
                                               setState(() =>
-                                                  FFAppState().fltrAgeMin =
-                                                      FFAppState()
-                                                          .rangeSliderStart);
-                                              setState(() => FFAppState()
-                                                      .fltrAgeMax =
-                                                  FFAppState().rangeSliderEnd);
+                                                  sliderDistanceValue =
+                                                      newValue);
+                                              setState(() =>
+                                                  FFAppState().fltrDistance =
+                                                      sliderDistanceValue!);
                                             },
                                           ),
-                                        ),
-                                        if (FFAppState().falseconst)
-                                          Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                'See people 2 years either\nside if I run out',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyText1,
-                                              ),
-                                              Expanded(
-                                                child: SwitchListTile(
-                                                  value: switchListTileValue ??=
-                                                      FFAppState()
-                                                          .fltrAgeRangeExt,
-                                                  onChanged: (newValue) async {
-                                                    setState(() =>
-                                                        switchListTileValue =
-                                                            newValue!);
-                                                  },
-                                                  tileColor: Color(0xFFF5F5F5),
-                                                  activeColor:
-                                                      Color(0xFF27AE60),
-                                                  activeTrackColor:
-                                                      Color(0xFFA0E0BC),
-                                                  dense: false,
-                                                  controlAffinity:
-                                                      ListTileControlAffinity
-                                                          .trailing,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                      ],
-                                    ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -708,91 +821,6 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 16),
-                                  child: Stack(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 90,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                          ),
-                                        ),
-                                      ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 8, 8, 8),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Distance Preference',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .subtitle1,
-                                                ),
-                                                Text(
-                                                  formatNumber(
-                                                    sliderDistanceValue,
-                                                    formatType:
-                                                        FormatType.custom,
-                                                    format: '###',
-                                                    locale: '',
-                                                  ),
-                                                  maxLines: 2,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                      ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Slider(
-                                            activeColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate,
-                                            inactiveColor: Color(0xFFC0C0C0),
-                                            min: 0,
-                                            max: 100,
-                                            value: sliderDistanceValue ??=
-                                                FFAppState().fltrDistance,
-                                            onChanged: (newValue) async {
-                                              setState(() =>
-                                                  sliderDistanceValue =
-                                                      newValue);
-                                              setState(() =>
-                                                  FFAppState().fltrDistance =
-                                                      sliderDistanceValue!);
-                                            },
-                                          ),
-                                        ],
                                       ),
                                     ],
                                   ),

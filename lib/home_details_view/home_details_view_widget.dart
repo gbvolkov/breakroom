@@ -620,10 +620,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                     if ((widget.mode == null || widget.mode == '') ||
                         (widget.mode == 'like'))
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
+                        padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 24),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Align(
@@ -693,70 +693,6 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                   ),
                                                 },
                                               );
-                                            },
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: AlignmentDirectional(0, 1),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: Container(
-                                  width: 115,
-                                  height: 115,
-                                  child: Stack(
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Container(
-                                          width: 110,
-                                          height: 110,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 4,
-                                                color: Color(0x33000000),
-                                                offset: Offset(0, 2),
-                                              )
-                                            ],
-                                            shape: BoxShape.circle,
-                                          ),
-                                        ),
-                                      ),
-                                      Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Container(
-                                          width: 84,
-                                          height: 84,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 60,
-                                            icon: Icon(
-                                              Icons.favorite_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                              size: 35,
-                                            ),
-                                            onPressed: () async {
-                                              setState(() => FFAppState()
-                                                  .swipeAction = 'up');
-                                              context.pop();
                                             },
                                           ),
                                         ),
