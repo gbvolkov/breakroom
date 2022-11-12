@@ -352,3 +352,8 @@ DateTime getEarlierDate(
 List<String> nLStringList(List<String>? nullableStringList) {
   return nullableStringList ?? [];
 }
+
+bool isLocationSet(LatLng? location) {
+  return !(location == null ||
+      (location.latitude == 0 && location.longitude == 0));
+}

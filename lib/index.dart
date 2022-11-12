@@ -98,3 +98,5 @@ export 'community_guidlines_view/community_guidlines_view_widget.dart'
     show CommunityGuidlinesViewWidget;
 export 'upload_photos_view/upload_photos_view_widget.dart'
     show UploadPhotosViewWidget;
+export 'upload_photos_view_copy/upload_photos_view_copy_widget.dart'
+    show UploadPhotosViewCopyWidget;

@@ -292,6 +292,8 @@ class FFAppState {
     _build = _value;
     prefs.setString('ff_build', _value);
   }
+
+  LatLng? zeropoint = LatLng(0, 0);
 }
 
 LatLng? _latLngFromString(String? val) {
