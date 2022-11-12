@@ -170,6 +170,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditBodyTypeView': (data) async => EditBodyTypeViewWidget(),
   'testPlacePicker': (data) async => TestPlacePickerWidget(),
   'CommunityGuidlinesView': (data) async => CommunityGuidlinesViewWidget(),
+  'UploadPhotosView': (data) async => UploadPhotosViewWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>

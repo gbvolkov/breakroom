@@ -477,6 +477,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'CommunityGuidlinesView',
               path: 'communityGuidlinesView',
               builder: (context, params) => CommunityGuidlinesViewWidget(),
+            ),
+            FFRoute(
+              name: 'UploadPhotosView',
+              path: 'uploadPhotosView',
+              requireAuth: true,
+              builder: (context, params) => UploadPhotosViewWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

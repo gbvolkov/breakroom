@@ -96,3 +96,5 @@ export 'test_place_picker/test_place_picker_widget.dart'
     show TestPlacePickerWidget;
 export 'community_guidlines_view/community_guidlines_view_widget.dart'
     show CommunityGuidlinesViewWidget;
+export 'upload_photos_view/upload_photos_view_widget.dart'
+    show UploadPhotosViewWidget;

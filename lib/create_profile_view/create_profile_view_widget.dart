@@ -582,7 +582,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   fillColor: Color(0xFFEFEFEF),
                                 ),
                                 style: FlutterFlowTheme.of(context).subtitle1,
-                                maxLines: 8,
+                                maxLines: 5,
                               ),
                             ),
                             Padding(
@@ -2118,7 +2118,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         await currentUserReference!
                                             .update(usersUpdateData);
 
-                                        context.pushNamed('HomeView');
+                                        context.pushNamed('UploadPhotosView');
                                       }
                                     },
                                     text: 'Save',
