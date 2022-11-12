@@ -84,6 +84,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   DateTime? get notiffReadTS;
 
+  bool? get isPremium;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -119,7 +121,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..filter = FilterStructBuilder()
     ..liked = ListBuilder()
     ..disliked = ListBuilder()
-    ..isComplete = false;
+    ..isComplete = false
+    ..isPremium = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -172,6 +175,7 @@ Map<String, dynamic> createUsersRecordData({
   FilterStruct? filter,
   bool? isComplete,
   DateTime? notiffReadTS,
+  bool? isPremium,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -211,7 +215,8 @@ Map<String, dynamic> createUsersRecordData({
         ..liked = null
         ..disliked = null
         ..isComplete = isComplete
-        ..notiffReadTS = notiffReadTS,
+        ..notiffReadTS = notiffReadTS
+        ..isPremium = isPremium,
     ),
   );
 

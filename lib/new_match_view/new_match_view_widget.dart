@@ -29,6 +29,26 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
     'imageOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
+        VisibilityEffect(duration: 1.ms),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: 0,
+          end: 1,
+        ),
+        RotateEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 600.ms,
+          begin: -0.2,
+          end: 0,
+        ),
+      ],
+    ),
+    'imageOnPageLoadAnimation2': AnimationInfo(
+      trigger: AnimationTrigger.onPageLoad,
+      effects: [
         RotateEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
@@ -52,7 +72,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
         ),
       ],
     ),
-    'imageOnPageLoadAnimation2': AnimationInfo(
+    'imageOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         VisibilityEffect(duration: 1.ms),
@@ -159,7 +179,8 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                         width: MediaQuery.of(context).size.width,
                         height: MediaQuery.of(context).size.height * 0.9,
                         fit: BoxFit.cover,
-                      ),
+                      ).animateOnPageLoad(
+                          animationsMap['imageOnPageLoadAnimation1']!),
                     ),
                     Align(
                       alignment: AlignmentDirectional(0, 0),
@@ -226,7 +247,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                         ),
                                       ),
                                     ).animateOnPageLoad(animationsMap[
-                                        'imageOnPageLoadAnimation1']!),
+                                        'imageOnPageLoadAnimation2']!),
                                   ),
                                 ),
                                 Align(
@@ -246,7 +267,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                         fit: BoxFit.cover,
                                       ),
                                     ).animateOnPageLoad(animationsMap[
-                                        'imageOnPageLoadAnimation2']!),
+                                        'imageOnPageLoadAnimation3']!),
                                   ),
                                 ),
                                 Align(

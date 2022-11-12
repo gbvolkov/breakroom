@@ -8,7 +8,6 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/permissions_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,8 +25,6 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
 
   DateTime? userBDay1;
   DateTime? userBDay;
-  String? address;
-  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -1078,204 +1075,38 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            currentUserLocationValue =
-                                await getCurrentUserLocation(
-                                    defaultLocation: LatLng(0.0, 0.0));
-                            if (await getPermissionStatus(locationPermission)) {
-                              if (currentUserLocationValue != null) {
-                                address = await actions.getAddressFromLocation(
-                                  currentUserLocationValue!,
-                                );
-                                var confirmDialogResponse =
-                                    await showDialog<bool>(
-                                          context: context,
-                                          builder: (alertDialogContext) {
-                                            return AlertDialog(
-                                              title: Text('Location'),
-                                              content: Text(
-                                                  'Do you want to update your location to ${address}?'),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          false),
-                                                  child: Text(
-                                                      'No, please leave intact'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () =>
-                                                      Navigator.pop(
-                                                          alertDialogContext,
-                                                          true),
-                                                  child: Text('Yes, please'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        ) ??
-                                        false;
-                                if (confirmDialogResponse) {
-                                  final usersUpdateData = {
-                                    ...createUsersRecordData(
-                                      firstName: FFAppState().usrFirstName,
-                                      lastName: FFAppState().usrLastName,
-                                      birthDay: FFAppState().usrBDay,
-                                      industry: FFAppState().usrIndustry,
-                                      occupation: FFAppState().usrOccupation,
-                                      bio: FFAppState().usrBio,
-                                      gender: FFAppState().usrGender,
-                                      genderPreference:
-                                          FFAppState().usrGenderPreference,
-                                      intention: FFAppState().usrIntention,
-                                      childfreeStatus:
-                                          FFAppState().usrChildfreeStatus,
-                                      religion: FFAppState().usrReligion,
-                                      education: FFAppState().usrEducation,
-                                      bodyType: FFAppState().usrBodyType,
-                                      workoutStatus:
-                                          FFAppState().usrWorkoutStatus,
-                                      drinkingStatus:
-                                          FFAppState().usrDrinkingStatus,
-                                      smokingStatus:
-                                          FFAppState().usrSmokingStatus,
-                                      spiritualStatus:
-                                          FFAppState().usrSpiritualStatus,
-                                      height: FFAppState().usrHeight,
-                                      weight: 80,
-                                      displayName:
-                                          '${FFAppState().usrFirstName}, ${functions.getAge(FFAppState().usrBDay).toString()}',
-                                      geoposition: currentUserLocationValue,
-                                    ),
-                                    'interests': FFAppState().usrInterests,
-                                    'lookingFor': FFAppState().usrLookingFor,
-                                  };
-                                  await currentUserReference!
-                                      .update(usersUpdateData);
-                                } else {
-                                  final usersUpdateData = {
-                                    ...createUsersRecordData(
-                                      firstName: FFAppState().usrFirstName,
-                                      lastName: FFAppState().usrLastName,
-                                      birthDay: FFAppState().usrBDay,
-                                      industry: FFAppState().usrIndustry,
-                                      occupation: FFAppState().usrOccupation,
-                                      bio: FFAppState().usrBio,
-                                      gender: FFAppState().usrGender,
-                                      genderPreference:
-                                          FFAppState().usrGenderPreference,
-                                      intention: FFAppState().usrIntention,
-                                      childfreeStatus:
-                                          FFAppState().usrChildfreeStatus,
-                                      religion: FFAppState().usrReligion,
-                                      education: FFAppState().usrEducation,
-                                      bodyType: FFAppState().usrBodyType,
-                                      workoutStatus:
-                                          FFAppState().usrWorkoutStatus,
-                                      drinkingStatus:
-                                          FFAppState().usrDrinkingStatus,
-                                      smokingStatus:
-                                          FFAppState().usrSmokingStatus,
-                                      spiritualStatus:
-                                          FFAppState().usrSpiritualStatus,
-                                      height: FFAppState().usrHeight,
-                                      weight: 80,
-                                      displayName:
-                                          '${FFAppState().usrFirstName}, ${functions.getAge(FFAppState().usrBDay).toString()}',
-                                    ),
-                                    'interests': FFAppState().usrInterests,
-                                    'lookingFor': FFAppState().usrLookingFor,
-                                  };
-                                  await currentUserReference!
-                                      .update(usersUpdateData);
-                                }
-                              } else {
-                                final usersUpdateData = {
-                                  ...createUsersRecordData(
-                                    firstName: FFAppState().usrFirstName,
-                                    lastName: FFAppState().usrLastName,
-                                    birthDay: FFAppState().usrBDay,
-                                    industry: FFAppState().usrIndustry,
-                                    occupation: FFAppState().usrOccupation,
-                                    bio: FFAppState().usrBio,
-                                    gender: FFAppState().usrGender,
-                                    genderPreference:
-                                        FFAppState().usrGenderPreference,
-                                    intention: FFAppState().usrIntention,
-                                    childfreeStatus:
-                                        FFAppState().usrChildfreeStatus,
-                                    religion: FFAppState().usrReligion,
-                                    education: FFAppState().usrEducation,
-                                    bodyType: FFAppState().usrBodyType,
-                                    workoutStatus:
-                                        FFAppState().usrWorkoutStatus,
-                                    drinkingStatus:
-                                        FFAppState().usrDrinkingStatus,
-                                    smokingStatus:
-                                        FFAppState().usrSmokingStatus,
-                                    spiritualStatus:
-                                        FFAppState().usrSpiritualStatus,
-                                    height: FFAppState().usrHeight,
-                                    weight: 80,
-                                    displayName:
-                                        '${FFAppState().usrFirstName}, ${functions.getAge(FFAppState().usrBDay).toString()}',
-                                  ),
-                                  'interests': FFAppState().usrInterests,
-                                  'lookingFor': FFAppState().usrLookingFor,
-                                };
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                              }
-                            } else {
-                              final usersUpdateData = {
-                                ...createUsersRecordData(
-                                  firstName: FFAppState().usrFirstName,
-                                  lastName: FFAppState().usrLastName,
-                                  birthDay: FFAppState().usrBDay,
-                                  industry: FFAppState().usrIndustry,
-                                  occupation: FFAppState().usrOccupation,
-                                  bio: FFAppState().usrBio,
-                                  gender: FFAppState().usrGender,
-                                  genderPreference:
-                                      FFAppState().usrGenderPreference,
-                                  intention: FFAppState().usrIntention,
-                                  childfreeStatus:
-                                      FFAppState().usrChildfreeStatus,
-                                  religion: FFAppState().usrReligion,
-                                  education: FFAppState().usrEducation,
-                                  bodyType: FFAppState().usrBodyType,
-                                  workoutStatus: FFAppState().usrWorkoutStatus,
-                                  drinkingStatus:
-                                      FFAppState().usrDrinkingStatus,
-                                  smokingStatus: FFAppState().usrSmokingStatus,
-                                  spiritualStatus:
-                                      FFAppState().usrSpiritualStatus,
-                                  height: FFAppState().usrHeight,
-                                  weight: 80,
-                                  displayName:
-                                      '${FFAppState().usrFirstName}, ${functions.getAge(FFAppState().usrBDay).toString()}',
-                                ),
-                                'interests': FFAppState().usrInterests,
-                                'lookingFor': FFAppState().usrLookingFor,
-                              };
-                              await currentUserReference!
-                                  .update(usersUpdateData);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Please permit Geoposition usage to find people around',
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle2,
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor: Color(0x00000000),
-                                ),
-                              );
-                            }
-
+                            final usersUpdateData = {
+                              ...createUsersRecordData(
+                                firstName: FFAppState().usrFirstName,
+                                lastName: FFAppState().usrLastName,
+                                birthDay: FFAppState().usrBDay,
+                                industry: FFAppState().usrIndustry,
+                                occupation: FFAppState().usrOccupation,
+                                bio: FFAppState().usrBio,
+                                gender: FFAppState().usrGender,
+                                genderPreference:
+                                    FFAppState().usrGenderPreference,
+                                intention: FFAppState().usrIntention,
+                                childfreeStatus:
+                                    FFAppState().usrChildfreeStatus,
+                                religion: FFAppState().usrReligion,
+                                education: FFAppState().usrEducation,
+                                bodyType: FFAppState().usrBodyType,
+                                workoutStatus: FFAppState().usrWorkoutStatus,
+                                drinkingStatus: FFAppState().usrDrinkingStatus,
+                                smokingStatus: FFAppState().usrSmokingStatus,
+                                spiritualStatus:
+                                    FFAppState().usrSpiritualStatus,
+                                height: FFAppState().usrHeight,
+                                weight: 80,
+                                displayName:
+                                    '${FFAppState().usrFirstName}, ${functions.getAge(FFAppState().usrBDay).toString()}',
+                              ),
+                              'interests': FFAppState().usrInterests,
+                              'lookingFor': FFAppState().usrLookingFor,
+                            };
+                            await currentUserReference!.update(usersUpdateData);
                             context.pop();
-
-                            setState(() {});
                           },
                           text: 'Save',
                           options: FFButtonOptions(

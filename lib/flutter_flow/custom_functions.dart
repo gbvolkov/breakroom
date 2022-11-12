@@ -203,6 +203,51 @@ List<UsersRecord> cleanUpFilteredProfiles(
   return result;
 }
 
+List<UsersRecord> cleanUpFilteredProfilesByUser(
+  List<UsersRecord> fliteredProfiles,
+  UsersRecord user,
+  LatLng location,
+) {
+  List<UsersRecord> result = [];
+  List<String> empty = [];
+
+  List<String> selectedUsers =
+      (user.liked?.asList() ?? empty) + (user.disliked?.asList() ?? empty);
+  bool isOK;
+
+  for (var profile in fliteredProfiles) {
+    if (!selectedUsers.contains(profile.uid)) {
+      isOK = true;
+      if (isOK &&
+          user.filter.lookingFor != null &&
+          user.filter.lookingFor!.isNotEmpty &&
+          profile.lookingFor != null) {
+        isOK = user.filter.lookingFor!
+            .any((String s) => profile.lookingFor!.contains(s));
+      }
+      if (isOK &&
+          user.filter.industries != null &&
+          user.filter.industries!.isNotEmpty) {
+        isOK = user.filter.industries!.contains(profile.industry);
+      }
+      if (isOK && user.filter.distance != null && user.filter.distance! > 0) {
+        if (!(user.filter.location == null ||
+            (user.filter.location!.latitude == 0 &&
+                user.filter.location!.longitude == 0))) {
+          location = user.filter.location!;
+        }
+        isOK =
+            geoDistance(profile.geoposition, location) <= user.filter.distance!;
+      }
+      if (isOK) {
+        result.add(profile);
+        return result;
+      }
+    }
+  }
+  return result;
+}
+
 UsersRecord? getFirstFilteredProfilesCopy(
   List<UsersRecord> fliteredProfiles,
   List<String> likedUsers,
