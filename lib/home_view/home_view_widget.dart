@@ -54,18 +54,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
           if (userDoc!.isComplete!) {
             if (!(await getPermissionStatus(locationPermission)) ||
                 !functions.isLocationSet(userDoc!.geoposition)) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    'Location is not set!!!!',
-                    style: TextStyle(
-                      color: FlutterFlowTheme.of(context).systemError,
-                    ),
-                  ),
-                  duration: Duration(milliseconds: 4000),
-                  backgroundColor: Color(0x00000000),
-                ),
-              );
+              context.pushNamed('SetYourLocationView');
             }
           } else {
             await actions.initializeUserDataState(

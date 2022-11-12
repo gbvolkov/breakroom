@@ -492,6 +492,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 photos:
                     params.getParam<String>('photos', ParamType.String, true),
               ),
+            ),
+            FFRoute(
+              name: 'SetYourLocationView',
+              path: 'setYourLocationView',
+              requireAuth: true,
+              builder: (context, params) => SetYourLocationViewWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

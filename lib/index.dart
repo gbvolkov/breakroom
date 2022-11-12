@@ -100,3 +100,5 @@ export 'upload_photos_view/upload_photos_view_widget.dart'
     show UploadPhotosViewWidget;
 export 'upload_photos_view_copy/upload_photos_view_copy_widget.dart'
     show UploadPhotosViewCopyWidget;
+export 'set_your_location_view/set_your_location_view_widget.dart'
+    show SetYourLocationViewWidget;
