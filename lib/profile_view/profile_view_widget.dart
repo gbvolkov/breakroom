@@ -2,7 +2,6 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../components/gender_icon_widget.dart';
-import '../components/menu_add_photo_widget.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -25,8 +24,11 @@ class ProfileViewWidget extends StatefulWidget {
 }
 
 class _ProfileViewWidgetState extends State<ProfileViewWidget> {
-  bool isMediaUploading = false;
-  String uploadedFileUrl = '';
+  bool isMediaUploading1 = false;
+  String uploadedFileUrl1 = '';
+
+  bool isMediaUploading2 = false;
+  String uploadedFileUrl2 = '';
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -167,7 +169,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                 m.storagePath,
                                                                 context))) {
                                                       setState(() =>
-                                                          isMediaUploading =
+                                                          isMediaUploading1 =
                                                               true);
                                                       var downloadUrls =
                                                           <String>[];
@@ -194,14 +196,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         ScaffoldMessenger.of(
                                                                 context)
                                                             .hideCurrentSnackBar();
-                                                        isMediaUploading =
+                                                        isMediaUploading1 =
                                                             false;
                                                       }
                                                       if (downloadUrls.length ==
                                                           selectedMedia
                                                               .length) {
                                                         setState(() =>
-                                                            uploadedFileUrl =
+                                                            uploadedFileUrl1 =
                                                                 downloadUrls
                                                                     .first);
                                                         showUploadMessage(
@@ -216,13 +218,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       }
                                                     }
 
-                                                    if (uploadedFileUrl !=
+                                                    if (uploadedFileUrl1 !=
                                                             null &&
-                                                        uploadedFileUrl != '') {
+                                                        uploadedFileUrl1 !=
+                                                            '') {
                                                       final usersUpdateData =
                                                           createUsersRecordData(
                                                         photoUrl:
-                                                            uploadedFileUrl,
+                                                            uploadedFileUrl1,
                                                       );
                                                       await currentUserReference!
                                                           .update(
@@ -905,19 +908,66 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  barrierColor: Color(0x7B000000),
+                                final selectedMedia =
+                                    await selectMediaWithSourceBottomSheet(
                                   context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding:
-                                          MediaQuery.of(context).viewInsets,
-                                      child: MenuAddPhotoWidget(),
+                                  allowPhoto: true,
+                                );
+                                if (selectedMedia != null &&
+                                    selectedMedia.every((m) =>
+                                        validateFileFormat(
+                                            m.storagePath, context))) {
+                                  setState(() => isMediaUploading2 = true);
+                                  var downloadUrls = <String>[];
+                                  try {
+                                    showUploadMessage(
+                                      context,
+                                      'Uploading file...',
+                                      showLoading: true,
                                     );
-                                  },
-                                ).then((value) => setState(() {}));
+                                    downloadUrls = (await Future.wait(
+                                      selectedMedia.map(
+                                        (m) async => await uploadData(
+                                            m.storagePath, m.bytes),
+                                      ),
+                                    ))
+                                        .where((u) => u != null)
+                                        .map((u) => u!)
+                                        .toList();
+                                  } finally {
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    isMediaUploading2 = false;
+                                  }
+                                  if (downloadUrls.length ==
+                                      selectedMedia.length) {
+                                    setState(() =>
+                                        uploadedFileUrl2 = downloadUrls.first);
+                                    showUploadMessage(context, 'Success!');
+                                  } else {
+                                    setState(() {});
+                                    showUploadMessage(
+                                        context, 'Failed to upload media');
+                                    return;
+                                  }
+                                }
+
+                                if (uploadedFileUrl1 != null &&
+                                    uploadedFileUrl1 != '') {
+                                  final usersUpdateData = {
+                                    'photos': FieldValue.arrayUnion([
+                                      getPhotoFirestoreData(
+                                        createPhotoStruct(
+                                          image: uploadedFileUrl2,
+                                          clearUnsetFields: false,
+                                        ),
+                                        true,
+                                      )
+                                    ]),
+                                  };
+                                  await columnUsersRecord.reference
+                                      .update(usersUpdateData);
+                                }
                               },
                               text: 'Add photo',
                               icon: Icon(
