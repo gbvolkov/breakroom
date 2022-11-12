@@ -10,6 +10,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -51,7 +52,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
         );
         if (userDoc != null) {
           if (userDoc!.isComplete!) {
-            if (!functions.isLocationSet(userDoc!.geoposition)) {
+            if (!(await getPermissionStatus(locationPermission)) ||
+                !functions.isLocationSet(userDoc!.geoposition)) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
