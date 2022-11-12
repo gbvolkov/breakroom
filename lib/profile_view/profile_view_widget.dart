@@ -806,14 +806,20 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 4),
-                                        child: Text(
-                                          'Photos',
-                                          style: FlutterFlowTheme.of(context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                        child: InkWell(
+                                          onTap: () async {
+                                            context
+                                                .pushNamed('UploadPhotosView');
+                                          },
+                                          child: Text(
+                                            'Photos',
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                          ),
                                         ),
                                       ),
                                     ),

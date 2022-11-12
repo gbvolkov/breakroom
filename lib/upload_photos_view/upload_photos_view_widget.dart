@@ -16,11 +16,8 @@ class UploadPhotosViewWidget extends StatefulWidget {
 }
 
 class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
-  bool isMediaUploading1 = false;
-  String uploadedFileUrl1 = '';
-
-  bool isMediaUploading2 = false;
-  String uploadedFileUrl2 = '';
+  bool isMediaUploading = false;
+  String uploadedFileUrl = '';
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -135,7 +132,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                                 validateFileFormat(
                                                     m.storagePath, context))) {
                                           setState(
-                                              () => isMediaUploading1 = true);
+                                              () => isMediaUploading = true);
                                           var downloadUrls = <String>[];
                                           try {
                                             showUploadMessage(
@@ -155,11 +152,11 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                           } finally {
                                             ScaffoldMessenger.of(context)
                                                 .hideCurrentSnackBar();
-                                            isMediaUploading1 = false;
+                                            isMediaUploading = false;
                                           }
                                           if (downloadUrls.length ==
                                               selectedMedia.length) {
-                                            setState(() => uploadedFileUrl1 =
+                                            setState(() => uploadedFileUrl =
                                                 downloadUrls.first);
                                             showUploadMessage(
                                                 context, 'Success!');
@@ -171,64 +168,18 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                           }
                                         }
                                       },
-                                      child: Image.network(
-                                        gridViewUsersRecord.photoUrl!,
+                                      child: Image.asset(
+                                        'assets/images/photo-frame.png',
                                         width: 105,
                                         height: 140,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, 1),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      final selectedMedia =
-                                          await selectMediaWithSourceBottomSheet(
-                                        context: context,
-                                        allowPhoto: true,
-                                      );
-                                      if (selectedMedia != null &&
-                                          selectedMedia.every((m) =>
-                                              validateFileFormat(
-                                                  m.storagePath, context))) {
-                                        setState(
-                                            () => isMediaUploading2 = true);
-                                        var downloadUrls = <String>[];
-                                        try {
-                                          showUploadMessage(
-                                            context,
-                                            'Uploading file...',
-                                            showLoading: true,
-                                          );
-                                          downloadUrls = (await Future.wait(
-                                            selectedMedia.map(
-                                              (m) async => await uploadData(
-                                                  m.storagePath, m.bytes),
-                                            ),
-                                          ))
-                                              .where((u) => u != null)
-                                              .map((u) => u!)
-                                              .toList();
-                                        } finally {
-                                          ScaffoldMessenger.of(context)
-                                              .hideCurrentSnackBar();
-                                          isMediaUploading2 = false;
-                                        }
-                                        if (downloadUrls.length ==
-                                            selectedMedia.length) {
-                                          setState(() => uploadedFileUrl2 =
-                                              downloadUrls.first);
-                                          showUploadMessage(
-                                              context, 'Success!');
-                                        } else {
-                                          setState(() {});
-                                          showUploadMessage(context,
-                                              'Failed to upload media');
-                                          return;
-                                        }
-                                      }
-                                    },
+                                if (gridViewUsersRecord.photoUrl != null &&
+                                    gridViewUsersRecord.photoUrl != '')
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, 1),
                                     child: Image.network(
                                       gridViewUsersRecord.photoUrl!,
                                       width: 105,
@@ -236,30 +187,46 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(1, -1),
-                                  child: Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Visibility(
-                                      visible: gridViewUsersRecord.photoUrl !=
-                                              null &&
-                                          gridViewUsersRecord.photoUrl != '',
-                                      child: Icon(
-                                        Icons.close,
+                                if (gridViewUsersRecord.photoUrl != null &&
+                                    gridViewUsersRecord.photoUrl != '')
+                                  Align(
+                                    alignment: AlignmentDirectional(1, -1),
+                                    child: Container(
+                                      width: 24,
+                                      height: 24,
+                                      decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        size: 20,
+                                            .alternate,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Delete photo',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .subtitle2,
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .backgroundDisable,
+                                            ),
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.close,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          size: 20,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                           );
@@ -292,8 +259,8 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                       Align(
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            context.pushNamed('HomeView');
                           },
                           text: 'Continue',
                           options: FFButtonOptions(
