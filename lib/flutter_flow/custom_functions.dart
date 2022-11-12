@@ -411,17 +411,14 @@ LatLng getUserGeoPosition(
   UsersRecord user,
   LatLng? location,
 ) {
-  if (user.filter.distance != null && user.filter.distance! > 0) {
-    if ((user.isPremium ?? false) &&
-        !(user.filter.location == null ||
-            (user.filter.location!.latitude == 0 &&
-                user.filter.location!.longitude == 0))) {
-      location = user.filter.location!;
-    }
-    if (location == null ||
-        (location.latitude == 0 && location.longitude == 0)) {
-      location = user.geoposition ?? location;
-    }
+  if ((user.isPremium ?? false) &&
+      !(user.filter.location == null ||
+          (user.filter.location!.latitude == 0 &&
+              user.filter.location!.longitude == 0))) {
+    location = user.filter.location!;
+  }
+  if (location == null || (location.latitude == 0 && location.longitude == 0)) {
+    location = user.geoposition ?? location;
   }
   return location ?? const LatLng(0, 0);
 }

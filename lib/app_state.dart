@@ -286,7 +286,7 @@ class FFAppState {
     prefs.setStringList('ff_whoViewedIntro', _whoViewedIntro);
   }
 
-  String _build = '20221108.1120.1';
+  String _build = '20221113.0140.1';
   String get build => _build;
   set build(String _value) {
     _build = _value;
