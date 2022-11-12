@@ -231,10 +231,14 @@ List<UsersRecord> cleanUpFilteredProfilesByUser(
         isOK = user.filter.industries!.contains(profile.industry);
       }
       if (isOK && user.filter.distance != null && user.filter.distance! > 0) {
-        if (!(user.filter.location == null ||
-            (user.filter.location!.latitude == 0 &&
-                user.filter.location!.longitude == 0))) {
+        if ((user.isPremium ?? false) &&
+            !(user.filter.location == null ||
+                (user.filter.location!.latitude == 0 &&
+                    user.filter.location!.longitude == 0))) {
           location = user.filter.location!;
+        }
+        if (location.latitude == 0 && location.longitude == 0) {
+          location = user.geoposition ?? location;
         }
         isOK =
             geoDistance(profile.geoposition, location) <= user.filter.distance!;

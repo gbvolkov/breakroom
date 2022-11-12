@@ -6,8 +6,8 @@ import 'index.dart'; // Imports other custom widgets
 import '../actions/index.dart'; // Imports custom actions
 import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
-// Begin custom widget code
 
+// Begin custom widget code
 class CustomRangeSlider extends StatefulWidget {
   const CustomRangeSlider({
     Key? key,
@@ -50,9 +50,12 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
     _activeColor = widget.activeColor ?? FlutterFlowTheme.of(context).alternate;
     _inactiveColor = widget.inactiveColor ??
         FlutterFlowTheme.of(context).secondaryBackground;
-    _currentRangeValues = RangeValues(
-        widget.rangeStart?.toDouble() ?? _minValue.toDouble(),
-        widget.rangeEnd?.toDouble() ?? _maxValue.toDouble());
+    int start = widget.rangeStart ?? _minValue;
+    int end = widget.rangeEnd ?? _maxValue;
+    start = (start < _minValue) ? _minValue : start;
+    end = (end > _maxValue) ? _maxValue : end;
+
+    _currentRangeValues = RangeValues(start.toDouble(), end.toDouble());
     FFAppState().rangeSliderStart = _minValue;
     FFAppState().rangeSliderEnd = _maxValue;
     super.initState();
