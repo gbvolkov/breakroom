@@ -224,7 +224,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'FiltersView',
               path: 'filtersView',
               requireAuth: true,
-              builder: (context, params) => FiltersViewWidget(),
+              asyncParams: {
+                'user': getDoc('users', UsersRecord.serializer),
+              },
+              builder: (context, params) => FiltersViewWidget(
+                user: params.getParam('user', ParamType.Document),
+              ),
             ),
             FFRoute(
               name: 'FilterIndustriesView',

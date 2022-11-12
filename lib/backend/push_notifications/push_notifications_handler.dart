@@ -117,7 +117,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditProfileView': (data) async => EditProfileViewWidget(),
   'EditBioView': (data) async => EditBioViewWidget(),
   'GetPremiumView': (data) async => GetPremiumViewWidget(),
-  'FiltersView': (data) async => FiltersViewWidget(),
+  'FiltersView': (data) async => FiltersViewWidget(
+        user: await getDocumentParameter(data, 'user', UsersRecord.serializer),
+      ),
   'FilterIndustriesView': (data) async => FilterIndustriesViewWidget(
         selectedIndustries: [],
       ),
