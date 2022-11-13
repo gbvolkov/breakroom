@@ -7,7 +7,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -31,6 +30,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
 
   List<String>? photoCollectionResult;
   List<String>? photosCollectionResultRemove;
+  List<PhotoStruct>? photosArray;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -306,15 +306,21 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
+                            photosArray =
+                                await actions.packImageCollectionToPhotos(
+                              FFAppState().photosCollection.toList(),
+                            );
+
                             final usersUpdateData = {
                               'photos': getPhotoListFirestoreData(
-                                functions.packImageCollection(
-                                    FFAppState().photosCollection.toList()),
+                                photosArray,
                               ),
                             };
                             await currentUserReference!.update(usersUpdateData);
 
                             context.pushNamed('HomeView');
+
+                            setState(() {});
                           },
                           text: 'Continue',
                           options: FFButtonOptions(
