@@ -43,13 +43,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      currentUserLocationValue =
-          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
       userDoc = await actions.getUserDocument(
         currentUserReference!,
       );
       userAddress = await actions.getAddressFromLocation(
-        functions.getUserGeoPosition(userDoc!, currentUserLocationValue),
+        userDoc!.geoposition!,
       );
       setState(() => FFAppState().usrAddress = userAddress!);
     });
