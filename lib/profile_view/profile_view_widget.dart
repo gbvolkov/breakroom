@@ -834,7 +834,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               FFAppState().usrAddress,
                                               'ND',
                                             ).maybeHandleOverflow(
-                                              maxChars: 50,
+                                              maxChars: 32,
                                               replacement: '…',
                                             ),
                                             style: FlutterFlowTheme.of(context)
