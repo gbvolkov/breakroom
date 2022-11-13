@@ -426,9 +426,7 @@ LatLng getUserGeoPosition(
 List<PhotoStruct> packImageCollection(List<String> imageCollection) {
   List<PhotoStruct> photoCollection = [];
   for (final img in imageCollection) {
-    PhotoStruct photo = PhotoStruct();
-    photo.image = img;
-    photo.rating = 0;
+    PhotoStruct photo = PhotoStruct((p0) => {p0.image = img, p0.rating = 0.0});
     photoCollection.add(photo);
   }
   return photoCollection;
