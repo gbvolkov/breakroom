@@ -422,3 +422,14 @@ LatLng getUserGeoPosition(
   }
   return location ?? const LatLng(0, 0);
 }
+
+List<PhotoStruct> packImageCollection(List<String> imageCollection) {
+  List<PhotoStruct> photoCollection = [];
+  for (final img in imageCollection) {
+    PhotoStruct photo = PhotoStruct();
+    photo.image = img;
+    photo.rating = 0;
+    photoCollection.add(photo);
+  }
+  return photoCollection;
+}

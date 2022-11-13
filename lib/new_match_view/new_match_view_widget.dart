@@ -53,8 +53,8 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 0.1,
-          end: 0,
+          begin: 0.2,
+          end: 0.04,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
@@ -80,8 +80,8 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: -0.1,
-          end: 0,
+          begin: -0.2,
+          end: -0.04,
         ),
         MoveEffect(
           curve: Curves.easeInOut,
@@ -214,7 +214,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                   alignment: AlignmentDirectional(1, 1),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 32, 0),
+                                        0, 32, 32, 0),
                                     child: InkWell(
                                       onTap: () async {
                                         context.pushNamed(
@@ -254,7 +254,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                   alignment: AlignmentDirectional(-1, -1),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        32, 0, 0, 0),
+                                        32, 0, 0, 32),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(32),
                                       child: Image.network(
