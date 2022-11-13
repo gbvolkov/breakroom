@@ -730,7 +730,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                                               0),
                                                                       child:
                                                                           Text(
-                                                                        '${functions.geoDistance(matchedUsersItem.geoposition, functions.getUserGeoPosition(columnUsersRecord, currentUserLocationValue)).toString()} miles',
+                                                                        '${valueOrDefault<String>(
+                                                                          functions
+                                                                              .geoDistance(matchedUsersItem.geoposition, functions.getUserLocation(columnUsersRecord.geoposition, currentUserLocationValue))
+                                                                              .toString(),
+                                                                          '?',
+                                                                        )} miles',
                                                                         style: FlutterFlowTheme.of(context)
                                                                             .bodyText2
                                                                             .override(

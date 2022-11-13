@@ -352,7 +352,7 @@ LatLng getUserLocation(
       (selectedLocation.latitude == 0 && selectedLocation.longitude == 0)) {
     if (userLocation == null ||
         (userLocation.latitude == 0 && userLocation.longitude == 0)) {
-      return const LatLng(40.8295538, -73.9386429);
+      return const LatLng(0, 0);
     }
     return userLocation;
   }
