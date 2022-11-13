@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UploadPhotosViewWidget extends StatefulWidget {
@@ -26,6 +27,15 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
 
   List<String>? photoCollectionResult;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() => FFAppState().photosCollection = widget.photos!.toList());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +98,11 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                 Expanded(
                   child: Builder(
                     builder: (context) {
-                      final photoCollection =
-                          (widget.photos?.toList() ?? []).take(6).toList();
+                      final photoCollection = FFAppState()
+                          .photosCollection
+                          .toList()
+                          .take(6)
+                          .toList();
                       return GridView.builder(
                         padding: EdgeInsets.zero,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -163,13 +176,18 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
 
                                         photoCollectionResult =
                                             await actions.setImageToCollection(
-                                          widget.photos!.toList(),
+                                          FFAppState()
+                                              .photosCollection
+                                              .toList(),
                                           uploadedFileUrl,
                                           valueOrDefault<int>(
                                             photoCollectionIndex,
                                             0,
                                           ),
                                         );
+                                        setState(() => FFAppState()
+                                                .photosCollection =
+                                            photoCollectionResult!.toList());
 
                                         setState(() {});
                                       },

@@ -298,6 +298,8 @@ class FFAppState {
   String usrAddress = '';
 
   List<String> initPhotoCollection = ['', '', '', '', '', ''];
+
+  List<String> photosCollection = [];
 }
 
 LatLng? _latLngFromString(String? val) {
