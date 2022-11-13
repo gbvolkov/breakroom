@@ -40,6 +40,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      currentUserLocationValue =
+          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
       if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
         setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
 
@@ -56,6 +58,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                 !functions.isLocationSet(userDoc!.geoposition)) {
               context.pushNamed('SetYourLocationView');
             }
+
+            final usersUpdateData = createUsersRecordData(
+              geoposition: functions.getUserLocation(
+                  userDoc!.geoposition, currentUserLocationValue),
+            );
+            await currentUserReference!.update(usersUpdateData);
           } else {
             await actions.initializeUserDataState(
               userDoc!.bodyType,
