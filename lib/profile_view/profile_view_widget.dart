@@ -14,6 +14,7 @@ import '../flutter_flow/permissions_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -34,27 +35,27 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
 
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? userAddress;
+  UsersRecord? userDoc;
 
   @override
   void initState() {
     super.initState();
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => setState(() => currentUserLocationValue = loc));
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      currentUserLocationValue =
+          await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+      userDoc = await actions.getUserDocument(
+        currentUserReference!,
+      );
+      userAddress = await actions.getAddressFromLocation(
+        functions.getUserGeoPosition(userDoc!, currentUserLocationValue),
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (currentUserLocationValue == null) {
-      return Center(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(
-            color: FlutterFlowTheme.of(context).primaryColor,
-          ),
-        ),
-      );
-    }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -830,11 +831,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         children: [
                                           SelectionArea(
                                               child: Text(
-                                            functions
-                                                .getUserGeoPosition(
-                                                    columnUsersRecord,
-                                                    currentUserLocationValue)
-                                                .toString(),
+                                            valueOrDefault<String>(
+                                              userAddress,
+                                              'ND',
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText2,
                                           )),
@@ -872,7 +872,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                               title: Text(
                                                                   'Please, confirm your location.'),
                                                               content: Text(
-                                                                  'Your location will be set to address.'),
+                                                                  'Your location will be set to ${address}'),
                                                               actions: [
                                                                 TextButton(
                                                                   onPressed: () =>
