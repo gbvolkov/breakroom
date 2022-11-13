@@ -26,6 +26,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
   String uploadedFileUrl = '';
 
   List<String>? photoCollectionResult;
+  List<String>? photosCollectionResultRemove;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -55,8 +56,8 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
-          onPressed: () async {
-            context.pop();
+          onPressed: () {
+            print('IconButton pressed ...');
           },
         ),
         title: Text(
@@ -240,6 +241,21 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                                       .backgroundDisable,
                                             ),
                                           );
+                                          photosCollectionResultRemove =
+                                              await actions
+                                                  .setImageToCollection(
+                                            FFAppState()
+                                                .photosCollection
+                                                .toList(),
+                                            '.',
+                                            photoCollectionIndex,
+                                          );
+                                          setState(() =>
+                                              FFAppState().photosCollection =
+                                                  photosCollectionResultRemove!
+                                                      .toList());
+
+                                          setState(() {});
                                         },
                                         child: Icon(
                                           Icons.close,
