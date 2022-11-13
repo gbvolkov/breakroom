@@ -1,15 +1,20 @@
-import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class UploadPhotosViewWidget extends StatefulWidget {
-  const UploadPhotosViewWidget({Key? key}) : super(key: key);
+  const UploadPhotosViewWidget({
+    Key? key,
+    this.photos,
+  }) : super(key: key);
+
+  final List<String>? photos;
 
   @override
   _UploadPhotosViewWidgetState createState() => _UploadPhotosViewWidgetState();
@@ -19,6 +24,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
   bool isMediaUploading = false;
   String uploadedFileUrl = '';
 
+  List<String>? photoCollectionResult;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -80,23 +86,10 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                   ],
                 ),
                 Expanded(
-                  child: FutureBuilder<List<UsersRecord>>(
-                    future: queryUsersRecordOnce(),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CircularProgressIndicator(
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                          ),
-                        );
-                      }
-                      List<UsersRecord> gridViewUsersRecordList =
-                          snapshot.data!;
+                  child: Builder(
+                    builder: (context) {
+                      final photoCollection =
+                          (widget.photos?.toList() ?? []).take(6).toList();
                       return GridView.builder(
                         padding: EdgeInsets.zero,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -106,18 +99,18 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                           childAspectRatio: 0.73,
                         ),
                         scrollDirection: Axis.vertical,
-                        itemCount: gridViewUsersRecordList.length,
-                        itemBuilder: (context, gridViewIndex) {
-                          final gridViewUsersRecord =
-                              gridViewUsersRecordList[gridViewIndex];
+                        itemCount: photoCollection.length,
+                        itemBuilder: (context, photoCollectionIndex) {
+                          final photoCollectionItem =
+                              photoCollection[photoCollectionIndex];
                           return Container(
                             width: 116,
                             height: 150,
                             child: Stack(
                               alignment: AlignmentDirectional(0, 0),
                               children: [
-                                if (gridViewUsersRecord.photoUrl == null ||
-                                    gridViewUsersRecord.photoUrl == '')
+                                if (photoCollectionItem == null ||
+                                    photoCollectionItem == '')
                                   Align(
                                     alignment: AlignmentDirectional(-1, 1),
                                     child: InkWell(
@@ -167,6 +160,18 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                             return;
                                           }
                                         }
+
+                                        photoCollectionResult =
+                                            await actions.setImageToCollection(
+                                          widget.photos!.toList(),
+                                          uploadedFileUrl,
+                                          valueOrDefault<int>(
+                                            photoCollectionIndex,
+                                            0,
+                                          ),
+                                        );
+
+                                        setState(() {});
                                       },
                                       child: Image.asset(
                                         'assets/images/photo-frame.png',
@@ -176,19 +181,19 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                       ),
                                     ),
                                   ),
-                                if (gridViewUsersRecord.photoUrl != null &&
-                                    gridViewUsersRecord.photoUrl != '')
+                                if (photoCollectionItem != null &&
+                                    photoCollectionItem != '')
                                   Align(
                                     alignment: AlignmentDirectional(-1, 1),
                                     child: Image.network(
-                                      gridViewUsersRecord.photoUrl!,
+                                      photoCollectionItem,
                                       width: 105,
                                       height: 140,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                if (gridViewUsersRecord.photoUrl != null &&
-                                    gridViewUsersRecord.photoUrl != '')
+                                if (photoCollectionItem != null &&
+                                    photoCollectionItem != '')
                                   Align(
                                     alignment: AlignmentDirectional(1, -1),
                                     child: Container(

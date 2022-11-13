@@ -487,7 +487,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'UploadPhotosView',
               path: 'uploadPhotosView',
               requireAuth: true,
-              builder: (context, params) => UploadPhotosViewWidget(),
+              builder: (context, params) => UploadPhotosViewWidget(
+                photos:
+                    params.getParam<String>('photos', ParamType.String, true),
+              ),
             ),
             FFRoute(
               name: 'UploadPhotosViewCopy',

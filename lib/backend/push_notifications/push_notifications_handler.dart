@@ -172,7 +172,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditBodyTypeView': (data) async => EditBodyTypeViewWidget(),
   'testPlacePicker': (data) async => TestPlacePickerWidget(),
   'CommunityGuidlinesView': (data) async => CommunityGuidlinesViewWidget(),
-  'UploadPhotosView': (data) async => UploadPhotosViewWidget(),
+  'UploadPhotosView': (data) async => UploadPhotosViewWidget(
+        photos: [],
+      ),
   'UploadPhotosViewCopy': (data) async => UploadPhotosViewCopyWidget(
         photos: [],
       ),

@@ -2118,7 +2118,16 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         await currentUserReference!
                                             .update(usersUpdateData);
 
-                                        context.pushNamed('UploadPhotosView');
+                                        context.pushNamed(
+                                          'UploadPhotosView',
+                                          queryParams: {
+                                            'photos': serializeParam(
+                                              FFAppState().initPhotoCollection,
+                                              ParamType.String,
+                                              true,
+                                            ),
+                                          }.withoutNulls,
+                                        );
                                       }
                                     },
                                     text: 'Save',
