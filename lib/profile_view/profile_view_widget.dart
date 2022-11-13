@@ -51,6 +51,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
       userAddress = await actions.getAddressFromLocation(
         functions.getUserGeoPosition(userDoc!, currentUserLocationValue),
       );
+      setState(() => FFAppState().usrAddress = userAddress!);
     });
   }
 
@@ -832,7 +833,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           SelectionArea(
                                               child: Text(
                                             valueOrDefault<String>(
-                                              userAddress,
+                                              FFAppState().usrAddress,
                                               'ND',
                                             ),
                                             style: FlutterFlowTheme.of(context)
@@ -903,6 +904,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                   );
                                                   await currentUserReference!
                                                       .update(usersUpdateData);
+                                                  setState(() => FFAppState()
+                                                      .usrAddress = address!);
                                                 }
                                               }
 

@@ -294,6 +294,8 @@ class FFAppState {
   }
 
   LatLng? zeropoint = LatLng(0, 0);
+
+  String usrAddress = '';
 }
 
 LatLng? _latLngFromString(String? val) {
