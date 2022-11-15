@@ -1022,48 +1022,52 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       alignment:
                                                           AlignmentDirectional(
                                                               1, -1),
-                                                      child: Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 0,
-                                                        shape:
-                                                            const CircleBorder(),
-                                                        child: Container(
-                                                          width: 20,
-                                                          height: 20,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          child: InkWell(
-                                                            onTap: () async {
-                                                              if (FFAppState()
-                                                                  .markedElements
-                                                                  .contains(
-                                                                      userPhotosIndex)) {
-                                                                setState(() =>
-                                                                    FFAppState()
-                                                                        .markedElements
-                                                                        .remove(
-                                                                            userPhotosIndex));
-                                                              } else {
-                                                                setState(() =>
-                                                                    FFAppState()
-                                                                        .markedElements
-                                                                        .add(
-                                                                            userPhotosIndex));
-                                                              }
-                                                            },
-                                                            child: Icon(
-                                                              Icons.check,
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          if (FFAppState()
+                                                              .markedElements
+                                                              .contains(
+                                                                  userPhotosIndex)) {
+                                                            setState(() => FFAppState()
+                                                                .markedElements
+                                                                .remove(
+                                                                    userPhotosIndex));
+                                                          } else {
+                                                            setState(() => FFAppState()
+                                                                .markedElements
+                                                                .add(
+                                                                    userPhotosIndex));
+                                                          }
+                                                        },
+                                                        child: Material(
+                                                          color: Colors
+                                                              .transparent,
+                                                          elevation: 0,
+                                                          shape:
+                                                              const CircleBorder(),
+                                                          child: Container(
+                                                            width: 20,
+                                                            height: 20,
+                                                            decoration:
+                                                                BoxDecoration(
                                                               color: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .primaryColor,
-                                                              size: 14,
+                                                                  .alternate,
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                            ),
+                                                            child: Visibility(
+                                                              visible: FFAppState()
+                                                                  .markedElements
+                                                                  .contains(
+                                                                      userPhotosIndex),
+                                                              child: Icon(
+                                                                Icons.check,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryColor,
+                                                                size: 14,
+                                                              ),
                                                             ),
                                                           ),
                                                         ),
