@@ -1000,7 +1000,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       onLongPress: () async {
                                                         setState(() => FFAppState()
                                                                 .blnImageDeleteMode =
-                                                            false);
+                                                            true);
                                                       },
                                                       child: Hero(
                                                         tag: userPhotosItem
@@ -1231,6 +1231,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    setState(
+                                        () => FFAppState().markedElements = []);
                                     setState(() => FFAppState()
                                         .blnImageDeleteMode = false);
                                   },
@@ -1294,6 +1296,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         );
                                       },
                                     );
+                                    setState(
+                                        () => FFAppState().markedElements = []);
                                     setState(() => FFAppState()
                                         .blnImageDeleteMode = false);
                                   },
