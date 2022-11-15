@@ -33,6 +33,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
   bool isMediaUploading2 = false;
   String uploadedFileUrl2 = '';
 
+  List<PhotoStruct>? clearedPhotos;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String? userAddress;
@@ -1296,10 +1297,25 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         );
                                       },
                                     );
+                                    clearedPhotos =
+                                        await actions.clearPhotosList(
+                                      columnUsersRecord.photos!.toList(),
+                                      FFAppState().markedElements.toList(),
+                                    );
+
+                                    final usersUpdateData = {
+                                      'photos': getPhotoListFirestoreData(
+                                        clearedPhotos,
+                                      ),
+                                    };
+                                    await columnUsersRecord.reference
+                                        .update(usersUpdateData);
                                     setState(
                                         () => FFAppState().markedElements = []);
                                     setState(() => FFAppState()
                                         .blnImageDeleteMode = false);
+
+                                    setState(() {});
                                   },
                                   text: 'Delete selected',
                                   options: FFButtonOptions(
