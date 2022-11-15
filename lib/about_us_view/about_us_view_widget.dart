@@ -151,34 +151,40 @@ class _AboutUsViewWidgetState extends State<AboutUsViewWidget> {
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () async {
-                              context.pushNamed('PrivacyAndPolicyView');
-                            },
-                            child: Text(
-                              'Privacy Policy',
-                              style: FlutterFlowTheme.of(context).subtitle1,
+                      InkWell(
+                        onTap: () async {
+                          context.pushNamed('PrivacyAndPolicyView');
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                context.pushNamed('PrivacyAndPolicyView');
+                              },
+                              child: Text(
+                                'Privacy Policy',
+                                style: FlutterFlowTheme.of(context).subtitle1,
+                              ),
                             ),
-                          ),
-                          FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30,
-                            borderWidth: 1,
-                            buttonSize: 32,
-                            icon: Icon(
-                              Icons.chevron_right_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 16,
+                            FlutterFlowIconButton(
+                              borderColor: Colors.transparent,
+                              borderRadius: 30,
+                              borderWidth: 1,
+                              buttonSize: 32,
+                              icon: Icon(
+                                Icons.chevron_right_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 16,
+                              ),
+                              onPressed: () async {
+                                context.pushNamed('PrivacyAndPolicyView');
+                              },
                             ),
-                            onPressed: () async {
-                              context.pushNamed('PrivacyAndPolicyView');
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

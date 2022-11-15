@@ -13,3 +13,4 @@ export 'is_user_complete.dart' show isUserComplete;
 export 'get_user_document.dart' show getUserDocument;
 export 'set_image_to_collection.dart' show setImageToCollection;
 export 'pack_image_collection_to_photos.dart' show packImageCollectionToPhotos;
+export 'set_boolean_array_item.dart' show setBooleanArrayItem;

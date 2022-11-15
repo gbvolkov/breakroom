@@ -50,6 +50,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
         userDoc!.geoposition!,
       );
       setState(() => FFAppState().usrAddress = userAddress!);
+      setState(() => FFAppState().blnImageDeleteMode = false);
+      setState(() => FFAppState().markedElements = []);
     });
   }
 
@@ -946,8 +948,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           gridDelegate:
                                               SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 3,
-                                            crossAxisSpacing: 10,
-                                            mainAxisSpacing: 10,
+                                            crossAxisSpacing: 6,
+                                            mainAxisSpacing: 6,
                                             childAspectRatio: 0.8,
                                           ),
                                           primary: false,
@@ -958,36 +960,116 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               (context, userPhotosIndex) {
                                             final userPhotosItem =
                                                 userPhotos[userPhotosIndex];
-                                            return InkWell(
-                                              onTap: () async {
-                                                await Navigator.push(
-                                                  context,
-                                                  PageTransition(
-                                                    type:
-                                                        PageTransitionType.fade,
-                                                    child:
-                                                        FlutterFlowExpandedImageView(
-                                                      image: Image.network(
-                                                        userPhotosItem.image!,
-                                                        fit: BoxFit.contain,
-                                                      ),
-                                                      allowRotation: false,
-                                                      tag:
+                                            return Container(
+                                              width: 100,
+                                              height: 130,
+                                              child: Stack(
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -1, 1),
+                                                    child: InkWell(
+                                                      onTap: () async {
+                                                        await Navigator.push(
+                                                          context,
+                                                          PageTransition(
+                                                            type:
+                                                                PageTransitionType
+                                                                    .fade,
+                                                            child:
+                                                                FlutterFlowExpandedImageView(
+                                                              image:
+                                                                  Image.network(
+                                                                userPhotosItem
+                                                                    .image!,
+                                                                fit: BoxFit
+                                                                    .contain,
+                                                              ),
+                                                              allowRotation:
+                                                                  false,
+                                                              tag:
+                                                                  userPhotosItem
+                                                                      .image!,
+                                                              useHeroAnimation:
+                                                                  true,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                      onLongPress: () async {
+                                                        setState(() => FFAppState()
+                                                                .blnImageDeleteMode =
+                                                            false);
+                                                      },
+                                                      child: Hero(
+                                                        tag: userPhotosItem
+                                                            .image!,
+                                                        transitionOnUserGestures:
+                                                            true,
+                                                        child: Image.network(
                                                           userPhotosItem.image!,
-                                                      useHeroAnimation: true,
+                                                          width: 100,
+                                                          height: 130,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
-                                                );
-                                              },
-                                              child: Hero(
-                                                tag: userPhotosItem.image!,
-                                                transitionOnUserGestures: true,
-                                                child: Image.network(
-                                                  userPhotosItem.image!,
-                                                  width: 100,
-                                                  height: 130,
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                  if (FFAppState()
+                                                      .blnImageDeleteMode)
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              1, -1),
+                                                      child: Material(
+                                                        color:
+                                                            Colors.transparent,
+                                                        elevation: 0,
+                                                        shape:
+                                                            const CircleBorder(),
+                                                        child: Container(
+                                                          width: 20,
+                                                          height: 20,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          child: InkWell(
+                                                            onTap: () async {
+                                                              if (FFAppState()
+                                                                  .markedElements
+                                                                  .contains(
+                                                                      userPhotosIndex)) {
+                                                                setState(() =>
+                                                                    FFAppState()
+                                                                        .markedElements
+                                                                        .remove(
+                                                                            userPhotosIndex));
+                                                              } else {
+                                                                setState(() =>
+                                                                    FFAppState()
+                                                                        .markedElements
+                                                                        .add(
+                                                                            userPhotosIndex));
+                                                              }
+                                                            },
+                                                            child: Icon(
+                                                              Icons.check,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryColor,
+                                                              size: 14,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ],
                                               ),
                                             );
                                           },
@@ -996,127 +1078,246 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     ),
                                   ],
                                 ),
+                                SelectionArea(
+                                    child: Text(
+                                  valueOrDefault<String>(
+                                    functions.printIntArray(
+                                        FFAppState().markedElements.toList()),
+                                    'ND',
+                                  ),
+                                  style: FlutterFlowTheme.of(context).bodyText1,
+                                )),
                               ],
                             ),
                           ),
                         ),
                       ),
                     ),
-                    Stack(
-                      children: [
-                        Container(
-                          width: double.infinity,
-                          height: 48,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color(0xFFEE837B),
-                                Color(0xFFF95A82),
-                                Color(0xFFEA3C7D)
-                              ],
-                              stops: [0, 0.6, 1],
-                              begin: AlignmentDirectional(0, -1),
-                              end: AlignmentDirectional(0, 1),
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        Align(
-                          alignment: AlignmentDirectional(-1, 0),
-                          child: Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                            child: FFButtonWidget(
-                              onPressed: () async {
-                                final selectedMedia =
-                                    await selectMediaWithSourceBottomSheet(
-                                  context: context,
-                                  allowPhoto: true,
-                                );
-                                if (selectedMedia != null &&
-                                    selectedMedia.every((m) =>
-                                        validateFileFormat(
-                                            m.storagePath, context))) {
-                                  setState(() => isMediaUploading2 = true);
-                                  var downloadUrls = <String>[];
-                                  try {
-                                    showUploadMessage(
-                                      context,
-                                      'Uploading file...',
-                                      showLoading: true,
-                                    );
-                                    downloadUrls = (await Future.wait(
-                                      selectedMedia.map(
-                                        (m) async => await uploadData(
-                                            m.storagePath, m.bytes),
-                                      ),
-                                    ))
-                                        .where((u) => u != null)
-                                        .map((u) => u!)
-                                        .toList();
-                                  } finally {
-                                    ScaffoldMessenger.of(context)
-                                        .hideCurrentSnackBar();
-                                    isMediaUploading2 = false;
-                                  }
-                                  if (downloadUrls.length ==
-                                      selectedMedia.length) {
-                                    setState(() =>
-                                        uploadedFileUrl2 = downloadUrls.first);
-                                    showUploadMessage(context, 'Success!');
-                                  } else {
-                                    setState(() {});
-                                    showUploadMessage(
-                                        context, 'Failed to upload media');
-                                    return;
-                                  }
-                                }
-
-                                if (uploadedFileUrl1 != null &&
-                                    uploadedFileUrl1 != '') {
-                                  final usersUpdateData = {
-                                    'photos': FieldValue.arrayUnion([
-                                      getPhotoFirestoreData(
-                                        createPhotoStruct(
-                                          image: uploadedFileUrl2,
-                                          clearUnsetFields: false,
-                                        ),
-                                        true,
-                                      )
-                                    ]),
-                                  };
-                                  await columnUsersRecord.reference
-                                      .update(usersUpdateData);
-                                }
-                              },
-                              text: 'Add photo',
-                              icon: Icon(
-                                Icons.add_circle,
-                                size: 15,
+                    if (!FFAppState().blnImageDeleteMode)
+                      Stack(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xFFEE837B),
+                                  Color(0xFFF95A82),
+                                  Color(0xFFEA3C7D)
+                                ],
+                                stops: [0, 0.6, 1],
+                                begin: AlignmentDirectional(0, -1),
+                                end: AlignmentDirectional(0, 1),
                               ),
-                              options: FFButtonOptions(
-                                width: double.infinity,
-                                height: 48,
-                                color: Colors.transparent,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle1
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                elevation: 0,
-                                borderSide: BorderSide(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          Align(
+                            alignment: AlignmentDirectional(-1, 0),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  final selectedMedia =
+                                      await selectMediaWithSourceBottomSheet(
+                                    context: context,
+                                    allowPhoto: true,
+                                  );
+                                  if (selectedMedia != null &&
+                                      selectedMedia.every((m) =>
+                                          validateFileFormat(
+                                              m.storagePath, context))) {
+                                    setState(() => isMediaUploading2 = true);
+                                    var downloadUrls = <String>[];
+                                    try {
+                                      showUploadMessage(
+                                        context,
+                                        'Uploading file...',
+                                        showLoading: true,
+                                      );
+                                      downloadUrls = (await Future.wait(
+                                        selectedMedia.map(
+                                          (m) async => await uploadData(
+                                              m.storagePath, m.bytes),
+                                        ),
+                                      ))
+                                          .where((u) => u != null)
+                                          .map((u) => u!)
+                                          .toList();
+                                    } finally {
+                                      ScaffoldMessenger.of(context)
+                                          .hideCurrentSnackBar();
+                                      isMediaUploading2 = false;
+                                    }
+                                    if (downloadUrls.length ==
+                                        selectedMedia.length) {
+                                      setState(() => uploadedFileUrl2 =
+                                          downloadUrls.first);
+                                      showUploadMessage(context, 'Success!');
+                                    } else {
+                                      setState(() {});
+                                      showUploadMessage(
+                                          context, 'Failed to upload media');
+                                      return;
+                                    }
+                                  }
+
+                                  if (uploadedFileUrl1 != null &&
+                                      uploadedFileUrl1 != '') {
+                                    final usersUpdateData = {
+                                      'photos': FieldValue.arrayUnion([
+                                        getPhotoFirestoreData(
+                                          createPhotoStruct(
+                                            image: uploadedFileUrl2,
+                                            clearUnsetFields: false,
+                                          ),
+                                          true,
+                                        )
+                                      ]),
+                                    };
+                                    await columnUsersRecord.reference
+                                        .update(usersUpdateData);
+                                  }
+                                },
+                                text: 'Add photo',
+                                icon: Icon(
+                                  Icons.add_circle,
+                                  size: 15,
+                                ),
+                                options: FFButtonOptions(
+                                  width: double.infinity,
+                                  height: 48,
                                   color: Colors.transparent,
-                                  width: 0,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .subtitle1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                  elevation: 0,
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    if (FFAppState().blnImageDeleteMode)
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    setState(() => FFAppState()
+                                        .blnImageDeleteMode = false);
+                                  },
+                                  text: 'Cancel',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    color: Colors.transparent,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                    elevation: 0,
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              height: 48,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFFEE837B),
+                                    Color(0xFFF95A82),
+                                    Color(0xFFEA3C7D)
+                                  ],
+                                  stops: [0, 0.6, 1],
+                                  begin: AlignmentDirectional(0, -1),
+                                  end: AlignmentDirectional(0, 1),
                                 ),
                                 borderRadius: BorderRadius.circular(8),
                               ),
+                              child: Align(
+                                alignment: AlignmentDirectional(-1, 0),
+                                child: FFButtonWidget(
+                                  onPressed: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (alertDialogContext) {
+                                        return AlertDialog(
+                                          title: Text('Delete images'),
+                                          content:
+                                              Text('Delete image code here'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.pop(
+                                                  alertDialogContext),
+                                              child: Text('Ok'),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                    setState(() => FFAppState()
+                                        .blnImageDeleteMode = false);
+                                  },
+                                  text: 'Delete selected',
+                                  options: FFButtonOptions(
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    color: Colors.transparent,
+                                    textStyle: FlutterFlowTheme.of(context)
+                                        .subtitle1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                        ),
+                                    elevation: 0,
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
                   ],
                 );
               },

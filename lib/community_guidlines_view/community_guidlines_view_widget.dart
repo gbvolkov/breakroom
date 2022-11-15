@@ -40,11 +40,7 @@ class _CommunityGuidlinesViewWidgetState
         ),
         title: Text(
           'Community Guidlines',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
+          style: FlutterFlowTheme.of(context).subtitle1,
         ),
         actions: [],
         centerTitle: true,
@@ -67,7 +63,7 @@ class _CommunityGuidlinesViewWidgetState
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
                         child: Text(
-                          'Welcome to the break room. You are always be welcomed here if you are sincere, considerate, and respectful of other people. Our aim is to let users express themselves freely and break free from everyday life activities if it doesn\'t offend others. On the Breakroom, everyone is held to the same standard. We are requesting that you exercise consideration, examine your actions carefully, and follow our community rules both online and offline. Your Breakroom account could be terminated as a result for misuse of the app and conduct.\nA list of our community policies can be found below. You risk being barred from the Breakroom if you disobey any of these rules. After receiving a ban, you are not permitted to rejoin our community. We encourage you to read our Safety Tips and report any behavior that you believe to be in violation of our policies.\n             ',
+                          'Welcome to the break room. You are always be welcomed here if you are sincere, considerate, and respectful of other people. Our aim is to let users express themselves freely and break free from everyday life activities if it doesn\'t offend others. On the Breakroom, everyone is held to the same standard. We are requesting that you exercise consideration, examine your actions carefully, and follow our community rules both online and offline. Your Breakroom account could be terminated as a result for misuse of the app and conduct.\nA list of our community policies can be found below. You risk being barred from the Breakroom if you disobey any of these rules. After receiving a ban, you are not permitted to rejoin our community. We encourage you to read our Safety Tips and report any behavior that you believe to be in violation of our policies.',
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(

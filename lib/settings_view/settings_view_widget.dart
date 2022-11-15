@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../components/dialog_remove_profile_widget.dart';
 import '../components/monthly_subscription_component_widget.dart';
+import '../components/rate_us_component_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -397,23 +398,20 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                           child: InkWell(
                             onTap: () async {
-                              await showDialog(
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
                                 context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Rate and review'),
-                                    content:
-                                        Text('Rate and review link or page'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Ok'),
-                                      ),
-                                    ],
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.of(context).viewInsets,
+                                    child: Container(
+                                      height: 470,
+                                      child: RateUsComponentWidget(),
+                                    ),
                                   );
                                 },
-                              );
+                              ).then((value) => setState(() {}));
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,

@@ -40,11 +40,7 @@ class _PrivacyAndPolicyViewWidgetState
         ),
         title: Text(
           'Privacy and policy',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
+          style: FlutterFlowTheme.of(context).subtitle1,
         ),
         actions: [],
         centerTitle: true,
@@ -67,7 +63,7 @@ class _PrivacyAndPolicyViewWidgetState
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
                         child: Text(
-                          'Take a break from work and the community.  The breakroom is a movement, not just an app. We promote honesty, integrity, equality, self-assurance, and respect at all phases of any relationship, whether it be one that takes place online or off. People can learn how to create and sustain healthy connections by visiting the breakroom. A happy, successful life depends on having healthy relationships. Whether you\'re seeking for love, friends, or to expand your professional network, Breakroom is a social network that gives you the power to feel confident as you meet people. Your life could be changed by one initial break.',
+                          'Your privacy is our top priority at The Breakroom. In order for you to completely trust the services and products we offer and concentrate on forming meaningful connections, your privacy is at the center of how we design and develop them. \nWe value the confidence you place in us when you give us your information, and we do not take this duty lightly. \nTo ensure that our decisions are made with the utmost respect for your privacy, we consult professionals from a variety of sectors, including law, security, engineering, product design, and others. \nWe are committed to protecting your privacy.',
                           style: FlutterFlowTheme.of(context)
                               .bodyText1
                               .override(

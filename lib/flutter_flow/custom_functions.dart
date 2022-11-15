@@ -422,3 +422,7 @@ LatLng getUserGeoPosition(
   }
   return location ?? const LatLng(0, 0);
 }
+
+String printIntArray(List<int>? intarray) {
+  return intarray?.toString() ?? "";
+}

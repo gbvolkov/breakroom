@@ -4,10 +4,10 @@ import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/gender_icon_widget.dart';
 import '../components/profile_bottom_sheet_widget.dart';
 import '../flutter_flow/chat/index.dart';
-import '../flutter_flow/flutter_flow_choice_chips.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
@@ -30,7 +30,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
   ChatsRecord? groupChat;
   UsersRecord? matchedUser;
   late SwipeableCardSectionController swipeableStackController;
-  String? choiceChipsValue;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   UsersRecord? userDoc;
@@ -42,57 +41,57 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-      if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
-        setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
-
-        context.pushNamed('IntroductionView');
-
-        return;
-      } else {
-        userDoc = await actions.getUserDocument(
-          currentUserReference!,
-        );
-        if (userDoc != null) {
-          if (userDoc!.isComplete!) {
-            if (!(await getPermissionStatus(locationPermission)) ||
-                !functions.isLocationSet(userDoc!.geoposition)) {
-              context.pushNamed('SetYourLocationView');
-            }
-
-            final usersUpdateData = createUsersRecordData(
-              geoposition: functions.getUserLocation(
-                  userDoc!.geoposition, currentUserLocationValue),
-            );
-            await currentUserReference!.update(usersUpdateData);
-          } else {
-            await actions.initializeUserDataState(
-              userDoc!.bodyType,
-              userDoc!.childfreeStatus,
-              userDoc!.drinkingStatus,
-              userDoc!.education,
-              userDoc!.gender,
-              userDoc!.genderPreference,
-              userDoc!.height,
-              userDoc!.weight,
-              userDoc!.intention,
-              userDoc!.lookingFor!.toList().toList(),
-              userDoc!.religion,
-              userDoc!.smokingStatus,
-              userDoc!.spiritualStatus,
-              userDoc!.workoutStatus,
-              userDoc!.firstName,
-              userDoc!.lastName,
-              userDoc!.birthDay,
-              userDoc!.bio,
-              userDoc!.industry,
-              userDoc!.occupation,
-              userDoc!.interests!.toList().toList(),
-            );
-
-            context.pushNamed('CreateProfileView');
-
-            return;
+      userDoc = await actions.getUserDocument(
+        currentUserReference!,
+      );
+      if (userDoc != null) {
+        if (userDoc!.isComplete!) {
+          if (!(await getPermissionStatus(locationPermission)) ||
+              !functions.isLocationSet(userDoc!.geoposition)) {
+            context.pushNamed('SetYourLocationView');
           }
+
+          final usersUpdateData = createUsersRecordData(
+            geoposition: functions.getUserLocation(
+                userDoc!.geoposition, currentUserLocationValue),
+          );
+          await currentUserReference!.update(usersUpdateData);
+          if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
+            setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
+
+            context.pushNamed('IntroductionView');
+          } else {
+            setState(() => FFAppState().tmpIntention =
+                valueOrDefault(currentUserDocument?.intention, ''));
+          }
+        } else {
+          await actions.initializeUserDataState(
+            userDoc!.bodyType,
+            userDoc!.childfreeStatus,
+            userDoc!.drinkingStatus,
+            userDoc!.education,
+            userDoc!.gender,
+            userDoc!.genderPreference,
+            userDoc!.height,
+            userDoc!.weight,
+            userDoc!.intention,
+            userDoc!.lookingFor!.toList().toList(),
+            userDoc!.religion,
+            userDoc!.smokingStatus,
+            userDoc!.spiritualStatus,
+            userDoc!.workoutStatus,
+            userDoc!.firstName,
+            userDoc!.lastName,
+            userDoc!.birthDay,
+            userDoc!.bio,
+            userDoc!.industry,
+            userDoc!.occupation,
+            userDoc!.interests!.toList().toList(),
+          );
+
+          context.pushNamed('CreateProfileView');
+
+          return;
         }
       }
     });
@@ -122,7 +121,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: StreamBuilder<UsersRecord>(
               stream: UsersRecord.getDocument(currentUserReference!),
               builder: (context, snapshot) {
@@ -142,116 +141,300 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                 return Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            context.pushNamed('IntroductionView');
-                          },
-                          child: Text(
-                            'BreakRoom',
-                            style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 38,
-                                ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            currentUserLocationValue =
-                                await getCurrentUserLocation(
-                                    defaultLocation: LatLng(0.0, 0.0));
-                            await actions.initializeFilterState(
-                              currentUserDocument!.filter,
-                              currentUserLocationValue,
-                            );
-
-                            context.pushNamed(
-                              'FiltersView',
-                              queryParams: {
-                                'user': serializeParam(
-                                  columnUsersRecord,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'user': columnUsersRecord,
-                              },
-                            );
-                          },
-                          child: Image.asset(
-                            'assets/images/imgFilter.png',
-                            width: 25,
-                            height: 25,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ],
-                    ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                            child: Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: FlutterFlowChoiceChips(
-                                initiallySelected: [
-                                  columnUsersRecord.intention!
-                                ],
-                                options: FFAppState()
-                                    .intentions
-                                    .map((label) => ChipData(label))
-                                    .toList(),
-                                onChanged: (val) async {
-                                  setState(() => choiceChipsValue = val?.first);
-                                  if (choiceChipsValue !=
-                                      valueOrDefault(
-                                          currentUserDocument?.intention, '')) {
-                                    final usersUpdateData =
-                                        createUsersRecordData(
-                                      intention: choiceChipsValue,
-                                    );
-                                    await currentUserReference!
-                                        .update(usersUpdateData);
-
-                                    context.pushNamed('HomeView');
-                                  }
-                                },
-                                selectedChipStyle: ChipStyle(
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .subtitle1
-                                      .override(
+                          InkWell(
+                            onTap: () async {
+                              context.pushNamed('IntroductionView');
+                            },
+                            child: Text(
+                              'BreakRoom',
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
                                         fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
+                                        fontSize: 38,
                                       ),
-                                  iconColor: Colors.white,
-                                  iconSize: 18,
-                                  elevation: 0,
-                                ),
-                                unselectedChipStyle: ChipStyle(
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).subtitle1,
-                                  iconColor: Color(0xFF323B45),
-                                  iconSize: 18,
-                                  elevation: 0,
-                                ),
-                                chipSpacing: 4,
-                                multiselect: false,
-                                initialized: choiceChipsValue != null,
-                                alignment: WrapAlignment.spaceBetween,
-                              ),
                             ),
                           ),
+                          InkWell(
+                            onTap: () async {
+                              currentUserLocationValue =
+                                  await getCurrentUserLocation(
+                                      defaultLocation: LatLng(0.0, 0.0));
+                              await actions.initializeFilterState(
+                                currentUserDocument!.filter,
+                                currentUserLocationValue,
+                              );
+
+                              context.pushNamed(
+                                'FiltersView',
+                                queryParams: {
+                                  'user': serializeParam(
+                                    columnUsersRecord,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'user': columnUsersRecord,
+                                },
+                              );
+                            },
+                            child: Image.asset(
+                              'assets/images/imgFilter.png',
+                              width: 25,
+                              height: 25,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      child: Stack(
+                        children: [
+                          if (FFAppState().tmpIntention == 'Dating')
+                            Container(
+                              width: double.infinity,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    height: 34,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          4, 0, 0, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () {
+                                          print('btnDating pressed ...');
+                                        },
+                                        text: 'Dating',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryBtnText,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    height: 34,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 4, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          setState(() => FFAppState()
+                                              .tmpIntention = 'Social');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            intention:
+                                                FFAppState().tmpIntention,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+
+                                          context.pushNamed(
+                                            'HomeView',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType.fade,
+                                                duration:
+                                                    Duration(milliseconds: 0),
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        text: 'Social',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 40,
+                                          color: Colors.transparent,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (FFAppState().tmpIntention == 'Social')
+                            Container(
+                              width: double.infinity,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    height: 34,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          4, 0, 0, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          setState(() => FFAppState()
+                                              .tmpIntention = 'Dating');
+
+                                          final usersUpdateData =
+                                              createUsersRecordData(
+                                            intention:
+                                                FFAppState().tmpIntention,
+                                          );
+                                          await currentUserReference!
+                                              .update(usersUpdateData);
+
+                                          context.pushNamed(
+                                            'HomeView',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType.fade,
+                                                duration:
+                                                    Duration(milliseconds: 0),
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        text: 'Dating',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          color: Colors.transparent,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
+                                    height: 34,
+                                    decoration: BoxDecoration(
+                                      color: Colors.transparent,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 4, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () {
+                                          print('btnSocial pressed ...');
+                                        },
+                                        text: 'Social',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 40,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle2
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -335,7 +518,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       );
                                     }
                                     return FlutterFlowSwipeableStack(
-                                      topCardHeightFraction: 0.72,
+                                      topCardHeightFraction: 0.78,
                                       middleCardHeightFraction: 0.68,
                                       botttomCardHeightFraction: 0.75,
                                       topCardWidthFraction: 0.9,

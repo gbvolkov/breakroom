@@ -808,6 +808,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                           },
                                         ).then((value) => setState(() {}));
 
+                                        setState(() => FFAppState()
+                                            .preventIntroduction = true);
+
                                         context.goNamedAuth(
                                             'CreateProfileView', mounted);
                                       },

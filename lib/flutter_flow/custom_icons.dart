@@ -6,6 +6,7 @@ class FFIcons {
   static const String _myFlutterAppFamily = 'MyFlutterApp';
   static const String _homeScreenIconsFamily = 'HomeScreenIcons';
   static const String _maleFemaleIconsFamily = 'MaleFemaleIcons';
+  static const String _introductionIconsFamily = 'IntroductionIcons';
 
   // MyFlutterApp
   static const IconData kicSettings =
@@ -28,4 +29,16 @@ class FFIcons {
       IconData(0xe800, fontFamily: _maleFemaleIconsFamily);
   static const IconData kmale =
       IconData(0xe801, fontFamily: _maleFemaleIconsFamily);
+
+  // IntroductionIcons
+  static const IconData kswipeLeft =
+      IconData(0xe801, fontFamily: _introductionIconsFamily);
+  static const IconData kswipeRight =
+      IconData(0xe802, fontFamily: _introductionIconsFamily);
+  static const IconData kswipeUp =
+      IconData(0xe803, fontFamily: _introductionIconsFamily);
+  static const IconData kicDislike =
+      IconData(0xe804, fontFamily: _introductionIconsFamily);
+  static const IconData kicLike =
+      IconData(0xe805, fontFamily: _introductionIconsFamily);
 }

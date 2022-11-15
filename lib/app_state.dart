@@ -300,6 +300,16 @@ class FFAppState {
   List<String> initPhotoCollection = ['', '', '', '', '', ''];
 
   List<String> photosCollection = [];
+
+  String tmpIntention = '';
+
+  bool preventIntroduction = false;
+
+  bool blnImageDeleteMode = false;
+
+  List<bool> photosToDelete = [];
+
+  List<int> markedElements = [];
 }
 
 LatLng? _latLngFromString(String? val) {
