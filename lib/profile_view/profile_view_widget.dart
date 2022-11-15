@@ -1169,13 +1169,13 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     }
                                   }
 
-                                  if (uploadedFileUrl1 != null &&
-                                      uploadedFileUrl1 != '') {
+                                  if (uploadedFileUrl2 != null &&
+                                      uploadedFileUrl2 != '') {
                                     final usersUpdateData = {
                                       'photos': FieldValue.arrayUnion([
                                         getPhotoFirestoreData(
                                           createPhotoStruct(
-                                            image: uploadedFileUrl1,
+                                            image: uploadedFileUrl2,
                                             clearUnsetFields: false,
                                           ),
                                           true,
