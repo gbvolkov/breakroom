@@ -1175,7 +1175,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       'photos': FieldValue.arrayUnion([
                                         getPhotoFirestoreData(
                                           createPhotoStruct(
-                                            image: uploadedFileUrl2,
+                                            image: uploadedFileUrl1,
                                             clearUnsetFields: false,
                                           ),
                                           true,
