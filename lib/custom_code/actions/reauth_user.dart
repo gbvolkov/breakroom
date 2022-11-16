@@ -25,7 +25,7 @@ Future<String> reauthUser(
       //await currentUser.verifyBeforeUpdateEmail(newEMail);
       //await currentUser.updateEmail(newEMail);
     } catch (ex) {
-      ex.toString();
+      return ex.toString();
     }
   }
   return result;
