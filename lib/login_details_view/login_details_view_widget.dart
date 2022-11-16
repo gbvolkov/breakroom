@@ -371,7 +371,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(0, 8, 0, 16),
                                                   child: Text(
-                                                    'We will send a confirmation link to this  Email khk jh kjh jh ',
+                                                    FFAppState().tmpError,
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .subtitle2
@@ -440,6 +440,25 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                           .text,
                                                     );
                                                     _shouldSetState = true;
+                                                    await showDialog(
+                                                      context: context,
+                                                      builder:
+                                                          (alertDialogContext) {
+                                                        return AlertDialog(
+                                                          title: Text('Oops'),
+                                                          content: Text(
+                                                              reauthUserResult!),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(
+                                                                      alertDialogContext),
+                                                              child: Text('Ok'),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    );
                                                     if (reauthUserResult !=
                                                         '') {
                                                       await showDialog(
