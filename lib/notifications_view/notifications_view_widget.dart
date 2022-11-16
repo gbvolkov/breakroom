@@ -8,6 +8,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -50,8 +51,11 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
         ),
         actions: [
           FFButtonWidget(
-            onPressed: () {
-              print('Button pressed ...');
+            onPressed: () async {
+              final usersUpdateData = createUsersRecordData(
+                notiffReadTS: getCurrentTimestamp,
+              );
+              await currentUserReference!.update(usersUpdateData);
             },
             text: 'Mark as read',
             options: FFButtonOptions(

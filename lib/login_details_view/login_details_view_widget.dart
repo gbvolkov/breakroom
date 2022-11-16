@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/actions/index.dart' as actions;
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -430,6 +431,26 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     var _shouldSetState = false;
                                                     setState(() => FFAppState()
                                                         .tmpError = '');
+                                                    if (currentUserEmail ==
+                                                        emailTextFieldController!
+                                                            .text) {
+                                                      setState(() => FFAppState()
+                                                              .tmpError =
+                                                          'New email shouldn\'t be equal to old email');
+                                                      if (_shouldSetState)
+                                                        setState(() {});
+                                                      return;
+                                                    }
+                                                    if (!functions.isEmailValid(
+                                                        emailTextFieldController!
+                                                            .text)) {
+                                                      setState(() => FFAppState()
+                                                              .tmpError =
+                                                          'Please specify valid email');
+                                                      if (_shouldSetState)
+                                                        setState(() {});
+                                                      return;
+                                                    }
                                                     reauthUserResult =
                                                         await actions
                                                             .reauthUser(
@@ -444,29 +465,9 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                             null ||
                                                         reauthUserResult ==
                                                             '')) {
-                                                      await showDialog(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title: Text('Oops'),
-                                                            content: Text(
-                                                                reauthUserResult!),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext),
-                                                                child:
-                                                                    Text('Ok'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
                                                       setState(() => FFAppState()
                                                               .tmpError =
-                                                          reauthUserResult!);
+                                                          'Password validation failed');
                                                       if (_shouldSetState)
                                                         setState(() {});
                                                       return;
