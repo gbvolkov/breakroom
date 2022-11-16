@@ -440,27 +440,10 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                           .text,
                                                     );
                                                     _shouldSetState = true;
-                                                    await showDialog(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text('Oops'),
-                                                          content: Text(
-                                                              reauthUserResult!),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext),
-                                                              child: Text('Ok'),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
-                                                    if (reauthUserResult !=
-                                                        '') {
+                                                    if (!(reauthUserResult ==
+                                                            null ||
+                                                        reauthUserResult ==
+                                                            '')) {
                                                       await showDialog(
                                                         context: context,
                                                         builder:

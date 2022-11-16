@@ -230,7 +230,7 @@ class _NotificationMessageComponentWidgetState
                         ),
                       ),
                       Expanded(
-                        flex: 6,
+                        flex: 8,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -420,7 +420,7 @@ class _NotificationMessageComponentWidgetState
                         ),
                       ),
                       Expanded(
-                        flex: 4,
+                        flex: 8,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
