@@ -426,3 +426,11 @@ LatLng getUserGeoPosition(
 String printIntArray(List<int>? intarray) {
   return intarray?.toString() ?? "";
 }
+
+String formatDateTime(DateTime dt) {
+  if (dt.difference(DateTime.now()).inDays.abs() < 2) {
+    return DateFormat.jm().format(dt);
+  } else {
+    return DateFormat.yMd().add_jm().format(dt);
+  }
+}

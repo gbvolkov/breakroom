@@ -310,6 +310,8 @@ class FFAppState {
   List<bool> photosToDelete = [];
 
   List<int> markedElements = [];
+
+  String tmpError = '';
 }
 
 LatLng? _latLngFromString(String? val) {

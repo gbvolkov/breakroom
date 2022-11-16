@@ -20,11 +20,12 @@ class LoginDetailsViewWidget extends StatefulWidget {
 
 class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   PageController? changeEmailPageViewController;
+  String? reauthUserResult;
+  bool? isOK;
   TextEditingController? emailTextFieldController;
   TextEditingController? passwordTextFieldController;
 
   late bool passwordTextFieldVisibility;
-  bool? isOK;
   TextEditingController? pinCodeController1;
   PageController? changePhonePageViewController;
   TextEditingController? newPhoneTextFieldController;
@@ -332,10 +333,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                             12),
                                                   ),
                                                   filled: true,
-                                                  fillColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .textFieldBackground,
+                                                  fillColor: Color(0xFFEFEFEF),
                                                   contentPadding:
                                                       EdgeInsetsDirectional
                                                           .fromSTEB(
@@ -365,6 +363,27 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     .visiblePassword,
                                               ),
                                             ),
+                                            if (FFAppState().tmpError != '')
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional(-1, 0),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(0, 8, 0, 16),
+                                                  child: Text(
+                                                    'We will send a confirmation link to this  Email khk jh kjh jh ',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle2
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .systemError,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
                                             Align(
                                               alignment:
                                                   AlignmentDirectional(-1, 0),
@@ -408,6 +427,48 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     AlignmentDirectional(-1, 0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
+                                                    var _shouldSetState = false;
+                                                    setState(() => FFAppState()
+                                                        .tmpError = '');
+                                                    reauthUserResult =
+                                                        await actions
+                                                            .reauthUser(
+                                                      currentUserEmail,
+                                                      passwordTextFieldController!
+                                                          .text,
+                                                      emailTextFieldController!
+                                                          .text,
+                                                    );
+                                                    _shouldSetState = true;
+                                                    if (reauthUserResult !=
+                                                        '') {
+                                                      await showDialog(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title: Text('Oops'),
+                                                            content: Text(
+                                                                reauthUserResult!),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext),
+                                                                child:
+                                                                    Text('Ok'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      setState(() => FFAppState()
+                                                              .tmpError =
+                                                          reauthUserResult!);
+                                                      if (_shouldSetState)
+                                                        setState(() {});
+                                                      return;
+                                                    }
                                                     isOK = await actions
                                                         .resetUserEmail(
                                                       currentUserEmail,
@@ -416,6 +477,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                       emailTextFieldController!
                                                           .text,
                                                     );
+                                                    _shouldSetState = true;
                                                     if (isOK!) {
                                                       final usersUpdateData =
                                                           createUsersRecordData(
@@ -470,8 +532,8 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                     }
 
                                                     Navigator.pop(context);
-
-                                                    setState(() {});
+                                                    if (_shouldSetState)
+                                                      setState(() {});
                                                   },
                                                   text: 'Change your Email',
                                                   options: FFButtonOptions(
@@ -489,9 +551,10 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                                   .of(context)
                                                               .primaryColor,
                                                         ),
+                                                    elevation: 0,
                                                     borderSide: BorderSide(
                                                       color: Colors.transparent,
-                                                      width: 1,
+                                                      width: 0,
                                                     ),
                                                     borderRadius:
                                                         BorderRadius.circular(

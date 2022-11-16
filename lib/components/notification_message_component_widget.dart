@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -259,8 +260,8 @@ class _NotificationMessageComponentWidgetState
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                               child: Text(
-                                dateTimeFormat(
-                                    'jm', widget.notification!.timestamp!),
+                                functions.formatDateTime(
+                                    widget.notification!.timestamp!),
                                 style: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
@@ -449,8 +450,8 @@ class _NotificationMessageComponentWidgetState
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                               child: Text(
-                                dateTimeFormat(
-                                    'jm', widget.notification!.timestamp!),
+                                functions.formatDateTime(
+                                    widget.notification!.timestamp!),
                                 style: FlutterFlowTheme.of(context)
                                     .subtitle2
                                     .override(
