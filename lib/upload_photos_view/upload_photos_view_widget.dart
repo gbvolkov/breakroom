@@ -179,22 +179,26 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                           }
                                         }
 
-                                        if (uploadedFileUrl != null &&
-                                            uploadedFileUrl != '') {
-                                          photoCollectionResult = await actions
-                                              .setImageToCollection(
-                                            FFAppState()
-                                                .photosCollection
-                                                .toList(),
-                                            uploadedFileUrl,
-                                            valueOrDefault<int>(
-                                              photoCollectionIndex,
-                                              0,
-                                            ),
-                                          );
-                                          setState(() => FFAppState()
-                                                  .photosCollection =
-                                              photoCollectionResult!.toList());
+                                        if (isMediaUploading) {
+                                          if (uploadedFileUrl != null &&
+                                              uploadedFileUrl != '') {
+                                            photoCollectionResult =
+                                                await actions
+                                                    .setImageToCollection(
+                                              FFAppState()
+                                                  .photosCollection
+                                                  .toList(),
+                                              uploadedFileUrl,
+                                              valueOrDefault<int>(
+                                                photoCollectionIndex,
+                                                0,
+                                              ),
+                                            );
+                                            setState(() =>
+                                                FFAppState().photosCollection =
+                                                    photoCollectionResult!
+                                                        .toList());
+                                          }
                                         }
 
                                         setState(() {});
