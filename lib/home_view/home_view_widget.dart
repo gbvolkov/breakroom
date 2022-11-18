@@ -147,18 +147,12 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          InkWell(
-                            onTap: () async {
-                              context.pushNamed('IntroductionView');
-                            },
-                            child: Text(
-                              'BreakRoom',
-                              style:
-                                  FlutterFlowTheme.of(context).title1.override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 38,
-                                      ),
-                            ),
+                          Text(
+                            'BreakRoom',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Roboto',
+                                  fontSize: 38,
+                                ),
                           ),
                           InkWell(
                             onTap: () async {
@@ -166,7 +160,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   await getCurrentUserLocation(
                                       defaultLocation: LatLng(0.0, 0.0));
                               await actions.initializeFilterState(
-                                currentUserDocument!.filter,
+                                columnUsersRecord.filter,
                                 currentUserLocationValue,
                               );
 

@@ -27,9 +27,9 @@ Future initializeFilterState(
   }
   if (filter?.ageRange.max == null) {
     FFAppState().fltrAgeMax =
-        2022; //getAge(userProfile.birthDay ?? DateTime.now())+10;
+        100; //getAge(userProfile.birthDay ?? DateTime.now())+10;
   } else {
-    FFAppState().fltrAgeMax = filter?.ageRange.max ?? 2022;
+    FFAppState().fltrAgeMax = filter?.ageRange.max ?? 100;
   }
   FFAppState().fltrAgeRangeExt = false;
   FFAppState().fltrIndusrtries = filter?.industries?.asList() ?? [];

@@ -37,7 +37,7 @@ Future initializeUserDataState(
   FFAppState().usrEducation = education ?? "";
   FFAppState().usrGender = gender ?? "";
   FFAppState().usrGenderPreference = genderPreference ?? "";
-  FFAppState().usrHeight = height ?? 170;
+  FFAppState().usrHeight = height ?? 60;
   FFAppState().usrIntention = intention ?? "";
   FFAppState().usrLookingFor = lookingFor ?? [];
   FFAppState().usrReligion = religion ?? "";
