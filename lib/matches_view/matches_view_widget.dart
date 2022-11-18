@@ -432,7 +432,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -0.77, -0.82),
+                                                            -0.9, -0.97),
                                                     child: Icon(
                                                       FFIcons.kheartsIcons,
                                                       color:
