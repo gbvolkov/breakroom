@@ -52,25 +52,9 @@ class _NotificationMessageComponentWidgetState
             );
             await widget.notification!.reference
                 .update(notificationsUpdateData);
-            if (widget.notification!.type == 'match') {
-              context.pushNamed(
-                'HomeDetailsView',
-                queryParams: {
-                  'userProfile': serializeParam(
-                    columnUsersRecord,
-                    ParamType.Document,
-                  ),
-                  'mode': serializeParam(
-                    widget.notification!.type,
-                    ParamType.String,
-                  ),
-                }.withoutNulls,
-                extra: <String, dynamic>{
-                  'userProfile': columnUsersRecord,
-                },
-              );
-            } else {
-              if (widget.notification!.type == 'like') {
+            if (columnUsersRecord.isPremium! ||
+                !getRemoteConfigBool('check_premium')) {
+              if (widget.notification!.type == 'match') {
                 context.pushNamed(
                   'HomeDetailsView',
                   queryParams: {
@@ -78,12 +62,43 @@ class _NotificationMessageComponentWidgetState
                       columnUsersRecord,
                       ParamType.Document,
                     ),
+                    'mode': serializeParam(
+                      valueOrDefault<String>(
+                        widget.notification!.type,
+                        'match',
+                      ),
+                      ParamType.String,
+                    ),
                   }.withoutNulls,
                   extra: <String, dynamic>{
                     'userProfile': columnUsersRecord,
                   },
                 );
+              } else {
+                if (widget.notification!.type == 'like') {
+                  context.pushNamed(
+                    'HomeDetailsView',
+                    queryParams: {
+                      'userProfile': serializeParam(
+                        columnUsersRecord,
+                        ParamType.Document,
+                      ),
+                      'mode': serializeParam(
+                        valueOrDefault<String>(
+                          widget.notification!.type,
+                          'like',
+                        ),
+                        ParamType.String,
+                      ),
+                    }.withoutNulls,
+                    extra: <String, dynamic>{
+                      'userProfile': columnUsersRecord,
+                    },
+                  );
+                }
               }
+            } else {
+              context.pushNamed('GetPremiumView');
             }
           },
           child: Column(
