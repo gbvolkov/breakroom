@@ -7,6 +7,7 @@ class FFIcons {
   static const String _homeScreenIconsFamily = 'HomeScreenIcons';
   static const String _maleFemaleIconsFamily = 'MaleFemaleIcons';
   static const String _introductionIconsFamily = 'IntroductionIcons';
+  static const String _breakroomHeartsFamily = 'BreakroomHearts';
 
   // MyFlutterApp
   static const IconData kicSettings =
@@ -41,4 +42,8 @@ class FFIcons {
       IconData(0xe804, fontFamily: _introductionIconsFamily);
   static const IconData kicLike =
       IconData(0xe805, fontFamily: _introductionIconsFamily);
+
+  // breakroom-hearts
+  static const IconData kheartsIcons =
+      IconData(0xe900, fontFamily: _breakroomHeartsFamily);
 }

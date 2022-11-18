@@ -32,6 +32,8 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   TextEditingController? newPhoneTextFieldController;
   TextEditingController? pinCodeController2;
   PageController? changePasswordPageViewController;
+  String? reauthUserResult1;
+  bool? isPwdChanged;
   TextEditingController? currentPasswordTextFieldController;
 
   late bool currentPasswordTextFieldVisibility;
@@ -41,7 +43,6 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
   TextEditingController? newPassword2TextFieldController;
 
   late bool newPassword2TextFieldVisibility;
-  bool? isPwdChanged;
   TextEditingController? passportVerificationPinCode;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -1960,6 +1961,32 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                       .emailAddress,
                                                 ),
                                               ),
+                                              if (FFAppState().tmpError != '')
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          -1, 0),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 8, 0, 16),
+                                                    child: Text(
+                                                      FFAppState().tmpError,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .subtitle2
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .systemError,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ),
                                               Align(
                                                 alignment:
                                                     AlignmentDirectional(1, 0),
@@ -2028,10 +2055,36 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                           -1, 0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
+                                                      var _shouldSetState =
+                                                          false;
                                                       if (newPassword1TextFieldController!
                                                               .text ==
                                                           newPassword2TextFieldController!
                                                               .text) {
+                                                        setState(() =>
+                                                            FFAppState()
+                                                                .tmpError = '');
+                                                        reauthUserResult1 =
+                                                            await actions
+                                                                .reauthUser(
+                                                          currentUserEmail,
+                                                          currentPasswordTextFieldController!
+                                                              .text,
+                                                          emailTextFieldController!
+                                                              .text,
+                                                        );
+                                                        _shouldSetState = true;
+                                                        if (reauthUserResult1 !=
+                                                                null &&
+                                                            reauthUserResult1 !=
+                                                                '') {
+                                                          setState(() => FFAppState()
+                                                                  .tmpError =
+                                                              'Your current password is invalid');
+                                                          if (_shouldSetState)
+                                                            setState(() {});
+                                                          return;
+                                                        }
                                                         isPwdChanged =
                                                             await actions
                                                                 .resetUserPassword(
@@ -2041,6 +2094,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                           newPassword1TextFieldController!
                                                               .text,
                                                         );
+                                                        _shouldSetState = true;
                                                         if (isPwdChanged!) {
                                                           ScaffoldMessenger.of(
                                                                   context)
@@ -2064,56 +2118,23 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                             ),
                                                           );
                                                         } else {
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                            SnackBar(
-                                                              content: Text(
-                                                                'An error happened while changing yout password',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryBtnText,
-                                                                ),
-                                                              ),
-                                                              duration: Duration(
-                                                                  milliseconds:
-                                                                      4000),
-                                                              backgroundColor:
-                                                                  FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                            ),
-                                                          );
+                                                          setState(() => FFAppState()
+                                                                  .tmpError =
+                                                              'Error occured while changing user password');
+                                                          if (_shouldSetState)
+                                                            setState(() {});
+                                                          return;
                                                         }
 
                                                         Navigator.pop(context);
                                                       } else {
-                                                        await showDialog(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Passwords does not match'),
-                                                              content: Text(
-                                                                  'Please confirm your password'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext),
-                                                                  child: Text(
-                                                                      'Ok'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        );
+                                                        setState(() => FFAppState()
+                                                                .tmpError =
+                                                            'Please enter the same new passwords');
                                                       }
 
-                                                      setState(() {});
+                                                      if (_shouldSetState)
+                                                        setState(() {});
                                                     },
                                                     text: 'Save new password',
                                                     options: FFButtonOptions(
@@ -2134,10 +2155,11 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                                                         context)
                                                                     .primaryColor,
                                                               ),
+                                                      elevation: 0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
-                                                        width: 1,
+                                                        width: 0,
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(
@@ -2782,6 +2804,11 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                           onTap: () async {
                             setState(() => FFAppState()
                                 .loginDetailsContainerName = 'email');
+                            setState(() => FFAppState().tmpError = '');
+                            setState(() {
+                              emailTextFieldController?.clear();
+                              passwordTextFieldController?.clear();
+                            });
                             scaffoldKey.currentState!.openEndDrawer();
                           },
                           child: Row(
@@ -2890,6 +2917,12 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                           onTap: () async {
                             setState(() => FFAppState()
                                 .loginDetailsContainerName = 'password');
+                            setState(() => FFAppState().tmpError = '');
+                            setState(() {
+                              currentPasswordTextFieldController?.clear();
+                              newPassword1TextFieldController?.clear();
+                              newPassword2TextFieldController?.clear();
+                            });
                             scaffoldKey.currentState!.openEndDrawer();
                           },
                           child: Row(

@@ -327,6 +327,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                   confirmPasswordTextFieldController
                                                       ?.clear();
                                                 });
+                                                setState(() => FFAppState()
+                                                    .tmpBool = false);
                                                 await signUpPageViewController
                                                     ?.nextPage(
                                                   duration: Duration(
@@ -505,6 +507,34 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                       0, 0, 0, 16),
                                   child: TextFormField(
                                     controller: passwordTextFieldController,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'passwordTextFieldController',
+                                      Duration(milliseconds: 2000),
+                                      () async {
+                                        if ((passwordTextFieldController!
+                                                        .text !=
+                                                    null &&
+                                                passwordTextFieldController!
+                                                        .text !=
+                                                    '') &&
+                                            (confirmPasswordTextFieldController!
+                                                        .text !=
+                                                    null &&
+                                                confirmPasswordTextFieldController!
+                                                        .text !=
+                                                    '') &&
+                                            (passwordTextFieldController!
+                                                    .text ==
+                                                confirmPasswordTextFieldController!
+                                                    .text)) {
+                                          setState(() =>
+                                              FFAppState().tmpBool = true);
+                                        } else {
+                                          setState(() =>
+                                              FFAppState().tmpBool = false);
+                                        }
+                                      },
+                                    ),
                                     autofocus: true,
                                     obscureText: !passwordTextFieldVisibility,
                                     decoration: InputDecoration(
@@ -585,6 +615,34 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                   child: TextFormField(
                                     controller:
                                         confirmPasswordTextFieldController,
+                                    onChanged: (_) => EasyDebounce.debounce(
+                                      'confirmPasswordTextFieldController',
+                                      Duration(milliseconds: 2000),
+                                      () async {
+                                        if ((passwordTextFieldController!
+                                                        .text !=
+                                                    null &&
+                                                passwordTextFieldController!
+                                                        .text !=
+                                                    '') &&
+                                            (confirmPasswordTextFieldController!
+                                                        .text !=
+                                                    null &&
+                                                confirmPasswordTextFieldController!
+                                                        .text !=
+                                                    '') &&
+                                            (passwordTextFieldController!
+                                                    .text ==
+                                                confirmPasswordTextFieldController!
+                                                    .text)) {
+                                          setState(() =>
+                                              FFAppState().tmpBool = true);
+                                        } else {
+                                          setState(() =>
+                                              FFAppState().tmpBool = false);
+                                        }
+                                      },
+                                    ),
                                     autofocus: true,
                                     obscureText:
                                         !confirmPasswordTextFieldVisibility,
@@ -655,187 +713,213 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                   EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
                               child: Stack(
                                 children: [
-                                  Container(
-                                    width: double.infinity,
-                                    height: 48,
-                                    decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0xFFEE837B),
-                                          Color(0xFFF95A82),
-                                          Color(0xFFEA3C7D)
-                                        ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                  if (!FFAppState().tmpBool)
+                                    Container(
+                                      width: double.infinity,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFE5E5E5),
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      child: Align(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        child: SelectionArea(
+                                            child: Text(
+                                          'Create account',
+                                          style: FlutterFlowTheme.of(context)
+                                              .subtitle1,
+                                        )),
+                                      ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(-1, 0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        currentUserLocationValue =
-                                            await getCurrentUserLocation(
-                                                defaultLocation:
-                                                    LatLng(0.0, 0.0));
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        if (passwordTextFieldController?.text !=
-                                            confirmPasswordTextFieldController
-                                                ?.text) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Passwords don\'t match!',
-                                              ),
-                                            ),
-                                          );
-                                          return;
-                                        }
-
-                                        final user =
-                                            await createAccountWithEmail(
-                                          context,
-                                          emailTextFieldController!.text,
-                                          passwordTextFieldController!.text,
-                                        );
-                                        if (user == null) {
-                                          return;
-                                        }
-
-                                        final usersCreateData =
-                                            createUsersRecordData(
-                                          geoposition: currentUserLocationValue,
-                                          filter: createFilterStruct(
-                                            ageRangeExt: false,
-                                            distance: 50.0,
-                                            ageRange: createIntRangeStruct(
-                                              min: 0,
-                                              max: 2000,
-                                              clearUnsetFields: false,
-                                              create: true,
-                                            ),
-                                            clearUnsetFields: false,
-                                            create: true,
-                                          ),
-                                          isComplete: false,
-                                        );
-                                        await UsersRecord.collection
-                                            .doc(user.uid)
-                                            .update(usersCreateData);
-
-                                        await sendEmailVerification();
-                                        await actions.initializeUserDataState(
-                                          valueOrDefault(
-                                              currentUserDocument?.bodyType,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.childfreeStatus,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.drinkingStatus,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.education,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.gender, ''),
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.genderPreference,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.height, 0),
-                                          valueOrDefault(
-                                              currentUserDocument?.weight, 0),
-                                          valueOrDefault(
-                                              currentUserDocument?.intention,
-                                              ''),
-                                          (currentUserDocument?.lookingFor
-                                                      ?.toList() ??
-                                                  [])
-                                              .toList(),
-                                          valueOrDefault(
-                                              currentUserDocument?.religion,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.smokingStatus,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.spiritualStatus,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument
-                                                  ?.workoutStatus,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.firstName,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.lastName,
-                                              ''),
-                                          currentUserDocument!.birthDay,
-                                          valueOrDefault(
-                                              currentUserDocument?.bio, ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.industry,
-                                              ''),
-                                          valueOrDefault(
-                                              currentUserDocument?.occupation,
-                                              ''),
-                                          (currentUserDocument?.interests
-                                                      ?.toList() ??
-                                                  [])
-                                              .toList(),
-                                        );
-                                        await showModalBottomSheet(
-                                          isScrollControlled: true,
-                                          backgroundColor: Colors.transparent,
-                                          context: context,
-                                          builder: (context) {
-                                            return Padding(
-                                              padding: MediaQuery.of(context)
-                                                  .viewInsets,
-                                              child:
-                                                  DialogSignupCompleteWidget(),
-                                            );
-                                          },
-                                        ).then((value) => setState(() {}));
-
-                                        setState(() => FFAppState()
-                                            .preventIntroduction = true);
-
-                                        context.goNamedAuth(
-                                            'CreateProfileView', mounted);
-                                      },
-                                      text: 'Create account',
-                                      options: FFButtonOptions(
-                                        width: double.infinity,
-                                        height: 48,
-                                        color: Colors.transparent,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryColor,
-                                            ),
-                                        elevation: 0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
+                                  if (FFAppState().tmpBool)
+                                    Container(
+                                      width: double.infinity,
+                                      height: 48,
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xFFEE837B),
+                                            Color(0xFFF95A82),
+                                            Color(0xFFEA3C7D)
+                                          ],
+                                          stops: [0, 0.6, 1],
+                                          begin: AlignmentDirectional(0, -1),
+                                          end: AlignmentDirectional(0, 1),
                                         ),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                  ),
+                                  if (FFAppState().tmpBool)
+                                    Align(
+                                      alignment: AlignmentDirectional(-1, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          currentUserLocationValue =
+                                              await getCurrentUserLocation(
+                                                  defaultLocation:
+                                                      LatLng(0.0, 0.0));
+                                          GoRouter.of(context)
+                                              .prepareAuthEvent();
+                                          if (passwordTextFieldController
+                                                  ?.text !=
+                                              confirmPasswordTextFieldController
+                                                  ?.text) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Passwords don\'t match!',
+                                                ),
+                                              ),
+                                            );
+                                            return;
+                                          }
+
+                                          final user =
+                                              await createAccountWithEmail(
+                                            context,
+                                            emailTextFieldController!.text,
+                                            passwordTextFieldController!.text,
+                                          );
+                                          if (user == null) {
+                                            return;
+                                          }
+
+                                          final usersCreateData =
+                                              createUsersRecordData(
+                                            geoposition:
+                                                currentUserLocationValue,
+                                            filter: createFilterStruct(
+                                              ageRangeExt: false,
+                                              distance: 50.0,
+                                              ageRange: createIntRangeStruct(
+                                                min: 0,
+                                                max: 2000,
+                                                clearUnsetFields: false,
+                                                create: true,
+                                              ),
+                                              clearUnsetFields: false,
+                                              create: true,
+                                            ),
+                                            isComplete: false,
+                                          );
+                                          await UsersRecord.collection
+                                              .doc(user.uid)
+                                              .update(usersCreateData);
+
+                                          await sendEmailVerification();
+                                          await actions.initializeUserDataState(
+                                            valueOrDefault(
+                                                currentUserDocument?.bodyType,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.childfreeStatus,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.drinkingStatus,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.education,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.gender,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.genderPreference,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.height, 0),
+                                            valueOrDefault(
+                                                currentUserDocument?.weight, 0),
+                                            valueOrDefault(
+                                                currentUserDocument?.intention,
+                                                ''),
+                                            (currentUserDocument?.lookingFor
+                                                        ?.toList() ??
+                                                    [])
+                                                .toList(),
+                                            valueOrDefault(
+                                                currentUserDocument?.religion,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.smokingStatus,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.spiritualStatus,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument
+                                                    ?.workoutStatus,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.firstName,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.lastName,
+                                                ''),
+                                            currentUserDocument!.birthDay,
+                                            valueOrDefault(
+                                                currentUserDocument?.bio, ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.industry,
+                                                ''),
+                                            valueOrDefault(
+                                                currentUserDocument?.occupation,
+                                                ''),
+                                            (currentUserDocument?.interests
+                                                        ?.toList() ??
+                                                    [])
+                                                .toList(),
+                                          );
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child:
+                                                    DialogSignupCompleteWidget(),
+                                              );
+                                            },
+                                          ).then((value) => setState(() {}));
+
+                                          setState(() => FFAppState()
+                                              .preventIntroduction = true);
+
+                                          context.goNamedAuth(
+                                              'CreateProfileView', mounted);
+                                        },
+                                        text: 'Create account',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 48,
+                                          color: Colors.transparent,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

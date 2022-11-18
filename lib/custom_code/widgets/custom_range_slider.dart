@@ -6,8 +6,9 @@ import 'index.dart'; // Imports other custom widgets
 import '../actions/index.dart'; // Imports custom actions
 import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
-
 // Begin custom widget code
+// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+
 class CustomRangeSlider extends StatefulWidget {
   const CustomRangeSlider({
     Key? key,

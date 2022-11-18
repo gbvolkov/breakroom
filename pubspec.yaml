@@ -55,6 +55,7 @@ dependencies:
   flutter_animate: 1.0.0
   flutter_cache_manager: 3.3.0
   flutter_google_places: 0.3.0
+  flutter_image_slideshow: ^0.1.4
   flutter_rating_bar: 4.0.1
   font_awesome_flutter: 10.1.0
   from_css_color: 2.0.0
@@ -158,6 +159,9 @@ flutter:
     - family: IntroductionIcons
       fonts:
         - asset: assets/fonts/IntroductionIcons.ttf
+    - family: BreakroomHearts
+      fonts:
+        - asset: assets/fonts/breakroom-hearts.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -426,7 +426,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                     },
                                                   ),
                                                 ),
-                                                if (!columnUsersRecord.liked!
+                                                if (columnUsersRecord.liked!
                                                     .toList()
                                                     .contains(matchesItem.uid))
                                                   Align(
@@ -434,12 +434,12 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                         AlignmentDirectional(
                                                             -0.77, -0.82),
                                                     child: Icon(
-                                                      Icons.favorite,
+                                                      FFIcons.kheartsIcons,
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .alternate,
-                                                      size: 16,
+                                                      size: 24,
                                                     ),
                                                   ),
                                               ],

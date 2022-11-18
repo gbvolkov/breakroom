@@ -7,6 +7,8 @@ import '../actions/index.dart'; // Imports custom actions
 import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
+// DO NOT REMOVE OR MODIFY THE CODE ABOVE!
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_google_places/flutter_google_places.dart' as fgp;
 import 'package:google_api_headers/google_api_headers.dart' as hdr;

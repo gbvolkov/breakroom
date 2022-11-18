@@ -115,7 +115,7 @@ class _EditIndustryViewWidgetState extends State<EditIndustryViewWidget> {
                               List<IndustriesRecord>
                                   ddIndustryIndustriesRecordList =
                                   snapshot.data!;
-                              return FlutterFlowDropDown(
+                              return FlutterFlowDropDown<String>(
                                 initialOption: ddIndustryValue ??=
                                     FFAppState().usrIndustry,
                                 options: ddIndustryIndustriesRecordList

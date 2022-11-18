@@ -423,7 +423,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     List<IndustriesRecord>
                                         ddIndustryIndustriesRecordList =
                                         snapshot.data!;
-                                    return FlutterFlowDropDown(
+                                    return FlutterFlowDropDown<String>(
                                       initialOption: ddIndustryValue ??=
                                           FFAppState().usrIndustry,
                                       options: ddIndustryIndustriesRecordList
@@ -847,9 +847,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
-                                        width: 1,
+                                        width: 0,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
@@ -958,6 +959,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1076,6 +1078,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1183,6 +1186,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1297,6 +1301,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1411,6 +1416,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1590,6 +1596,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1705,6 +1712,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -1817,6 +1825,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
                                         width: 1,
@@ -2143,9 +2152,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryColor,
                                           ),
+                                      elevation: 0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
-                                        width: 1,
+                                        width: 0,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
