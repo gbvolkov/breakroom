@@ -39,6 +39,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() => FFAppState().photosCollection = widget.photos!.toList());
+      setState(() => FFAppState().lastUploadedURL = '');
     });
   }
 
@@ -179,9 +180,10 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                           }
                                         }
 
-                                        if (isMediaUploading) {
-                                          if (uploadedFileUrl != null &&
-                                              uploadedFileUrl != '') {
+                                        if (uploadedFileUrl != null &&
+                                            uploadedFileUrl != '') {
+                                          if (uploadedFileUrl !=
+                                              FFAppState().lastUploadedURL) {
                                             photoCollectionResult =
                                                 await actions
                                                     .setImageToCollection(
@@ -198,6 +200,9 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                                 FFAppState().photosCollection =
                                                     photoCollectionResult!
                                                         .toList());
+                                            setState(() =>
+                                                FFAppState().lastUploadedURL =
+                                                    uploadedFileUrl);
                                           }
                                         }
 

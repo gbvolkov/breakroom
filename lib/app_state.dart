@@ -312,6 +312,8 @@ class FFAppState {
   List<int> markedElements = [];
 
   String tmpError = '';
+
+  String lastUploadedURL = '';
 }
 
 LatLng? _latLngFromString(String? val) {
