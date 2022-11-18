@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -298,6 +299,25 @@ class _TestAnythingYouWantWidgetState extends State<TestAnythingYouWantWidget>
                 ).animateOnActionTrigger(
                   animationsMap['swipeableStackOnActionTriggerAnimation']!,
                 ),
+              ),
+              Divider(),
+              ClipRect(
+                child: ImageFiltered(
+                  imageFilter: ImageFilter.blur(
+                    sigmaX: 4,
+                    sigmaY: 4,
+                  ),
+                  child: Text(
+                    'Hello World',
+                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                          fontFamily: 'Roboto',
+                          fontSize: 24,
+                        ),
+                  ),
+                ),
+              ),
+              Divider(
+                height: 64,
               ),
             ],
           ),

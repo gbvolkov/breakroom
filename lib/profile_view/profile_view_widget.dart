@@ -825,7 +825,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                     ),
-                                    if (columnUsersRecord.isPremium ?? true)
+                                    if (columnUsersRecord.isPremium! ||
+                                        !getRemoteConfigBool('check_premium'))
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -1083,15 +1084,6 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     ),
                                   ],
                                 ),
-                                SelectionArea(
-                                    child: Text(
-                                  valueOrDefault<String>(
-                                    functions.printIntArray(
-                                        FFAppState().markedElements.toList()),
-                                    'ND',
-                                  ),
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                )),
                               ],
                             ),
                           ),
@@ -1280,23 +1272,6 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                 alignment: AlignmentDirectional(-1, 0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (alertDialogContext) {
-                                        return AlertDialog(
-                                          title: Text('Delete images'),
-                                          content:
-                                              Text('Delete image code here'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () => Navigator.pop(
-                                                  alertDialogContext),
-                                              child: Text('Ok'),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
                                     clearedPhotos =
                                         await actions.clearPhotosList(
                                       columnUsersRecord.photos!.toList(),

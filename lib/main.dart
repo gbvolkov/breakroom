@@ -18,6 +18,8 @@ void main() async {
 
   FFAppState(); // Initialize FFAppState
 
+  await initializeFirebaseRemoteConfig();
+
   runApp(MyApp());
 }
 

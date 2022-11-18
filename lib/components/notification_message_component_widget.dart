@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'dart:ui';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,12 @@ class NotificationMessageComponentWidget extends StatefulWidget {
     Key? key,
     this.notification,
     this.noriffTS,
+    this.isBlured,
   }) : super(key: key);
 
   final NotificationsRecord? notification;
   final DateTime? noriffTS;
+  final bool? isBlured;
 
   @override
   _NotificationMessageComponentWidgetState createState() =>
@@ -166,71 +169,86 @@ class _NotificationMessageComponentWidgetState
                                     ),
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 8, 0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(90),
-                                    child: Image.network(
-                                      valueOrDefault<String>(
-                                        columnUsersRecord.photoUrl,
-                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                            Builder(builder: (_) {
+                              final child = Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 8, 0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(90),
+                                      child: Image.network(
+                                        valueOrDefault<String>(
+                                          columnUsersRecord.photoUrl,
+                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                        ),
+                                        width: 24,
+                                        height: 24,
+                                        fit: BoxFit.cover,
                                       ),
-                                      width: 24,
-                                      height: 24,
-                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
-                                SelectionArea(
-                                    child: Text(
-                                  columnUsersRecord.displayName!,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                        fontSize: 12,
-                                      ),
-                                )),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
-                                  child: SelectionArea(
+                                  SelectionArea(
                                       child: Text(
-                                    valueOrDefault<String>(
-                                      () {
-                                        if (widget.notification!.type ==
-                                            'like') {
-                                          return 'liked you';
-                                        } else if (widget.notification!.type ==
-                                            'match') {
-                                          return 'liked you back';
-                                        } else {
-                                          return 'sent you a message';
-                                        }
-                                      }(),
-                                      'sent you a message',
-                                    ),
+                                    columnUsersRecord.displayName!,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
                                           fontSize: 12,
                                         ),
                                   )),
-                                ),
-                              ],
-                            ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 0, 0),
+                                    child: SelectionArea(
+                                        child: Text(
+                                      valueOrDefault<String>(
+                                        () {
+                                          if (widget.notification!.type ==
+                                              'like') {
+                                            return 'liked you';
+                                          } else if (widget
+                                                  .notification!.type ==
+                                              'match') {
+                                            return 'liked you back';
+                                          } else {
+                                            return 'sent you a message';
+                                          }
+                                        }(),
+                                        'sent you a message',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 12,
+                                          ),
+                                    )),
+                                  ),
+                                ],
+                              );
+                              if (widget.isBlured!) {
+                                return ClipRect(
+                                  child: ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
+                                      sigmaX: 4,
+                                      sigmaY: 4,
+                                    ),
+                                    child: child,
+                                  ),
+                                );
+                              }
+                              return child;
+                            }),
                           ],
                         ),
                       ),
                       Expanded(
-                        flex: 8,
+                        flex: 9,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -266,7 +284,7 @@ class _NotificationMessageComponentWidgetState
                                     .subtitle2
                                     .override(
                                       fontFamily: 'Roboto',
-                                      fontSize: 10,
+                                      fontSize: 9,
                                     ),
                               ),
                             ),
@@ -356,71 +374,86 @@ class _NotificationMessageComponentWidgetState
                                     ),
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 8, 0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(90),
-                                    child: Image.network(
-                                      valueOrDefault<String>(
-                                        columnUsersRecord.photoUrl,
-                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                            Builder(builder: (_) {
+                              final child = Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 8, 0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(90),
+                                      child: Image.network(
+                                        valueOrDefault<String>(
+                                          columnUsersRecord.photoUrl,
+                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                        ),
+                                        width: 24,
+                                        height: 24,
+                                        fit: BoxFit.cover,
                                       ),
-                                      width: 24,
-                                      height: 24,
-                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
-                                SelectionArea(
-                                    child: Text(
-                                  columnUsersRecord.displayName!,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: Color(0xA5F95A82),
-                                        fontSize: 12,
-                                      ),
-                                )),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
-                                  child: SelectionArea(
+                                  SelectionArea(
                                       child: Text(
-                                    valueOrDefault<String>(
-                                      () {
-                                        if (widget.notification!.type ==
-                                            'like') {
-                                          return 'liked you';
-                                        } else if (widget.notification!.type ==
-                                            'match') {
-                                          return 'liked you back';
-                                        } else {
-                                          return 'sent you a message';
-                                        }
-                                      }(),
-                                      'sent you a message',
-                                    ),
+                                    columnUsersRecord.displayName!,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyText1
                                         .override(
                                           fontFamily: 'Roboto',
-                                          color: Color(0xA5000000),
+                                          color: Color(0xA5F95A82),
                                           fontSize: 12,
                                         ),
                                   )),
-                                ),
-                              ],
-                            ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8, 0, 0, 0),
+                                    child: SelectionArea(
+                                        child: Text(
+                                      valueOrDefault<String>(
+                                        () {
+                                          if (widget.notification!.type ==
+                                              'like') {
+                                            return 'liked you';
+                                          } else if (widget
+                                                  .notification!.type ==
+                                              'match') {
+                                            return 'liked you back';
+                                          } else {
+                                            return 'sent you a message';
+                                          }
+                                        }(),
+                                        'sent you a message',
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: Color(0xA5000000),
+                                            fontSize: 12,
+                                          ),
+                                    )),
+                                  ),
+                                ],
+                              );
+                              if (widget.isBlured!) {
+                                return ClipRect(
+                                  child: ImageFiltered(
+                                    imageFilter: ImageFilter.blur(
+                                      sigmaX: 4,
+                                      sigmaY: 4,
+                                    ),
+                                    child: child,
+                                  ),
+                                );
+                              }
+                              return child;
+                            }),
                           ],
                         ),
                       ),
                       Expanded(
-                        flex: 8,
+                        flex: 9,
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
@@ -457,7 +490,7 @@ class _NotificationMessageComponentWidgetState
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: Color(0xA5050A41),
-                                      fontSize: 10,
+                                      fontSize: 9,
                                     ),
                               ),
                             ),

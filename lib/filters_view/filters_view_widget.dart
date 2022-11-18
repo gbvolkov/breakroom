@@ -685,42 +685,44 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 ),
                               ],
                             ),
-                            Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    setState(() => FFAppState().filterName =
-                                        'Advanced filters');
-                                    await pageViewController?.nextPage(
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.ease,
-                                    );
-                                  },
-                                  text: 'Advanced filters',
-                                  options: FFButtonOptions(
-                                    width: 170,
-                                    height: 40,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        ),
-                                    elevation: 0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
+                            if (widget.user!.isPremium! ||
+                                !getRemoteConfigBool('check_premium'))
+                              Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      setState(() => FFAppState().filterName =
+                                          'Advanced filters');
+                                      await pageViewController?.nextPage(
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.ease,
+                                      );
+                                    },
+                                    text: 'Advanced filters',
+                                    options: FFButtonOptions(
+                                      width: 170,
+                                      height: 40,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                          ),
+                                      elevation: 0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
                                   ),
                                 ),
                               ),
-                            ),
                           ],
                         ),
                         Column(
@@ -1115,7 +1117,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (widget.user!.isPremium!) {
+                          if (widget.user!.isPremium! ||
+                              !getRemoteConfigBool('check_premium')) {
                             var confirmDialogResponse = await showDialog<bool>(
                                   context: context,
                                   builder: (alertDialogContext) {
