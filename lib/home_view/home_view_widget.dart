@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
+import '../components/nitifications_bell_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -13,12 +14,10 @@ import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
-import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
@@ -158,97 +157,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   fontSize: 38,
                                 ),
                           ),
-                          StreamBuilder<List<NotificationsRecord>>(
-                            stream: queryNotificationsRecord(
-                              queryBuilder: (notificationsRecord) =>
-                                  notificationsRecord
-                                      .where('receiver',
-                                          isEqualTo: currentUserReference)
-                                      .where('timestamp',
-                                          isGreaterThan:
-                                              columnUsersRecord.notiffReadTS)
-                                      .where('is_read', isEqualTo: false),
-                            ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<NotificationsRecord>
-                                  badgeNotificationsRecordList = snapshot.data!;
-                              return Badge(
-                                badgeContent: Text(
-                                  badgeNotificationsRecordList.length
-                                      .toString(),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .alternate,
-                                      ),
-                                ),
-                                showBadge:
-                                    badgeNotificationsRecordList.length > 0,
-                                shape: BadgeShape.circle,
-                                badgeColor:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                elevation: 4,
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(6, 6, 6, 6),
-                                position: BadgePosition.topEnd(),
-                                animationType: BadgeAnimationType.scale,
-                                toAnimate: true,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    if (badgeNotificationsRecordList.length > 0)
-                                      FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30,
-                                        borderWidth: 1,
-                                        buttonSize: 40,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.bell,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 16,
-                                        ),
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
-                                        },
-                                      ),
-                                    if (badgeNotificationsRecordList.length <=
-                                        0)
-                                      FlutterFlowIconButton(
-                                        borderColor: Colors.transparent,
-                                        borderRadius: 30,
-                                        borderWidth: 1,
-                                        buttonSize: 40,
-                                        icon: FaIcon(
-                                          FontAwesomeIcons.bellSlash,
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          size: 16,
-                                        ),
-                                        onPressed: () {
-                                          print('IconButton pressed ...');
-                                        },
-                                      ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
+                          NitificationsBellWidget(),
                           InkWell(
                             onTap: () async {
                               currentUserLocationValue =
