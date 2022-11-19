@@ -71,6 +71,13 @@ class _$FilterStructSerializer implements StructuredSerializer<FilterStruct> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.gender;
+    if (value != null) {
+      result
+        ..add('gender')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -119,6 +126,10 @@ class _$FilterStructSerializer implements StructuredSerializer<FilterStruct> {
                   specifiedType: const FullType(IntRangeStruct))!
               as IntRangeStruct);
           break;
+        case 'gender':
+          result.gender = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'firestoreUtilData':
           result.firestoreUtilData = serializers.deserialize(value,
                   specifiedType: const FullType(FirestoreUtilData))!
@@ -147,6 +158,8 @@ class _$FilterStruct extends FilterStruct {
   @override
   final IntRangeStruct ageRange;
   @override
+  final String? gender;
+  @override
   final FirestoreUtilData firestoreUtilData;
 
   factory _$FilterStruct([void Function(FilterStructBuilder)? updates]) =>
@@ -160,6 +173,7 @@ class _$FilterStruct extends FilterStruct {
       this.industries,
       this.address,
       required this.ageRange,
+      this.gender,
       required this.firestoreUtilData})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -186,6 +200,7 @@ class _$FilterStruct extends FilterStruct {
         industries == other.industries &&
         address == other.address &&
         ageRange == other.ageRange &&
+        gender == other.gender &&
         firestoreUtilData == other.firestoreUtilData;
   }
 
@@ -197,13 +212,15 @@ class _$FilterStruct extends FilterStruct {
                 $jc(
                     $jc(
                         $jc(
-                            $jc($jc(0, lookingFor.hashCode),
-                                ageRangeExt.hashCode),
-                            location.hashCode),
-                        distance.hashCode),
-                    industries.hashCode),
-                address.hashCode),
-            ageRange.hashCode),
+                            $jc(
+                                $jc($jc(0, lookingFor.hashCode),
+                                    ageRangeExt.hashCode),
+                                location.hashCode),
+                            distance.hashCode),
+                        industries.hashCode),
+                    address.hashCode),
+                ageRange.hashCode),
+            gender.hashCode),
         firestoreUtilData.hashCode));
   }
 
@@ -217,6 +234,7 @@ class _$FilterStruct extends FilterStruct {
           ..add('industries', industries)
           ..add('address', address)
           ..add('ageRange', ageRange)
+          ..add('gender', gender)
           ..add('firestoreUtilData', firestoreUtilData))
         .toString();
   }
@@ -259,6 +277,10 @@ class FilterStructBuilder
       _$this._ageRange ??= new IntRangeStructBuilder();
   set ageRange(IntRangeStructBuilder? ageRange) => _$this._ageRange = ageRange;
 
+  String? _gender;
+  String? get gender => _$this._gender;
+  set gender(String? gender) => _$this._gender = gender;
+
   FirestoreUtilData? _firestoreUtilData;
   FirestoreUtilData? get firestoreUtilData => _$this._firestoreUtilData;
   set firestoreUtilData(FirestoreUtilData? firestoreUtilData) =>
@@ -278,6 +300,7 @@ class FilterStructBuilder
       _industries = $v.industries?.toBuilder();
       _address = $v.address;
       _ageRange = $v.ageRange.toBuilder();
+      _gender = $v.gender;
       _firestoreUtilData = $v.firestoreUtilData;
       _$v = null;
     }
@@ -310,6 +333,7 @@ class FilterStructBuilder
               industries: _industries?.build(),
               address: address,
               ageRange: ageRange.build(),
+              gender: gender,
               firestoreUtilData: BuiltValueNullFieldError.checkNotNull(
                   firestoreUtilData, r'FilterStruct', 'firestoreUtilData'));
     } catch (_) {

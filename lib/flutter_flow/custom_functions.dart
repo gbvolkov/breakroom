@@ -441,3 +441,11 @@ String formatDateTime(DateTime dt) {
     return DateFormat.yMd().add_jm().format(dt);
   }
 }
+
+List<String> getGenderFilter(String gender) {
+  if (gender == "Everyone") {
+    return ["Man", "Women"];
+  } else {
+    return [gender];
+  }
+}

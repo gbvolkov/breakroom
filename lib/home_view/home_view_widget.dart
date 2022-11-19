@@ -437,11 +437,19 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                           StreamBuilder<List<UsersRecord>>(
                             stream: queryUsersRecord(
                               queryBuilder: (usersRecord) => usersRecord
-                                  .where('gender',
-                                      isEqualTo: columnUsersRecord
-                                                  .genderPreference !=
+                                  .whereIn(
+                                      'gender',
+                                      functions.getGenderFilter(
+                                                  valueOrDefault<String>(
+                                                columnUsersRecord.filter.gender,
+                                                'Everyone',
+                                              )) !=
                                               ''
-                                          ? columnUsersRecord.genderPreference
+                                          ? functions.getGenderFilter(
+                                              valueOrDefault<String>(
+                                              columnUsersRecord.filter.gender,
+                                              'Everyone',
+                                            ))
                                           : null)
                                   .where('intention',
                                       isEqualTo:
