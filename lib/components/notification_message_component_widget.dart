@@ -69,6 +69,10 @@ class _NotificationMessageComponentWidgetState
                       ),
                       ParamType.String,
                     ),
+                    'backPage': serializeParam(
+                      'NotificationView',
+                      ParamType.String,
+                    ),
                   }.withoutNulls,
                   extra: <String, dynamic>{
                     'userProfile': columnUsersRecord,
@@ -88,6 +92,10 @@ class _NotificationMessageComponentWidgetState
                           widget.notification!.type,
                           'like',
                         ),
+                        ParamType.String,
+                      ),
+                      'backPage': serializeParam(
+                        'NotificationView',
                         ParamType.String,
                       ),
                     }.withoutNulls,
