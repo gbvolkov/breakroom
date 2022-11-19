@@ -166,7 +166,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           isEqualTo: currentUserReference)
                                       .where('timestamp',
                                           isGreaterThan:
-                                              columnUsersRecord.notiffReadTS),
+                                              columnUsersRecord.notiffReadTS)
+                                      .where('is_read', isEqualTo: false),
                             ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
@@ -213,10 +214,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   borderWidth: 1,
                                   buttonSize: 40,
                                   icon: FaIcon(
-                                    FontAwesomeIcons.solidBell,
+                                    FontAwesomeIcons.bell,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 20,
+                                    size: 16,
                                   ),
                                   onPressed: () {
                                     print('IconButton pressed ...');
