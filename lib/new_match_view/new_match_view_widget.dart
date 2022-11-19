@@ -333,21 +333,26 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                     alignment: AlignmentDirectional(-1, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        if (Navigator.of(context).canPop()) {
-                          context.pop();
+                        if (widget.me!.isPremium! ||
+                            !getRemoteConfigBool('check_premium')) {
+                          if (Navigator.of(context).canPop()) {
+                            context.pop();
+                          }
+                          context.pushNamed(
+                            'Chat',
+                            queryParams: {
+                              'chatUser': serializeParam(
+                                widget.match,
+                                ParamType.Document,
+                              ),
+                            }.withoutNulls,
+                            extra: <String, dynamic>{
+                              'chatUser': widget.match,
+                            },
+                          );
+                        } else {
+                          context.pushNamed('GetPremiumView');
                         }
-                        context.pushNamed(
-                          'Chat',
-                          queryParams: {
-                            'chatUser': serializeParam(
-                              widget.match,
-                              ParamType.Document,
-                            ),
-                          }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'chatUser': widget.match,
-                          },
-                        );
                       },
                       text: 'Start chat',
                       options: FFButtonOptions(

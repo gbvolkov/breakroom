@@ -408,21 +408,30 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       size: 30,
                                                     ),
                                                     onPressed: () async {
-                                                      context.pushNamed(
-                                                        'Chat',
-                                                        queryParams: {
-                                                          'chatUser':
-                                                              serializeParam(
-                                                            matchesItem,
-                                                            ParamType.Document,
-                                                          ),
-                                                        }.withoutNulls,
-                                                        extra: <String,
-                                                            dynamic>{
-                                                          'chatUser':
+                                                      if (columnUsersRecord
+                                                              .isPremium! ||
+                                                          !getRemoteConfigBool(
+                                                              'check_premium')) {
+                                                        context.pushNamed(
+                                                          'Chat',
+                                                          queryParams: {
+                                                            'chatUser':
+                                                                serializeParam(
                                                               matchesItem,
-                                                        },
-                                                      );
+                                                              ParamType
+                                                                  .Document,
+                                                            ),
+                                                          }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            'chatUser':
+                                                                matchesItem,
+                                                          },
+                                                        );
+                                                      } else {
+                                                        context.pushNamed(
+                                                            'GetPremiumView');
+                                                      }
                                                     },
                                                   ),
                                                 ),

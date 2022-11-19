@@ -1,7 +1,10 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -468,8 +471,31 @@ class _GetPremium1ViewWidgetState extends State<GetPremium1ViewWidget> {
                             ),
                           ),
                           FFButtonWidget(
-                            onPressed: () {
-                              print('btnGetPremium pressed ...');
+                            onPressed: () async {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Congrats! You are premium user now!',
+                                    style: FlutterFlowTheme.of(context)
+                                        .title1
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .alternate,
+                                        ),
+                                  ),
+                                  duration: Duration(milliseconds: 3000),
+                                  backgroundColor: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                ),
+                              );
+
+                              final usersUpdateData = createUsersRecordData(
+                                isPremium: true,
+                              );
+                              await currentUserReference!
+                                  .update(usersUpdateData);
+                              context.pop();
                             },
                             text: 'Continue',
                             options: FFButtonOptions(
