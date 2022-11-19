@@ -194,6 +194,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => HomeDetailsViewWidget(
                 userProfile: params.getParam('userProfile', ParamType.Document),
                 mode: params.getParam('mode', ParamType.String),
+                backPage: params.getParam('backPage', ParamType.String),
               ),
             ),
             FFRoute(

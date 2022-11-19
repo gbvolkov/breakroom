@@ -19,10 +19,12 @@ class HomeDetailsViewWidget extends StatefulWidget {
     Key? key,
     this.userProfile,
     this.mode,
+    this.backPage,
   }) : super(key: key);
 
   final UsersRecord? userProfile;
   final String? mode;
+  final String? backPage;
 
   @override
   _HomeDetailsViewWidgetState createState() => _HomeDetailsViewWidgetState();
@@ -74,7 +76,11 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
             if (widget.mode == null || widget.mode == '') {
               context.pushNamed('HomeView');
             } else {
-              context.pushNamed('MatchesView');
+              if (widget.backPage == null || widget.backPage == '') {
+                context.pushNamed('MatchesView');
+              } else {
+                context.pushNamed('NotificationsView');
+              }
             }
           },
         ),
