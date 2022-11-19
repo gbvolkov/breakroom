@@ -1,11 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/empty_matches_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -188,9 +188,12 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                         .map((e) => e)
                                         .toList();
                                     if (matches.isEmpty) {
-                                      return CachedNetworkImage(
-                                        imageUrl:
-                                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                      return Center(
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child: EmptyMatchesWidgetWidget(),
+                                        ),
                                       );
                                     }
                                     return GridView.builder(

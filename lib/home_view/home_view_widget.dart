@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -516,8 +517,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         .take(1)
                                         .toList();
                                     if (matchedUsers.isEmpty) {
-                                      return Image.asset(
-                                        'assets/images/UnknownSurgeon.png',
+                                      return Center(
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child:
+                                              EmptyCandidatesListWidgetWidget(
+                                            user: columnUsersRecord,
+                                          ),
+                                        ),
                                       );
                                     }
                                     return FlutterFlowSwipeableStack(
