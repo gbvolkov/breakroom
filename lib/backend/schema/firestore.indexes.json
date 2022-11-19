@@ -19,11 +19,11 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "gender",
+          "fieldPath": "intention",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "intention",
+          "fieldPath": "gender",
           "order": "ASCENDING"
         },
         {

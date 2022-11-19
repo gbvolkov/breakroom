@@ -314,6 +314,8 @@ class FFAppState {
   String tmpError = '';
 
   String lastUploadedURL = '';
+
+  String fltrGender = '';
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -24,6 +24,8 @@ abstract class FilterStruct
 
   IntRangeStruct get ageRange;
 
+  String? get gender;
+
   /// Utility class for Firestore updates
   FirestoreUtilData get firestoreUtilData;
 
@@ -34,6 +36,7 @@ abstract class FilterStruct
     ..industries = ListBuilder()
     ..address = ''
     ..ageRange = IntRangeStructBuilder()
+    ..gender = ''
     ..firestoreUtilData = FirestoreUtilData();
 
   FilterStruct._();
@@ -47,6 +50,7 @@ FilterStruct createFilterStruct({
   double? distance,
   String? address,
   IntRangeStruct? ageRange,
+  String? gender,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -61,6 +65,7 @@ FilterStruct createFilterStruct({
         ..industries = null
         ..address = address
         ..ageRange = ageRange?.toBuilder() ?? IntRangeStructBuilder()
+        ..gender = gender
         ..firestoreUtilData = FirestoreUtilData(
           clearUnsetFields: clearUnsetFields,
           create: create,

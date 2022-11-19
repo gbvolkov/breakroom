@@ -32,6 +32,7 @@ Future initializeFilterState(
     FFAppState().fltrAgeMax = filter?.ageRange.max ?? 100;
   }
   FFAppState().fltrAgeRangeExt = false;
+  FFAppState().fltrGender = filter?.gender ?? "Everyone";
   FFAppState().fltrIndusrtries = filter?.industries?.asList() ?? [];
   FFAppState().fltrLocation = filter?.location ?? currentLocation;
   //if (filter?.address == null) {

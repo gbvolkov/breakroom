@@ -218,12 +218,19 @@ List<UsersRecord> cleanUpFilteredProfilesByUser(
   for (var profile in fliteredProfiles) {
     if (!selectedUsers.contains(profile.uid)) {
       isOK = true;
-      if (isOK &&
+      /*if (isOK &&
           user.filter.lookingFor != null &&
           user.filter.lookingFor!.isNotEmpty &&
           profile.lookingFor != null) {
         isOK = user.filter.lookingFor!
             .any((String s) => profile.lookingFor!.contains(s));
+      }*/
+      if (isOK &&
+          user.filter.lookingFor != null &&
+          user.filter.lookingFor!.isNotEmpty &&
+          !(user.filter.lookingFor!.contains("Everyone")) &&
+          profile.gender != null) {
+        isOK = user.filter.lookingFor!.contains(profile.gender);
       }
       if (isOK &&
           user.filter.industries != null &&
@@ -432,5 +439,13 @@ String formatDateTime(DateTime dt) {
     return DateFormat.jm().format(dt);
   } else {
     return DateFormat.yMd().add_jm().format(dt);
+  }
+}
+
+List<String> getGenderFilter(String? gender) {
+  if ((gender ?? "").isEmpty || (gender == "Everyone")) {
+    return ["Man", "Women"];
+  } else {
+    return [gender!];
   }
 }

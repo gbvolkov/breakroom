@@ -225,9 +225,9 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                       noriffTS:
                                                           columnUsersRecord
                                                               .notiffReadTS,
-                                                      isBlured: !columnUsersRecord
-                                                              .isPremium! &&
-                                                          getRemoteConfigBool(
+                                                      isPremium: columnUsersRecord
+                                                              .isPremium! ||
+                                                          !getRemoteConfigBool(
                                                               'check_premium'),
                                                     ),
                                                   ),
@@ -343,9 +343,9 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                         yesterdayMsgsItem,
                                                     noriffTS: columnUsersRecord
                                                         .notiffReadTS,
-                                                    isBlured: !columnUsersRecord
-                                                            .isPremium! &&
-                                                        getRemoteConfigBool(
+                                                    isPremium: columnUsersRecord
+                                                            .isPremium! ||
+                                                        !getRemoteConfigBool(
                                                             'check_premium'),
                                                   ),
                                                 );
@@ -456,9 +456,9 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                         earlierMsgsItem,
                                                     noriffTS: columnUsersRecord
                                                         .notiffReadTS,
-                                                    isBlured: !columnUsersRecord
-                                                            .isPremium! &&
-                                                        getRemoteConfigBool(
+                                                    isPremium: columnUsersRecord
+                                                            .isPremium! ||
+                                                        !getRemoteConfigBool(
                                                             'check_premium'),
                                                   ),
                                                 );

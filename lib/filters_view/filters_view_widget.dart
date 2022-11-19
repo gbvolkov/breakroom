@@ -24,10 +24,10 @@ class FiltersViewWidget extends StatefulWidget {
 }
 
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
-  List<String>? choiceChipsValues;
+  PageController? pageViewController;
+  String? ccInterestedInValue;
   bool? switchListTileValue;
   double? sliderDistanceValue;
-  PageController? pageViewController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   ValueNotifier<List<String>?> ccIndustriesValues = ValueNotifier(null);
 
@@ -404,13 +404,13 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                               child: FlutterFlowChoiceChips(
-                                initiallySelected: FFAppState().fltrLookingFor,
+                                initiallySelected: [FFAppState().fltrGender],
                                 options: FFAppState()
-                                    .lookingForList
+                                    .interestedInList
                                     .map((label) => ChipData(label))
                                     .toList(),
-                                onChanged: (val) =>
-                                    setState(() => choiceChipsValues = val),
+                                onChanged: (val) => setState(
+                                    () => ccInterestedInValue = val?.first),
                                 selectedChipStyle: ChipStyle(
                                   backgroundColor:
                                       FlutterFlowTheme.of(context).alternate,
@@ -440,8 +440,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   elevation: 0,
                                 ),
                                 chipSpacing: 4,
-                                multiselect: true,
-                                initialized: choiceChipsValues != null,
+                                multiselect: false,
+                                initialized: ccInterestedInValue != null,
                                 alignment: WrapAlignment.spaceEvenly,
                               ),
                             ),
@@ -694,12 +694,18 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                       0, 16, 0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      setState(() => FFAppState().filterName =
-                                          'Advanced filters');
-                                      await pageViewController?.nextPage(
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.ease,
-                                      );
+                                      if (widget.user!.isPremium! ||
+                                          !getRemoteConfigBool(
+                                              'check_premium')) {
+                                        setState(() => FFAppState().filterName =
+                                            'Advanced filters');
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      } else {
+                                        context.pushNamed('GetPremiumView');
+                                      }
                                     },
                                     text: 'Advanced filters',
                                     options: FFButtonOptions(
@@ -1030,59 +1036,6 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ],
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 0),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: 48,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color(0xFFEE837B),
-                                              Color(0xFFF95A82),
-                                              Color(0xFFEA3C7D)
-                                            ],
-                                            stops: [0, 0.6, 1],
-                                            begin: AlignmentDirectional(0, -1),
-                                            end: AlignmentDirectional(0, 1),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          context.pushNamed('GetPremiumView');
-                                        },
-                                        text: 'Get premium',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 48,
-                                          color: Colors.transparent,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
-                                              ),
-                                          elevation: 0,
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                           ],
@@ -1117,6 +1070,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: FFButtonWidget(
                         onPressed: () async {
+                          setState(() =>
+                              FFAppState().fltrGender = ccInterestedInValue!);
                           if (widget.user!.isPremium! ||
                               !getRemoteConfigBool('check_premium')) {
                             var confirmDialogResponse = await showDialog<bool>(
@@ -1155,6 +1110,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     max: FFAppState().fltrAgeMax,
                                     clearUnsetFields: false,
                                   ),
+                                  gender: FFAppState().fltrGender,
                                   fieldValues: {
                                     'lookingFor': FFAppState().fltrLookingFor,
                                     'industries': FFAppState().fltrIndusrtries,
@@ -1190,6 +1146,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     max: FFAppState().fltrAgeMax,
                                     clearUnsetFields: false,
                                   ),
+                                  gender: FFAppState().fltrGender,
                                   fieldValues: {
                                     'lookingFor': FFAppState().fltrLookingFor,
                                     'industries': FFAppState().fltrIndusrtries,
@@ -1212,6 +1169,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   max: FFAppState().fltrAgeMax,
                                   clearUnsetFields: false,
                                 ),
+                                gender: FFAppState().fltrGender,
                                 fieldValues: {
                                   'lookingFor': FFAppState().fltrLookingFor,
                                   'industries': FFAppState().fltrIndusrtries,
