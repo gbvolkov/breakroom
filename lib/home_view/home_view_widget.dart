@@ -13,10 +13,12 @@ import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
+import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
@@ -155,6 +157,73 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   fontFamily: 'Roboto',
                                   fontSize: 38,
                                 ),
+                          ),
+                          StreamBuilder<List<NotificationsRecord>>(
+                            stream: queryNotificationsRecord(
+                              queryBuilder: (notificationsRecord) =>
+                                  notificationsRecord
+                                      .where('receiver',
+                                          isEqualTo: currentUserReference)
+                                      .where('timestamp',
+                                          isGreaterThan:
+                                              columnUsersRecord.notiffReadTS),
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: CircularProgressIndicator(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                                  ),
+                                );
+                              }
+                              List<NotificationsRecord>
+                                  badgeNotificationsRecordList = snapshot.data!;
+                              return Badge(
+                                badgeContent: Text(
+                                  badgeNotificationsRecordList.length
+                                      .toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                      ),
+                                ),
+                                showBadge:
+                                    badgeNotificationsRecordList.length > 0,
+                                shape: BadgeShape.circle,
+                                badgeColor:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                elevation: 4,
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(6, 6, 6, 6),
+                                position: BadgePosition.topEnd(),
+                                animationType: BadgeAnimationType.scale,
+                                toAnimate: true,
+                                child: FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 30,
+                                  borderWidth: 1,
+                                  buttonSize: 40,
+                                  icon: FaIcon(
+                                    FontAwesomeIcons.solidBell,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    print('IconButton pressed ...');
+                                  },
+                                ),
+                              );
+                            },
                           ),
                           InkWell(
                             onTap: () async {

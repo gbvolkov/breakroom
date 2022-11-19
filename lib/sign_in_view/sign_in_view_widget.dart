@@ -63,14 +63,6 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
             context.pop();
           },
         ),
-        title: Text(
-          'Page Title',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
         actions: [],
         centerTitle: true,
         elevation: 0,

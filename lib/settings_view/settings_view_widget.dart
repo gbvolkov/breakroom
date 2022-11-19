@@ -619,6 +619,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                               if (confirmDialogResponse) {
                                 GoRouter.of(context).prepareAuthEvent();
                                 await signOut();
+                                setState(() => FFAppState().dislikedUsers = []);
 
                                 context.goNamedAuth('WelcomeView', mounted);
                               }
@@ -712,6 +713,8 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       if (confirmDialogResponse) {
                                         GoRouter.of(context).prepareAuthEvent();
                                         await signOut();
+                                        setState(() =>
+                                            FFAppState().dislikedUsers = []);
 
                                         context.goNamedAuth(
                                             'WelcomeView', mounted);

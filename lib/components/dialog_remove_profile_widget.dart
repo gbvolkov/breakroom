@@ -148,6 +148,7 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                       await deleteUser(context);
                       GoRouter.of(context).prepareAuthEvent();
                       await signOut();
+                      setState(() => FFAppState().dislikedUsers = []);
 
                       context.pushNamedAuth('WelcomeView', mounted);
                     }

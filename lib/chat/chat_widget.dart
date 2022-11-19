@@ -77,7 +77,7 @@ class _ChatWidgetState extends State<ChatWidget> {
               Text(
                 widget.chatUser!.displayName!,
                 style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Lexend Deca',
+                      fontFamily: 'Roboto',
                       color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

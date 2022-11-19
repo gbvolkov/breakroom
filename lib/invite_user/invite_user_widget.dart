@@ -141,7 +141,7 @@ class _InviteUserWidgetState extends State<InviteUserWidget> {
                                             style: FlutterFlowTheme.of(context)
                                                 .subtitle1
                                                 .override(
-                                                  fontFamily: 'Outfit',
+                                                  fontFamily: 'Roboto',
                                                   color: Color(0xFF101213),
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.normal,
@@ -157,7 +157,7 @@ class _InviteUserWidgetState extends State<InviteUserWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText2
                                                       .override(
-                                                        fontFamily: 'Outfit',
+                                                        fontFamily: 'Roboto',
                                                         color:
                                                             Color(0xFF57636C),
                                                         fontSize: 14,

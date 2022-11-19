@@ -739,6 +739,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                       .update(usersUpdateData);
                                                   setState(() => FFAppState()
                                                       .swipeAction = 'left');
+                                                  setState(() => FFAppState()
+                                                      .dislikedUsers
+                                                      .add(widget
+                                                          .userProfile!.uid!));
                                                   if (Navigator.of(context)
                                                       .canPop()) {
                                                     context.pop();
