@@ -1258,16 +1258,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   );
 
                                   final usersUpdateData = {
-                                    'disliked':
-                                        FieldValue.arrayRemove([userDoc!.uid]),
-                                    'touched':
-                                        FieldValue.arrayRemove([userDoc!.uid]),
+                                    'disliked': FieldValue.arrayRemove([uid]),
+                                    'touched': FieldValue.arrayRemove([uid]),
                                   };
                                   await columnUsersRecord.reference
                                       .update(usersUpdateData);
-                                  setState(() => FFAppState()
-                                      .dislikedUsers
-                                      .remove(userDoc!.uid!));
+                                  setState(() =>
+                                      FFAppState().dislikedUsers.remove(uid!));
                                   if (Navigator.of(context).canPop()) {
                                     context.pop();
                                   }
