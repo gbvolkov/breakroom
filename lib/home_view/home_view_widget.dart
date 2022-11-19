@@ -157,7 +157,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   fontSize: 38,
                                 ),
                           ),
-                          NitificationsBellWidget(),
+                          NitificationsBellWidget(
+                            notiffTS: columnUsersRecord.notiffReadTS,
+                          ),
                           InkWell(
                             onTap: () async {
                               currentUserLocationValue =

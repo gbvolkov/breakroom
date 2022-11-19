@@ -9,7 +9,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class NitificationsBellWidget extends StatefulWidget {
-  const NitificationsBellWidget({Key? key}) : super(key: key);
+  const NitificationsBellWidget({
+    Key? key,
+    this.notiffTS,
+  }) : super(key: key);
+
+  final DateTime? notiffTS;
 
   @override
   _NitificationsBellWidgetState createState() =>
@@ -23,7 +28,7 @@ class _NitificationsBellWidgetState extends State<NitificationsBellWidget> {
       stream: queryNotificationsRecord(
         queryBuilder: (notificationsRecord) => notificationsRecord
             .where('receiver', isEqualTo: currentUserReference)
-            .where('timestamp', isGreaterThan: columnUsersRecord.notiffReadTS)
+            .where('timestamp', isGreaterThan: widget.notiffTS)
             .where('is_read', isEqualTo: false),
       ),
       builder: (context, snapshot) {
