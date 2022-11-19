@@ -160,7 +160,7 @@ class FFAppState {
 
   List<String> lookingForSelection = [];
 
-  List<String> interestedInList = ['Man', 'Woman', 'Everyone'];
+  List<String> interestedInList = ['Men', 'Women', 'Everyone'];
 
   String filterName = 'Filter';
 
