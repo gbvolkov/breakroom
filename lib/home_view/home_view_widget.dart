@@ -208,20 +208,43 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                 position: BadgePosition.topEnd(),
                                 animationType: BadgeAnimationType.scale,
                                 toAnimate: true,
-                                child: FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  borderWidth: 1,
-                                  buttonSize: 40,
-                                  icon: FaIcon(
-                                    FontAwesomeIcons.bell,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 16,
-                                  ),
-                                  onPressed: () {
-                                    print('IconButton pressed ...');
-                                  },
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    if (badgeNotificationsRecordList.length > 0)
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 40,
+                                        icon: FaIcon(
+                                          FontAwesomeIcons.bell,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
+                                      ),
+                                    if (badgeNotificationsRecordList.length <=
+                                        0)
+                                      FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 40,
+                                        icon: FaIcon(
+                                          FontAwesomeIcons.bellSlash,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          size: 16,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
+                                      ),
+                                  ],
                                 ),
                               );
                             },
