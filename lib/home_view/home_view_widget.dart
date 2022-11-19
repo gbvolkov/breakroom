@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -516,8 +517,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         .take(1)
                                         .toList();
                                     if (matchedUsers.isEmpty) {
-                                      return Image.asset(
-                                        'assets/images/UnknownSurgeon.png',
+                                      return Center(
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                          child:
+                                              EmptyCandidatesListWidgetWidget(
+                                            user: columnUsersRecord,
+                                          ),
+                                        ),
                                       );
                                     }
                                     return FlutterFlowSwipeableStack(
@@ -1258,16 +1266,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   );
 
                                   final usersUpdateData = {
-                                    'disliked':
-                                        FieldValue.arrayRemove([userDoc!.uid]),
-                                    'touched':
-                                        FieldValue.arrayRemove([userDoc!.uid]),
+                                    'disliked': FieldValue.arrayRemove([uid]),
+                                    'touched': FieldValue.arrayRemove([uid]),
                                   };
                                   await columnUsersRecord.reference
                                       .update(usersUpdateData);
-                                  setState(() => FFAppState()
-                                      .dislikedUsers
-                                      .remove(userDoc!.uid!));
+                                  setState(() =>
+                                      FFAppState().dislikedUsers.remove(uid!));
                                   if (Navigator.of(context).canPop()) {
                                     context.pop();
                                   }
