@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/gender_icon_widget.dart';
 import '../flutter_flow/chat/index.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -29,6 +30,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
   ChatsRecord? groupChat;
   UsersRecord? matchedUser;
   late SwipeableCardSectionController swipeableStackController;
+  String? uid;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   UsersRecord? userDoc;
@@ -541,6 +543,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         };
                                         await currentUserReference!
                                             .update(usersUpdateData);
+                                        setState(() => FFAppState()
+                                            .dislikedUsers
+                                            .add(functions.getFirstUID(
+                                                matchedUsers.toList())!));
                                         if (Navigator.of(context).canPop()) {
                                           context.pop();
                                         }
@@ -1228,6 +1234,58 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                               );
                             },
                           ),
+                          if (!(columnUsersRecord.isPremium! ||
+                                  !getRemoteConfigBool('check_premium'))
+                              ? false
+                              : (FFAppState().dislikedUsers.length > 0))
+                            Align(
+                              alignment: AlignmentDirectional(0.88, 0.72),
+                              child: FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 20,
+                                borderWidth: 1,
+                                buttonSize: 40,
+                                fillColor: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                icon: Icon(
+                                  Icons.settings_backup_restore,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 20,
+                                ),
+                                onPressed: () async {
+                                  uid = await actions.getLastString(
+                                    FFAppState().dislikedUsers.toList(),
+                                  );
+
+                                  final usersUpdateData = {
+                                    'disliked':
+                                        FieldValue.arrayRemove([userDoc!.uid]),
+                                    'touched':
+                                        FieldValue.arrayRemove([userDoc!.uid]),
+                                  };
+                                  await columnUsersRecord.reference
+                                      .update(usersUpdateData);
+                                  setState(() => FFAppState()
+                                      .dislikedUsers
+                                      .remove(userDoc!.uid!));
+                                  if (Navigator.of(context).canPop()) {
+                                    context.pop();
+                                  }
+                                  context.pushNamed(
+                                    'HomeView',
+                                    extra: <String, dynamic>{
+                                      kTransitionInfoKey: TransitionInfo(
+                                        hasTransition: true,
+                                        transitionType: PageTransitionType.fade,
+                                        duration: Duration(milliseconds: 0),
+                                      ),
+                                    },
+                                  );
+
+                                  setState(() {});
+                                },
+                              ),
+                            ),
                         ],
                       ),
                     ),

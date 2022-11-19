@@ -316,6 +316,8 @@ class FFAppState {
   String lastUploadedURL = '';
 
   String fltrGender = '';
+
+  List<String> dislikedUsers = [];
 }
 
 LatLng? _latLngFromString(String? val) {

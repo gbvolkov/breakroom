@@ -448,3 +448,11 @@ List<String> getGenderFilter(String? gender) {
     }
   }
 }
+
+String getLast(List<String> uids) {
+  if (uids.isNotEmpty) {
+    return uids[uids.length - 1];
+  } else {
+    return "";
+  }
+}

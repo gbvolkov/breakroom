@@ -17,3 +17,4 @@ export 'pack_image_collection_to_photos.dart' show packImageCollectionToPhotos;
 export 'set_boolean_array_item.dart' show setBooleanArrayItem;
 export 'clear_photos_list.dart' show clearPhotosList;
 export 'check_internet_connection.dart' show checkInternetConnection;
+export 'get_last_string.dart' show getLastString;
