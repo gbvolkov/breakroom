@@ -442,10 +442,10 @@ String formatDateTime(DateTime dt) {
   }
 }
 
-List<String> getGenderFilter(String gender) {
-  if (gender == "Everyone") {
+List<String> getGenderFilter(String? gender) {
+  if ((gender ?? "").isEmpty || (gender == "Everyone")) {
     return ["Man", "Women"];
   } else {
-    return [gender];
+    return [gender!];
   }
 }
