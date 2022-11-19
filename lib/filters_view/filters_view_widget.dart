@@ -406,7 +406,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               child: FlutterFlowChoiceChips(
                                 initiallySelected: FFAppState().fltrLookingFor,
                                 options: FFAppState()
-                                    .lookingForList
+                                    .interestedInList
                                     .map((label) => ChipData(label))
                                     .toList(),
                                 onChanged: (val) =>
