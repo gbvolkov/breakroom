@@ -478,13 +478,13 @@ int canProcessLike(
   */
 
   clikes ??= 0;
-  lastLikeTS ??= DateTime.now();
+  //lastLikeTS ??= DateTime.now();
   isPremium ??= false;
   checkPremium ??= false;
 
   isPremium |= !checkPremium;
   //last likes was yesterday => reset and proceed from start
-  if (getDaysDiff(lastLikeTS, DateTime.now()) != 0) {
+  if ((lastLikeTS == null) || getDaysDiff(lastLikeTS, DateTime.now()) != 0) {
     return -1;
   }
   if (isPremium) {
