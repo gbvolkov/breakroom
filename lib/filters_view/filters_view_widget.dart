@@ -1211,7 +1211,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   .update(usersUpdateData);
                             }
 
-                            context.goNamed('HomeView');
+                            if (Navigator.of(context).canPop()) {
+                              context.pop();
+                            }
+                            context.pushNamed('HomeView');
                           },
                           text: 'Save',
                           options: FFButtonOptions(
