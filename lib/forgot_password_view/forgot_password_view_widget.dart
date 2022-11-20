@@ -239,173 +239,195 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                     keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
-                                if (FFAppState().resetPwdSendState != 'Send')
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 64, 0, 0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 4, 0),
-                                          child: FlutterFlowTimer(
-                                            timerValue: timerValue ??=
-                                                StopWatchTimer.getDisplayTime(
-                                              timerMilliseconds ??= 60000,
-                                              hours: false,
-                                              minute: false,
-                                              second: true,
-                                              milliSecond: false,
-                                            ),
-                                            timer: timerController ??=
-                                                StopWatchTimer(
-                                              mode: StopWatchMode.countDown,
-                                              presetMillisecond:
-                                                  timerMilliseconds ??= 60000,
-                                              onChange: (value) {
-                                                setState(() {
-                                                  timerMilliseconds = value;
-                                                  timerValue = StopWatchTimer
-                                                      .getDisplayTime(
-                                                    value,
-                                                    hours: false,
-                                                    minute: false,
-                                                    second: true,
-                                                    milliSecond: false,
-                                                  );
-                                                });
-                                              },
-                                            ),
-                                            textAlign: TextAlign.start,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .secondaryText,
-                                                ),
-                                            onEnded: () async {
-                                              setState(() => FFAppState()
-                                                      .resetLinkAvailability =
-                                                  true);
-                                              timerController?.onExecute.add(
-                                                StopWatchExecute.reset,
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        Text(
-                                          's',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyText1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
-                                  child: Stack(
+                                      0, 64, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: 48,
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            colors: [
-                                              Color(0xFFEE837B),
-                                              Color(0xFFF95A82),
-                                              Color(0xFFEA3C7D)
-                                            ],
-                                            stops: [0, 0.6, 1],
-                                            begin: AlignmentDirectional(0, -1),
-                                            end: AlignmentDirectional(0, 1),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                      ),
-                                      if (!FFAppState().resetLinkAvailability)
-                                        Container(
-                                          width: double.infinity,
-                                          height: 48,
-                                          decoration: BoxDecoration(
-                                            color: Color(0x8DF5F5F5),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                        ),
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            if (FFAppState()
-                                                .resetLinkAvailability) {
-                                              if (txtEmailController!
-                                                  .text.isEmpty) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Email required!',
-                                                    ),
-                                                  ),
-                                                );
-                                                return;
-                                              }
-                                              await resetPassword(
-                                                email: txtEmailController!.text,
-                                                context: context,
-                                              );
-                                              setState(() => FFAppState()
-                                                      .resetPwdSendState =
-                                                  'Resend link');
-                                              setState(() => FFAppState()
-                                                      .resetLinkAvailability =
-                                                  false);
-                                              await Future.delayed(
-                                                  const Duration(
-                                                      milliseconds: 3000));
-                                              timerController?.onExecute.add(
-                                                StopWatchExecute.start,
-                                              );
-                                            }
-                                          },
-                                          text: FFAppState().resetPwdSendState,
-                                          options: FFButtonOptions(
-                                            width: double.infinity,
-                                            height: 48,
-                                            color: FlutterFlowTheme.of(context)
-                                                .noColor,
-                                            textStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .subtitle1
-                                                    .override(
-                                                      fontFamily: 'Roboto',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                    ),
-                                            elevation: 0,
-                                            borderSide: BorderSide(
-                                              color: Colors.transparent,
-                                              width: 1,
+                                      if (FFAppState().resetPwdSendState !=
+                                          'Send')
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 4, 0),
+                                              child: FlutterFlowTimer(
+                                                timerValue: timerValue ??=
+                                                    StopWatchTimer
+                                                        .getDisplayTime(
+                                                  timerMilliseconds ??= 60000,
+                                                  hours: false,
+                                                  minute: false,
+                                                  second: true,
+                                                  milliSecond: false,
+                                                ),
+                                                timer: timerController ??=
+                                                    StopWatchTimer(
+                                                  mode: StopWatchMode.countDown,
+                                                  presetMillisecond:
+                                                      timerMilliseconds ??=
+                                                          60000,
+                                                  onChange: (value) {
+                                                    setState(() {
+                                                      timerMilliseconds = value;
+                                                      timerValue =
+                                                          StopWatchTimer
+                                                              .getDisplayTime(
+                                                        value,
+                                                        hours: false,
+                                                        minute: false,
+                                                        second: true,
+                                                        milliSecond: false,
+                                                      );
+                                                    });
+                                                  },
+                                                ),
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                        ),
+                                                onEnded: () async {
+                                                  setState(() => FFAppState()
+                                                          .resetLinkAvailability =
+                                                      true);
+                                                  timerController?.onExecute
+                                                      .add(
+                                                    StopWatchExecute.reset,
+                                                  );
+                                                },
+                                              ),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
+                                            Text(
+                                              's',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                      ),
+                                            ),
+                                          ],
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: double.infinity,
+                                              height: 48,
+                                              decoration: BoxDecoration(
+                                                gradient: LinearGradient(
+                                                  colors: [
+                                                    Color(0xFFEE837B),
+                                                    Color(0xFFF95A82),
+                                                    Color(0xFFEA3C7D)
+                                                  ],
+                                                  stops: [0, 0.6, 1],
+                                                  begin: AlignmentDirectional(
+                                                      0, -1),
+                                                  end: AlignmentDirectional(
+                                                      0, 1),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                            ),
+                                            if (!FFAppState()
+                                                .resetLinkAvailability)
+                                              Container(
+                                                width: double.infinity,
+                                                height: 48,
+                                                decoration: BoxDecoration(
+                                                  color: Color(0x8DF5F5F5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional(-1, 0),
+                                              child: FFButtonWidget(
+                                                onPressed: () async {
+                                                  if (FFAppState()
+                                                      .resetLinkAvailability) {
+                                                    if (txtEmailController!
+                                                        .text.isEmpty) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'Email required!',
+                                                          ),
+                                                        ),
+                                                      );
+                                                      return;
+                                                    }
+                                                    await resetPassword(
+                                                      email: txtEmailController!
+                                                          .text,
+                                                      context: context,
+                                                    );
+                                                    setState(() => FFAppState()
+                                                            .resetPwdSendState =
+                                                        'Resend link');
+                                                    setState(() => FFAppState()
+                                                            .resetLinkAvailability =
+                                                        false);
+                                                    await Future.delayed(
+                                                        const Duration(
+                                                            milliseconds:
+                                                                3000));
+                                                    timerController?.onExecute
+                                                        .add(
+                                                      StopWatchExecute.start,
+                                                    );
+                                                  }
+                                                },
+                                                text: FFAppState()
+                                                    .resetPwdSendState,
+                                                options: FFButtonOptions(
+                                                  width: double.infinity,
+                                                  height: 48,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .noColor,
+                                                  textStyle: FlutterFlowTheme
+                                                          .of(context)
+                                                      .subtitle1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                      ),
+                                                  elevation: 0,
+                                                  borderSide: BorderSide(
+                                                    color: Colors.transparent,
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
