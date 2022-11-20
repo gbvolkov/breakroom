@@ -89,274 +89,276 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
         centerTitle: false,
         elevation: 0,
       ),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 50,
-            decoration: BoxDecoration(
-              color: Color(0xFFDBE2E7),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 3,
-                  color: Color(0x33000000),
-                  offset: Offset(0, 2),
-                )
-              ],
-              borderRadius: BorderRadius.circular(0),
-            ),
-            alignment: AlignmentDirectional(0, 0),
-            child: TextFormField(
-              controller: textController,
-              obscureText: false,
-              decoration: InputDecoration(
-                hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Lexend Deca',
-                      color: Color(0xFF95A1AC),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x00000000),
-                    width: 1,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
-                  ),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x00000000),
-                    width: 1,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
-                  ),
-                ),
-                errorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x00000000),
-                    width: 1,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
-                  ),
-                ),
-                focusedErrorBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color(0x00000000),
-                    width: 1,
-                  ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(4.0),
-                    topRight: Radius.circular(4.0),
-                  ),
-                ),
-                contentPadding: EdgeInsetsDirectional.fromSTEB(24, 14, 0, 0),
-                prefixIcon: Icon(
-                  Icons.search_outlined,
-                  color: Color(0xFF95A1AC),
-                  size: 24,
-                ),
+      body: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              width: double.infinity,
+              height: 50,
+              decoration: BoxDecoration(
+                color: Color(0xFFDBE2E7),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3,
+                    color: Color(0x33000000),
+                    offset: Offset(0, 2),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(0),
               ),
-              style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Roboto',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                  ),
-            ),
-          ),
-          Expanded(
-            child: StreamBuilder<List<UsersRecord>>(
-              stream: queryUsersRecord(
-                limit: 50,
-              ),
-              builder: (context, snapshot) {
-                // Customize what your widget looks like when it's loading.
-                if (!snapshot.hasData) {
-                  return Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+              alignment: AlignmentDirectional(0, 0),
+              child: TextFormField(
+                controller: textController,
+                obscureText: false,
+                decoration: InputDecoration(
+                  hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Lexend Deca',
+                        color: Color(0xFF95A1AC),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
                       ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
                     ),
-                  );
-                }
-                List<UsersRecord> listViewUsersRecordList = snapshot.data!
-                    .where((u) => u.uid != currentUserUid)
-                    .toList();
-                return ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.vertical,
-                  itemCount: listViewUsersRecordList.length,
-                  itemBuilder: (context, listViewIndex) {
-                    final listViewUsersRecord =
-                        listViewUsersRecordList[listViewIndex];
-                    return Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
-                      child: Container(
-                        width: double.infinity,
-                        height: 70,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 0,
-                              color: Color(0xFFDBE2E7),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(0),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Color(0x00000000),
+                      width: 1,
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(4.0),
+                      topRight: Radius.circular(4.0),
+                    ),
+                  ),
+                  contentPadding: EdgeInsetsDirectional.fromSTEB(24, 14, 0, 0),
+                  prefixIcon: Icon(
+                    Icons.search_outlined,
+                    color: Color(0xFF95A1AC),
+                    size: 24,
+                  ),
+                ),
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Roboto',
+                      color: FlutterFlowTheme.of(context).primaryText,
+                    ),
+              ),
+            ),
+            Expanded(
+              child: StreamBuilder<List<UsersRecord>>(
+                stream: queryUsersRecord(
+                  limit: 50,
+                ),
+                builder: (context, snapshot) {
+                  // Customize what your widget looks like when it's loading.
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(
+                          color: FlutterFlowTheme.of(context).primaryColor,
                         ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Card(
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color: FlutterFlowTheme.of(context).alternate,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40),
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      2, 2, 2, 2),
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.network(
-                                      valueOrDefault<String>(
-                                        listViewUsersRecord.photoUrl,
-                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                      ),
+                    );
+                  }
+                  List<UsersRecord> listViewUsersRecordList = snapshot.data!
+                      .where((u) => u.uid != currentUserUid)
+                      .toList();
+                  return ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: listViewUsersRecordList.length,
+                    itemBuilder: (context, listViewIndex) {
+                      final listViewUsersRecord =
+                          listViewUsersRecordList[listViewIndex];
+                      return Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                        child: Container(
+                          width: double.infinity,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 0,
+                                color: Color(0xFFDBE2E7),
+                                offset: Offset(0, 2),
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Card(
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        2, 2, 2, 2),
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        valueOrDefault<String>(
+                                          listViewUsersRecord.photoUrl,
+                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      2, 0, 0, 0),
-                                  child: CheckboxListTile(
-                                    value: checkboxListTileValueMap[
-                                        listViewUsersRecord] ??= false,
-                                    onChanged: (newValue) async {
-                                      setState(() => checkboxListTileValueMap[
-                                          listViewUsersRecord] = newValue!);
-                                    },
-                                    title: Text(
-                                      listViewUsersRecord.displayName!,
-                                      style: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: Color(0xFF95A1AC),
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                          ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        2, 0, 0, 0),
+                                    child: CheckboxListTile(
+                                      value: checkboxListTileValueMap[
+                                          listViewUsersRecord] ??= false,
+                                      onChanged: (newValue) async {
+                                        setState(() => checkboxListTileValueMap[
+                                            listViewUsersRecord] = newValue!);
+                                      },
+                                      title: Text(
+                                        listViewUsersRecord.displayName!,
+                                        style: FlutterFlowTheme.of(context)
+                                            .subtitle1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color: Color(0xFF95A1AC),
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                      ),
+                                      subtitle: Text(
+                                        listViewUsersRecord.email!,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color: Color(0xFF1A1F24),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                      ),
+                                      tileColor: Color(0xFFF5F5F5),
+                                      activeColor: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      dense: false,
+                                      controlAffinity:
+                                          ListTileControlAffinity.trailing,
                                     ),
-                                    subtitle: Text(
-                                      listViewUsersRecord.email!,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText2
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: Color(0xFF1A1F24),
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                    ),
-                                    tileColor: Color(0xFFF5F5F5),
-                                    activeColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    dense: false,
-                                    controlAffinity:
-                                        ListTileControlAffinity.trailing,
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 100,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).alternate,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4,
-                  color: Color(0x3314181B),
-                  offset: Offset(0, -2),
-                )
-              ],
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
+                      );
+                    },
+                  );
+                },
               ),
             ),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 34),
-              child: FFButtonWidget(
-                onPressed: () async {
-                  groupChat = await FFChatManager.instance.createChat(
-                    checkboxListTileCheckedItems
-                        .map((e) => e.reference)
-                        .toList(),
-                  );
-                  context.pushNamed(
-                    'Chat',
-                    queryParams: {
-                      'chatRef': serializeParam(
-                        groupChat?.reference,
-                        ParamType.DocumentReference,
-                      ),
-                    }.withoutNulls,
-                  );
+            Container(
+              width: double.infinity,
+              height: 100,
+              decoration: BoxDecoration(
+                color: FlutterFlowTheme.of(context).alternate,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 4,
+                    color: Color(0x3314181B),
+                    offset: Offset(0, -2),
+                  )
+                ],
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 34),
+                child: FFButtonWidget(
+                  onPressed: () async {
+                    groupChat = await FFChatManager.instance.createChat(
+                      checkboxListTileCheckedItems
+                          .map((e) => e.reference)
+                          .toList(),
+                    );
+                    context.pushNamed(
+                      'Chat',
+                      queryParams: {
+                        'chatRef': serializeParam(
+                          groupChat?.reference,
+                          ParamType.DocumentReference,
+                        ),
+                      }.withoutNulls,
+                    );
 
-                  setState(() {});
-                },
-                text: 'Create Chat',
-                options: FFButtonOptions(
-                  width: 130,
-                  height: 40,
-                  color: FlutterFlowTheme.of(context).alternate,
-                  textStyle: FlutterFlowTheme.of(context).title3.override(
-                        fontFamily: 'Roboto',
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                      ),
-                  borderSide: BorderSide(
-                    color: Colors.transparent,
-                    width: 1,
+                    setState(() {});
+                  },
+                  text: 'Create Chat',
+                  options: FFButtonOptions(
+                    width: 130,
+                    height: 40,
+                    color: FlutterFlowTheme.of(context).alternate,
+                    textStyle: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Roboto',
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -161,220 +161,225 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
         centerTitle: true,
         elevation: 0,
       ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: AlignmentDirectional(0, 0),
-                      child: Image.asset(
-                        'assets/images/m12_Artboard_1.png',
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.9,
-                        fit: BoxFit.cover,
-                      ).animateOnPageLoad(
-                          animationsMap['imageOnPageLoadAnimation1']!),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(0, 0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'It\'s a match!',
-                            style: FlutterFlowTheme.of(context).title1.override(
-                                  fontFamily: 'Roboto',
-                                  fontSize: 34,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
-                            child: Text(
-                              'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-                              style: FlutterFlowTheme.of(context).bodyText2,
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Image.asset(
+                          'assets/images/m12_Artboard_1.png',
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height * 0.9,
+                          fit: BoxFit.cover,
+                        ).animateOnPageLoad(
+                            animationsMap['imageOnPageLoadAnimation1']!),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'It\'s a match!',
+                              style:
+                                  FlutterFlowTheme.of(context).title1.override(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 34,
+                                        fontWeight: FontWeight.w900,
+                                      ),
                             ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 64, 0, 64),
-                            child: Stack(
-                              alignment: AlignmentDirectional(0, 0),
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(1, 1),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 32, 32, 0),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        context.pushNamed(
-                                          'HomeDetailsView',
-                                          queryParams: {
-                                            'userProfile': serializeParam(
-                                              widget.match,
-                                              ParamType.Document,
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
+                              child: Text(
+                                'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
+                                style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 64, 0, 64),
+                              child: Stack(
+                                alignment: AlignmentDirectional(0, 0),
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(1, 1),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 32, 32, 0),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'HomeDetailsView',
+                                            queryParams: {
+                                              'userProfile': serializeParam(
+                                                widget.match,
+                                                ParamType.Document,
+                                              ),
+                                              'mode': serializeParam(
+                                                'match',
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                            extra: <String, dynamic>{
+                                              'userProfile': widget.match,
+                                            },
+                                          );
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                          child: Image.network(
+                                            valueOrDefault<String>(
+                                              widget.match!.photoUrl,
+                                              'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                             ),
-                                            'mode': serializeParam(
-                                              'match',
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                          extra: <String, dynamic>{
-                                            'userProfile': widget.match,
-                                          },
-                                        );
-                                      },
+                                            width: 150,
+                                            height: 250,
+                                            fit: BoxFit.fitHeight,
+                                          ),
+                                        ),
+                                      ).animateOnPageLoad(animationsMap[
+                                          'imageOnPageLoadAnimation2']!),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(-1, -1),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          32, 0, 0, 32),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(32),
                                         child: Image.network(
                                           valueOrDefault<String>(
-                                            widget.match!.photoUrl,
+                                            widget.me!.photoUrl,
                                             'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                           ),
                                           width: 150,
                                           height: 250,
-                                          fit: BoxFit.fitHeight,
+                                          fit: BoxFit.cover,
                                         ),
-                                      ),
-                                    ).animateOnPageLoad(animationsMap[
-                                        'imageOnPageLoadAnimation2']!),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(-1, -1),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        32, 0, 0, 32),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(32),
-                                      child: Image.network(
-                                        valueOrDefault<String>(
-                                          widget.me!.photoUrl,
-                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                        ),
-                                        width: 150,
-                                        height: 250,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ).animateOnPageLoad(animationsMap[
-                                        'imageOnPageLoadAnimation3']!),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Container(
-                                    width: 84,
-                                    height: 84,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      shape: BoxShape.circle,
+                                      ).animateOnPageLoad(animationsMap[
+                                          'imageOnPageLoadAnimation3']!),
                                     ),
-                                    child: FlutterFlowIconButton(
-                                      borderColor: Colors.transparent,
-                                      borderRadius: 30,
-                                      borderWidth: 1,
-                                      buttonSize: 60,
-                                      icon: Icon(
-                                        Icons.favorite_rounded,
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Container(
+                                      width: 84,
+                                      height: 84,
+                                      decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        size: 35,
+                                            .alternate,
+                                        shape: BoxShape.circle,
                                       ),
-                                      onPressed: () {
-                                        print('IconButton pressed ...');
-                                      },
-                                    ),
-                                  ).animateOnPageLoad(animationsMap[
-                                      'containerOnPageLoadAnimation']!),
-                                ),
-                              ],
+                                      child: FlutterFlowIconButton(
+                                        borderColor: Colors.transparent,
+                                        borderRadius: 30,
+                                        borderWidth: 1,
+                                        buttonSize: 60,
+                                        icon: Icon(
+                                          Icons.favorite_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          size: 35,
+                                        ),
+                                        onPressed: () {
+                                          print('IconButton pressed ...');
+                                        },
+                                      ),
+                                    ).animateOnPageLoad(animationsMap[
+                                        'containerOnPageLoadAnimation']!),
+                                  ),
+                                ],
+                              ),
                             ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
+                child: Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFFEE837B),
+                            Color(0xFFF95A82),
+                            Color(0xFFEA3C7D)
+                          ],
+                          stops: [0, 0.6, 1],
+                          begin: AlignmentDirectional(0, -1),
+                          end: AlignmentDirectional(0, 1),
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional(-1, 0),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          if (widget.me!.isPremium! ||
+                              !getRemoteConfigBool('check_premium')) {
+                            context.pushNamed(
+                              'Chat',
+                              queryParams: {
+                                'chatUser': serializeParam(
+                                  widget.match,
+                                  ParamType.Document,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'chatUser': widget.match,
+                              },
+                            );
+                          } else {
+                            context.pushNamed('GetPremiumView');
+                          }
+                        },
+                        text: 'Start chat',
+                        options: FFButtonOptions(
+                          width: double.infinity,
+                          height: 48,
+                          color: Colors.transparent,
+                          textStyle: FlutterFlowTheme.of(context)
+                              .subtitle1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                              ),
+                          elevation: 0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1,
                           ),
-                        ],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
-              child: Stack(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 48,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFFEE837B),
-                          Color(0xFFF95A82),
-                          Color(0xFFEA3C7D)
-                        ],
-                        stops: [0, 0.6, 1],
-                        begin: AlignmentDirectional(0, -1),
-                        end: AlignmentDirectional(0, 1),
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(-1, 0),
-                    child: FFButtonWidget(
-                      onPressed: () async {
-                        if (widget.me!.isPremium! ||
-                            !getRemoteConfigBool('check_premium')) {
-                          context.pushNamed(
-                            'Chat',
-                            queryParams: {
-                              'chatUser': serializeParam(
-                                widget.match,
-                                ParamType.Document,
-                              ),
-                            }.withoutNulls,
-                            extra: <String, dynamic>{
-                              'chatUser': widget.match,
-                            },
-                          );
-                        } else {
-                          context.pushNamed('GetPremiumView');
-                        }
-                      },
-                      text: 'Start chat',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 48,
-                        color: Colors.transparent,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle1
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                        elevation: 0,
-                        borderSide: BorderSide(
-                          color: Colors.transparent,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
