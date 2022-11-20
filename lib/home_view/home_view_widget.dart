@@ -568,8 +568,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             .dislikedUsers
                                             .add(functions.getFirstUID(
                                                 matchedUsers.toList())!));
-
-                                        context.goNamed(
+                                        if (Navigator.of(context).canPop()) {
+                                          context.pop();
+                                        }
+                                        context.pushNamed(
                                           'HomeView',
                                           extra: <String, dynamic>{
                                             kTransitionInfoKey: TransitionInfo(
@@ -750,8 +752,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           await NotificationsRecord.collection
                                               .doc()
                                               .set(notificationsCreateData);
-
-                                          context.goNamed(
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed(
                                             'HomeView',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
@@ -770,7 +774,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       },
                                       onUpSwipe: (index) {},
                                       onDownSwipe: (index) async {
-                                        context.goNamed('HomeView');
+                                        if (Navigator.of(context).canPop()) {
+                                          context.pop();
+                                        }
+                                        context.pushNamed('HomeView');
                                       },
                                       itemBuilder:
                                           (context, matchedUsersIndex) {
@@ -1318,8 +1325,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       .update(usersUpdateData);
                                   setState(() =>
                                       FFAppState().dislikedUsers.remove(uid!));
-
-                                  context.goNamed(
+                                  if (Navigator.of(context).canPop()) {
+                                    context.pop();
+                                  }
+                                  context.pushNamed(
                                     'HomeView',
                                     extra: <String, dynamic>{
                                       kTransitionInfoKey: TransitionInfo(

@@ -507,6 +507,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'setYourLocationView',
               requireAuth: true,
               builder: (context, params) => SetYourLocationViewWidget(),
+            ),
+            FFRoute(
+              name: 'testCheckBoxCopy',
+              path: 'testCheckBoxCopy',
+              builder: (context, params) => TestCheckBoxCopyWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

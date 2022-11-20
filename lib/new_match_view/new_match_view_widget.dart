@@ -146,7 +146,10 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
             size: 30,
           ),
           onPressed: () async {
-            context.goNamed('HomeView');
+            if (Navigator.of(context).canPop()) {
+              context.pop();
+            }
+            context.pushNamed('HomeView');
           },
         ),
         title: Text(

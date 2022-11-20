@@ -45,12 +45,15 @@ class _ImageSliderState extends State<ImageSlider> {
   Widget build(BuildContext context) {
     List<Image> images = [];
 
-    //for (int i = 0; i <
+    for (int i = 0; i < _imageUrls.length; i++) {
+      images.add(Image.network(_imageUrls[i], fit: BoxFit.cover));
+    }
+
     return imgs.ImageSlideshow(
         width: widget.width ?? 100,
         height: widget.height ?? 100,
         initialPage: 0,
-        //IndicatorColor:
-        children: []);
+        indicatorColor: FlutterFlowTheme.of(context).alternate,
+        children: images);
   }
 }

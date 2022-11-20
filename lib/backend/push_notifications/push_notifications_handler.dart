@@ -180,6 +180,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         photos: [],
       ),
   'SetYourLocationView': (data) async => SetYourLocationViewWidget(),
+  'testCheckBoxCopy': (data) async => TestCheckBoxCopyWidget(),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
