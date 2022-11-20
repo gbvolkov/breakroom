@@ -272,6 +272,19 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.likesCount;
+    if (value != null) {
+      result
+        ..add('likesCount')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.lastLikeTime;
+    if (value != null) {
+      result
+        ..add('lastLikeTime')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(DateTime)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -450,6 +463,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.isPremium = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'likesCount':
+          result.likesCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'lastLikeTime':
+          result.lastLikeTime = serializers.deserialize(value,
+              specifiedType: const FullType(DateTime)) as DateTime?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -537,6 +558,10 @@ class _$UsersRecord extends UsersRecord {
   @override
   final bool? isPremium;
   @override
+  final int? likesCount;
+  @override
+  final DateTime? lastLikeTime;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -579,6 +604,8 @@ class _$UsersRecord extends UsersRecord {
       this.isComplete,
       this.notiffReadTS,
       this.isPremium,
+      this.likesCount,
+      this.lastLikeTime,
       this.ffRef})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(filter, r'UsersRecord', 'filter');
@@ -631,6 +658,8 @@ class _$UsersRecord extends UsersRecord {
         isComplete == other.isComplete &&
         notiffReadTS == other.notiffReadTS &&
         isPremium == other.isPremium &&
+        likesCount == other.likesCount &&
+        lastLikeTime == other.lastLikeTime &&
         ffRef == other.ffRef;
   }
 
@@ -654,25 +683,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode),
-                                                                                education.hashCode),
-                                                                            bodyType.hashCode),
-                                                                        interests.hashCode),
-                                                                    lookingFor.hashCode),
-                                                                height.hashCode),
-                                                            weight.hashCode),
-                                                        workoutStatus.hashCode),
-                                                    drinkingStatus.hashCode),
-                                                smokingStatus.hashCode),
-                                            spiritualStatus.hashCode),
-                                        photos.hashCode),
-                                    touched.hashCode),
-                                filter.hashCode),
-                            liked.hashCode),
-                        disliked.hashCode),
-                    isComplete.hashCode),
-                notiffReadTS.hashCode),
-            isPremium.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode), education.hashCode), bodyType.hashCode),
+                                                                                interests.hashCode),
+                                                                            lookingFor.hashCode),
+                                                                        height.hashCode),
+                                                                    weight.hashCode),
+                                                                workoutStatus.hashCode),
+                                                            drinkingStatus.hashCode),
+                                                        smokingStatus.hashCode),
+                                                    spiritualStatus.hashCode),
+                                                photos.hashCode),
+                                            touched.hashCode),
+                                        filter.hashCode),
+                                    liked.hashCode),
+                                disliked.hashCode),
+                            isComplete.hashCode),
+                        notiffReadTS.hashCode),
+                    isPremium.hashCode),
+                likesCount.hashCode),
+            lastLikeTime.hashCode),
         ffRef.hashCode));
   }
 
@@ -715,6 +744,8 @@ class _$UsersRecord extends UsersRecord {
           ..add('isComplete', isComplete)
           ..add('notiffReadTS', notiffReadTS)
           ..add('isPremium', isPremium)
+          ..add('likesCount', likesCount)
+          ..add('lastLikeTime', lastLikeTime)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -882,6 +913,15 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   bool? get isPremium => _$this._isPremium;
   set isPremium(bool? isPremium) => _$this._isPremium = isPremium;
 
+  int? _likesCount;
+  int? get likesCount => _$this._likesCount;
+  set likesCount(int? likesCount) => _$this._likesCount = likesCount;
+
+  DateTime? _lastLikeTime;
+  DateTime? get lastLikeTime => _$this._lastLikeTime;
+  set lastLikeTime(DateTime? lastLikeTime) =>
+      _$this._lastLikeTime = lastLikeTime;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -929,6 +969,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _isComplete = $v.isComplete;
       _notiffReadTS = $v.notiffReadTS;
       _isPremium = $v.isPremium;
+      _likesCount = $v.likesCount;
+      _lastLikeTime = $v.lastLikeTime;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -990,6 +1032,8 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               isComplete: isComplete,
               notiffReadTS: notiffReadTS,
               isPremium: isPremium,
+              likesCount: likesCount,
+              lastLikeTime: lastLikeTime,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
