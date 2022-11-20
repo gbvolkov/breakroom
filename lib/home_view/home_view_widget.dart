@@ -464,10 +464,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             ))
                                           : null)
                                   .where('intention',
-                                      isEqualTo:
-                                          columnUsersRecord.intention != ''
-                                              ? columnUsersRecord.intention
-                                              : null)
+                                      isEqualTo: FFAppState().tmpIntention != ''
+                                          ? FFAppState().tmpIntention
+                                          : null)
                                   .where('birthDay',
                                       isLessThanOrEqualTo:
                                           functions.addYearsToDate(
