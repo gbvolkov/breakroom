@@ -76,14 +76,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if (widget.mode == null || widget.mode == '') {
-              if (Navigator.of(context).canPop()) {
-                context.pop();
-              }
-              context.pushNamed('HomeView');
-            } else {
+            if (Navigator.of(context).canPop()) {
               context.pop();
             }
+            context.pushNamed('HomeView');
           },
         ),
         title: Text(
@@ -128,6 +124,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                             .toList()
                             .map((e) => e.image!)
                             .toList(),
+                        emptyListImage:
+                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                       ),
                     ),
                   ),

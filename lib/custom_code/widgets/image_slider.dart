@@ -17,11 +17,13 @@ class ImageSlider extends StatefulWidget {
     this.width,
     this.height,
     this.images,
+    required this.emptyListImage,
   }) : super(key: key);
 
   final double? width;
   final double? height;
   final List<String>? images;
+  final String emptyListImage;
 
   @override
   _ImageSliderState createState() => _ImageSliderState();
@@ -32,12 +34,7 @@ class _ImageSliderState extends State<ImageSlider> {
 
   @override
   void initState() {
-    _imageUrls = widget.images ??
-        [
-          "https://www.maxpixel.net/static/photo/2x/Portrait-Old-Human-Man-Painting-Dark-Creepy-6888019.jpg",
-          "https://upload.wikimedia.org/wikipedia/commons/9/91/41_year_old_man_with_partial_gray_hair.jpg"
-        ];
-
+    _imageUrls = widget.images ?? [];
     super.initState();
   }
 
@@ -45,8 +42,12 @@ class _ImageSliderState extends State<ImageSlider> {
   Widget build(BuildContext context) {
     List<Image> images = [];
 
-    for (int i = 0; i < _imageUrls.length; i++) {
-      images.add(Image.network(_imageUrls[i], fit: BoxFit.cover));
+    if (_imageUrls.isEmpty) {
+      images.add(Image.asset(widget.emptyListImage, fit: BoxFit.cover));
+    } else {
+      for (int i = 0; i < _imageUrls.length; i++) {
+        images.add(Image.network(_imageUrls[i], fit: BoxFit.cover));
+      }
     }
 
     return imgs.ImageSlideshow(
