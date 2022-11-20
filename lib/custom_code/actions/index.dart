@@ -18,3 +18,4 @@ export 'set_boolean_array_item.dart' show setBooleanArrayItem;
 export 'clear_photos_list.dart' show clearPhotosList;
 export 'check_internet_connection.dart' show checkInternetConnection;
 export 'get_last_string.dart' show getLastString;
+export 'can_process_like_action.dart' show canProcessLikeAction;

@@ -3,7 +3,7 @@ import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
-import '../components/nitifications_bell_widget.dart';
+import '../components/notifications_bell_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
@@ -31,6 +31,7 @@ class HomeViewWidget extends StatefulWidget {
 class _HomeViewWidgetState extends State<HomeViewWidget> {
   ChatsRecord? groupChat;
   UsersRecord? matchedUser;
+  int? clikesState;
   late SwipeableCardSectionController swipeableStackController;
   String? uid;
   LatLng? currentUserLocationValue;
@@ -157,9 +158,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   fontSize: 38,
                                 ),
                           ),
-                          NitificationsBellWidget(
-                            notiffTS: columnUsersRecord.notiffReadTS,
-                          ),
+                          if (columnUsersRecord.isPremium ?? true)
+                            InkWell(
+                              onTap: () async {
+                                context.goNamed('NotificationsView');
+                              },
+                              child: NotificationsBellWidget(
+                                notiffTS: columnUsersRecord.notiffReadTS,
+                              ),
+                            ),
                           InkWell(
                             onTap: () async {
                               currentUserLocationValue =
@@ -576,21 +583,59 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         );
                                       },
                                       onRightSwipe: (index) async {
+                                        var _shouldSetState = false;
                                         matchedUser =
                                             await actions.getUsersListElement(
                                           matchedUsers.toList(),
                                           0,
                                         );
-                                        // addToLikedList
+                                        _shouldSetState = true;
+                                        clikesState =
+                                            await actions.canProcessLikeAction(
+                                          columnUsersRecord.likesCount,
+                                          columnUsersRecord.lastLikeTime,
+                                          columnUsersRecord.isPremium,
+                                          getRemoteConfigBool('check_premium'),
+                                        );
+                                        _shouldSetState = true;
+                                        if (clikesState == 0) {
+                                          context.pushNamed('GetPremiumView');
 
-                                        final usersUpdateData = {
-                                          'liked': FieldValue.arrayUnion(
-                                              [matchedUser!.uid]),
-                                          'touched': FieldValue.arrayUnion(
-                                              [matchedUser!.uid]),
-                                        };
-                                        await currentUserReference!
-                                            .update(usersUpdateData);
+                                          if (_shouldSetState) setState(() {});
+                                          return;
+                                        } else {
+                                          if (clikesState == -1) {
+                                            // addToLikedList
+
+                                            final usersUpdateData = {
+                                              ...createUsersRecordData(
+                                                likesCount: 1,
+                                                lastLikeTime:
+                                                    getCurrentTimestamp,
+                                              ),
+                                              'liked': FieldValue.arrayUnion(
+                                                  [matchedUser!.uid]),
+                                              'touched': FieldValue.arrayUnion(
+                                                  [matchedUser!.uid]),
+                                            };
+                                            await currentUserReference!
+                                                .update(usersUpdateData);
+                                          } else {
+                                            // addToLikedList
+
+                                            final usersUpdateData = {
+                                              'liked': FieldValue.arrayUnion(
+                                                  [matchedUser!.uid]),
+                                              'touched': FieldValue.arrayUnion(
+                                                  [matchedUser!.uid]),
+                                              'likesCount':
+                                                  FieldValue.increment(1),
+                                            };
+                                            await currentUserReference!
+                                                .update(usersUpdateData);
+                                          }
+                                        }
+
                                         if (functions
                                             .getFirstLiked(
                                                 matchedUsers.toList())
@@ -600,6 +645,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                               .createChat(
                                             [matchedUser!.reference],
                                           );
+                                          _shouldSetState = true;
                                           triggerPushNotification(
                                             notificationTitle:
                                                 'You have match!',
@@ -722,7 +768,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           );
                                         }
 
-                                        setState(() {});
+                                        if (_shouldSetState) setState(() {});
                                       },
                                       onUpSwipe: (index) {},
                                       onDownSwipe: (index) async {

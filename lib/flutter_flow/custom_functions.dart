@@ -456,3 +456,42 @@ String getLast(List<String> uids) {
     return "";
   }
 }
+
+int getDaysDiff(
+  DateTime ts1,
+  DateTime ts2,
+) {
+  ts1 = DateTime(ts1.year, ts1.month, ts1.day);
+  ts2 = DateTime(ts2.year, ts2.month, ts2.day);
+  return ts2.difference(ts1).inDays;
+}
+
+int canProcessLike(
+  int? clikes,
+  DateTime? lastLikeTS,
+  bool? isPremium,
+  bool? checkPremium,
+) {
+  /** -1 - reset date to today and set cLikes to 1 and proceed
+  *** +n - set cLikes to n and proceed
+  ***  0 - do not proceed
+  */
+
+  clikes ??= 0;
+  lastLikeTS ??= DateTime.now();
+  isPremium ??= false;
+  checkPremium ??= false;
+
+  isPremium |= !checkPremium;
+  //last likes was yesterday => reset and proceed from start
+  if (getDaysDiff(lastLikeTS, DateTime.now()) != 0) {
+    return -1;
+  }
+  if (isPremium) {
+    //set clikes and proceed further
+    return (clikes++ >= 10) ? 1 : clikes;
+  } else {
+    //no more than 10 likes per day allowed for normal user
+    return (clikes++ >= 10) ? 0 : clikes;
+  }
+}
