@@ -278,8 +278,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-
-                                          context.goNamed(
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed(
                                             'HomeView',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
@@ -357,8 +359,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-
-                                          context.goNamed(
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed(
                                             'HomeView',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
