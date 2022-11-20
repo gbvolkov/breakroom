@@ -76,10 +76,14 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if (Navigator.of(context).canPop()) {
+            if (widget.mode == null || widget.mode == '') {
+              if (Navigator.of(context).canPop()) {
+                context.pop();
+              }
+              context.pushNamed('HomeView');
+            } else {
               context.pop();
             }
-            context.pushNamed('HomeView');
           },
         ),
         title: Text(
