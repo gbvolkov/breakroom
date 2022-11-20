@@ -278,7 +278,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             intention:
                                                 FFAppState().tmpIntention,
                                           );
-                                          await currentUserReference!
+                                          await columnUsersRecord.reference
                                               .update(usersUpdateData);
 
                                           context.goNamed(
@@ -357,7 +357,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             intention:
                                                 FFAppState().tmpIntention,
                                           );
-                                          await currentUserReference!
+                                          await columnUsersRecord.reference
                                               .update(usersUpdateData);
 
                                           context.goNamed(

@@ -28,13 +28,29 @@ class ImageSlider extends StatefulWidget {
 }
 
 class _ImageSliderState extends State<ImageSlider> {
+  List<String> _imageUrls = <String>[];
+
   @override
   void initState() {
+    _imageUrls = widget.images ??
+        [
+          "https://www.maxpixel.net/static/photo/2x/Portrait-Old-Human-Man-Painting-Dark-Creepy-6888019.jpg",
+          "https://upload.wikimedia.org/wikipedia/commons/9/91/41_year_old_man_with_partial_gray_hair.jpg"
+        ];
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return imgs.ImageSlideshow(children: []);
+    List<Image> images = [];
+
+    //for (int i = 0; i <
+    return imgs.ImageSlideshow(
+        width: widget.width ?? 100,
+        height: widget.height ?? 100,
+        initialPage: 0,
+        //IndicatorColor:
+        children: []);
   }
 }
