@@ -816,7 +816,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       size: 20,
                                                     ),
                                                     onPressed: () async {
-                                                      context.pushNamed(
+                                                      context.goNamed(
                                                         'ChooseLocationPage',
                                                         queryParams: {
                                                           'currentLocation':
@@ -1180,10 +1180,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                             await currentUserReference!.update(usersUpdateData);
                           }
 
-                          if (Navigator.of(context).canPop()) {
-                            context.pop();
-                          }
-                          context.pushNamed('HomeView');
+                          context.goNamed('HomeView');
                         },
                         text: 'Save',
                         options: FFButtonOptions(

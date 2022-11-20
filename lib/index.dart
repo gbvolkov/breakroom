@@ -4,9 +4,9 @@ export 'phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
 export 'verify_s_m_s/verify_s_m_s_widget.dart' show VerifySMSWidget;
 export 'chat_view/chat_view_widget.dart' show ChatViewWidget;
 export 'profile_view/profile_view_widget.dart' show ProfileViewWidget;
+export 'sign_in_view/sign_in_view_widget.dart' show SignInViewWidget;
 export 'notifications_view/notifications_view_widget.dart'
     show NotificationsViewWidget;
-export 'sign_in_view/sign_in_view_widget.dart' show SignInViewWidget;
 export 'home_view/home_view_widget.dart' show HomeViewWidget;
 export 'welcome_view/welcome_view_widget.dart' show WelcomeViewWidget;
 export 'page_test/page_test_widget.dart' show PageTestWidget;

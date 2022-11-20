@@ -63,7 +63,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
           if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
             setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
 
-            context.pushNamed('IntroductionView');
+            context.goNamed('IntroductionView');
           } else {
             setState(() => FFAppState().tmpIntention =
                 valueOrDefault(currentUserDocument?.intention, ''));
@@ -93,7 +93,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
             userDoc!.interests!.toList().toList(),
           );
 
-          context.pushNamed('CreateProfileView');
+          context.goNamed('CreateProfileView');
 
           return;
         }
@@ -281,7 +281,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           await currentUserReference!
                                               .update(usersUpdateData);
 
-                                          context.pushNamed(
+                                          context.goNamed(
                                             'HomeView',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
@@ -360,7 +360,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           await currentUserReference!
                                               .update(usersUpdateData);
 
-                                          context.pushNamed(
+                                          context.goNamed(
                                             'HomeView',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
@@ -507,7 +507,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   ),
                                 );
                               }
-                              List<UsersRecord> containerUsersRecordList =
+                              List<UsersRecord> conCandidatesUsersRecordList =
                                   snapshot.data!
                                       .where((u) => u.uid != currentUserUid)
                                       .toList();
@@ -521,7 +521,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                   builder: (context) {
                                     final matchedUsers = functions
                                         .cleanUpFilteredProfilesByUser(
-                                            containerUsersRecordList.toList(),
+                                            conCandidatesUsersRecordList
+                                                .toList(),
                                             columnUsersRecord,
                                             currentUserLocationValue!)
                                         .toList()
@@ -566,10 +567,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             .dislikedUsers
                                             .add(functions.getFirstUID(
                                                 matchedUsers.toList())!));
-                                        if (Navigator.of(context).canPop()) {
-                                          context.pop();
-                                        }
-                                        context.pushNamed(
+
+                                        context.goNamed(
                                           'HomeView',
                                           extra: <String, dynamic>{
                                             kTransitionInfoKey: TransitionInfo(
@@ -690,7 +689,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                               .doc()
                                               .set(notificationsCreateData);
 
-                                          context.pushNamed(
+                                          context.goNamed(
                                             'NewMatchView',
                                             queryParams: {
                                               'me': serializeParam(
@@ -750,10 +749,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           await NotificationsRecord.collection
                                               .doc()
                                               .set(notificationsCreateData);
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed(
+
+                                          context.goNamed(
                                             'HomeView',
                                             extra: <String, dynamic>{
                                               kTransitionInfoKey:
@@ -772,10 +769,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       },
                                       onUpSwipe: (index) {},
                                       onDownSwipe: (index) async {
-                                        if (Navigator.of(context).canPop()) {
-                                          context.pop();
-                                        }
-                                        context.pushNamed('HomeView');
+                                        context.goNamed('HomeView');
                                       },
                                       itemBuilder:
                                           (context, matchedUsersIndex) {
@@ -1323,10 +1317,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       .update(usersUpdateData);
                                   setState(() =>
                                       FFAppState().dislikedUsers.remove(uid!));
-                                  if (Navigator.of(context).canPop()) {
-                                    context.pop();
-                                  }
-                                  context.pushNamed(
+
+                                  context.goNamed(
                                     'HomeView',
                                     extra: <String, dynamic>{
                                       kTransitionInfoKey: TransitionInfo(

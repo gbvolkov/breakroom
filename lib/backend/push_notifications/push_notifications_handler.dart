@@ -92,9 +92,9 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'VerifySMS': (data) async => VerifySMSWidget(),
   'ChatView': (data) async => ChatViewWidget(),
   'ProfileView': (data) async => NavBarPage(initialPage: 'ProfileView'),
+  'SignInView': (data) async => SignInViewWidget(),
   'NotificationsView': (data) async =>
       NavBarPage(initialPage: 'NotificationsView'),
-  'SignInView': (data) async => SignInViewWidget(),
   'WelcomeView': (data) async => WelcomeViewWidget(),
   'PageTest': (data) async => PageTestWidget(
         swipeAction: getParameter(data, 'swipeAction'),

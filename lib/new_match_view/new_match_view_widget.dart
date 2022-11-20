@@ -146,7 +146,7 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
             size: 30,
           ),
           onPressed: () async {
-            context.pushNamed('HomeView');
+            context.goNamed('HomeView');
           },
         ),
         title: Text(
@@ -335,9 +335,6 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                       onPressed: () async {
                         if (widget.me!.isPremium! ||
                             !getRemoteConfigBool('check_premium')) {
-                          if (Navigator.of(context).canPop()) {
-                            context.pop();
-                          }
                           context.pushNamed(
                             'Chat',
                             queryParams: {

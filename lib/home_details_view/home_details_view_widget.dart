@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
@@ -32,6 +33,7 @@ class HomeDetailsViewWidget extends StatefulWidget {
 
 class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
   ChatsRecord? groupChat;
+  int? clikesState;
   PageController? pageViewController;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -74,13 +76,9 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
           ),
           onPressed: () async {
             if (widget.mode == null || widget.mode == '') {
-              context.pushNamed('HomeView');
+              context.goNamed('HomeView');
             } else {
-              if (widget.backPage == null || widget.backPage == '') {
-                context.pushNamed('MatchesView');
-              } else {
-                context.pushNamed('NotificationsView');
-              }
+              context.pop();
             }
           },
         ),
@@ -677,8 +675,12 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                             ],
                           ),
                         ),
-                        if ((widget.mode == null || widget.mode == '') ||
-                            (widget.mode == 'like'))
+                        if (!columnUsersRecord.liked!
+                                .toList()
+                                .contains(widget.userProfile!.uid) &&
+                            !columnUsersRecord.disliked!
+                                .toList()
+                                .contains(widget.userProfile!.uid))
                           Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(24, 0, 24, 24),
@@ -743,11 +745,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                       .dislikedUsers
                                                       .add(widget
                                                           .userProfile!.uid!));
-                                                  if (Navigator.of(context)
-                                                      .canPop()) {
-                                                    context.pop();
-                                                  }
-                                                  context.pushNamed(
+
+                                                  context.goNamed(
                                                     'HomeView',
                                                     extra: <String, dynamic>{
                                                       kTransitionInfoKey:
@@ -810,20 +809,72 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                   size: 30,
                                                 ),
                                                 onPressed: () async {
-                                                  // addToLikedList
+                                                  var _shouldSetState = false;
+                                                  clikesState = await actions
+                                                      .canProcessLikeAction(
+                                                    columnUsersRecord
+                                                        .likesCount,
+                                                    columnUsersRecord
+                                                        .lastLikeTime,
+                                                    columnUsersRecord.isPremium,
+                                                    getRemoteConfigBool(
+                                                        'check_premium'),
+                                                  );
+                                                  _shouldSetState = true;
+                                                  if (clikesState == 0) {
+                                                    context.pushNamed(
+                                                        'GetPremiumView');
 
-                                                  final usersUpdateData = {
-                                                    'liked':
-                                                        FieldValue.arrayUnion([
-                                                      widget.userProfile!.uid
-                                                    ]),
-                                                    'touched':
-                                                        FieldValue.arrayUnion([
-                                                      widget.userProfile!.uid
-                                                    ]),
-                                                  };
-                                                  await currentUserReference!
-                                                      .update(usersUpdateData);
+                                                    if (_shouldSetState)
+                                                      setState(() {});
+                                                    return;
+                                                  } else {
+                                                    if (clikesState == -1) {
+                                                      // addToLikedList
+
+                                                      final usersUpdateData = {
+                                                        ...createUsersRecordData(
+                                                          likesCount: 1,
+                                                          lastLikeTime:
+                                                              getCurrentTimestamp,
+                                                        ),
+                                                        'liked': FieldValue
+                                                            .arrayUnion([
+                                                          widget
+                                                              .userProfile!.uid
+                                                        ]),
+                                                        'touched': FieldValue
+                                                            .arrayUnion([
+                                                          widget
+                                                              .userProfile!.uid
+                                                        ]),
+                                                      };
+                                                      await currentUserReference!
+                                                          .update(
+                                                              usersUpdateData);
+                                                    } else {
+                                                      // addToLikedList
+
+                                                      final usersUpdateData = {
+                                                        'liked': FieldValue
+                                                            .arrayUnion([
+                                                          widget
+                                                              .userProfile!.uid
+                                                        ]),
+                                                        'touched': FieldValue
+                                                            .arrayUnion([
+                                                          widget
+                                                              .userProfile!.uid
+                                                        ]),
+                                                        'likesCount': FieldValue
+                                                            .increment(1),
+                                                      };
+                                                      await currentUserReference!
+                                                          .update(
+                                                              usersUpdateData);
+                                                    }
+                                                  }
+
                                                   if (widget.userProfile!.liked!
                                                       .toList()
                                                       .contains(
@@ -837,6 +888,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                             .reference
                                                       ],
                                                     );
+                                                    _shouldSetState = true;
                                                     triggerPushNotification(
                                                       notificationTitle:
                                                           'You have match!',
@@ -892,28 +944,25 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         .doc()
                                                         .set(
                                                             notificationsCreateData);
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          'Congrats! You have a match!',
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                          ),
+
+                                                    context.goNamed(
+                                                      'NewMatchView',
+                                                      queryParams: {
+                                                        'me': serializeParam(
+                                                          columnUsersRecord,
+                                                          ParamType.Document,
                                                         ),
-                                                        duration: Duration(
-                                                            milliseconds: 4000),
-                                                        backgroundColor:
-                                                            Color(0x00000000),
-                                                      ),
+                                                        'match': serializeParam(
+                                                          widget.userProfile,
+                                                          ParamType.Document,
+                                                        ),
+                                                      }.withoutNulls,
+                                                      extra: <String, dynamic>{
+                                                        'me': columnUsersRecord,
+                                                        'match':
+                                                            widget.userProfile,
+                                                      },
                                                     );
-                                                    await Future.delayed(
-                                                        const Duration(
-                                                            milliseconds:
-                                                                3000));
                                                   } else {
                                                     triggerPushNotification(
                                                       notificationTitle:
@@ -969,30 +1018,25 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         .doc()
                                                         .set(
                                                             notificationsCreateData);
+
+                                                    context.goNamed(
+                                                      'HomeView',
+                                                      extra: <String, dynamic>{
+                                                        kTransitionInfoKey:
+                                                            TransitionInfo(
+                                                          hasTransition: true,
+                                                          transitionType:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          duration: Duration(
+                                                              milliseconds: 0),
+                                                        ),
+                                                      },
+                                                    );
                                                   }
 
-                                                  setState(() => FFAppState()
-                                                      .swipeAction = 'right');
-                                                  if (Navigator.of(context)
-                                                      .canPop()) {
-                                                    context.pop();
-                                                  }
-                                                  context.pushNamed(
-                                                    'HomeView',
-                                                    extra: <String, dynamic>{
-                                                      kTransitionInfoKey:
-                                                          TransitionInfo(
-                                                        hasTransition: true,
-                                                        transitionType:
-                                                            PageTransitionType
-                                                                .fade,
-                                                        duration: Duration(
-                                                            milliseconds: 0),
-                                                      ),
-                                                    },
-                                                  );
-
-                                                  setState(() {});
+                                                  if (_shouldSetState)
+                                                    setState(() {});
                                                 },
                                               ),
                                             ),

@@ -58,7 +58,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
           buttonSize: 24,
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: Color(0xFF95A1AC),
+            color: FlutterFlowTheme.of(context).primaryText,
             size: 24,
           ),
           onPressed: () async {
@@ -72,7 +72,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
             Text(
               'Add Friends to chat',
               style: FlutterFlowTheme.of(context).subtitle1.override(
-                    fontFamily: 'Lexend Deca',
+                    fontFamily: 'Roboto',
                     color: Color(0xFF95A1AC),
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -81,7 +81,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
             Text(
               'Select the friends to add to chat.',
               style: FlutterFlowTheme.of(context).bodyText2.override(
-                    fontFamily: 'Lexend Deca',
+                    fontFamily: 'Roboto',
                     color: Color(0xFF1A1F24),
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
@@ -169,8 +169,8 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                 ),
               ),
               style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Lexend Deca',
-                    color: Color(0xFF95A1AC),
+                    fontFamily: 'Roboto',
+                    color: FlutterFlowTheme.of(context).primaryText,
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
                   ),
@@ -228,7 +228,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                             children: [
                               Card(
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color: Color(0xFF4E39F9),
+                                color: FlutterFlowTheme.of(context).alternate,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40),
                                 ),
@@ -269,7 +269,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle1
                                           .override(
-                                            fontFamily: 'Lexend Deca',
+                                            fontFamily: 'Roboto',
                                             color: Color(0xFF95A1AC),
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500,
@@ -280,14 +280,15 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
-                                            fontFamily: 'Lexend Deca',
+                                            fontFamily: 'Roboto',
                                             color: Color(0xFF1A1F24),
                                             fontSize: 14,
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
                                     tileColor: Color(0xFFF5F5F5),
-                                    activeColor: Color(0xFF4E39F9),
+                                    activeColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     dense: false,
                                     controlAffinity:
                                         ListTileControlAffinity.trailing,
@@ -308,7 +309,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
             width: double.infinity,
             height: 100,
             decoration: BoxDecoration(
-              color: Color(0xFF4E39F9),
+              color: FlutterFlowTheme.of(context).alternate,
               boxShadow: [
                 BoxShadow(
                   blurRadius: 4,
@@ -341,7 +342,7 @@ class _AddUsersToGroupWidgetState extends State<AddUsersToGroupWidget> {
                 options: FFButtonOptions(
                   width: 130,
                   height: 40,
-                  color: Color(0xFF4E39F9),
+                  color: FlutterFlowTheme.of(context).alternate,
                   textStyle: FlutterFlowTheme.of(context).title3.override(
                         fontFamily: 'Lexend Deca',
                         color: Colors.white,

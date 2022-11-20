@@ -109,17 +109,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : ProfileViewWidget(),
             ),
             FFRoute(
+              name: 'SignInView',
+              path: 'signInView',
+              builder: (context, params) => SignInViewWidget(),
+            ),
+            FFRoute(
               name: 'NotificationsView',
               path: 'notificationsView',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'NotificationsView')
                   : NotificationsViewWidget(),
-            ),
-            FFRoute(
-              name: 'SignInView',
-              path: 'signInView',
-              builder: (context, params) => SignInViewWidget(),
             ),
             FFRoute(
               name: 'HomeView',

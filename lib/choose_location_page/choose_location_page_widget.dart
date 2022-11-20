@@ -49,10 +49,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
             size: 30,
           ),
           onPressed: () async {
-            if (Navigator.of(context).canPop()) {
-              context.pop();
-            }
-            context.pushNamed(
+            context.goNamed(
               'FiltersView',
               extra: <String, dynamic>{
                 kTransitionInfoKey: TransitionInfo(

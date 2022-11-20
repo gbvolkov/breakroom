@@ -68,7 +68,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
             Text(
               'Create Group Chat',
               style: FlutterFlowTheme.of(context).subtitle1.override(
-                    fontFamily: 'Lexend Deca',
+                    fontFamily: 'Roboto',
                     color: Color(0xFF95A1AC),
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -77,7 +77,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
             Text(
               'Select the friends to add to chat.',
               style: FlutterFlowTheme.of(context).bodyText2.override(
-                    fontFamily: 'Lexend Deca',
+                    fontFamily: 'Roboto',
                     color: Color(0xFF1A1F24),
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
@@ -165,10 +165,8 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                 ),
               ),
               style: FlutterFlowTheme.of(context).bodyText1.override(
-                    fontFamily: 'Lexend Deca',
-                    color: Color(0xFF95A1AC),
-                    fontSize: 14,
-                    fontWeight: FontWeight.normal,
+                    fontFamily: 'Roboto',
+                    color: FlutterFlowTheme.of(context).primaryText,
                   ),
             ),
           ),
@@ -224,7 +222,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                             children: [
                               Card(
                                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                                color: Color(0xFF4E39F9),
+                                color: FlutterFlowTheme.of(context).alternate,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(40),
                                 ),
@@ -263,7 +261,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .subtitle1
                                           .override(
-                                            fontFamily: 'Lexend Deca',
+                                            fontFamily: 'Roboto',
                                             color: Color(0xFF95A1AC),
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500,
@@ -274,14 +272,15 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
-                                            fontFamily: 'Lexend Deca',
+                                            fontFamily: 'Roboto',
                                             color: Color(0xFF1A1F24),
                                             fontSize: 14,
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
                                     tileColor: Color(0xFFF5F5F5),
-                                    activeColor: Color(0xFF4E39F9),
+                                    activeColor:
+                                        FlutterFlowTheme.of(context).alternate,
                                     dense: false,
                                     controlAffinity:
                                         ListTileControlAffinity.trailing,
@@ -302,7 +301,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
             width: double.infinity,
             height: 100,
             decoration: BoxDecoration(
-              color: Color(0xFF4E39F9),
+              color: FlutterFlowTheme.of(context).alternate,
               boxShadow: [
                 BoxShadow(
                   blurRadius: 4,
@@ -342,9 +341,9 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                 options: FFButtonOptions(
                   width: 130,
                   height: 40,
-                  color: Color(0xFF4E39F9),
+                  color: FlutterFlowTheme.of(context).alternate,
                   textStyle: FlutterFlowTheme.of(context).title3.override(
-                        fontFamily: 'Lexend Deca',
+                        fontFamily: 'Roboto',
                         color: Colors.white,
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
