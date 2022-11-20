@@ -43,10 +43,10 @@ class _ImageSliderState extends State<ImageSlider> {
     List<Image> images = [];
 
     if (_imageUrls.isEmpty) {
-      images.add(Image.network(widget.emptyListImage, fit: BoxFit.cover));
+      images.add(Image.network(widget.emptyListImage, fit: BoxFit.contain));
     } else {
       for (int i = 0; i < _imageUrls.length; i++) {
-        images.add(Image.network(_imageUrls[i], fit: BoxFit.cover));
+        images.add(Image.network(_imageUrls[i], fit: BoxFit.contain));
       }
     }
 
