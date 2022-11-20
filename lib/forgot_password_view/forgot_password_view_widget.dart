@@ -1,11 +1,14 @@
 import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordViewWidget extends StatefulWidget {
@@ -17,8 +20,11 @@ class ForgotPasswordViewWidget extends StatefulWidget {
 }
 
 class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
-  PageController? pageViewController;
+  StopWatchTimer? timerController;
+  String? timerValue;
+  int? timerMilliseconds;
   TextEditingController? txtEmailController;
+  PageController? pageViewController;
   TextEditingController? pinCodeController;
   TextEditingController? newPassword1TextFieldController;
 
@@ -31,18 +37,26 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() => FFAppState().resetPwdSendState = 'Send');
+      setState(() => FFAppState().resetLinkAvailability = true);
+    });
+
     newPassword1TextFieldController = TextEditingController();
     newPassword1TextFieldVisibility = false;
     newPassword2TextFieldController = TextEditingController();
     newPassword2TextFieldVisibility = false;
     pinCodeController = TextEditingController();
     txtEmailController = TextEditingController();
+    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
     newPassword1TextFieldController?.dispose();
     newPassword2TextFieldController?.dispose();
+    timerController?.dispose();
     txtEmailController?.dispose();
     super.dispose();
   }
@@ -225,9 +239,83 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                     keyboardType: TextInputType.emailAddress,
                                   ),
                                 ),
+                                if (FFAppState().resetPwdSendState != 'Send')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 64, 0, 0),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 4, 0),
+                                          child: FlutterFlowTimer(
+                                            timerValue: timerValue ??=
+                                                StopWatchTimer.getDisplayTime(
+                                              timerMilliseconds ??= 60000,
+                                              hours: false,
+                                              minute: false,
+                                              second: true,
+                                              milliSecond: false,
+                                            ),
+                                            timer: timerController ??=
+                                                StopWatchTimer(
+                                              mode: StopWatchMode.countDown,
+                                              presetMillisecond:
+                                                  timerMilliseconds ??= 60000,
+                                              onChange: (value) {
+                                                setState(() {
+                                                  timerMilliseconds = value;
+                                                  timerValue = StopWatchTimer
+                                                      .getDisplayTime(
+                                                    value,
+                                                    hours: false,
+                                                    minute: false,
+                                                    second: true,
+                                                    milliSecond: false,
+                                                  );
+                                                });
+                                              },
+                                            ),
+                                            textAlign: TextAlign.start,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyText1
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryText,
+                                                ),
+                                            onEnded: () async {
+                                              setState(() => FFAppState()
+                                                      .resetLinkAvailability =
+                                                  true);
+                                              timerController?.onExecute.add(
+                                                StopWatchExecute.reset,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Text(
+                                          's',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 64, 0, 0),
+                                      0, 8, 0, 0),
                                   child: Stack(
                                     children: [
                                       Container(
@@ -248,28 +336,53 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                               BorderRadius.circular(8),
                                         ),
                                       ),
+                                      if (!FFAppState().resetLinkAvailability)
+                                        Container(
+                                          width: double.infinity,
+                                          height: 48,
+                                          decoration: BoxDecoration(
+                                            color: Color(0x8DF5F5F5),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
                                       Align(
                                         alignment: AlignmentDirectional(-1, 0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            if (txtEmailController!
-                                                .text.isEmpty) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    'Email required!',
+                                            if (FFAppState()
+                                                .resetLinkAvailability) {
+                                              if (txtEmailController!
+                                                  .text.isEmpty) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'Email required!',
+                                                    ),
                                                   ),
-                                                ),
+                                                );
+                                                return;
+                                              }
+                                              await resetPassword(
+                                                email: txtEmailController!.text,
+                                                context: context,
                                               );
-                                              return;
+                                              setState(() => FFAppState()
+                                                      .resetPwdSendState =
+                                                  'Resend link');
+                                              setState(() => FFAppState()
+                                                      .resetLinkAvailability =
+                                                  false);
+                                              await Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 3000));
+                                              timerController?.onExecute.add(
+                                                StopWatchExecute.start,
+                                              );
                                             }
-                                            await resetPassword(
-                                              email: txtEmailController!.text,
-                                              context: context,
-                                            );
                                           },
-                                          text: 'Next',
+                                          text: FFAppState().resetPwdSendState,
                                           options: FFButtonOptions(
                                             width: double.infinity,
                                             height: 48,

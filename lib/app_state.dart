@@ -318,6 +318,10 @@ class FFAppState {
   String fltrGender = '';
 
   List<String> dislikedUsers = [];
+
+  String resetPwdSendState = 'Send';
+
+  bool resetLinkAvailability = true;
 }
 
 LatLng? _latLngFromString(String? val) {
