@@ -50,6 +50,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
       );
       if (userDoc != null) {
         if (userDoc!.isComplete!) {
+          setState(() => FFAppState().tmpIntention = userDoc!.intention!);
           if (!(await getPermissionStatus(locationPermission)) ||
               !functions.isLocationSet(userDoc!.geoposition)) {
             context.pushNamed('SetYourLocationView');
@@ -64,9 +65,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
             setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
 
             context.goNamed('IntroductionView');
-          } else {
-            setState(() => FFAppState().tmpIntention =
-                valueOrDefault(currentUserDocument?.intention, ''));
           }
         } else {
           await actions.initializeUserDataState(
