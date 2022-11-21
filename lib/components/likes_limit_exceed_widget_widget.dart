@@ -412,14 +412,7 @@ class _LikesLimitExceedWidgetWidgetState
                           isPremium: true,
                         );
                         await currentUserReference!.update(usersUpdateData);
-                        if (widget.back == 'HomeView') {
-                          if (Navigator.of(context).canPop()) {
-                            context.pop();
-                          }
-                          context.pushNamed('HomeView');
-                        } else {
-                          context.pop();
-                        }
+                        Navigator.pop(context);
                       },
                       text: 'Continue',
                       options: FFButtonOptions(

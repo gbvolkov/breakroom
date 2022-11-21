@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
+import '../components/likes_limit_exceed_widget_widget.dart';
 import '../components/notifications_bell_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -601,14 +602,39 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         );
                                         _shouldSetState = true;
                                         if (clikesState == 0) {
-                                          context.goNamed(
-                                            'GetPremiumView',
-                                            queryParams: {
-                                              'back': serializeParam(
-                                                'HomeView',
-                                                ParamType.String,
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            context: context,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: MediaQuery.of(context)
+                                                    .viewInsets,
+                                                child:
+                                                    LikesLimitExceedWidgetWidget(
+                                                  user: columnUsersRecord,
+                                                  showTime: true,
+                                                  back: 'HomeView',
+                                                ),
+                                              );
+                                            },
+                                          ).then((value) => setState(() {}));
+
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed(
+                                            'HomeView',
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType.fade,
+                                                duration:
+                                                    Duration(milliseconds: 0),
                                               ),
-                                            }.withoutNulls,
+                                            },
                                           );
 
                                           if (_shouldSetState) setState(() {});
