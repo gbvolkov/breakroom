@@ -603,6 +603,11 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         if (clikesState == 0) {
                                           context.pushNamed('GetPremiumView');
 
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed('HomeView');
+
                                           if (_shouldSetState) setState(() {});
                                           return;
                                         } else {
