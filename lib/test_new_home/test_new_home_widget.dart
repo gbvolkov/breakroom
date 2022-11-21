@@ -31,12 +31,12 @@ class TestNewHomeWidget extends StatefulWidget {
 
 class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
   ChatsRecord? groupChat;
-  Completer<List<UsersRecord>>? _firestoreRequestCompleter;
-  Completer<UsersRecord>? _documentRequestCompleter;
   UsersRecord? matchedUser;
   int? clikesState;
   late SwipeableCardSectionController swipeableStackController;
   String? uid;
+  Completer<List<UsersRecord>>? _firestoreRequestCompleter;
+  Completer<UsersRecord>? _documentRequestCompleter;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   UsersRecord? userDoc;
@@ -284,22 +284,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed(
-                                            'HomeView',
-                                            extra: <String, dynamic>{
-                                              kTransitionInfoKey:
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                              ),
-                                            },
-                                          );
+                                          setState(() =>
+                                              _documentRequestCompleter = null);
+                                          await waitForDocumentRequestCompleter();
+                                          setState(() =>
+                                              _firestoreRequestCompleter =
+                                                  null);
+                                          await waitForFirestoreRequestCompleter();
                                         },
                                         text: 'Social',
                                         options: FFButtonOptions(
@@ -365,22 +356,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed(
-                                            'HomeView',
-                                            extra: <String, dynamic>{
-                                              kTransitionInfoKey:
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                              ),
-                                            },
-                                          );
+                                          setState(() =>
+                                              _documentRequestCompleter = null);
+                                          await waitForDocumentRequestCompleter();
+                                          setState(() =>
+                                              _firestoreRequestCompleter =
+                                                  null);
+                                          await waitForFirestoreRequestCompleter();
                                         },
                                         text: 'Dating',
                                         options: FFButtonOptions(
@@ -1329,19 +1311,12 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                       .update(usersUpdateData);
                                   setState(() =>
                                       FFAppState().dislikedUsers.remove(uid!));
-                                  if (Navigator.of(context).canPop()) {
-                                    context.pop();
-                                  }
-                                  context.pushNamed(
-                                    'HomeView',
-                                    extra: <String, dynamic>{
-                                      kTransitionInfoKey: TransitionInfo(
-                                        hasTransition: true,
-                                        transitionType: PageTransitionType.fade,
-                                        duration: Duration(milliseconds: 0),
-                                      ),
-                                    },
-                                  );
+                                  setState(
+                                      () => _documentRequestCompleter = null);
+                                  await waitForDocumentRequestCompleter();
+                                  setState(
+                                      () => _firestoreRequestCompleter = null);
+                                  await waitForFirestoreRequestCompleter();
 
                                   setState(() {});
                                 },
