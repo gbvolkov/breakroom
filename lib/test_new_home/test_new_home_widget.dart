@@ -284,6 +284,15 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
+                                          setState(() =>
+                                              _documentRequestCompleter = null);
+                                          await waitForDocumentRequestCompleter();
+                                          setState(() =>
+                                              _firestoreRequestCompleter =
+                                                  null);
+                                          await waitForFirestoreRequestCompleter();
+                                          swipeableStackController
+                                              .triggerSwipeDown();
                                         },
                                         text: 'Social',
                                         options: FFButtonOptions(
@@ -356,6 +365,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                               _firestoreRequestCompleter =
                                                   null);
                                           await waitForFirestoreRequestCompleter();
+                                          swipeableStackController
+                                              .triggerSwipeDown();
                                         },
                                         text: 'Dating',
                                         options: FFButtonOptions(
