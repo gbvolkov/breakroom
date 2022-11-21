@@ -31,10 +31,10 @@ class TestNewHomeWidget extends StatefulWidget {
 
 class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
   ChatsRecord? groupChat;
+  Completer<List<UsersRecord>>? _firestoreRequestCompleter;
+  Completer<UsersRecord>? _documentRequestCompleter;
   UsersRecord? matchedUser;
   int? clikesState;
-  Completer<UsersRecord>? _documentRequestCompleter;
-  Completer<List<UsersRecord>>? _firestoreRequestCompleter;
   late SwipeableCardSectionController swipeableStackController;
   String? uid;
   LatLng? currentUserLocationValue;
@@ -580,21 +580,12 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             .dislikedUsers
                                             .add(functions.getFirstUID(
                                                 matchedUsers.toList())!));
-                                        if (Navigator.of(context).canPop()) {
-                                          context.pop();
-                                        }
-                                        context.pushNamed(
-                                          'HomeView',
-                                          extra: <String, dynamic>{
-                                            kTransitionInfoKey: TransitionInfo(
-                                              hasTransition: true,
-                                              transitionType:
-                                                  PageTransitionType.fade,
-                                              duration:
-                                                  Duration(milliseconds: 0),
-                                            ),
-                                          },
-                                        );
+                                        setState(() =>
+                                            _documentRequestCompleter = null);
+                                        await waitForDocumentRequestCompleter();
+                                        setState(() =>
+                                            _firestoreRequestCompleter = null);
+                                        await waitForFirestoreRequestCompleter();
                                       },
                                       onRightSwipe: (index) async {
                                         var _shouldSetState = false;
@@ -704,7 +695,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                               .doc()
                                               .set(notificationsCreateData);
 
-                                          context.goNamed(
+                                          context.pushNamed(
                                             'NewMatchView',
                                             queryParams: {
                                               'me': serializeParam(
@@ -721,6 +712,14 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                               'match': matchedUser,
                                             },
                                           );
+
+                                          setState(() =>
+                                              _documentRequestCompleter = null);
+                                          await waitForDocumentRequestCompleter();
+                                          setState(() =>
+                                              _firestoreRequestCompleter =
+                                                  null);
+                                          await waitForFirestoreRequestCompleter();
                                         } else {
                                           triggerPushNotification(
                                             notificationTitle:
@@ -764,22 +763,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           await NotificationsRecord.collection
                                               .doc()
                                               .set(notificationsCreateData);
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed(
-                                            'HomeView',
-                                            extra: <String, dynamic>{
-                                              kTransitionInfoKey:
-                                                  TransitionInfo(
-                                                hasTransition: true,
-                                                transitionType:
-                                                    PageTransitionType.fade,
-                                                duration:
-                                                    Duration(milliseconds: 0),
-                                              ),
-                                            },
-                                          );
+                                          setState(() =>
+                                              _documentRequestCompleter = null);
+                                          await waitForDocumentRequestCompleter();
+                                          setState(() =>
+                                              _firestoreRequestCompleter =
+                                                  null);
+                                          await waitForFirestoreRequestCompleter();
                                         }
 
                                         if (_shouldSetState) setState(() {});
