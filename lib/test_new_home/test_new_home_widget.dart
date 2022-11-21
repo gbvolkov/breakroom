@@ -149,7 +149,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'BreakRoom',
+                            'TESTRoom',
                             style: FlutterFlowTheme.of(context).title1.override(
                                   fontFamily: 'Roboto',
                                   fontSize: 38,
@@ -503,8 +503,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                     e,
                                                     columnUsersRecord,
                                                     currentUserLocationValue!))
-                                            .toList()
-                                            .take(1)
                                             .toList();
                                     if (matchedUsers.isEmpty) {
                                       return Center(
