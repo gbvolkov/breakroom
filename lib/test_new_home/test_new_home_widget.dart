@@ -291,8 +291,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                               _firestoreRequestCompleter =
                                                   null);
                                           await waitForFirestoreRequestCompleter();
-                                          swipeableStackController
-                                              .triggerSwipeDown();
                                         },
                                         text: 'Social',
                                         options: FFButtonOptions(
@@ -365,8 +363,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                               _firestoreRequestCompleter =
                                                   null);
                                           await waitForFirestoreRequestCompleter();
-                                          swipeableStackController
-                                              .triggerSwipeDown();
                                         },
                                         text: 'Dating',
                                         options: FFButtonOptions(
@@ -464,10 +460,11 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   ))
                                                 : null)
                                         .where('intention',
-                                            isEqualTo:
-                                                FFAppState().tmpIntention != ''
-                                                    ? FFAppState().tmpIntention
-                                                    : null)
+                                            isEqualTo: columnUsersRecord
+                                                        .intention !=
+                                                    ''
+                                                ? columnUsersRecord.intention
+                                                : null)
                                         .where('birthDay',
                                             isLessThanOrEqualTo:
                                                 functions.addYearsToDate(
