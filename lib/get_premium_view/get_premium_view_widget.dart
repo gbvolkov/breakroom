@@ -9,7 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class GetPremiumViewWidget extends StatefulWidget {
-  const GetPremiumViewWidget({Key? key}) : super(key: key);
+  const GetPremiumViewWidget({
+    Key? key,
+    this.back,
+  }) : super(key: key);
+
+  final String? back;
 
   @override
   _GetPremiumViewWidgetState createState() => _GetPremiumViewWidgetState();
@@ -49,7 +54,14 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                       size: 30,
                     ),
                     onPressed: () async {
-                      context.pop();
+                      if (widget.back == 'HomeView') {
+                        if (Navigator.of(context).canPop()) {
+                          context.pop();
+                        }
+                        context.pushNamed('HomeView');
+                      } else {
+                        context.pop();
+                      }
                     },
                   ),
                 ],
@@ -294,7 +306,14 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                               );
                               await currentUserReference!
                                   .update(usersUpdateData);
-                              context.pop();
+                              if (widget.back == 'HomeView') {
+                                if (Navigator.of(context).canPop()) {
+                                  context.pop();
+                                }
+                                context.pushNamed('HomeView');
+                              } else {
+                                context.pop();
+                              }
                             },
                             text: 'Continue',
                             options: FFButtonOptions(
