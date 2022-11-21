@@ -563,8 +563,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             .update(usersUpdateData);
                                         setState(() => FFAppState()
                                             .dislikedUsers
-                                            .add(functions.getFirstUID(
-                                                matchedUsers.toList())!));
+                                            .add(matchedUsers[index]!.uid!));
                                         if (Navigator.of(context).canPop()) {
                                           context.pop();
                                         }

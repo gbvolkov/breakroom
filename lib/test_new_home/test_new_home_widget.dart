@@ -587,10 +587,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           }
                                         }
 
-                                        if (functions
-                                            .getFirstLiked(
-                                                matchedUsers.toList())
-                                            .contains(currentUserUid)) {
+                                        if (matchedUsers[index]!
+                                            .liked!
+                                            .toList()
+                                            .contains(columnUsersRecord.uid)) {
                                           groupChat = await FFChatManager
                                               .instance
                                               .createChat(
@@ -744,7 +744,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                         valueOrDefault<String>(
                                                       functions
                                                           .getPhotosListValue(
-                                                              matchedUsersItem
+                                                              matchedUsers[
+                                                                      index]!
                                                                   .photos!
                                                                   .toList(),
                                                               random_data
@@ -907,7 +908,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                           Text(
                                                                         '${valueOrDefault<String>(
                                                                           functions
-                                                                              .geoDistance(matchedUsersItem.geoposition, functions.getUserLocation(columnUsersRecord.geoposition, currentUserLocationValue))
+                                                                              .geoDistance(matchedUsers[index]!.geoposition, functions.getUserLocation(columnUsersRecord.geoposition, currentUserLocationValue))
                                                                               .toString(),
                                                                           '?',
                                                                         )} miles',
@@ -984,7 +985,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                               0),
                                                                       child:
                                                                           Text(
-                                                                        matchedUsersItem
+                                                                        matchedUsers[index]!
                                                                             .photos!
                                                                             .toList()
                                                                             .length
@@ -1098,7 +1099,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                                 0),
                                                                             child:
                                                                                 Text(
-                                                                              matchedUsersItem.intention!,
+                                                                              matchedUsers[index]!.intention!,
                                                                               style: FlutterFlowTheme.of(context).bodyText2.override(
                                                                                     fontFamily: 'Roboto',
                                                                                     color: FlutterFlowTheme.of(context).alternate,
@@ -1114,7 +1115,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                         BoxDecoration(),
                                                                     child:
                                                                         GenderIconWidget(
-                                                                      gender: matchedUsersItem
+                                                                      gender: matchedUsers[
+                                                                              index]!
                                                                           .gender,
                                                                       maleIcon:
                                                                           Icon(
@@ -1149,7 +1151,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                         0,
                                                                         6),
                                                             child: Text(
-                                                              '${matchedUsersItem.firstName}, ${functions.getAge(matchedUsersItem.birthDay).toString()}',
+                                                              '${matchedUsers[index]!.firstName}, ${functions.getAge(matchedUsers[index]!.birthDay).toString()}',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .title2
@@ -1174,7 +1176,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                         0,
                                                                         8),
                                                             child: Text(
-                                                              '${matchedUsersItem.industry}, ${matchedUsersItem.occupation}',
+                                                              '${matchedUsers[index]!.industry}, ${matchedUsers[index]!.occupation}',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .subtitle1
@@ -1191,12 +1193,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                             ),
                                                           ),
                                                           Text(
-                                                            matchedUsersItem
+                                                            matchedUsers[index]!
                                                                 .bio!
                                                                 .maybeHandleOverflow(
-                                                              maxChars: 50,
-                                                              replacement: '…',
-                                                            ),
+                                                                  maxChars: 50,
+                                                                  replacement:
+                                                                      '…',
+                                                                ),
                                                             maxLines: 3,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
