@@ -1,9 +1,9 @@
-import '../auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -23,6 +23,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
   StopWatchTimer? timerController;
   String? timerValue;
   int? timerMilliseconds;
+  String? error;
   TextEditingController? txtEmailController;
   PageController? pageViewController;
   TextEditingController? pinCodeController;
@@ -365,39 +366,31 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                 onPressed: () async {
                                                   if (FFAppState()
                                                       .resetLinkAvailability) {
-                                                    if (txtEmailController!
-                                                        .text.isEmpty) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            'Email required!',
-                                                          ),
-                                                        ),
+                                                    error = await actions
+                                                        .sendPwdResetEmail(
+                                                      context,
+                                                      txtEmailController!.text,
+                                                    );
+                                                    if (error == null ||
+                                                        error == '') {
+                                                      setState(() => FFAppState()
+                                                              .resetPwdSendState =
+                                                          'Resend link');
+                                                      setState(() => FFAppState()
+                                                              .resetLinkAvailability =
+                                                          false);
+                                                      await Future.delayed(
+                                                          const Duration(
+                                                              milliseconds:
+                                                                  3000));
+                                                      timerController?.onExecute
+                                                          .add(
+                                                        StopWatchExecute.start,
                                                       );
-                                                      return;
                                                     }
-                                                    await resetPassword(
-                                                      email: txtEmailController!
-                                                          .text,
-                                                      context: context,
-                                                    );
-                                                    setState(() => FFAppState()
-                                                            .resetPwdSendState =
-                                                        'Resend link');
-                                                    setState(() => FFAppState()
-                                                            .resetLinkAvailability =
-                                                        false);
-                                                    await Future.delayed(
-                                                        const Duration(
-                                                            milliseconds:
-                                                                3000));
-                                                    timerController?.onExecute
-                                                        .add(
-                                                      StopWatchExecute.start,
-                                                    );
                                                   }
+
+                                                  setState(() {});
                                                 },
                                                 text: FFAppState()
                                                     .resetPwdSendState,
