@@ -14,7 +14,6 @@ import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
-import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +32,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
   ChatsRecord? groupChat;
   int? clikesState;
   late SwipeableCardSectionController swipeableStackController;
-  Completer<List<UsersRecord>>? _firestoreRequestCompleter;
-  Completer<UsersRecord>? _documentRequestCompleter;
   String? uid;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -127,10 +124,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: FutureBuilder<UsersRecord>(
-              future: (_documentRequestCompleter ??= Completer<UsersRecord>()
-                    ..complete(
-                        UsersRecord.getDocumentOnce(currentUserReference!)))
-                  .future,
+              future: UsersRecord.getDocumentOnce(currentUserReference!),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -432,56 +426,50 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                       child: Stack(
                         children: [
                           FutureBuilder<List<UsersRecord>>(
-                            future: (_firestoreRequestCompleter ??= Completer<
-                                    List<UsersRecord>>()
-                                  ..complete(queryUsersRecordOnce(
-                                    queryBuilder: (usersRecord) => usersRecord
-                                        .whereIn(
-                                            'gender',
-                                            functions.getGenderFilter(
-                                                        valueOrDefault<String>(
-                                                      columnUsersRecord
-                                                          .filter.gender,
-                                                      'Everyone',
-                                                    )) !=
-                                                    ''
-                                                ? functions.getGenderFilter(
-                                                    valueOrDefault<String>(
-                                                    columnUsersRecord
-                                                        .filter.gender,
-                                                    'Everyone',
-                                                  ))
-                                                : null)
-                                        .where('intention',
-                                            isEqualTo: columnUsersRecord
-                                                        .intention !=
-                                                    ''
-                                                ? columnUsersRecord.intention
-                                                : null)
-                                        .where('birthDay',
-                                            isLessThanOrEqualTo:
-                                                functions.addYearsToDate(
-                                                    getCurrentTimestamp,
-                                                    valueOrDefault<int>(
-                                                      columnUsersRecord
-                                                          .filter.ageRange?.min,
-                                                      18,
-                                                    ),
-                                                    -1,
-                                                    0))
-                                        .where('birthDay',
-                                            isGreaterThanOrEqualTo:
-                                                functions.addYearsToDate(
-                                                    getCurrentTimestamp,
-                                                    valueOrDefault<int>(
-                                                      columnUsersRecord
-                                                          .filter.ageRange?.max,
-                                                      150,
-                                                    ),
-                                                    -1,
-                                                    -1)),
-                                  )))
-                                .future,
+                            future: queryUsersRecordOnce(
+                              queryBuilder: (usersRecord) => usersRecord
+                                  .whereIn(
+                                      'gender',
+                                      functions.getGenderFilter(
+                                                  valueOrDefault<String>(
+                                                columnUsersRecord.filter.gender,
+                                                'Everyone',
+                                              )) !=
+                                              ''
+                                          ? functions.getGenderFilter(
+                                              valueOrDefault<String>(
+                                              columnUsersRecord.filter.gender,
+                                              'Everyone',
+                                            ))
+                                          : null)
+                                  .where('intention',
+                                      isEqualTo:
+                                          columnUsersRecord.intention != ''
+                                              ? columnUsersRecord.intention
+                                              : null)
+                                  .where('birthDay',
+                                      isLessThanOrEqualTo:
+                                          functions.addYearsToDate(
+                                              getCurrentTimestamp,
+                                              valueOrDefault<int>(
+                                                columnUsersRecord
+                                                    .filter.ageRange?.min,
+                                                18,
+                                              ),
+                                              -1,
+                                              0))
+                                  .where('birthDay',
+                                      isGreaterThanOrEqualTo:
+                                          functions.addYearsToDate(
+                                              getCurrentTimestamp,
+                                              valueOrDefault<int>(
+                                                columnUsersRecord
+                                                    .filter.ageRange?.max,
+                                                150,
+                                              ),
+                                              -1,
+                                              -1)),
+                            ),
                             builder: (context, snapshot) {
                               // Customize what your widget looks like when it's loading.
                               if (!snapshot.hasData) {
@@ -542,21 +530,16 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         // addToDislikedLike
 
                                         final usersUpdateData = {
-                                          'disliked': FieldValue.arrayUnion([
-                                            functions.getFirstUID(
-                                                matchedUsers.toList())
-                                          ]),
-                                          'touched': FieldValue.arrayUnion([
-                                            functions.getFirstUID(
-                                                matchedUsers.toList())
-                                          ]),
+                                          'disliked': FieldValue.arrayUnion(
+                                              [matchedUsers[index]!.uid]),
+                                          'touched': FieldValue.arrayUnion(
+                                              [matchedUsers[index]!.uid]),
                                         };
                                         await currentUserReference!
                                             .update(usersUpdateData);
                                         setState(() => FFAppState()
                                             .dislikedUsers
-                                            .add(functions.getFirstUID(
-                                                matchedUsers.toList())!));
+                                            .add(matchedUsers[index]!.uid!));
                                         if (Navigator.of(context).canPop()) {
                                           context.pop();
                                         }
@@ -1291,12 +1274,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                       .update(usersUpdateData);
                                   setState(() =>
                                       FFAppState().dislikedUsers.remove(uid!));
-                                  setState(
-                                      () => _documentRequestCompleter = null);
-                                  await waitForDocumentRequestCompleter();
-                                  setState(
-                                      () => _firestoreRequestCompleter = null);
-                                  await waitForFirestoreRequestCompleter();
+                                  if (Navigator.of(context).canPop()) {
+                                    context.pop();
+                                  }
+                                  context.pushNamed('testNewHome');
 
                                   setState(() {});
                                 },
@@ -1313,35 +1294,5 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
         ),
       ),
     );
-  }
-
-  Future waitForDocumentRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _documentRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
-  }
-
-  Future waitForFirestoreRequestCompleter({
-    double minWait = 0,
-    double maxWait = double.infinity,
-  }) async {
-    final stopwatch = Stopwatch()..start();
-    while (true) {
-      await Future.delayed(Duration(milliseconds: 50));
-      final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = _firestoreRequestCompleter?.isCompleted ?? false;
-      if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
-        break;
-      }
-    }
   }
 }

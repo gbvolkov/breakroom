@@ -125,8 +125,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-            child: StreamBuilder<UsersRecord>(
-              stream: UsersRecord.getDocument(currentUserReference!),
+            child: FutureBuilder<UsersRecord>(
+              future: UsersRecord.getDocumentOnce(currentUserReference!),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
@@ -451,8 +451,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                     Expanded(
                       child: Stack(
                         children: [
-                          StreamBuilder<List<UsersRecord>>(
-                            stream: queryUsersRecord(
+                          FutureBuilder<List<UsersRecord>>(
+                            future: queryUsersRecordOnce(
                               queryBuilder: (usersRecord) => usersRecord
                                   .whereIn(
                                       'gender',
@@ -521,15 +521,16 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                 ),
                                 child: Builder(
                                   builder: (context) {
-                                    final matchedUsers = functions
-                                        .cleanUpFilteredProfilesByUser(
-                                            conCandidatesUsersRecordList
-                                                .toList(),
-                                            columnUsersRecord,
-                                            currentUserLocationValue!)
-                                        .toList()
-                                        .take(1)
-                                        .toList();
+                                    final matchedUsers =
+                                        conCandidatesUsersRecordList
+                                            .where((e) =>
+                                                functions.checkProfileRecord(
+                                                    e,
+                                                    columnUsersRecord,
+                                                    currentUserLocationValue!))
+                                            .toList()
+                                            .take(1)
+                                            .toList();
                                     if (matchedUsers.isEmpty) {
                                       return Center(
                                         child: Container(
