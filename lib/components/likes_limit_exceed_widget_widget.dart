@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -372,7 +373,7 @@ class _LikesLimitExceedWidgetWidgetState
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
                   child: Text(
-                    'Hello World',
+                    functions.getTimeToNoon(),
                     style: FlutterFlowTheme.of(context).bodyText1.override(
                           fontFamily: 'Roboto',
                           fontSize: 17,

@@ -499,9 +499,6 @@ int canProcessLike(
 String getTimeToNoon() {
   DateTime now = DateTime.now();
   DateTime eod = DateTime(now.year, now.month, now.day, 23, 59);
-  Duration diff = eod.difference(now);
-
-  String into = DateFormat.Hm().formatDurationFrom(diff, now);
-  return into;
-  // Add your function code here!
+  List<String> sduration = eod.difference(now).toString().split(':');
+  return "${sduration[0].padLeft(2, "0")}h ${sduration[1].padLeft(2, "0")}m";
 }
