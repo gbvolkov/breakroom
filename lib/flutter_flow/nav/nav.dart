@@ -122,14 +122,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : NotificationsViewWidget(),
             ),
             FFRoute(
-              name: 'HomeView',
-              path: 'homeView',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'HomeView')
-                  : HomeViewWidget(),
-            ),
-            FFRoute(
               name: 'WelcomeView',
               path: 'welcomeView',
               builder: (context, params) => WelcomeViewWidget(),
@@ -196,6 +188,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 mode: params.getParam('mode', ParamType.String),
                 backPage: params.getParam('backPage', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'HomeView',
+              path: 'homeView',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'HomeView')
+                  : HomeViewWidget(),
             ),
             FFRoute(
               name: 'EditNameView',
@@ -512,6 +512,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'testCheckBoxCopy',
               path: 'testCheckBoxCopy',
               builder: (context, params) => TestCheckBoxCopyWidget(),
+            ),
+            FFRoute(
+              name: 'testNewHome',
+              path: 'testNewHome',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'testNewHome')
+                  : TestNewHomeWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

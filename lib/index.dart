@@ -7,7 +7,6 @@ export 'profile_view/profile_view_widget.dart' show ProfileViewWidget;
 export 'sign_in_view/sign_in_view_widget.dart' show SignInViewWidget;
 export 'notifications_view/notifications_view_widget.dart'
     show NotificationsViewWidget;
-export 'home_view/home_view_widget.dart' show HomeViewWidget;
 export 'welcome_view/welcome_view_widget.dart' show WelcomeViewWidget;
 export 'page_test/page_test_widget.dart' show PageTestWidget;
 export 'test_check_box/test_check_box_widget.dart' show TestCheckBoxWidget;
@@ -21,6 +20,7 @@ export 'create_profile_view/create_profile_view_widget.dart'
 export 'sign_up_view/sign_up_view_widget.dart' show SignUpViewWidget;
 export 'home_details_view/home_details_view_widget.dart'
     show HomeDetailsViewWidget;
+export 'home_view/home_view_widget.dart' show HomeViewWidget;
 export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
 export 'edit_profile_view/edit_profile_view_widget.dart'
     show EditProfileViewWidget;
@@ -104,3 +104,4 @@ export 'set_your_location_view/set_your_location_view_widget.dart'
     show SetYourLocationViewWidget;
 export 'test_check_box_copy/test_check_box_copy_widget.dart'
     show TestCheckBoxCopyWidget;
+export 'test_new_home/test_new_home_widget.dart' show TestNewHomeWidget;
