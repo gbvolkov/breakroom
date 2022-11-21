@@ -538,10 +538,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         setState(() => FFAppState()
                                             .dislikedUsers
                                             .add(matchedUsers[index]!.uid!));
-                                        if (Navigator.of(context).canPop()) {
-                                          context.pop();
-                                        }
-                                        context.pushNamed('testNewHome');
                                       },
                                       onRightSwipe: (index) async {
                                         var _shouldSetState = false;
@@ -711,10 +707,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           await NotificationsRecord.collection
                                               .doc()
                                               .set(notificationsCreateData);
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed('testNewHome');
                                         }
 
                                         if (_shouldSetState) setState(() {});
