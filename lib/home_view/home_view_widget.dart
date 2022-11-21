@@ -601,12 +601,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         );
                                         _shouldSetState = true;
                                         if (clikesState == 0) {
-                                          context.pushNamed('GetPremiumView');
-
-                                          if (Navigator.of(context).canPop()) {
-                                            context.pop();
-                                          }
-                                          context.pushNamed('HomeView');
+                                          context.goNamed(
+                                            'GetPremiumView',
+                                            queryParams: {
+                                              'back': serializeParam(
+                                                'HomeView',
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
 
                                           if (_shouldSetState) setState(() {});
                                           return;

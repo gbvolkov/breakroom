@@ -106,7 +106,15 @@ class _NotificationMessageComponentWidgetState
                 }
               }
             } else {
-              context.pushNamed('GetPremiumView');
+              context.pushNamed(
+                'GetPremiumView',
+                queryParams: {
+                  'back': serializeParam(
+                    'NotificationView',
+                    ParamType.String,
+                  ),
+                }.withoutNulls,
+              );
             }
           },
           child: Column(

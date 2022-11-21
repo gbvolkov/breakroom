@@ -219,7 +219,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'GetPremiumView',
               path: 'getPremiumView',
               requireAuth: true,
-              builder: (context, params) => GetPremiumViewWidget(),
+              builder: (context, params) => GetPremiumViewWidget(
+                back: params.getParam('back', ParamType.String),
+              ),
             ),
             FFRoute(
               name: 'FiltersView',
