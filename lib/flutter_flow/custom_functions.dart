@@ -495,3 +495,13 @@ int canProcessLike(
     return (clikes++ >= 10) ? 0 : clikes;
   }
 }
+
+String getTimeToNoon() {
+  DateTime now = DateTime.now();
+  DateTime eod = DateTime(now.year, now.month, now.day, 23, 59);
+  Duration diff = eod.difference(now);
+
+  String into = DateFormat.Hm().formatDurationFrom(diff, now);
+  return into;
+  // Add your function code here!
+}
