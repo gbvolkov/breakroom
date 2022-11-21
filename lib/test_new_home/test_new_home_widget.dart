@@ -284,13 +284,6 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-                                          setState(() =>
-                                              _documentRequestCompleter = null);
-                                          await waitForDocumentRequestCompleter();
-                                          setState(() =>
-                                              _firestoreRequestCompleter =
-                                                  null);
-                                          await waitForFirestoreRequestCompleter();
                                         },
                                         text: 'Social',
                                         options: FFButtonOptions(
