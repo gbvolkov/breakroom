@@ -31,7 +31,6 @@ class HomeViewWidget extends StatefulWidget {
 
 class _HomeViewWidgetState extends State<HomeViewWidget> {
   ChatsRecord? groupChat;
-  UsersRecord? matchedUser;
   int? clikesState;
   late SwipeableCardSectionController swipeableStackController;
   String? uid;
@@ -555,14 +554,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                         // addToDislikedLike
 
                                         final usersUpdateData = {
-                                          'disliked': FieldValue.arrayUnion([
-                                            functions.getFirstUID(
-                                                matchedUsers.toList())
-                                          ]),
-                                          'touched': FieldValue.arrayUnion([
-                                            functions.getFirstUID(
-                                                matchedUsers.toList())
-                                          ]),
+                                          'disliked': FieldValue.arrayUnion(
+                                              [matchedUsers[index]!.uid]),
+                                          'touched': FieldValue.arrayUnion(
+                                              [matchedUsers[index]!.uid]),
                                         };
                                         await currentUserReference!
                                             .update(usersUpdateData);
@@ -588,12 +583,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                       },
                                       onRightSwipe: (index) async {
                                         var _shouldSetState = false;
-                                        matchedUser =
-                                            await actions.getUsersListElement(
-                                          matchedUsers.toList(),
-                                          0,
-                                        );
-                                        _shouldSetState = true;
                                         clikesState =
                                             await actions.canProcessLikeAction(
                                           columnUsersRecord.likesCount,
@@ -651,9 +640,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                     getCurrentTimestamp,
                                               ),
                                               'liked': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                               'touched': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                             };
                                             await currentUserReference!
                                                 .update(usersUpdateData);
@@ -662,9 +651,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
 
                                             final usersUpdateData = {
                                               'liked': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                               'touched': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                               'likesCount':
                                                   FieldValue.increment(1),
                                             };
@@ -673,14 +662,14 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                           }
                                         }
 
-                                        if (functions
-                                            .getFirstLiked(
-                                                matchedUsers.toList())
-                                            .contains(currentUserUid)) {
+                                        if (matchedUsers[index]!
+                                            .liked!
+                                            .toList()
+                                            .contains(columnUsersRecord.uid)) {
                                           groupChat = await FFChatManager
                                               .instance
                                               .createChat(
-                                            [matchedUser!.reference],
+                                            [matchedUsers[index]!.reference],
                                           );
                                           _shouldSetState = true;
                                           triggerPushNotification(
@@ -697,7 +686,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             )}!',
                                             notificationImageUrl:
                                                 currentUserPhoto,
-                                            userRefs: [matchedUser!.reference],
+                                            userRefs: [
+                                              matchedUsers[index]!.reference
+                                            ],
                                             initialPageName: 'HomeDetailsView',
                                             parameterData: {
                                               'userProfile':
@@ -708,7 +699,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
 
                                           final notificationsCreateData =
                                               createNotificationsRecordData(
-                                            receiver: matchedUser!.reference,
+                                            receiver:
+                                                matchedUsers[index]!.reference,
                                             type: 'match',
                                             content:
                                                 'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
@@ -735,13 +727,13 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                                 ParamType.Document,
                                               ),
                                               'match': serializeParam(
-                                                matchedUser,
+                                                matchedUsers[index],
                                                 ParamType.Document,
                                               ),
                                             }.withoutNulls,
                                             extra: <String, dynamic>{
                                               'me': columnUsersRecord,
-                                              'match': matchedUser,
+                                              'match': matchedUsers[index],
                                             },
                                           );
                                         } else {
@@ -759,7 +751,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             )} likes you!',
                                             notificationImageUrl:
                                                 currentUserPhoto,
-                                            userRefs: [matchedUser!.reference],
+                                            userRefs: [
+                                              matchedUsers[index]!.reference
+                                            ],
                                             initialPageName: 'HomeDetailsView',
                                             parameterData: {
                                               'userProfile':
@@ -769,7 +763,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
 
                                           final notificationsCreateData =
                                               createNotificationsRecordData(
-                                            receiver: matchedUser!.reference,
+                                            receiver:
+                                                matchedUsers[index]!.reference,
                                             type: 'like',
                                             content:
                                                 'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(

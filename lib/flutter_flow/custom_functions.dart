@@ -162,6 +162,24 @@ List<UsersRecord> filterMatches(
   return result;
 }
 
+bool checkMatches(
+  UsersRecord fan,
+  List<String>? liked,
+  String? pattern,
+) {
+  if (pattern != null && pattern.isNotEmpty) {
+    String tocompare =
+        "${(fan.firstName ?? "")}  ${(fan.lastName ?? "")}  ${(fan.email ?? "")}";
+    if (tocompare.contains(pattern)) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+}
+
 List<UsersRecord> cleanUpFilteredProfiles(
   List<UsersRecord> fliteredProfiles,
   List<String> likedUsers,

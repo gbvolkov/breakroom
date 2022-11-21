@@ -180,12 +180,11 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                     EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                                 child: Builder(
                                   builder: (context) {
-                                    final matches = functions
-                                        .filterMatches(
-                                            containerUsersRecordList.toList(),
+                                    final matches = containerUsersRecordList
+                                        .where((e) => functions.checkMatches(
+                                            e,
                                             columnUsersRecord.liked!.toList(),
-                                            textController!.text)
-                                        .map((e) => e)
+                                            textController!.text))
                                         .toList();
                                     if (matches.isEmpty) {
                                       return Center(
