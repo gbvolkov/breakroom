@@ -31,12 +31,11 @@ class TestNewHomeWidget extends StatefulWidget {
 
 class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
   ChatsRecord? groupChat;
-  UsersRecord? matchedUser;
   int? clikesState;
   late SwipeableCardSectionController swipeableStackController;
-  String? uid;
   Completer<List<UsersRecord>>? _firestoreRequestCompleter;
   Completer<UsersRecord>? _documentRequestCompleter;
+  String? uid;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   UsersRecord? userDoc;
@@ -284,13 +283,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-                                          setState(() =>
-                                              _documentRequestCompleter = null);
-                                          await waitForDocumentRequestCompleter();
-                                          setState(() =>
-                                              _firestoreRequestCompleter =
-                                                  null);
-                                          await waitForFirestoreRequestCompleter();
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed('testNewHome');
                                         },
                                         text: 'Social',
                                         options: FFButtonOptions(
@@ -356,13 +352,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await columnUsersRecord.reference
                                               .update(usersUpdateData);
-                                          setState(() =>
-                                              _documentRequestCompleter = null);
-                                          await waitForDocumentRequestCompleter();
-                                          setState(() =>
-                                              _firestoreRequestCompleter =
-                                                  null);
-                                          await waitForFirestoreRequestCompleter();
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed('testNewHome');
                                         },
                                         text: 'Dating',
                                         options: FFButtonOptions(
@@ -515,15 +508,16 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                 ),
                                 child: Builder(
                                   builder: (context) {
-                                    final matchedUsers = functions
-                                        .cleanUpFilteredProfilesByUser(
-                                            conCandidatesUsersRecordList
-                                                .toList(),
-                                            columnUsersRecord,
-                                            currentUserLocationValue!)
-                                        .toList()
-                                        .take(1)
-                                        .toList();
+                                    final matchedUsers =
+                                        conCandidatesUsersRecordList
+                                            .where((e) =>
+                                                functions.checkProfileRecord(
+                                                    e,
+                                                    columnUsersRecord,
+                                                    currentUserLocationValue!))
+                                            .toList()
+                                            .take(1)
+                                            .toList();
                                     if (matchedUsers.isEmpty) {
                                       return Center(
                                         child: Container(
@@ -563,21 +557,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             .dislikedUsers
                                             .add(functions.getFirstUID(
                                                 matchedUsers.toList())!));
-                                        setState(() =>
-                                            _documentRequestCompleter = null);
-                                        await waitForDocumentRequestCompleter();
-                                        setState(() =>
-                                            _firestoreRequestCompleter = null);
-                                        await waitForFirestoreRequestCompleter();
+                                        if (Navigator.of(context).canPop()) {
+                                          context.pop();
+                                        }
+                                        context.pushNamed('testNewHome');
                                       },
                                       onRightSwipe: (index) async {
                                         var _shouldSetState = false;
-                                        matchedUser =
-                                            await actions.getUsersListElement(
-                                          matchedUsers.toList(),
-                                          0,
-                                        );
-                                        _shouldSetState = true;
                                         clikesState =
                                             await actions.canProcessLikeAction(
                                           columnUsersRecord.likesCount,
@@ -602,9 +588,9 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                     getCurrentTimestamp,
                                               ),
                                               'liked': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                               'touched': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                             };
                                             await currentUserReference!
                                                 .update(usersUpdateData);
@@ -613,9 +599,9 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
 
                                             final usersUpdateData = {
                                               'liked': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                               'touched': FieldValue.arrayUnion(
-                                                  [matchedUser!.uid]),
+                                                  [matchedUsers[index]!.uid]),
                                               'likesCount':
                                                   FieldValue.increment(1),
                                             };
@@ -631,7 +617,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           groupChat = await FFChatManager
                                               .instance
                                               .createChat(
-                                            [matchedUser!.reference],
+                                            [matchedUsers[index]!.reference],
                                           );
                                           _shouldSetState = true;
                                           triggerPushNotification(
@@ -648,7 +634,9 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             )}!',
                                             notificationImageUrl:
                                                 currentUserPhoto,
-                                            userRefs: [matchedUser!.reference],
+                                            userRefs: [
+                                              matchedUsers[index]!.reference
+                                            ],
                                             initialPageName: 'HomeDetailsView',
                                             parameterData: {
                                               'userProfile':
@@ -659,7 +647,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
 
                                           final notificationsCreateData =
                                               createNotificationsRecordData(
-                                            receiver: matchedUser!.reference,
+                                            receiver:
+                                                matchedUsers[index]!.reference,
                                             type: 'match',
                                             content:
                                                 'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
@@ -686,23 +675,15 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                 ParamType.Document,
                                               ),
                                               'match': serializeParam(
-                                                matchedUser,
+                                                matchedUsers[index],
                                                 ParamType.Document,
                                               ),
                                             }.withoutNulls,
                                             extra: <String, dynamic>{
                                               'me': columnUsersRecord,
-                                              'match': matchedUser,
+                                              'match': matchedUsers[index],
                                             },
                                           );
-
-                                          setState(() =>
-                                              _documentRequestCompleter = null);
-                                          await waitForDocumentRequestCompleter();
-                                          setState(() =>
-                                              _firestoreRequestCompleter =
-                                                  null);
-                                          await waitForFirestoreRequestCompleter();
                                         } else {
                                           triggerPushNotification(
                                             notificationTitle:
@@ -718,7 +699,9 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             )} likes you!',
                                             notificationImageUrl:
                                                 currentUserPhoto,
-                                            userRefs: [matchedUser!.reference],
+                                            userRefs: [
+                                              matchedUsers[index]!.reference
+                                            ],
                                             initialPageName: 'HomeDetailsView',
                                             parameterData: {
                                               'userProfile':
@@ -728,7 +711,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
 
                                           final notificationsCreateData =
                                               createNotificationsRecordData(
-                                            receiver: matchedUser!.reference,
+                                            receiver:
+                                                matchedUsers[index]!.reference,
                                             type: 'like',
                                             content:
                                                 'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
@@ -746,25 +730,20 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           await NotificationsRecord.collection
                                               .doc()
                                               .set(notificationsCreateData);
-                                          setState(() =>
-                                              _documentRequestCompleter = null);
-                                          await waitForDocumentRequestCompleter();
-                                          setState(() =>
-                                              _firestoreRequestCompleter =
-                                                  null);
-                                          await waitForFirestoreRequestCompleter();
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed('testNewHome');
                                         }
 
                                         if (_shouldSetState) setState(() {});
                                       },
                                       onUpSwipe: (index) {},
                                       onDownSwipe: (index) async {
-                                        setState(() =>
-                                            _documentRequestCompleter = null);
-                                        await waitForDocumentRequestCompleter();
-                                        setState(() =>
-                                            _firestoreRequestCompleter = null);
-                                        await waitForFirestoreRequestCompleter();
+                                        if (Navigator.of(context).canPop()) {
+                                          context.pop();
+                                        }
+                                        context.pushNamed('testNewHome');
                                       },
                                       itemBuilder:
                                           (context, matchedUsersIndex) {

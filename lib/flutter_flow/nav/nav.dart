@@ -519,7 +519,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'testNewHome',
               path: 'testNewHome',
               requireAuth: true,
-              builder: (context, params) => TestNewHomeWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'testNewHome')
+                  : TestNewHomeWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

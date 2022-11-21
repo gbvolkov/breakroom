@@ -254,6 +254,102 @@ List<UsersRecord> cleanUpFilteredProfilesByUser(
   return result;
 }
 
+List<UsersRecord> cleanUpFilteredProfilesByUserMulty(
+  List<UsersRecord> fliteredProfiles,
+  UsersRecord user,
+  LatLng location,
+) {
+  List<UsersRecord> result = [];
+  List<String> empty = [];
+
+  List<String> selectedUsers =
+      (user.liked?.asList() ?? empty) + (user.disliked?.asList() ?? empty);
+  bool isOK;
+
+  for (var profile in fliteredProfiles) {
+    if (!selectedUsers.contains(profile.uid)) {
+      isOK = true;
+      /*
+      if (isOK &&
+          user.filter.lookingFor != null &&
+          user.filter.lookingFor!.isNotEmpty &&
+          profile.lookingFor != null) {
+        isOK = user.filter.lookingFor!
+            .any((String s) => profile.lookingFor!.contains(s));
+      }
+      */
+      if (isOK &&
+          user.filter.industries != null &&
+          user.filter.industries!.isNotEmpty) {
+        isOK = user.filter.industries!.contains(profile.industry);
+      }
+      if (isOK && user.filter.distance != null && user.filter.distance! > 0) {
+        if ((user.isPremium ?? false) &&
+            !(user.filter.location == null ||
+                (user.filter.location!.latitude == 0 &&
+                    user.filter.location!.longitude == 0))) {
+          location = user.filter.location!;
+        }
+        if (location.latitude == 0 && location.longitude == 0) {
+          location = user.geoposition ?? location;
+        }
+        isOK =
+            geoDistance(profile.geoposition, location) <= user.filter.distance!;
+      }
+      if (isOK) {
+        result.add(profile);
+        //return result;
+      }
+    }
+  }
+  return result;
+}
+
+bool checkProfileRecord(
+  UsersRecord profile,
+  UsersRecord user,
+  LatLng location,
+) {
+  //List<UsersRecord> result = [];
+  List<String> empty = [];
+
+  List<String> selectedUsers =
+      (user.liked?.asList() ?? empty) + (user.disliked?.asList() ?? empty);
+  bool isOK = false;
+
+  if (!selectedUsers.contains(profile.uid)) {
+    isOK = true;
+    /*
+      if (isOK &&
+          user.filter.lookingFor != null &&
+          user.filter.lookingFor!.isNotEmpty &&
+          profile.lookingFor != null) {
+        isOK = user.filter.lookingFor!
+            .any((String s) => profile.lookingFor!.contains(s));
+      }
+    */
+    if (isOK &&
+        user.filter.industries != null &&
+        user.filter.industries!.isNotEmpty) {
+      isOK = user.filter.industries!.contains(profile.industry);
+    }
+    if (isOK && user.filter.distance != null && user.filter.distance! > 0) {
+      if ((user.isPremium ?? false) &&
+          !(user.filter.location == null ||
+              (user.filter.location!.latitude == 0 &&
+                  user.filter.location!.longitude == 0))) {
+        location = user.filter.location!;
+      }
+      if (location.latitude == 0 && location.longitude == 0) {
+        location = user.geoposition ?? location;
+      }
+      isOK =
+          geoDistance(profile.geoposition, location) <= user.filter.distance!;
+    }
+  }
+  return isOK;
+}
+
 UsersRecord? getFirstFilteredProfilesCopy(
   List<UsersRecord> fliteredProfiles,
   List<String> likedUsers,

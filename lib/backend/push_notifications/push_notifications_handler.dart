@@ -183,7 +183,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       ),
   'SetYourLocationView': (data) async => SetYourLocationViewWidget(),
   'testCheckBoxCopy': (data) async => TestCheckBoxCopyWidget(),
-  'testNewHome': (data) async => TestNewHomeWidget(),
+  'testNewHome': (data) async => NavBarPage(initialPage: 'testNewHome'),
 };
 
 bool hasMatchingParameters(Map<String, dynamic> data, Set<String> params) =>
