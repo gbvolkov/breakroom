@@ -843,7 +843,17 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                                   .fltrLocation,
                                                               ParamType.LatLng,
                                                             ),
+                                                            'user':
+                                                                serializeParam(
+                                                              widget.user,
+                                                              ParamType
+                                                                  .Document,
+                                                            ),
                                                           }.withoutNulls,
+                                                          extra: <String,
+                                                              dynamic>{
+                                                            'user': widget.user,
+                                                          },
                                                         );
                                                       },
                                                     ),

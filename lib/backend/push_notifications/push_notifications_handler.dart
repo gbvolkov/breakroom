@@ -128,6 +128,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       ),
   'ChooseLocationPage': (data) async => ChooseLocationPageWidget(
         currentLocation: getParameter(data, 'currentLocation'),
+        user: await getDocumentParameter(data, 'user', UsersRecord.serializer),
       ),
   'LoginSetNewPasswordView': (data) async => LoginSetNewPasswordViewWidget(),
   'IntroductionView': (data) async => IntroductionViewWidget(),

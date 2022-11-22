@@ -1,3 +1,4 @@
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_google_map.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -13,9 +14,11 @@ class ChooseLocationPageWidget extends StatefulWidget {
   const ChooseLocationPageWidget({
     Key? key,
     this.currentLocation,
+    this.user,
   }) : super(key: key);
 
   final LatLng? currentLocation;
+  final UsersRecord? user;
 
   @override
   _ChooseLocationPageWidgetState createState() =>
@@ -51,7 +54,14 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
           onPressed: () async {
             context.goNamed(
               'FiltersView',
+              queryParams: {
+                'user': serializeParam(
+                  widget.user,
+                  ParamType.Document,
+                ),
+              }.withoutNulls,
               extra: <String, dynamic>{
+                'user': widget.user,
                 kTransitionInfoKey: TransitionInfo(
                   hasTransition: true,
                   transitionType: PageTransitionType.fade,

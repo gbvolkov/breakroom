@@ -247,9 +247,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'ChooseLocationPage',
               path: 'chooseLocationPage',
               requireAuth: true,
+              asyncParams: {
+                'user': getDoc('users', UsersRecord.serializer),
+              },
               builder: (context, params) => ChooseLocationPageWidget(
                 currentLocation:
                     params.getParam('currentLocation', ParamType.LatLng),
+                user: params.getParam('user', ParamType.Document),
               ),
             ),
             FFRoute(
