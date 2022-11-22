@@ -724,7 +724,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             matchedUsers[matchedUsersIndex];
                                         return StreamBuilder<UsersRecord>(
                                           stream: UsersRecord.getDocument(
-                                              matchedUsers[index]!.reference),
+                                              matchedUsersItem.reference),
                                           builder: (context, snapshot) {
                                             // Customize what your widget looks like when it's loading.
                                             if (!snapshot.hasData) {
@@ -867,7 +867,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0, -1),
+                                                            0, 0.08),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
