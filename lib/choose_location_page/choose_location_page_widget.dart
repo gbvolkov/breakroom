@@ -52,23 +52,7 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
             size: 30,
           ),
           onPressed: () async {
-            context.goNamed(
-              'FiltersView',
-              queryParams: {
-                'user': serializeParam(
-                  widget.user,
-                  ParamType.Document,
-                ),
-              }.withoutNulls,
-              extra: <String, dynamic>{
-                'user': widget.user,
-                kTransitionInfoKey: TransitionInfo(
-                  hasTransition: true,
-                  transitionType: PageTransitionType.fade,
-                  duration: Duration(milliseconds: 0),
-                ),
-              },
-            );
+            context.pop();
           },
         ),
         title: Text(
