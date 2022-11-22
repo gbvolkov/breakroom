@@ -834,7 +834,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                         size: 20,
                                                       ),
                                                       onPressed: () async {
-                                                        context.goNamed(
+                                                        context.pushNamed(
                                                           'ChooseLocationPage',
                                                           queryParams: {
                                                             'currentLocation':
