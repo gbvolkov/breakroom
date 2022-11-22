@@ -724,7 +724,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             matchedUsers[matchedUsersIndex];
                                         return StreamBuilder<UsersRecord>(
                                           stream: UsersRecord.getDocument(
-                                              matchedUsersItem.reference),
+                                              matchedUsers[index]!.reference),
                                           builder: (context, snapshot) {
                                             // Customize what your widget looks like when it's loading.
                                             if (!snapshot.hasData) {
