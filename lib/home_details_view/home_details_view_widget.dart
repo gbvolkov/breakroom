@@ -395,7 +395,16 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                         onPressed: () async {
                                           if (columnUsersRecord.isPremium! ||
                                               !getRemoteConfigBool(
-                                                  'check_premium')) {
+                                                  'check_premium') ||
+                                              (columnUsersRecord.liked!
+                                                      .toList()
+                                                      .contains(widget
+                                                          .userProfile!.uid) &&
+                                                  widget.userProfile!.liked!
+                                                      .toList()
+                                                      .contains(
+                                                          columnUsersRecord
+                                                              .uid))) {
                                             context.pushNamed(
                                               'Chat',
                                               queryParams: {
