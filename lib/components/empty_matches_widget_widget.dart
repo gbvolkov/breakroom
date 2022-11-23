@@ -5,7 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EmptyMatchesWidgetWidget extends StatefulWidget {
-  const EmptyMatchesWidgetWidget({Key? key}) : super(key: key);
+  const EmptyMatchesWidgetWidget({
+    Key? key,
+    this.search,
+  }) : super(key: key);
+
+  final String? search;
 
   @override
   _EmptyMatchesWidgetWidgetState createState() =>
@@ -21,27 +26,45 @@ class _EmptyMatchesWidgetWidgetState extends State<EmptyMatchesWidgetWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
-            child: SvgPicture.asset(
-              'assets/images/hearts.svg',
-              width: 130,
-              height: 100,
-              fit: BoxFit.cover,
+          if (widget.search != null && widget.search != '')
+            Align(
+              alignment: AlignmentDirectional(0, -1),
+              child: Text(
+                'There is no user with this name',
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Roboto',
+                      color: FlutterFlowTheme.of(context).trueBlack,
+                      letterSpacing: 0.6,
+                    ),
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
-            child: Text(
-              'You don\'t seem to have likes yet',
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).title2.override(
-                    fontFamily: 'Roboto',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontWeight: FontWeight.bold,
+          if (widget.search == null || widget.search == '')
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                  child: SvgPicture.asset(
+                    'assets/images/hearts.svg',
+                    width: 130,
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                  child: Text(
+                    'You don\'t seem to have likes yet',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).title2.override(
+                          fontFamily: 'Roboto',
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ),
+              ],
             ),
-          ),
         ],
       ),
     );

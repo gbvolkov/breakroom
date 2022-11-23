@@ -21,9 +21,9 @@ Future initializeFilterState(
   FFAppState().fltrName = "Filter";
   if (filter?.ageRange.min == null) {
     FFAppState().fltrAgeMin =
-        0; //getAge(userProfile.birthDay ?? DateTime.now())-10;
+        18; //getAge(userProfile.birthDay ?? DateTime.now())-10;
   } else {
-    FFAppState().fltrAgeMin = filter?.ageRange.min ?? 0;
+    FFAppState().fltrAgeMin = filter?.ageRange.min ?? 18;
   }
   if (filter?.ageRange.max == null) {
     FFAppState().fltrAgeMax =
