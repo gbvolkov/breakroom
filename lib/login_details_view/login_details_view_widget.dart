@@ -126,20 +126,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                         size: 30,
                                       ),
                                       onPressed: () async {
-                                        if ((changePasswordPageViewController
-                                                    ?.page
-                                                    ?.round() ??
-                                                0) ==
-                                            0) {
-                                          context.pop();
-                                        } else {
-                                          await changeEmailPageViewController
-                                              ?.previousPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.ease,
-                                          );
-                                        }
+                                        Navigator.pop(context);
                                       },
                                     ),
                                     Text(
@@ -1578,20 +1565,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                           size: 30,
                                         ),
                                         onPressed: () async {
-                                          if ((changePasswordPageViewController
-                                                      ?.page
-                                                      ?.round() ??
-                                                  0) ==
-                                              0) {
-                                            context.pop();
-                                          } else {
-                                            await changePasswordPageViewController
-                                                ?.previousPage(
-                                              duration:
-                                                  Duration(milliseconds: 300),
-                                              curve: Curves.ease,
-                                            );
-                                          }
+                                          Navigator.pop(context);
                                         },
                                       ),
                                       Text(
@@ -2852,6 +2826,11 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                   onPressed: () async {
                                     setState(() => FFAppState()
                                         .loginDetailsContainerName = 'email');
+                                    setState(() => FFAppState().tmpError = '');
+                                    setState(() {
+                                      emailTextFieldController?.clear();
+                                      passwordTextFieldController?.clear();
+                                    });
                                     scaffoldKey.currentState!.openEndDrawer();
                                   },
                                 ),
@@ -2967,6 +2946,13 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                                     setState(() =>
                                         FFAppState().loginDetailsContainerName =
                                             'password');
+                                    setState(() => FFAppState().tmpError = '');
+                                    setState(() {
+                                      currentPasswordTextFieldController
+                                          ?.clear();
+                                      newPassword1TextFieldController?.clear();
+                                      newPassword2TextFieldController?.clear();
+                                    });
                                     scaffoldKey.currentState!.openEndDrawer();
                                   },
                                 ),

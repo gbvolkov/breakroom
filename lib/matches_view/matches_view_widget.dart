@@ -191,7 +191,9 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                         child: Container(
                                           width: double.infinity,
                                           height: double.infinity,
-                                          child: EmptyMatchesWidgetWidget(),
+                                          child: EmptyMatchesWidgetWidget(
+                                            search: textController!.text,
+                                          ),
                                         ),
                                       );
                                     }
@@ -413,7 +415,13 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       if (columnUsersRecord
                                                               .isPremium! ||
                                                           !getRemoteConfigBool(
-                                                              'check_premium')) {
+                                                              'check_premium') ||
+                                                          columnUsersRecord
+                                                              .liked!
+                                                              .toList()
+                                                              .contains(
+                                                                  matchesItem
+                                                                      .uid)) {
                                                         context.pushNamed(
                                                           'Chat',
                                                           queryParams: {
