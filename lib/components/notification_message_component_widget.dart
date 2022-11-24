@@ -226,8 +226,12 @@ class _NotificationMessageComponentWidgetState
                                       ),
                                     ),
                                     SelectionArea(
-                                        child: AutoSizeText(
-                                      columnUsersRecord.displayName!,
+                                        child: Text(
+                                      columnUsersRecord.displayName!
+                                          .maybeHandleOverflow(
+                                        maxChars: 32,
+                                        replacement: '…',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -437,8 +441,12 @@ class _NotificationMessageComponentWidgetState
                                       ),
                                     ),
                                     SelectionArea(
-                                        child: AutoSizeText(
-                                      columnUsersRecord.displayName!,
+                                        child: Text(
+                                      columnUsersRecord.displayName!
+                                          .maybeHandleOverflow(
+                                        maxChars: 32,
+                                        replacement: '…',
+                                      ),
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
