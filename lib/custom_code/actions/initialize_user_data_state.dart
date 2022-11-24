@@ -48,7 +48,8 @@ Future initializeUserDataState(
   FFAppState().usrLastName = lastName ?? "";
   DateTime dt = DateTime(
       DateTime.now().year - 18, DateTime.now().month, DateTime.now().day);
-  FFAppState().usrBDay = birthDay ?? dt;
+  //FFAppState().usrBDay = birthDay ?? dt;
+  FFAppState().usrBDay = birthDay;
   FFAppState().usrBio = bio ?? "";
   FFAppState().usrIndustry = industry ?? "";
   FFAppState().usrOccupation = occupation ?? "";
