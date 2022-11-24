@@ -29,7 +29,6 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
   bool? switchListTileValue;
   double? sliderDistanceValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  ValueNotifier<List<String>?> ccIndustriesValues = ValueNotifier(null);
 
   @override
   void initState() {
@@ -43,291 +42,6 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      endDrawer: Container(
-        width: MediaQuery.of(context).size.width * 0.85,
-        child: Drawer(
-          elevation: 16,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Align(
-                  alignment: AlignmentDirectional(-1, 0),
-                  child: FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30,
-                    borderWidth: 1,
-                    buttonSize: 60,
-                    icon: Icon(
-                      Icons.close,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 30,
-                    ),
-                    onPressed: () async {
-                      if (scaffoldKey.currentState!.isDrawerOpen ||
-                          scaffoldKey.currentState!.isEndDrawerOpen) {
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-                ),
-                if (FFAppState().advancedFilterName == 'Advanced1')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      decoration: BoxDecoration(),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 100),
-                            child: Text(
-                              'Show me',
-                              style:
-                                  FlutterFlowTheme.of(context).title1.override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 32,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                            ),
-                          ),
-                          Align(
-                            alignment: AlignmentDirectional(0, 0),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.45,
-                                child: custom_widgets.MyRadioButton(
-                                  width: MediaQuery.of(context).size.width,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.45,
-                                  buttonLabels:
-                                      FFAppState().intentions.toList(),
-                                  buttonValues: FFAppState().genders.toList(),
-                                  horizontal: true,
-                                  buttonWidth: 120.0,
-                                  buttonHeight: 50.0,
-                                  defaultSelected: 'Never',
-                                  onValue: () async {
-                                    setState(() => FFAppState()
-                                        .fltrLookingFor
-                                        .add(FFAppState().mrbSelectedValue));
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                if (FFAppState().advancedFilterName == 'Advanced2')
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                    child: FutureBuilder<List<IndustriesRecord>>(
-                      future: queryIndustriesRecordOnce(
-                        queryBuilder: (industriesRecord) =>
-                            industriesRecord.orderBy('industry'),
-                      ),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child: CircularProgressIndicator(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                              ),
-                            ),
-                          );
-                        }
-                        List<IndustriesRecord> containerIndustriesRecordList =
-                            snapshot.data!;
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height * 0.8,
-                          decoration: BoxDecoration(),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Text(
-                                        'Industry',
-                                        style: FlutterFlowTheme.of(context)
-                                            .title1
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              fontSize: 32,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                      ),
-                                    ),
-                                    FFButtonWidget(
-                                      onPressed: () async {
-                                        if (FFAppState().isSelectAllVisible) {
-                                          setState(() => FFAppState()
-                                              .isSelectAllVisible = false);
-                                          setState(() => ccIndustriesValues
-                                                  .value =
-                                              List.from(
-                                                  containerIndustriesRecordList
-                                                      .map((e) => e.industry!)
-                                                      .toList()));
-                                        } else {
-                                          setState(() => FFAppState()
-                                              .isSelectAllVisible = true);
-                                          setState(() =>
-                                              ccIndustriesValues.value = []);
-                                        }
-                                      },
-                                      text: functions.getSelectAllButtonTitle(
-                                          FFAppState().isSelectAllVisible),
-                                      options: FFButtonOptions(
-                                        width: 130,
-                                        height: 40,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
-                                        elevation: 0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 0),
-                                  child: FlutterFlowChoiceChips(
-                                    initiallySelected:
-                                        FFAppState().fltrIndusrtries,
-                                    options: containerIndustriesRecordList
-                                        .map((e) => e.industry!)
-                                        .toList()
-                                        .map((label) => ChipData(label))
-                                        .toList(),
-                                    onChanged: (val) => setState(
-                                        () => ccIndustriesValues.value = val),
-                                    selectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .alternate,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                          ),
-                                      iconColor: Colors.white,
-                                      iconSize: 18,
-                                      labelPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              8, 6, 8, 6),
-                                      elevation: 0,
-                                    ),
-                                    unselectedChipStyle: ChipStyle(
-                                      backgroundColor:
-                                          FlutterFlowTheme.of(context)
-                                              .secondaryBackground,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1,
-                                      iconColor: Color(0xFF323B45),
-                                      iconSize: 18,
-                                      labelPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              8, 6, 8, 6),
-                                      elevation: 0,
-                                    ),
-                                    chipSpacing: 20,
-                                    rowSpacing: 8,
-                                    multiselect: true,
-                                    initialized:
-                                        ccIndustriesValues.value != null,
-                                    alignment: WrapAlignment.start,
-                                    selectedValuesVariable: ccIndustriesValues,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(-1, 0),
-                        child: Padding(
-                          padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
-                          child: FFButtonWidget(
-                            onPressed: () async {
-                              setState(() => FFAppState().fltrIndusrtries =
-                                  ccIndustriesValues.value!.toList());
-                              if (scaffoldKey.currentState!.isDrawerOpen ||
-                                  scaffoldKey.currentState!.isEndDrawerOpen) {
-                                Navigator.pop(context);
-                              }
-                            },
-                            text: 'Save',
-                            options: FFButtonOptions(
-                              width: double.infinity,
-                              height: 48,
-                              color: FlutterFlowTheme.of(context).alternate,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                  ),
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
       appBar: AppBar(
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
@@ -752,7 +466,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
+                                        0, 0, 0, 8),
                                     child: Stack(
                                       alignment: AlignmentDirectional(0, 0),
                                       children: [
@@ -869,96 +583,16 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 16),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      children: [
-                                        if (FFAppState().falseconst)
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(-1, 0),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 60,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryBackground,
-                                                borderRadius:
-                                                    BorderRadius.circular(16),
-                                              ),
-                                            ),
+                                    child: Text(
+                                      'Reset location',
+                                      textAlign: TextAlign.end,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
                                           ),
-                                        if (FFAppState().falseconst)
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 8, 0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Show me',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .subtitle1,
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Text(
-                                                      'Man',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyText2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
-                                                              ),
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30,
-                                                      buttonSize: 32,
-                                                      icon: Icon(
-                                                        Icons
-                                                            .chevron_right_rounded,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        size: 20,
-                                                      ),
-                                                      onPressed: () async {
-                                                        setState(() => FFAppState()
-                                                                .advancedFilterName =
-                                                            'Advanced1');
-                                                        scaffoldKey
-                                                            .currentState!
-                                                            .openEndDrawer();
-                                                      },
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                      ],
                                     ),
                                   ),
                                   Padding(
@@ -967,15 +601,36 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     child: Stack(
                                       alignment: AlignmentDirectional(0, -1),
                                       children: [
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(16),
+                                        InkWell(
+                                          onTap: () async {
+                                            setState(() => FFAppState()
+                                                    .advancedFilterName =
+                                                'Advanced2');
+
+                                            context.pushNamed(
+                                              'FilterIndustriesView',
+                                              queryParams: {
+                                                'selectedIndustries':
+                                                    serializeParam(
+                                                  FFAppState().fltrIndusrtries,
+                                                  ParamType.String,
+                                                  true,
+                                                ),
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 100,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              borderRadius:
+                                                  BorderRadius.circular(16),
+                                            ),
                                           ),
                                         ),
                                         Padding(

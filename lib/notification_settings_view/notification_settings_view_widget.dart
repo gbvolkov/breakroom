@@ -35,8 +35,8 @@ class _NotificationSettingsViewWidgetState
           borderWidth: 1,
           buttonSize: 60,
           icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
+            Icons.chevron_left,
+            color: FlutterFlowTheme.of(context).alternate,
             size: 30,
           ),
           onPressed: () async {

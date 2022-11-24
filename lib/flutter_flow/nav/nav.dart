@@ -524,6 +524,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'testNewHome',
               requireAuth: true,
               builder: (context, params) => TestNewHomeWidget(),
+            ),
+            FFRoute(
+              name: 'ChangeEmailView',
+              path: 'changeEmailView',
+              requireAuth: true,
+              builder: (context, params) => ChangeEmailViewWidget(),
+            ),
+            FFRoute(
+              name: 'ChangePasswordView',
+              path: 'changePasswordView',
+              requireAuth: true,
+              builder: (context, params) => ChangePasswordViewWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ).toRoute(appStateNotifier),

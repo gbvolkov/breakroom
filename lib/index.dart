@@ -105,3 +105,7 @@ export 'set_your_location_view/set_your_location_view_widget.dart'
 export 'test_check_box_copy/test_check_box_copy_widget.dart'
     show TestCheckBoxCopyWidget;
 export 'test_new_home/test_new_home_widget.dart' show TestNewHomeWidget;
+export 'change_email_view/change_email_view_widget.dart'
+    show ChangeEmailViewWidget;
+export 'change_password_view/change_password_view_widget.dart'
+    show ChangePasswordViewWidget;

@@ -33,7 +33,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
           buttonSize: 60,
           icon: Icon(
             Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).primaryText,
+            color: FlutterFlowTheme.of(context).alternate,
             size: 30,
           ),
           onPressed: () async {
