@@ -229,7 +229,7 @@ class _NotificationMessageComponentWidgetState
                                         child: Text(
                                       columnUsersRecord.displayName!
                                           .maybeHandleOverflow(
-                                        maxChars: 32,
+                                        maxChars: 16,
                                         replacement: '…',
                                       ),
                                       style: FlutterFlowTheme.of(context)
@@ -444,7 +444,7 @@ class _NotificationMessageComponentWidgetState
                                         child: Text(
                                       columnUsersRecord.displayName!
                                           .maybeHandleOverflow(
-                                        maxChars: 32,
+                                        maxChars: 16,
                                         replacement: '…',
                                       ),
                                       style: FlutterFlowTheme.of(context)
