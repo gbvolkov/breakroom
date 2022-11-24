@@ -226,7 +226,7 @@ class _NotificationMessageComponentWidgetState
                                       ),
                                     ),
                                     SelectionArea(
-                                        child: Text(
+                                        child: AutoSizeText(
                                       columnUsersRecord.displayName!,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
@@ -437,7 +437,7 @@ class _NotificationMessageComponentWidgetState
                                       ),
                                     ),
                                     SelectionArea(
-                                        child: Text(
+                                        child: AutoSizeText(
                                       columnUsersRecord.displayName!,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
