@@ -2,7 +2,6 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/firebase_storage/storage.dart';
 import '../components/gender_icon_widget.dart';
-import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -16,7 +15,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 
 class ProfileViewWidget extends StatefulWidget {
   const ProfileViewWidget({Key? key}) : super(key: key);
@@ -1014,30 +1012,26 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                               -1, 1),
                                                       child: InkWell(
                                                         onTap: () async {
-                                                          await Navigator.push(
-                                                            context,
-                                                            PageTransition(
-                                                              type:
-                                                                  PageTransitionType
-                                                                      .fade,
-                                                              child:
-                                                                  FlutterFlowExpandedImageView(
-                                                                image: Image
-                                                                    .network(
-                                                                  userPhotosItem
-                                                                      .image!,
-                                                                  fit: BoxFit
-                                                                      .contain,
-                                                                ),
-                                                                allowRotation:
-                                                                    false,
-                                                                tag:
-                                                                    userPhotosItem
-                                                                        .image!,
-                                                                useHeroAnimation:
-                                                                    true,
+                                                          context.pushNamed(
+                                                            'PhotoExpandView',
+                                                            queryParams: {
+                                                              'user':
+                                                                  serializeParam(
+                                                                columnUsersRecord,
+                                                                ParamType
+                                                                    .Document,
                                                               ),
-                                                            ),
+                                                              'photoidx':
+                                                                  serializeParam(
+                                                                userPhotosIndex,
+                                                                ParamType.int,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              'user':
+                                                                  columnUsersRecord,
+                                                            },
                                                           );
                                                         },
                                                         onLongPress: () async {
@@ -1046,18 +1040,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                       .blnImageDeleteMode =
                                                                   true);
                                                         },
-                                                        child: Hero(
-                                                          tag: userPhotosItem
-                                                              .image!,
-                                                          transitionOnUserGestures:
-                                                              true,
-                                                          child: Image.network(
-                                                            userPhotosItem
-                                                                .image!,
-                                                            width: 100,
-                                                            height: 130,
-                                                            fit: BoxFit.cover,
-                                                          ),
+                                                        child: Image.network(
+                                                          userPhotosItem.image!,
+                                                          width: 100,
+                                                          height: 130,
+                                                          fit: BoxFit.cover,
                                                         ),
                                                       ),
                                                     ),

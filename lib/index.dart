@@ -4,6 +4,8 @@ export 'phone_sign_in/phone_sign_in_widget.dart' show PhoneSignInWidget;
 export 'verify_s_m_s/verify_s_m_s_widget.dart' show VerifySMSWidget;
 export 'chat_view/chat_view_widget.dart' show ChatViewWidget;
 export 'profile_view/profile_view_widget.dart' show ProfileViewWidget;
+export 'photo_expand_view/photo_expand_view_widget.dart'
+    show PhotoExpandViewWidget;
 export 'sign_in_view/sign_in_view_widget.dart' show SignInViewWidget;
 export 'notifications_view/notifications_view_widget.dart'
     show NotificationsViewWidget;

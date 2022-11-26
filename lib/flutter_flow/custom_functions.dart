@@ -547,7 +547,12 @@ String formatDateTime(DateTime dt) {
   if (dt.difference(DateTime.now()).inDays.abs() < 2) {
     return DateFormat.jm().format(dt);
   } else {
-    return DateFormat.yMd().add_jm().format(dt);
+    if (dt.year == DateTime.now().year) {
+      return DateFormat.Md().format(dt);
+    } else {
+      return DateFormat.yM().format(dt);
+      //return DateFormat.yMd().add_jm().format(dt);
+    }
   }
 }
 
@@ -615,4 +620,18 @@ String getTimeToNoon() {
   DateTime eod = DateTime(now.year, now.month, now.day, 23, 59);
   List<String> sduration = eod.difference(now).toString().split(':');
   return "${sduration[0].padLeft(2, "0")}h ${sduration[1].padLeft(2, "0")}m";
+}
+
+int inc(int i1) {
+  return i1 + 1;
+}
+
+List<PhotoStruct> removePhotoFromList(
+  List<PhotoStruct> photos,
+  int idx,
+) {
+  if (idx >= 0 && idx < photos.length) {
+    photos.removeAt(idx);
+  }
+  return photos;
 }

@@ -92,6 +92,10 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'VerifySMS': (data) async => VerifySMSWidget(),
   'ChatView': (data) async => ChatViewWidget(),
   'ProfileView': (data) async => NavBarPage(initialPage: 'ProfileView'),
+  'PhotoExpandView': (data) async => PhotoExpandViewWidget(
+        user: await getDocumentParameter(data, 'user', UsersRecord.serializer),
+        photoidx: getParameter(data, 'photoidx'),
+      ),
   'SignInView': (data) async => SignInViewWidget(),
   'NotificationsView': (data) async =>
       NavBarPage(initialPage: 'NotificationsView'),

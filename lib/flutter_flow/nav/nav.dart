@@ -109,6 +109,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : ProfileViewWidget(),
             ),
             FFRoute(
+              name: 'PhotoExpandView',
+              path: 'photoExpandView',
+              requireAuth: true,
+              asyncParams: {
+                'user': getDoc('users', UsersRecord.serializer),
+              },
+              builder: (context, params) => PhotoExpandViewWidget(
+                user: params.getParam('user', ParamType.Document),
+                photoidx: params.getParam('photoidx', ParamType.int),
+              ),
+            ),
+            FFRoute(
               name: 'SignInView',
               path: 'signInView',
               builder: (context, params) => SignInViewWidget(),
