@@ -121,6 +121,7 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
                 child: FFButtonWidget(
                   onPressed: () async {
+                    Function() _navigate = () {};
                     var confirmDialogResponse = await showDialog<bool>(
                           context: context,
                           builder: (alertDialogContext) {
@@ -148,10 +149,12 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                       await deleteUser(context);
                       GoRouter.of(context).prepareAuthEvent();
                       await signOut();
+                      _navigate =
+                          () => context.goNamedAuth('WelcomeView', mounted);
                       setState(() => FFAppState().dislikedUsers = []);
-
-                      context.pushNamedAuth('WelcomeView', mounted);
                     }
+
+                    _navigate();
                   },
                   text: 'Yes, delete my account',
                   options: FFButtonOptions(
