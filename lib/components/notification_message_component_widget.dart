@@ -139,34 +139,39 @@ class _NotificationMessageComponentWidgetState
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                              child: AutoSizeText(
-                                valueOrDefault<String>(
-                                  () {
-                                    if (widget.notification!.type == 'like') {
-                                      return 'Wow, people seem to like you';
-                                    } else if (widget.notification!.type ==
-                                        'match') {
-                                      return 'It\'s a match';
-                                    } else {
-                                      return widget.notification!.content;
-                                    }
-                                  }(),
-                                  'Message',
-                                ).maybeHandleOverflow(
-                                  maxChars: 32,
-                                  replacement: '…',
+                            Container(
+                              width: double.infinity,
+                              height: 18,
+                              decoration: BoxDecoration(),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                child: AutoSizeText(
+                                  valueOrDefault<String>(
+                                    () {
+                                      if (widget.notification!.type == 'like') {
+                                        return 'Wow, people seem to like you';
+                                      } else if (widget.notification!.type ==
+                                          'match') {
+                                        return 'It\'s a match';
+                                      } else {
+                                        return widget.notification!.content;
+                                      }
+                                    }(),
+                                    'Message',
+                                  ).maybeHandleOverflow(
+                                    maxChars: 32,
+                                    replacement: '…',
+                                  ),
+                                  maxLines: 1,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                 ),
-                                maxLines: 1,
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
                               ),
                             ),
                             ClipRRect(
@@ -177,6 +182,7 @@ class _NotificationMessageComponentWidgetState
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(0),
                                 ),
+                                alignment: AlignmentDirectional(0, 0),
                                 child: Builder(builder: (_) {
                                   final child = Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -194,8 +200,8 @@ class _NotificationMessageComponentWidgetState
                                               columnUsersRecord.photoUrl,
                                               'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                             ),
-                                            width: 24,
-                                            height: 24,
+                                            width: 32,
+                                            height: 32,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -271,25 +277,21 @@ class _NotificationMessageComponentWidgetState
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                              child: Container(
-                                width: 14,
-                                height: 14,
-                                decoration: BoxDecoration(),
-                                child: Visibility(
-                                  visible: !widget.notification!.isRead! &&
-                                      (widget.noriffTS == null
-                                          ? true
-                                          : (widget.notification!.timestamp! >=
-                                              widget.noriffTS!)),
-                                  child: Icon(
-                                    Icons.brightness_1,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 8,
-                                  ),
+                            Container(
+                              width: 14,
+                              height: 18,
+                              decoration: BoxDecoration(),
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Visibility(
+                                visible: !widget.notification!.isRead! &&
+                                    (widget.noriffTS == null
+                                        ? true
+                                        : (widget.notification!.timestamp! >=
+                                            widget.noriffTS!)),
+                                child: Icon(
+                                  Icons.brightness_1,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 8,
                                 ),
                               ),
                             ),
@@ -297,22 +299,34 @@ class _NotificationMessageComponentWidgetState
                               width: double.infinity,
                               height: 48,
                               decoration: BoxDecoration(),
-                              alignment: AlignmentDirectional(1, -1),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                                child: Text(
-                                  functions.formatDateTime(
-                                      widget.notification!.timestamp!),
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
+                              alignment: AlignmentDirectional(1, 0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    height: 48,
+                                    decoration: BoxDecoration(),
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        functions.formatDateTime(
+                                            widget.notification!.timestamp!),
+                                        textAlign: TextAlign.end,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                            ),
                                       ),
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
@@ -338,35 +352,40 @@ class _NotificationMessageComponentWidgetState
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                              child: AutoSizeText(
-                                valueOrDefault<String>(
-                                  () {
-                                    if (widget.notification!.type == 'like') {
-                                      return 'Wow, people seem to like you';
-                                    } else if (widget.notification!.type ==
-                                        'match') {
-                                      return 'It\'s a match';
-                                    } else {
-                                      return widget.notification!.content;
-                                    }
-                                  }(),
-                                  'Message',
-                                ).maybeHandleOverflow(
-                                  maxChars: 32,
-                                  replacement: '…',
+                            Container(
+                              width: double.infinity,
+                              height: 18,
+                              decoration: BoxDecoration(),
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                child: AutoSizeText(
+                                  valueOrDefault<String>(
+                                    () {
+                                      if (widget.notification!.type == 'like') {
+                                        return 'Wow, people seem to like you';
+                                      } else if (widget.notification!.type ==
+                                          'match') {
+                                        return 'It\'s a match';
+                                      } else {
+                                        return widget.notification!.content;
+                                      }
+                                    }(),
+                                    'Message',
+                                  ).maybeHandleOverflow(
+                                    maxChars: 32,
+                                    replacement: '…',
+                                  ),
+                                  maxLines: 1,
+                                  style: FlutterFlowTheme.of(context)
+                                      .subtitle2
+                                      .override(
+                                        fontFamily: 'Roboto',
+                                        color: Color(0xA5050A41),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                 ),
-                                maxLines: 1,
-                                style: FlutterFlowTheme.of(context)
-                                    .subtitle2
-                                    .override(
-                                      fontFamily: 'Roboto',
-                                      color: Color(0xA5050A41),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500,
-                                    ),
                               ),
                             ),
                             ClipRRect(
@@ -374,6 +393,7 @@ class _NotificationMessageComponentWidgetState
                                 width: double.infinity,
                                 height: 48,
                                 decoration: BoxDecoration(),
+                                alignment: AlignmentDirectional(0, 0),
                                 child: Builder(builder: (_) {
                                   final child = Row(
                                     mainAxisSize: MainAxisSize.max,
@@ -390,8 +410,8 @@ class _NotificationMessageComponentWidgetState
                                               columnUsersRecord.photoUrl,
                                               'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                             ),
-                                            width: 24,
-                                            height: 24,
+                                            width: 32,
+                                            height: 32,
                                             fit: BoxFit.cover,
                                           ),
                                         ),
@@ -467,25 +487,21 @@ class _NotificationMessageComponentWidgetState
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                              child: Container(
-                                width: 14,
-                                height: 14,
-                                decoration: BoxDecoration(),
-                                child: Visibility(
-                                  visible: !widget.notification!.isRead! &&
-                                      (widget.noriffTS == null
-                                          ? true
-                                          : (widget.notification!.timestamp! >=
-                                              widget.noriffTS!)),
-                                  child: Icon(
-                                    Icons.brightness_1,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 8,
-                                  ),
+                            Container(
+                              width: 14,
+                              height: 18,
+                              decoration: BoxDecoration(),
+                              alignment: AlignmentDirectional(0, 0),
+                              child: Visibility(
+                                visible: !widget.notification!.isRead! &&
+                                    (widget.noriffTS == null
+                                        ? true
+                                        : (widget.notification!.timestamp! >=
+                                            widget.noriffTS!)),
+                                child: Icon(
+                                  Icons.brightness_1,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 8,
                                 ),
                               ),
                             ),
@@ -493,21 +509,31 @@ class _NotificationMessageComponentWidgetState
                               width: double.infinity,
                               height: 48,
                               decoration: BoxDecoration(),
-                              alignment: AlignmentDirectional(1, -1),
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                                child: Text(
-                                  functions.formatDateTime(
-                                      widget.notification!.timestamp!),
-                                  textAlign: TextAlign.end,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: Color(0xA5050A41),
+                              alignment: AlignmentDirectional(1, 0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Container(
+                                    height: 48,
+                                    decoration: BoxDecoration(),
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          8, 0, 0, 0),
+                                      child: Text(
+                                        functions.formatDateTime(
+                                            widget.notification!.timestamp!),
+                                        textAlign: TextAlign.end,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color: Color(0xA5050A41),
+                                            ),
                                       ),
-                                ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

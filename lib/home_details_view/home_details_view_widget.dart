@@ -3,6 +3,7 @@ import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/gender_icon_widget.dart';
 import '../flutter_flow/chat/index.dart';
+import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -15,6 +16,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart'
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeDetailsViewWidget extends StatefulWidget {
   const HomeDetailsViewWidget({
@@ -296,19 +298,55 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Container(
-                                            width: 64,
-                                            height: 64,
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Image.network(
-                                              valueOrDefault<String>(
+                                          InkWell(
+                                            onTap: () async {
+                                              await Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                  type: PageTransitionType.fade,
+                                                  child:
+                                                      FlutterFlowExpandedImageView(
+                                                    image: Image.network(
+                                                      valueOrDefault<String>(
+                                                        widget.userProfile!
+                                                            .photoUrl,
+                                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                      ),
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                    allowRotation: false,
+                                                    tag: valueOrDefault<String>(
+                                                      widget.userProfile!
+                                                          .photoUrl,
+                                                      'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                    ),
+                                                    useHeroAnimation: true,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Hero(
+                                              tag: valueOrDefault<String>(
                                                 widget.userProfile!.photoUrl,
                                                 'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                               ),
-                                              fit: BoxFit.cover,
+                                              transitionOnUserGestures: true,
+                                              child: Container(
+                                                width: 64,
+                                                height: 64,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Image.network(
+                                                  valueOrDefault<String>(
+                                                    widget
+                                                        .userProfile!.photoUrl,
+                                                    'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                  ),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
                                             ),
                                           ),
                                           Padding(
