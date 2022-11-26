@@ -685,6 +685,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       size: 16,
                                     ),
                                     onPressed: () async {
+                                      Function() _navigate = () {};
                                       var confirmDialogResponse =
                                           await showDialog<bool>(
                                                 context: context,
@@ -716,12 +717,13 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                       if (confirmDialogResponse) {
                                         GoRouter.of(context).prepareAuthEvent();
                                         await signOut();
+                                        _navigate = () => context.goNamedAuth(
+                                            'WelcomeView', mounted);
                                         setState(() =>
                                             FFAppState().dislikedUsers = []);
-
-                                        context.goNamedAuth(
-                                            'WelcomeView', mounted);
                                       }
+
+                                      _navigate();
                                     },
                                   ),
                                 ),
