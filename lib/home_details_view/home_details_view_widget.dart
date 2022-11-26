@@ -78,7 +78,11 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
             size: 30,
           ),
           onPressed: () async {
-            context.pop();
+            if (widget.backPage == 'push') {
+              context.goNamed('HomeView');
+            } else {
+              context.pop();
+            }
           },
         ),
         title: Text(
@@ -1017,6 +1021,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                           'userProfile':
                                                               currentUserReference,
                                                           'mode': 'Match',
+                                                          'backPage': 'push',
                                                         },
                                                       );
 
@@ -1094,6 +1099,7 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         parameterData: {
                                                           'userProfile':
                                                               currentUserReference,
+                                                          'backPage': 'push',
                                                         },
                                                       );
 

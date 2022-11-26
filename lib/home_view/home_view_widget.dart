@@ -693,6 +693,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                               'userProfile':
                                                   currentUserReference,
                                               'mode': 'Match',
+                                              'backPage': 'push',
                                             },
                                           );
 
@@ -757,6 +758,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget> {
                                             parameterData: {
                                               'userProfile':
                                                   currentUserReference,
+                                              'backPage': 'push',
                                             },
                                           );
 
