@@ -123,7 +123,6 @@ class _NavBarPageState extends State<NavBarPage> {
       'MatchesView': MatchesViewWidget(),
       'NotificationsView': NotificationsViewWidget(),
       'ProfileView': ProfileViewWidget(),
-      'testCheckBoxCopy': TestCheckBoxCopyWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -183,14 +182,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 20,
             ),
             label: 'Profile',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.twelve_mp,
-              size: 24,
-            ),
-            label: 'Home',
             tooltip: '',
           )
         ],
