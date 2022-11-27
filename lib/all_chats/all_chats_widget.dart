@@ -408,13 +408,27 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                           ) ??
                                                           false;
                                                   if (confirmDialogResponse) {
-                                                    final chatsUpdateData =
-                                                        createChatsRecordData(
-                                                      isDeleted: true,
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Please define the requirements!',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .alternate,
+                                                            fontSize: 24,
+                                                          ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 4000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryBtnText,
+                                                      ),
                                                     );
-                                                    await chatsItem.reference
-                                                        .update(
-                                                            chatsUpdateData);
                                                   }
                                                 },
                                               ),
