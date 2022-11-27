@@ -185,14 +185,18 @@ bool checkChats(
   String? pattern,
 ) {
   if (pattern != null && pattern.isNotEmpty) {
-    UsersRecord? usr;
+    String tocompare = "";
     if (currentUserReference != chat.userA) {
-      usr = chat.userA?.get() as UsersRecord?;
+      chat.userA?.get().then((DocumentSnapshot usrDoc) {
+        tocompare =
+            "${(usrDoc.get("firstName") ?? "")}  ${(usrDoc.get("lastName") ?? "")}";
+      });
     } else if (currentUserReference != chat.userB) {
-      usr = chat.userA?.get() as UsersRecord?;
+      chat.userB?.get().then((DocumentSnapshot usrDoc) {
+        tocompare =
+            "${(usrDoc.get("firstName") ?? "")}  ${(usrDoc.get("lastName") ?? "")}";
+      });
     }
-    String tocompare =
-        "${(usr?.firstName ?? "")}  ${(usr?.lastName ?? "")}  ${(usr?.email ?? "")}";
 
     return tocompare.contains(pattern);
   } else {
