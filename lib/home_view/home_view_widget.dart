@@ -607,7 +607,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                         if (animationsMap[
                                                 'containerOnActionTriggerAnimation1'] !=
                                             null) {
-                                          await animationsMap[
+                                          animationsMap[
                                                   'containerOnActionTriggerAnimation1']!
                                               .controller
                                               .forward();
