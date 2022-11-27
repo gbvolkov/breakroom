@@ -38,12 +38,19 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
       trigger: AnimationTrigger.onActionTrigger,
       applyInitialState: true,
       effects: [
-        VisibilityEffect(duration: 1000.ms),
+        VisibilityEffect(duration: 1.ms),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 1000.ms,
+          delay: 0.ms,
           duration: 2000.ms,
-          begin: 1,
+          begin: 0,
+          end: 10,
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 2000.ms,
+          duration: 2000.ms,
+          begin: 10,
           end: 0,
         ),
       ],
