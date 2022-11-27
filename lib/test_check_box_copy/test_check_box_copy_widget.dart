@@ -68,72 +68,6 @@ class _TestCheckBoxCopyWidgetState extends State<TestCheckBoxCopyWidget> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                child: FutureBuilder<List<IndustriesRecord>>(
-                  future: queryIndustriesRecordOnce(
-                    queryBuilder: (industriesRecord) =>
-                        industriesRecord.orderBy('industry'),
-                  ),
-                  builder: (context, snapshot) {
-                    // Customize what your widget looks like when it's loading.
-                    if (!snapshot.hasData) {
-                      return Center(
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: CircularProgressIndicator(
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                          ),
-                        ),
-                      );
-                    }
-                    List<IndustriesRecord> containerIndustriesRecordList =
-                        snapshot.data!;
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      decoration: BoxDecoration(),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Text(
-                                    'Industry',
-                                    style: FlutterFlowTheme.of(context)
-                                        .title1
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Container(
-                              width: 300,
-                              height: 300,
-                              child: custom_widgets.ImageSlider(
-                                width: 300,
-                                height: 300,
-                                emptyListImage:
-                                    'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
               FFButtonWidget(
                 onPressed: () async {
                   context.pushNamed('testCheckBoxCopy');
@@ -152,6 +86,75 @@ class _TestCheckBoxCopyWidgetState extends State<TestCheckBoxCopyWidget> {
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                  child: FutureBuilder<List<IndustriesRecord>>(
+                    future: queryIndustriesRecordOnce(
+                      queryBuilder: (industriesRecord) =>
+                          industriesRecord.orderBy('industry'),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+                      List<IndustriesRecord> containerIndustriesRecordList =
+                          snapshot.data!;
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Text(
+                                      'Industry',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            fontSize: 32,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                width: 300,
+                                height: 300,
+                                child: custom_widgets.ImageSlider(
+                                  width: 300,
+                                  height: 300,
+                                  emptyListImage:
+                                      'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
