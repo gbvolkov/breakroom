@@ -77,6 +77,20 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
                   DocumentReference, const [const FullType.nullable(Object)])
             ])));
     }
+    value = object.isBlocked;
+    if (value != null) {
+      result
+        ..add('is_blocked')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.isDeleted;
+    if (value != null) {
+      result
+        ..add('is_deleted')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -139,6 +153,14 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
                     DocumentReference, const [const FullType.nullable(Object)])
               ]))! as BuiltList<Object?>);
           break;
+        case 'is_blocked':
+          result.isBlocked = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -168,6 +190,10 @@ class _$ChatsRecord extends ChatsRecord {
   @override
   final BuiltList<DocumentReference<Object?>>? lastMessageSeenBy;
   @override
+  final bool? isBlocked;
+  @override
+  final bool? isDeleted;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ChatsRecord([void Function(ChatsRecordBuilder)? updates]) =>
@@ -181,6 +207,8 @@ class _$ChatsRecord extends ChatsRecord {
       this.lastMessageTime,
       this.lastMessageSentBy,
       this.lastMessageSeenBy,
+      this.isBlocked,
+      this.isDeleted,
       this.ffRef})
       : super._();
 
@@ -202,6 +230,8 @@ class _$ChatsRecord extends ChatsRecord {
         lastMessageTime == other.lastMessageTime &&
         lastMessageSentBy == other.lastMessageSentBy &&
         lastMessageSeenBy == other.lastMessageSeenBy &&
+        isBlocked == other.isBlocked &&
+        isDeleted == other.isDeleted &&
         ffRef == other.ffRef;
   }
 
@@ -212,12 +242,16 @@ class _$ChatsRecord extends ChatsRecord {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, users.hashCode), userA.hashCode),
-                            userB.hashCode),
-                        lastMessage.hashCode),
-                    lastMessageTime.hashCode),
-                lastMessageSentBy.hashCode),
-            lastMessageSeenBy.hashCode),
+                        $jc(
+                            $jc(
+                                $jc($jc($jc(0, users.hashCode), userA.hashCode),
+                                    userB.hashCode),
+                                lastMessage.hashCode),
+                            lastMessageTime.hashCode),
+                        lastMessageSentBy.hashCode),
+                    lastMessageSeenBy.hashCode),
+                isBlocked.hashCode),
+            isDeleted.hashCode),
         ffRef.hashCode));
   }
 
@@ -231,6 +265,8 @@ class _$ChatsRecord extends ChatsRecord {
           ..add('lastMessageTime', lastMessageTime)
           ..add('lastMessageSentBy', lastMessageSentBy)
           ..add('lastMessageSeenBy', lastMessageSeenBy)
+          ..add('isBlocked', isBlocked)
+          ..add('isDeleted', isDeleted)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -276,6 +312,14 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
           ListBuilder<DocumentReference<Object?>>? lastMessageSeenBy) =>
       _$this._lastMessageSeenBy = lastMessageSeenBy;
 
+  bool? _isBlocked;
+  bool? get isBlocked => _$this._isBlocked;
+  set isBlocked(bool? isBlocked) => _$this._isBlocked = isBlocked;
+
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -294,6 +338,8 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
       _lastMessageTime = $v.lastMessageTime;
       _lastMessageSentBy = $v.lastMessageSentBy;
       _lastMessageSeenBy = $v.lastMessageSeenBy?.toBuilder();
+      _isBlocked = $v.isBlocked;
+      _isDeleted = $v.isDeleted;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -326,6 +372,8 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
               lastMessageTime: lastMessageTime,
               lastMessageSentBy: lastMessageSentBy,
               lastMessageSeenBy: _lastMessageSeenBy?.build(),
+              isBlocked: isBlocked,
+              isDeleted: isDeleted,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

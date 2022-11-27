@@ -29,6 +29,12 @@ abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
   @BuiltValueField(wireName: 'last_message_seen_by')
   BuiltList<DocumentReference>? get lastMessageSeenBy;
 
+  @BuiltValueField(wireName: 'is_blocked')
+  bool? get isBlocked;
+
+  @BuiltValueField(wireName: 'is_deleted')
+  bool? get isDeleted;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -36,7 +42,9 @@ abstract class ChatsRecord implements Built<ChatsRecord, ChatsRecordBuilder> {
   static void _initializeBuilder(ChatsRecordBuilder builder) => builder
     ..users = ListBuilder()
     ..lastMessage = ''
-    ..lastMessageSeenBy = ListBuilder();
+    ..lastMessageSeenBy = ListBuilder()
+    ..isBlocked = false
+    ..isDeleted = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('chats');
@@ -65,6 +73,8 @@ Map<String, dynamic> createChatsRecordData({
   String? lastMessage,
   DateTime? lastMessageTime,
   DocumentReference? lastMessageSentBy,
+  bool? isBlocked,
+  bool? isDeleted,
 }) {
   final firestoreData = serializers.toFirestore(
     ChatsRecord.serializer,
@@ -76,7 +86,9 @@ Map<String, dynamic> createChatsRecordData({
         ..lastMessage = lastMessage
         ..lastMessageTime = lastMessageTime
         ..lastMessageSentBy = lastMessageSentBy
-        ..lastMessageSeenBy = null,
+        ..lastMessageSeenBy = null
+        ..isBlocked = isBlocked
+        ..isDeleted = isDeleted,
     ),
   );
 

@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,7 +20,6 @@ class AllChatsWidget extends StatefulWidget {
 }
 
 class _AllChatsWidgetState extends State<AllChatsWidget> {
-  ChatsRecord? groupChat;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -67,6 +67,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
             stream: queryChatsRecord(
               queryBuilder: (chatsRecord) => chatsRecord
                   .where('users', arrayContains: currentUserReference)
+                  .where('is_deleted', isNotEqualTo: true)
                   .orderBy('last_message_time', descending: true),
             ),
             builder: (context, snapshot) {
@@ -254,14 +255,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                               ) ??
                                               false;
                                       if (confirmDialogResponse) {
-                                        groupChat = await FFChatManager.instance
-                                            .removeGroupMembers(
-                                          listViewChatsRecord,
-                                          [stackUsersRecord.reference],
+                                        final chatsUpdateData =
+                                            createChatsRecordData(
+                                          isDeleted: true,
                                         );
+                                        await listViewChatsRecord.reference
+                                            .update(chatsUpdateData);
                                       }
-
-                                      setState(() {});
                                     },
                                   ),
                                 ],
