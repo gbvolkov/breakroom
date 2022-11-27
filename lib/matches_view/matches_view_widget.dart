@@ -18,18 +18,18 @@ class MatchesViewWidget extends StatefulWidget {
 }
 
 class _MatchesViewWidgetState extends State<MatchesViewWidget> {
-  TextEditingController? textController;
+  TextEditingController? txtSearchController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    txtSearchController = TextEditingController();
   }
 
   @override
   void dispose() {
-    textController?.dispose();
+    txtSearchController?.dispose();
     super.dispose();
   }
 
@@ -78,9 +78,9 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     TextFormField(
-                      controller: textController,
+                      controller: txtSearchController,
                       onChanged: (_) => EasyDebounce.debounce(
-                        'textController',
+                        'txtSearchController',
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
@@ -124,10 +124,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                           color: FlutterFlowTheme.of(context).secondaryText,
                           size: 18,
                         ),
-                        suffixIcon: textController!.text.isNotEmpty
+                        suffixIcon: txtSearchController!.text.isNotEmpty
                             ? InkWell(
                                 onTap: () async {
-                                  textController?.clear();
+                                  txtSearchController?.clear();
                                   setState(() {});
                                 },
                                 child: Icon(
@@ -184,7 +184,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                         .where((e) => functions.checkMatches(
                                             e,
                                             columnUsersRecord.liked!.toList(),
-                                            textController!.text))
+                                            txtSearchController!.text))
                                         .toList();
                                     if (matches.isEmpty) {
                                       return Center(
@@ -192,7 +192,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                           width: double.infinity,
                                           height: double.infinity,
                                           child: EmptyMatchesWidgetWidget(
-                                            search: textController!.text,
+                                            search: txtSearchController!.text,
                                           ),
                                         ),
                                       );

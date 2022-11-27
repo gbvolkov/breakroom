@@ -180,6 +180,30 @@ bool checkMatches(
   }
 }
 
+bool checkChats(
+  ChatsRecord chat,
+  String? pattern,
+) {
+  if (pattern != null && pattern.isNotEmpty) {
+    //UsersRecord usrA = UsersRecord.getDocumentOnce(chat.userA);
+    //"${(fan.firstName ?? "")}  ${(fan.lastName ?? "")}  ${(fan.email ?? "")}";
+    String? tocompare = "";
+    if (currentUserReference != chat.userA) {
+      tocompare = chat.userA?.get().toString();
+    } else if (currentUserReference != chat.userB) {
+      tocompare = chat.userB?.get().toString();
+    }
+
+    if (tocompare?.contains(pattern) ?? true) {
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    return true;
+  }
+}
+
 List<UsersRecord> cleanUpFilteredProfiles(
   List<UsersRecord> fliteredProfiles,
   List<String> likedUsers,
