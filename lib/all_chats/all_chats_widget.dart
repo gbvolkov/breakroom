@@ -68,7 +68,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
               queryBuilder: (chatsRecord) => chatsRecord
                   .where('users', arrayContains: currentUserReference)
                   .where('is_deleted', isNotEqualTo: true)
-                  .orderBy('last_message_time', descending: true),
+                  .orderBy('last_message_time', descending: true)
+                  .orderBy('is_deleted'),
             ),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
