@@ -97,36 +97,6 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         width: double.infinity,
                         height: 72,
                         decoration: BoxDecoration(),
-                        child: Slidable(
-                          actionPane: const SlidableScrollActionPane(),
-                          secondaryActions: [
-                            IconSlideAction(
-                              caption: 'Block',
-                              color: Colors.blue,
-                              icon: FontAwesomeIcons.ban,
-                              onTap: () {
-                                print('SlidableActionWidget pressed ...');
-                              },
-                            ),
-                            IconSlideAction(
-                              caption: 'Delete',
-                              color: FlutterFlowTheme.of(context).systemError,
-                              icon: Icons.delete_forever_outlined,
-                              onTap: () {
-                                print('SlidableActionWidget pressed ...');
-                              },
-                            ),
-                          ],
-                          child: ListTile(
-                            tileColor: Color(0xFFF5F5F5),
-                            dense: false,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 72,
-                        decoration: BoxDecoration(),
                         child: StreamBuilder<FFChatInfo>(
                           stream: FFChatManager.instance
                               .getChatInfo(chatRecord: listViewChatsRecord),
@@ -187,6 +157,49 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                               borderRadius: BorderRadius.circular(0),
                             );
                           },
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          context.pushNamed(
+                            'Chat',
+                            queryParams: {
+                              'chatRef': serializeParam(
+                                listViewChatsRecord.reference,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 72,
+                          decoration: BoxDecoration(),
+                          child: Slidable(
+                            actionPane: const SlidableScrollActionPane(),
+                            secondaryActions: [
+                              IconSlideAction(
+                                caption: 'Block',
+                                color: Colors.blue,
+                                icon: FontAwesomeIcons.ban,
+                                onTap: () {
+                                  print('SlidableActionWidget pressed ...');
+                                },
+                              ),
+                              IconSlideAction(
+                                caption: 'Delete',
+                                color: FlutterFlowTheme.of(context).systemError,
+                                icon: Icons.delete_forever_outlined,
+                                onTap: () {
+                                  print('SlidableActionWidget pressed ...');
+                                },
+                              ),
+                            ],
+                            child: ListTile(
+                              tileColor: Color(0xFFF5F5F5),
+                              dense: false,
+                            ),
+                          ),
                         ),
                       ),
                     ],
