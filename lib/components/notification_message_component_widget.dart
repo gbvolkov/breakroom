@@ -186,8 +186,7 @@ class _NotificationMessageComponentWidgetState
                                 child: Builder(builder: (_) {
                                   final child = Row(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
