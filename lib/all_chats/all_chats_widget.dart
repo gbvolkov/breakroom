@@ -19,6 +19,7 @@ class AllChatsWidget extends StatefulWidget {
 }
 
 class _AllChatsWidgetState extends State<AllChatsWidget> {
+  ChatsRecord? groupChat;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -223,8 +224,44 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .systemError,
                                     icon: Icons.delete_forever_outlined,
-                                    onTap: () {
-                                      print('SlidableActionWidget pressed ...');
+                                    onTap: () async {
+                                      var confirmDialogResponse =
+                                          await showDialog<bool>(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('Delete chat'),
+                                                    content: Text(
+                                                        'The chat will be removed completely. Please confirm'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                false),
+                                                        child: Text('Cancel'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                true),
+                                                        child: Text('Confirm'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ) ??
+                                              false;
+                                      if (confirmDialogResponse) {
+                                        groupChat = await FFChatManager.instance
+                                            .removeGroupMembers(
+                                          listViewChatsRecord,
+                                          [stackUsersRecord.reference],
+                                        );
+                                      }
+
+                                      setState(() {});
                                     },
                                   ),
                                 ],
