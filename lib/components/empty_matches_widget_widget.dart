@@ -1,7 +1,6 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EmptyMatchesWidgetWidget extends StatefulWidget {
@@ -44,11 +43,11 @@ class _EmptyMatchesWidgetWidgetState extends State<EmptyMatchesWidgetWidget> {
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
-                  child: SvgPicture.asset(
-                    'assets/images/hearts.svg',
+                  child: Image.asset(
+                    'assets/images/hearts.png',
                     width: 130,
                     height: 100,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain,
                   ),
                 ),
                 Padding(
