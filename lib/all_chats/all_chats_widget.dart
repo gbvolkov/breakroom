@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../components/empty_list_widget_widget.dart';
 import '../components/menu_report_user_widget.dart';
+import '../components/report_user_dialog_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -21,7 +22,9 @@ class AllChatsWidget extends StatefulWidget {
 }
 
 class _AllChatsWidgetState extends State<AllChatsWidget> {
+  ComplaintsRecord? reportDoc;
   String? choice;
+  String? report;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -313,28 +316,51 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     }
                                                   } else {
                                                     if (choice == 'report') {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(
-                                                        SnackBar(
-                                                          content: Text(
-                                                            'To be reported',
-                                                            style: GoogleFonts
-                                                                .getFont(
-                                                              'Roboto',
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .alternate,
-                                                              fontSize: 18,
-                                                            ),
-                                                          ),
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  4000),
-                                                          backgroundColor:
-                                                              Color(0x00000000),
-                                                        ),
-                                                      );
+                                                      await showModalBottomSheet(
+                                                        isScrollControlled:
+                                                            true,
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return Padding(
+                                                            padding:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets,
+                                                            child:
+                                                                ReportUserDialogWidget(),
+                                                          );
+                                                        },
+                                                      ).then((value) =>
+                                                          setState(() =>
+                                                              report = value));
+
+                                                      if (report != null &&
+                                                          report != '') {
+                                                        final complaintsCreateData =
+                                                            createComplaintsRecordData(
+                                                          reporter:
+                                                              currentUserReference,
+                                                          referredUser:
+                                                              stackUsersRecord
+                                                                  .reference,
+                                                          report: report,
+                                                          complaintTS:
+                                                              getCurrentTimestamp,
+                                                        );
+                                                        var complaintsRecordReference =
+                                                            ComplaintsRecord
+                                                                .collection
+                                                                .doc();
+                                                        await complaintsRecordReference
+                                                            .set(
+                                                                complaintsCreateData);
+                                                        reportDoc = ComplaintsRecord
+                                                            .getDocumentFromData(
+                                                                complaintsCreateData,
+                                                                complaintsRecordReference);
+                                                      }
                                                     } else {
                                                       if (choice == 'block') {
                                                         ScaffoldMessenger.of(
