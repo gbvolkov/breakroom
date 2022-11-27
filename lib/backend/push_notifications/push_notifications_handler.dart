@@ -136,12 +136,14 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
       ),
   'LoginSetNewPasswordView': (data) async => LoginSetNewPasswordViewWidget(),
   'IntroductionView': (data) async => IntroductionViewWidget(),
-  'Chat': (data) async => ChatWidget(
-        chatUser: await getDocumentParameter(
-            data, 'chatUser', UsersRecord.serializer),
-        chatRef: getParameter(data, 'chatRef'),
-      ),
   'AllChats': (data) async => NavBarPage(initialPage: 'AllChats'),
+  'Chat': (data) async => hasMatchingParameters(data, {'chatUser', 'chatRef'})
+      ? ChatWidget(
+          chatUser: await getDocumentParameter(
+              data, 'chatUser', UsersRecord.serializer),
+          chatRef: getParameter(data, 'chatRef'),
+        )
+      : NavBarPage(initialPage: 'Chat'),
   'InviteUser': (data) async => InviteUserWidget(),
   'InviteUsers': (data) async => InviteUsersWidget(),
   'AddUsersToGroup': (data) async => AddUsersToGroupWidget(

@@ -280,25 +280,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => IntroductionViewWidget(),
             ),
             FFRoute(
-              name: 'Chat',
-              path: 'chat',
-              requireAuth: true,
-              asyncParams: {
-                'chatUser': getDoc('users', UsersRecord.serializer),
-              },
-              builder: (context, params) => ChatWidget(
-                chatUser: params.getParam('chatUser', ParamType.Document),
-                chatRef: params.getParam(
-                    'chatRef', ParamType.DocumentReference, false, 'chats'),
-              ),
-            ),
-            FFRoute(
               name: 'AllChats',
               path: 'allChats',
               requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'AllChats')
                   : AllChatsWidget(),
+            ),
+            FFRoute(
+              name: 'Chat',
+              path: 'chat',
+              requireAuth: true,
+              asyncParams: {
+                'chatUser': getDoc('users', UsersRecord.serializer),
+              },
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'Chat')
+                  : ChatWidget(
+                      chatUser: params.getParam('chatUser', ParamType.Document),
+                      chatRef: params.getParam('chatRef',
+                          ParamType.DocumentReference, false, 'chats'),
+                    ),
             ),
             FFRoute(
               name: 'InviteUser',
