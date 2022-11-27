@@ -544,14 +544,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ChangeEmailViewWidget(),
             ),
             FFRoute(
-              name: 'test_HomeView',
-              path: 'testHomeView',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'test_HomeView')
-                  : TestHomeViewWidget(),
-            ),
-            FFRoute(
               name: 'ChangePasswordView',
               path: 'changePasswordView',
               requireAuth: true,

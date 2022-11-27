@@ -109,6 +109,5 @@ export 'test_check_box_copy/test_check_box_copy_widget.dart'
 export 'test_new_home/test_new_home_widget.dart' show TestNewHomeWidget;
 export 'change_email_view/change_email_view_widget.dart'
     show ChangeEmailViewWidget;
-export 'test_home_view/test_home_view_widget.dart' show TestHomeViewWidget;
 export 'change_password_view/change_password_view_widget.dart'
     show ChangePasswordViewWidget;
