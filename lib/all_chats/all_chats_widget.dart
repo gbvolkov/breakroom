@@ -269,6 +269,101 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                   ).then((value) => setState(
                                                       () => choice = value));
 
+                                                  if (choice == 'unmatch') {
+                                                    var confirmDialogResponse =
+                                                        await showDialog<bool>(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return AlertDialog(
+                                                                  title: Text(
+                                                                      'Confirm unmatch'),
+                                                                  content: Text(
+                                                                      'Are you sure you want to unmatch ${stackUsersRecord.displayName}?'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                      child: Text(
+                                                                          'Cancel'),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                      child: Text(
+                                                                          'Confirm'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            ) ??
+                                                            false;
+                                                    if (confirmDialogResponse) {
+                                                      final usersUpdateData = {
+                                                        'liked': FieldValue
+                                                            .arrayRemove([
+                                                          stackUsersRecord.uid
+                                                        ]),
+                                                      };
+                                                      await currentUserReference!
+                                                          .update(
+                                                              usersUpdateData);
+                                                    }
+                                                  } else {
+                                                    if (choice == 'report') {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        SnackBar(
+                                                          content: Text(
+                                                            'To be reported',
+                                                            style: GoogleFonts
+                                                                .getFont(
+                                                              'Roboto',
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .alternate,
+                                                              fontSize: 18,
+                                                            ),
+                                                          ),
+                                                          duration: Duration(
+                                                              milliseconds:
+                                                                  4000),
+                                                          backgroundColor:
+                                                              Color(0x00000000),
+                                                        ),
+                                                      );
+                                                    } else {
+                                                      if (choice == 'block') {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'To be blocked',
+                                                              style: GoogleFonts
+                                                                  .getFont(
+                                                                'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                                fontSize: 18,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0x00000000),
+                                                          ),
+                                                        );
+                                                      }
+                                                    }
+                                                  }
+
                                                   setState(() {});
                                                 },
                                               ),
