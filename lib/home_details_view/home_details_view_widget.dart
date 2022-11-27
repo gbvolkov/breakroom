@@ -454,6 +454,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                   widget.userProfile,
                                                   ParamType.Document,
                                                 ),
+                                                'route': serializeParam(
+                                                  'homedetailsview',
+                                                  ParamType.String,
+                                                ),
                                               }.withoutNulls,
                                               extra: <String, dynamic>{
                                                 'chatUser': widget.userProfile,

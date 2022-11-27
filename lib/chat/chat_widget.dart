@@ -13,10 +13,12 @@ class ChatWidget extends StatefulWidget {
     Key? key,
     this.chatUser,
     this.chatRef,
+    this.route,
   }) : super(key: key);
 
   final UsersRecord? chatUser;
   final DocumentReference? chatRef;
+  final String? route;
 
   @override
   _ChatWidgetState createState() => _ChatWidgetState();
@@ -73,10 +75,13 @@ class _ChatWidgetState extends State<ChatWidget> {
             canpop = await actions.canPop(
               context,
             );
-            if (canpop!) {
+            if (canpop! && (widget.route != null && widget.route != '')) {
               context.pop();
             } else {
-              context.goNamed('HomeView');
+              if (Navigator.of(context).canPop()) {
+                context.pop();
+              }
+              context.pushNamed('HomeView');
             }
 
             setState(() {});

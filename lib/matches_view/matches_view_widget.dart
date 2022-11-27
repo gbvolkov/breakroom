@@ -431,6 +431,11 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                               ParamType
                                                                   .Document,
                                                             ),
+                                                            'route':
+                                                                serializeParam(
+                                                              'matchesview',
+                                                              ParamType.String,
+                                                            ),
                                                           }.withoutNulls,
                                                           extra: <String,
                                                               dynamic>{

@@ -141,6 +141,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         chatUser: await getDocumentParameter(
             data, 'chatUser', UsersRecord.serializer),
         chatRef: getParameter(data, 'chatRef'),
+        route: getParameter(data, 'route'),
       ),
   'InviteUser': (data) async => InviteUserWidget(),
   'InviteUsers': (data) async => InviteUsersWidget(),
@@ -187,8 +188,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         photos: [],
       ),
   'SetYourLocationView': (data) async => SetYourLocationViewWidget(),
-  'testCheckBoxCopy': (data) async =>
-      NavBarPage(initialPage: 'testCheckBoxCopy'),
+  'testCheckBoxCopy': (data) async => TestCheckBoxCopyWidget(),
   'testNewHome': (data) async => TestNewHomeWidget(),
   'ChangeEmailView': (data) async => ChangeEmailViewWidget(),
   'ChangePasswordView': (data) async => ChangePasswordViewWidget(),

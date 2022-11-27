@@ -236,6 +236,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                 stackUsersRecord,
                                                 ParamType.Document,
                                               ),
+                                              'route': serializeParam(
+                                                'allchats',
+                                                ParamType.String,
+                                              ),
                                             }.withoutNulls,
                                             extra: <String, dynamic>{
                                               'chatUser': stackUsersRecord,
