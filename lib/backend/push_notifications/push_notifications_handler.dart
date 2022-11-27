@@ -190,6 +190,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'testCheckBoxCopy': (data) async => TestCheckBoxCopyWidget(),
   'testNewHome': (data) async => TestNewHomeWidget(),
   'ChangeEmailView': (data) async => ChangeEmailViewWidget(),
+  'test_HomeView': (data) async => NavBarPage(initialPage: 'test_HomeView'),
   'ChangePasswordView': (data) async => ChangePasswordViewWidget(),
 };
 

@@ -24,14 +24,14 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
-class HomeViewWidget extends StatefulWidget {
-  const HomeViewWidget({Key? key}) : super(key: key);
+class TestHomeViewWidget extends StatefulWidget {
+  const TestHomeViewWidget({Key? key}) : super(key: key);
 
   @override
-  _HomeViewWidgetState createState() => _HomeViewWidgetState();
+  _TestHomeViewWidgetState createState() => _TestHomeViewWidgetState();
 }
 
-class _HomeViewWidgetState extends State<HomeViewWidget>
+class _TestHomeViewWidgetState extends State<TestHomeViewWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
     'containerOnActionTriggerAnimation': AnimationInfo(
@@ -182,7 +182,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'BreakRoom',
+                            'TESTTEST',
                             style: FlutterFlowTheme.of(context).title1.override(
                                   fontFamily: 'Roboto',
                                   fontSize: 38,
@@ -583,14 +583,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                       botttomCardWidthFraction: 0.8,
                                       onSwipeFn: (index) {},
                                       onLeftSwipe: (index) async {
-                                        if (animationsMap[
-                                                'containerOnActionTriggerAnimation'] !=
-                                            null) {
-                                          animationsMap[
-                                                  'containerOnActionTriggerAnimation']!
-                                              .controller
-                                              .forward();
-                                        }
                                         // addToDislikedLike
 
                                         final usersUpdateData = {
