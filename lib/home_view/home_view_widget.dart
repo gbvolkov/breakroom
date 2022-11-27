@@ -34,7 +34,28 @@ class HomeViewWidget extends StatefulWidget {
 class _HomeViewWidgetState extends State<HomeViewWidget>
     with TickerProviderStateMixin {
   final animationsMap = {
-    'containerOnActionTriggerAnimation': AnimationInfo(
+    'containerOnActionTriggerAnimation1': AnimationInfo(
+      trigger: AnimationTrigger.onActionTrigger,
+      applyInitialState: true,
+      effects: [
+        VisibilityEffect(duration: 1.ms),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 0.ms,
+          duration: 2000.ms,
+          begin: 0,
+          end: 10,
+        ),
+        FadeEffect(
+          curve: Curves.easeInOut,
+          delay: 1.ms,
+          duration: 2000.ms,
+          begin: 10,
+          end: 0,
+        ),
+      ],
+    ),
+    'containerOnActionTriggerAnimation2': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
       applyInitialState: true,
       effects: [
@@ -584,10 +605,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                       onSwipeFn: (index) {},
                                       onLeftSwipe: (index) async {
                                         if (animationsMap[
-                                                'containerOnActionTriggerAnimation'] !=
+                                                'containerOnActionTriggerAnimation1'] !=
                                             null) {
                                           await animationsMap[
-                                                  'containerOnActionTriggerAnimation']!
+                                                  'containerOnActionTriggerAnimation1']!
                                               .controller
                                               .forward();
                                         }
@@ -669,6 +690,14 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                           if (_shouldSetState) setState(() {});
                                           return;
                                         } else {
+                                          if (animationsMap[
+                                                  'containerOnActionTriggerAnimation2'] !=
+                                              null) {
+                                            await animationsMap[
+                                                    'containerOnActionTriggerAnimation2']!
+                                                .controller
+                                                .forward();
+                                          }
                                           if (clikesState == -1) {
                                             // addToLikedList
 
@@ -1369,6 +1398,35 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                     shape: BoxShape.rectangle,
                                                   ),
                                                   child: Icon(
+                                                    FFIcons.kicDislike,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                    size: 100,
+                                                  ),
+                                                ).animateOnActionTrigger(
+                                                  animationsMap[
+                                                      'containerOnActionTriggerAnimation1']!,
+                                                ),
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    AlignmentDirectional(0, 0),
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      1,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .systemSuccess,
+                                                    shape: BoxShape.rectangle,
+                                                  ),
+                                                  child: Icon(
                                                     FFIcons.kicLike,
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1377,7 +1435,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                   ),
                                                 ).animateOnActionTrigger(
                                                   animationsMap[
-                                                      'containerOnActionTriggerAnimation']!,
+                                                      'containerOnActionTriggerAnimation2']!,
                                                 ),
                                               ),
                                             ],
