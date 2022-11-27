@@ -123,7 +123,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'MatchesView': MatchesViewWidget(),
       'NotificationsView': NotificationsViewWidget(),
       'ProfileView': ProfileViewWidget(),
-      'Chat': ChatWidget(),
+      'testCheckBoxCopy': TestCheckBoxCopyWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     return Scaffold(
@@ -187,10 +187,10 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.chat,
+              Icons.twelve_mp,
               size: 24,
             ),
-            label: 'Chat',
+            label: 'Home',
             tooltip: '',
           )
         ],

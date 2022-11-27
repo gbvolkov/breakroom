@@ -294,13 +294,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               asyncParams: {
                 'chatUser': getDoc('users', UsersRecord.serializer),
               },
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Chat')
-                  : ChatWidget(
-                      chatUser: params.getParam('chatUser', ParamType.Document),
-                      chatRef: params.getParam('chatRef',
-                          ParamType.DocumentReference, false, 'chats'),
-                    ),
+              builder: (context, params) => ChatWidget(
+                chatUser: params.getParam('chatUser', ParamType.Document),
+                chatRef: params.getParam(
+                    'chatRef', ParamType.DocumentReference, false, 'chats'),
+              ),
             ),
             FFRoute(
               name: 'InviteUser',
@@ -531,7 +529,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'testCheckBoxCopy',
               path: 'testCheckBoxCopy',
-              builder: (context, params) => TestCheckBoxCopyWidget(),
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'testCheckBoxCopy')
+                  : TestCheckBoxCopyWidget(),
             ),
             FFRoute(
               name: 'testNewHome',

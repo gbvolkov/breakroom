@@ -137,13 +137,11 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'LoginSetNewPasswordView': (data) async => LoginSetNewPasswordViewWidget(),
   'IntroductionView': (data) async => IntroductionViewWidget(),
   'AllChats': (data) async => NavBarPage(initialPage: 'AllChats'),
-  'Chat': (data) async => hasMatchingParameters(data, {'chatUser', 'chatRef'})
-      ? ChatWidget(
-          chatUser: await getDocumentParameter(
-              data, 'chatUser', UsersRecord.serializer),
-          chatRef: getParameter(data, 'chatRef'),
-        )
-      : NavBarPage(initialPage: 'Chat'),
+  'Chat': (data) async => ChatWidget(
+        chatUser: await getDocumentParameter(
+            data, 'chatUser', UsersRecord.serializer),
+        chatRef: getParameter(data, 'chatRef'),
+      ),
   'InviteUser': (data) async => InviteUserWidget(),
   'InviteUsers': (data) async => InviteUsersWidget(),
   'AddUsersToGroup': (data) async => AddUsersToGroupWidget(
@@ -189,7 +187,8 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
         photos: [],
       ),
   'SetYourLocationView': (data) async => SetYourLocationViewWidget(),
-  'testCheckBoxCopy': (data) async => TestCheckBoxCopyWidget(),
+  'testCheckBoxCopy': (data) async =>
+      NavBarPage(initialPage: 'testCheckBoxCopy'),
   'testNewHome': (data) async => TestNewHomeWidget(),
   'ChangeEmailView': (data) async => ChangeEmailViewWidget(),
   'ChangePasswordView': (data) async => ChangePasswordViewWidget(),

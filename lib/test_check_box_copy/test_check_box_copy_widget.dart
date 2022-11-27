@@ -2,6 +2,7 @@ import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,6 +15,7 @@ class TestCheckBoxCopyWidget extends StatefulWidget {
 }
 
 class _TestCheckBoxCopyWidgetState extends State<TestCheckBoxCopyWidget> {
+  bool? canpop;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -34,8 +36,17 @@ class _TestCheckBoxCopyWidgetState extends State<TestCheckBoxCopyWidget> {
             color: FlutterFlowTheme.of(context).primaryText,
             size: 30,
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
+          onPressed: () async {
+            canpop = await actions.canPop(
+              context,
+            );
+            if (canpop!) {
+              context.pop();
+            } else {
+              context.pushNamed('HomeView');
+            }
+
+            setState(() {});
           },
         ),
         title: Text(
