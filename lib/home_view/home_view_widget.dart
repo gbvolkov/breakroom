@@ -49,7 +49,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
         FadeEffect(
           curve: Curves.easeInOut,
           delay: 1.ms,
-          duration: 2000.ms,
+          duration: 1000.ms,
           begin: 10,
           end: 0,
         ),
@@ -70,7 +70,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
         FadeEffect(
           curve: Curves.easeInOut,
           delay: 1.ms,
-          duration: 2000.ms,
+          duration: 1000.ms,
           begin: 10,
           end: 0,
         ),
@@ -607,7 +607,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                         if (animationsMap[
                                                 'containerOnActionTriggerAnimation1'] !=
                                             null) {
-                                          animationsMap[
+                                          await animationsMap[
                                                   'containerOnActionTriggerAnimation1']!
                                               .controller
                                               .forward();
