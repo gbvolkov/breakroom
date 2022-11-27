@@ -635,3 +635,17 @@ List<PhotoStruct> removePhotoFromList(
   }
   return photos;
 }
+
+DocumentReference? getChatUser(
+  DocumentReference? userA,
+  DocumentReference? userB,
+  DocumentReference currentUser,
+) {
+  if ((userA ?? currentUser) != currentUser) {
+    return userA;
+  } else if ((userB ?? currentUser) != currentUser) {
+    return userB;
+  } else {
+    return null;
+  }
+}
