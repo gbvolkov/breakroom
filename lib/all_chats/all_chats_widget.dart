@@ -115,7 +115,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 72,
+                            height: 80,
                             decoration: BoxDecoration(),
                             child: StreamBuilder<FFChatInfo>(
                               stream: FFChatManager.instance
@@ -205,7 +205,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 72,
+                              height: 80,
                               decoration: BoxDecoration(),
                               child: Slidable(
                                 actionPane: const SlidableScrollActionPane(),
