@@ -1355,19 +1355,25 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                 alignment:
                                                     AlignmentDirectional(0, 0),
                                                 child: Container(
-                                                  width: 100,
-                                                  height: 100,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      1,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
                                                         .alternate,
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.none,
-                                                      image: Image.asset(
-                                                        'assets/images/dislike.png',
-                                                      ).image,
-                                                    ),
-                                                    shape: BoxShape.circle,
+                                                    shape: BoxShape.rectangle,
+                                                  ),
+                                                  child: Icon(
+                                                    FFIcons.kicLike,
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                    size: 100,
                                                   ),
                                                 ).animateOnActionTrigger(
                                                   animationsMap[
