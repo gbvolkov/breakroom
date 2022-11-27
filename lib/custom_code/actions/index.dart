@@ -20,3 +20,4 @@ export 'check_internet_connection.dart' show checkInternetConnection;
 export 'get_last_string.dart' show getLastString;
 export 'can_process_like_action.dart' show canProcessLikeAction;
 export 'send_pwd_reset_email.dart' show sendPwdResetEmail;
+export 'can_pop.dart' show canPop;
