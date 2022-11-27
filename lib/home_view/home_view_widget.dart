@@ -48,7 +48,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
         ),
         FadeEffect(
           curve: Curves.easeInOut,
-          delay: 2000.ms,
+          delay: 1.ms,
           duration: 2000.ms,
           begin: 10,
           end: 0,
