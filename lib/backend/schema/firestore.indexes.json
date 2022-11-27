@@ -41,10 +41,6 @@
           "arrayConfig": "CONTAINS"
         },
         {
-          "fieldPath": "is_deleted",
-          "order": "ASCENDING"
-        },
-        {
           "fieldPath": "last_message_time",
           "order": "DESCENDING"
         }
@@ -65,20 +61,6 @@
         {
           "fieldPath": "timestamp",
           "order": "ASCENDING"
-        }
-      ]
-    },
-    {
-      "collectionGroup": "chats",
-      "queryScope": "COLLECTION",
-      "fields": [
-        {
-          "fieldPath": "users",
-          "arrayConfig": "CONTAINS"
-        },
-        {
-          "fieldPath": "last_message_time",
-          "order": "DESCENDING"
         }
       ]
     },
