@@ -208,11 +208,8 @@ class _NotificationMessageComponentWidgetState
                                       ),
                                       SelectionArea(
                                           child: Text(
-                                        columnUsersRecord.displayName!
-                                            .maybeHandleOverflow(
-                                          maxChars: 32,
-                                          replacement: '…',
-                                        ),
+                                        columnUsersRecord.displayName!,
+                                        textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -418,11 +415,8 @@ class _NotificationMessageComponentWidgetState
                                       ),
                                       SelectionArea(
                                           child: Text(
-                                        columnUsersRecord.displayName!
-                                            .maybeHandleOverflow(
-                                          maxChars: 48,
-                                          replacement: '…',
-                                        ),
+                                        columnUsersRecord.displayName!,
+                                        textAlign: TextAlign.start,
                                         style: FlutterFlowTheme.of(context)
                                             .bodyText1
                                             .override(
@@ -512,6 +506,7 @@ class _NotificationMessageComponentWidgetState
                               alignment: AlignmentDirectional(1, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Container(
                                     height: 48,

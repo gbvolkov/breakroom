@@ -46,7 +46,7 @@ class _CustomRangeSliderState extends State<CustomRangeSlider> {
 
   @override
   void initState() {
-    _minValue = widget.minValue ?? 0;
+    _minValue = widget.minValue ?? 18;
     _maxValue = widget.maxValue ?? 100;
     _activeColor = widget.activeColor ?? FlutterFlowTheme.of(context).alternate;
     _inactiveColor = widget.inactiveColor ??
