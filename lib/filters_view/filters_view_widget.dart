@@ -271,7 +271,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                     },
                                                   ),
                                                 ),
-                                                if (FFAppState().falseconst)
+                                                if (false)
                                                   Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,

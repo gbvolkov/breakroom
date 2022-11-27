@@ -109,7 +109,7 @@ class _LoginDetailsViewWidgetState extends State<LoginDetailsViewWidget> {
                           ),
                         ),
                       ),
-                      if (FFAppState().falseconst)
+                      if (false)
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 24),
                           child: Row(

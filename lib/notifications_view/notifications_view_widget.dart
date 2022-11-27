@@ -32,7 +32,7 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
         backgroundColor: FlutterFlowTheme.of(context).primaryColor,
         automaticallyImplyLeading: false,
         leading: Visibility(
-          visible: FFAppState().falseconst,
+          visible: false,
           child: FlutterFlowIconButton(
             borderColor: Colors.transparent,
             borderRadius: 30,
