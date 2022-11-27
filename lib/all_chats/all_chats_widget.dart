@@ -360,6 +360,34 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                             .getDocumentFromData(
                                                                 complaintsCreateData,
                                                                 complaintsRecordReference);
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Your report has been sent. Our support service will get back soon.',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    fontSize:
+                                                                        18,
+                                                                  ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                          ),
+                                                        );
                                                       }
                                                     } else {
                                                       if (choice == 'block') {
@@ -368,22 +396,21 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                             .showSnackBar(
                                                           SnackBar(
                                                             content: Text(
-                                                              'To be blocked',
-                                                              style: GoogleFonts
-                                                                  .getFont(
-                                                                'Roboto',
+                                                              'Please define the requirements!',
+                                                              style: TextStyle(
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .alternate,
-                                                                fontSize: 18,
+                                                                fontSize: 24,
                                                               ),
                                                             ),
                                                             duration: Duration(
                                                                 milliseconds:
                                                                     4000),
                                                             backgroundColor:
-                                                                Color(
-                                                                    0x00000000),
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBtnText,
                                                           ),
                                                         );
                                                       }

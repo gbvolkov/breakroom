@@ -3,6 +3,7 @@ import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +35,7 @@ class _ChatWidgetState extends State<ChatWidget> {
   }
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  bool? canpop;
 
   @override
   void initState() {
@@ -68,7 +70,16 @@ class _ChatWidgetState extends State<ChatWidget> {
             size: 24,
           ),
           onPressed: () async {
-            context.pop();
+            canpop = await actions.canPop(
+              context,
+            );
+            if (canpop!) {
+              context.pop();
+            } else {
+              context.goNamed('HomeView');
+            }
+
+            setState(() {});
           },
         ),
         title: Stack(
