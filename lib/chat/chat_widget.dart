@@ -97,7 +97,7 @@ class _ChatWidgetState extends State<ChatWidget> {
         ),
         actions: [
           Visibility(
-            visible: FFAppState().falseconst,
+            visible: false,
             child: FlutterFlowIconButton(
               borderColor: Colors.transparent,
               borderRadius: 30,
