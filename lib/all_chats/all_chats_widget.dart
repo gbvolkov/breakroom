@@ -6,6 +6,8 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AllChatsWidget extends StatefulWidget {
@@ -89,64 +91,105 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                 itemBuilder: (context, listViewIndex) {
                   final listViewChatsRecord =
                       listViewChatsRecordList[listViewIndex];
-                  return StreamBuilder<FFChatInfo>(
-                    stream: FFChatManager.instance
-                        .getChatInfo(chatRecord: listViewChatsRecord),
-                    builder: (context, snapshot) {
-                      final chatInfo =
-                          snapshot.data ?? FFChatInfo(listViewChatsRecord);
-                      return FFChatPreview(
-                        onTap: () => context.pushNamed(
-                          'Chat',
-                          queryParams: {
-                            'chatUser': serializeParam(
-                              chatInfo.otherUsers.length == 1
-                                  ? chatInfo.otherUsersList.first
-                                  : null,
-                              ParamType.Document,
-                            ),
-                            'chatRef': serializeParam(
-                              chatInfo.chatRecord.reference,
-                              ParamType.DocumentReference,
-                            ),
-                          }.withoutNulls,
-                          extra: <String, dynamic>{
-                            'chatUser': chatInfo.otherUsers.length == 1
-                                ? chatInfo.otherUsersList.first
-                                : null,
+                  return Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 72,
+                        decoration: BoxDecoration(),
+                        child: StreamBuilder<FFChatInfo>(
+                          stream: FFChatManager.instance
+                              .getChatInfo(chatRecord: listViewChatsRecord),
+                          builder: (context, snapshot) {
+                            final chatInfo = snapshot.data ??
+                                FFChatInfo(listViewChatsRecord);
+                            return FFChatPreview(
+                              onTap: () => context.pushNamed(
+                                'Chat',
+                                queryParams: {
+                                  'chatUser': serializeParam(
+                                    chatInfo.otherUsers.length == 1
+                                        ? chatInfo.otherUsersList.first
+                                        : null,
+                                    ParamType.Document,
+                                  ),
+                                  'chatRef': serializeParam(
+                                    chatInfo.chatRecord.reference,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'chatUser': chatInfo.otherUsers.length == 1
+                                      ? chatInfo.otherUsersList.first
+                                      : null,
+                                },
+                              ),
+                              lastChatText: chatInfo.chatPreviewMessage(),
+                              lastChatTime: listViewChatsRecord.lastMessageTime,
+                              seen: listViewChatsRecord.lastMessageSeenBy!
+                                  .contains(currentUserReference),
+                              title: chatInfo.chatPreviewTitle(),
+                              userProfilePic: chatInfo.chatPreviewPic(),
+                              color: Color(0x00000000),
+                              unreadColor:
+                                  FlutterFlowTheme.of(context).alternate,
+                              titleTextStyle: GoogleFonts.getFont(
+                                'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                              dateTextStyle: GoogleFonts.getFont(
+                                'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                              ),
+                              previewTextStyle: GoogleFonts.getFont(
+                                'Roboto',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 14,
+                              ),
+                              contentPadding:
+                                  EdgeInsetsDirectional.fromSTEB(3, 3, 3, 3),
+                              borderRadius: BorderRadius.circular(0),
+                            );
                           },
                         ),
-                        lastChatText: chatInfo.chatPreviewMessage(),
-                        lastChatTime: listViewChatsRecord.lastMessageTime,
-                        seen: listViewChatsRecord.lastMessageSeenBy!
-                            .contains(currentUserReference),
-                        title: chatInfo.chatPreviewTitle(),
-                        userProfilePic: chatInfo.chatPreviewPic(),
-                        color: Color(0x00000000),
-                        unreadColor: FlutterFlowTheme.of(context).alternate,
-                        titleTextStyle: GoogleFonts.getFont(
-                          'Roboto',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 72,
+                        decoration: BoxDecoration(),
+                        child: Slidable(
+                          actionPane: const SlidableScrollActionPane(),
+                          secondaryActions: [
+                            IconSlideAction(
+                              caption: 'Block',
+                              color: Colors.blue,
+                              icon: FontAwesomeIcons.ban,
+                              onTap: () {
+                                print('SlidableActionWidget pressed ...');
+                              },
+                            ),
+                            IconSlideAction(
+                              caption: 'Delete',
+                              color: FlutterFlowTheme.of(context).systemError,
+                              icon: Icons.delete_forever_outlined,
+                              onTap: () {
+                                print('SlidableActionWidget pressed ...');
+                              },
+                            ),
+                          ],
+                          child: ListTile(
+                            tileColor: Color(0xFFF5F5F5),
+                            dense: false,
+                          ),
                         ),
-                        dateTextStyle: GoogleFonts.getFont(
-                          'Roboto',
-                          color: FlutterFlowTheme.of(context).secondaryText,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14,
-                        ),
-                        previewTextStyle: GoogleFonts.getFont(
-                          'Roboto',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontWeight: FontWeight.normal,
-                          fontSize: 14,
-                        ),
-                        contentPadding:
-                            EdgeInsetsDirectional.fromSTEB(3, 3, 3, 3),
-                        borderRadius: BorderRadius.circular(0),
-                      );
-                    },
+                      ),
+                    ],
                   );
                 },
               );

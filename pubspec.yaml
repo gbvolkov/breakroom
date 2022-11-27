@@ -59,6 +59,7 @@ dependencies:
   flutter_google_places: 0.3.0
   flutter_image_slideshow: ^0.1.4
   flutter_rating_bar: 4.0.1
+  flutter_slidable: 0.6.0
   font_awesome_flutter: 10.1.0
   from_css_color: 2.0.0
   geocoding: ^2.0.5
