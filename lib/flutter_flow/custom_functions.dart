@@ -548,7 +548,7 @@ String formatDateTime(DateTime dt) {
     return DateFormat.jm().format(dt);
   } else {
     if (dt.year == DateTime.now().year) {
-      return DateFormat.Md().format(dt);
+      return DateFormat.MMMd().format(dt);
     } else {
       return DateFormat.yM().format(dt);
       //return DateFormat.yMd().add_jm().format(dt);
