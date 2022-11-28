@@ -793,7 +793,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                               ageRangeExt: false,
                                               distance: 50.0,
                                               ageRange: createIntRangeStruct(
-                                                min: 0,
+                                                min: 18,
                                                 max: 100,
                                                 clearUnsetFields: false,
                                                 create: true,

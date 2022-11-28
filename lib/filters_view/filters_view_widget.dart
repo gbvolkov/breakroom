@@ -5,8 +5,10 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/permissions_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,11 +26,13 @@ class FiltersViewWidget extends StatefulWidget {
 }
 
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
+  LatLng? currentUserLocationValue;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   PageController? pageViewController;
   String? ccInterestedInValue;
   bool? switchListTileValue;
   double? sliderDistanceValue;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? address;
 
   @override
   void initState() {
@@ -464,137 +468,212 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                            ),
+                                  Stack(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    children: [
+                                      Align(
+                                        alignment: AlignmentDirectional(-1, 0),
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          height: 60,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
                                           ),
                                         ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8, 0, 8, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'Location',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle1,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.5,
+                                              height: 70,
+                                              decoration: BoxDecoration(),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      FFAppState().fltrAddress,
+                                                      maxLines: 2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyText1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                          ),
+                                                    ),
+                                                  ),
+                                                  FlutterFlowIconButton(
+                                                    borderColor:
+                                                        Colors.transparent,
+                                                    borderRadius: 30,
+                                                    buttonSize: 32,
+                                                    icon: Icon(
+                                                      Icons
+                                                          .chevron_right_rounded,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText,
+                                                      size: 20,
+                                                    ),
+                                                    onPressed: () async {
+                                                      context.pushNamed(
+                                                        'ChooseLocationPage',
+                                                        queryParams: {
+                                                          'currentLocation':
+                                                              serializeParam(
+                                                            FFAppState()
+                                                                .fltrLocation,
+                                                            ParamType.LatLng,
+                                                          ),
+                                                          'user':
+                                                              serializeParam(
+                                                            widget.user,
+                                                            ParamType.Document,
+                                                          ),
+                                                        }.withoutNulls,
+                                                        extra: <String,
+                                                            dynamic>{
+                                                          'user': widget.user,
+                                                        },
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  if (widget.user!.isPremium! ||
+                                      !getRemoteConfigBool('check_premium'))
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  8, 0, 8, 0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                'Location',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .subtitle1,
-                                              ),
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.5,
-                                                height: 70,
-                                                decoration: BoxDecoration(),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        FFAppState()
-                                                            .fltrAddress,
-                                                        maxLines: 2,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
+                                                  0, 0, 0, 8),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              currentUserLocationValue =
+                                                  await getCurrentUserLocation(
+                                                      defaultLocation:
+                                                          LatLng(0.0, 0.0));
+                                              if ((await getPermissionStatus(
+                                                      locationPermission)) &&
+                                                  functions.isLocationSet(
+                                                      currentUserLocationValue)) {
+                                                setState(() => FFAppState()
+                                                        .tmpLocation =
+                                                    currentUserLocationValue);
+                                                address = await actions
+                                                    .getAddressFromLocation(
+                                                  FFAppState().tmpLocation!,
+                                                );
+                                                var confirmDialogResponse =
+                                                    await showDialog<bool>(
+                                                          context: context,
+                                                          builder:
+                                                              (alertDialogContext) {
+                                                            return AlertDialog(
+                                                              title: Text(
+                                                                  'Please, confirm your location.'),
+                                                              content: Text(
+                                                                  'Your location will be set to ${address}'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                  child: Text(
+                                                                      'Cancel'),
                                                                 ),
-                                                      ),
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30,
-                                                      buttonSize: 32,
-                                                      icon: Icon(
-                                                        Icons
-                                                            .chevron_right_rounded,
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                  child: Text(
+                                                                      'Confirm'),
+                                                                ),
+                                                              ],
+                                                            );
+                                                          },
+                                                        ) ??
+                                                        false;
+                                                if (confirmDialogResponse) {
+                                                  setState(() => FFAppState()
+                                                          .fltrLocation =
+                                                      FFAppState().tmpLocation);
+                                                  setState(() => FFAppState()
+                                                      .fltrAddress = address!);
+                                                }
+                                              }
+
+                                              setState(() {});
+                                            },
+                                            child: Container(
+                                              width: 100,
+                                              height: 40,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              alignment:
+                                                  AlignmentDirectional(1, -1),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 4, 0),
+                                                child: Text(
+                                                  'Reset location',
+                                                  textAlign: TextAlign.end,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryText,
-                                                        size: 20,
+                                                                .alternate,
                                                       ),
-                                                      onPressed: () async {
-                                                        context.pushNamed(
-                                                          'ChooseLocationPage',
-                                                          queryParams: {
-                                                            'currentLocation':
-                                                                serializeParam(
-                                                              FFAppState()
-                                                                  .fltrLocation,
-                                                              ParamType.LatLng,
-                                                            ),
-                                                            'user':
-                                                                serializeParam(
-                                                              widget.user,
-                                                              ParamType
-                                                                  .Document,
-                                                            ),
-                                                          }.withoutNulls,
-                                                          extra: <String,
-                                                              dynamic>{
-                                                            'user': widget.user,
-                                                          },
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
                                                 ),
                                               ),
-                                            ],
+                                            ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: Text(
-                                      'Reset location',
-                                      textAlign: TextAlign.end,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          ),
-                                    ),
-                                  ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0, 0, 0, 16),

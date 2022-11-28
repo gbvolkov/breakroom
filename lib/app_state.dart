@@ -320,6 +320,8 @@ class FFAppState {
   String resetPwdSendState = 'Send';
 
   bool resetLinkAvailability = true;
+
+  LatLng? tmpLocation = LatLng(50.4501, 30.5234);
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -83,71 +83,72 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-              child: TextFormField(
-                controller: txtSearchController,
-                onChanged: (_) => EasyDebounce.debounce(
-                  'txtSearchController',
-                  Duration(milliseconds: 2000),
-                  () => setState(() {}),
+            if (false)
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                child: TextFormField(
+                  controller: txtSearchController,
+                  onChanged: (_) => EasyDebounce.debounce(
+                    'txtSearchController',
+                    Duration(milliseconds: 2000),
+                    () => setState(() {}),
+                  ),
+                  obscureText: false,
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Color(0x00000000),
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    filled: true,
+                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 18,
+                    ),
+                    suffixIcon: txtSearchController!.text.isNotEmpty
+                        ? InkWell(
+                            onTap: () async {
+                              txtSearchController?.clear();
+                              setState(() {});
+                            },
+                            child: Icon(
+                              Icons.clear,
+                              color: Color(0xFF757575),
+                              size: 22,
+                            ),
+                          )
+                        : null,
+                  ),
+                  style: FlutterFlowTheme.of(context).subtitle2,
                 ),
-                obscureText: false,
-                decoration: InputDecoration(
-                  hintText: 'Search',
-                  hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: FlutterFlowTheme.of(context).secondaryText,
-                    size: 18,
-                  ),
-                  suffixIcon: txtSearchController!.text.isNotEmpty
-                      ? InkWell(
-                          onTap: () async {
-                            txtSearchController?.clear();
-                            setState(() {});
-                          },
-                          child: Icon(
-                            Icons.clear,
-                            color: Color(0xFF757575),
-                            size: 22,
-                          ),
-                        )
-                      : null,
-                ),
-                style: FlutterFlowTheme.of(context).subtitle2,
               ),
-            ),
             Expanded(
               child: StreamBuilder<List<ChatsRecord>>(
                 stream: queryChatsRecord(
@@ -176,10 +177,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                       child: Builder(
                         builder: (context) {
                           final chats = containerChatsRecordList
-                              .where((e) =>
-                                  !e.isDeleted! &&
-                                  functions.checkChats(
-                                      e, txtSearchController!.text))
+                              .where((e) => !e.isDeleted!)
                               .toList();
                           if (chats.isEmpty) {
                             return EmptyListWidgetWidget();
