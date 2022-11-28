@@ -592,9 +592,17 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       locationPermission)) &&
                                                   functions.isLocationSet(
                                                       currentUserLocationValue)) {
-                                                setState(() => FFAppState()
-                                                        .tmpLocation =
-                                                    currentUserLocationValue);
+                                                if (functions.isLocationSet(
+                                                    currentUserLocationValue)) {
+                                                  setState(() => FFAppState()
+                                                          .tmpLocation =
+                                                      currentUserLocationValue);
+                                                } else {
+                                                  setState(() => FFAppState()
+                                                          .tmpLocation =
+                                                      widget.user!.geoposition);
+                                                }
+
                                                 address = await actions
                                                     .getAddressFromLocation(
                                                   FFAppState().tmpLocation!,
