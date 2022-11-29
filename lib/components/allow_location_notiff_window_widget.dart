@@ -16,72 +16,75 @@ class _AllowLocationNotiffWindowWidgetState
     extends State<AllowLocationNotiffWindowWidget> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 2.7,
-      height: 204,
-      decoration: BoxDecoration(
-        color: FlutterFlowTheme.of(context).primaryBtnText,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                width: 106,
-                height: 100,
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                ),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                  child: Icon(
-                    Icons.location_on,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 80,
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 200),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 2.7,
+        height: 204,
+        decoration: BoxDecoration(
+          color: FlutterFlowTheme.of(context).primaryBtnText,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Stack(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: 106,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                    child: Icon(
+                      Icons.location_on,
+                      color: FlutterFlowTheme.of(context).alternate,
+                      size: 80,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                child: Text(
-                  'Allow location',
-                  style: FlutterFlowTheme.of(context).title3.override(
-                        fontFamily: 'Roboto',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                  child: Text(
+                    'Allow location',
+                    style: FlutterFlowTheme.of(context).title3.override(
+                          fontFamily: 'Roboto',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(68, 0, 68, 0),
-                child: Text(
-                  'Please go to settings in your phone and turn on the location access, so the app can work properly.',
-                  textAlign: TextAlign.center,
-                  style: FlutterFlowTheme.of(context).bodyText2,
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(68, 0, 68, 0),
+                  child: Text(
+                    'Please go to settings in your phone and turn on the location access, so the app can work properly.',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).bodyText2,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Align(
-            alignment: AlignmentDirectional(0.97, -0.93),
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 2,
-              borderWidth: 1,
-              buttonSize: 40,
-              icon: Icon(
-                Icons.close,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 20,
-              ),
-              onPressed: () async {
-                Navigator.pop(context);
-              },
+              ],
             ),
-          ),
-        ],
+            Align(
+              alignment: AlignmentDirectional(0.97, -0.93),
+              child: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 2,
+                borderWidth: 1,
+                buttonSize: 40,
+                icon: Icon(
+                  Icons.close,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 20,
+                ),
+                onPressed: () async {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
