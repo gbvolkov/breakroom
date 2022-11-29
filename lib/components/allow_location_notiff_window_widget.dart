@@ -17,7 +17,7 @@ class _AllowLocationNotiffWindowWidgetState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 200),
+      padding: EdgeInsetsDirectional.fromSTEB(48, 0, 48, 200),
       child: Container(
         width: MediaQuery.of(context).size.width * 2.7,
         height: 204,
@@ -57,7 +57,7 @@ class _AllowLocationNotiffWindowWidgetState
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(68, 0, 68, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
                   child: Text(
                     'Please go to settings in your phone and turn on the location access, so the app can work properly.',
                     textAlign: TextAlign.center,
