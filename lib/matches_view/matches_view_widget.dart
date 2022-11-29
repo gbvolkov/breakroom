@@ -485,14 +485,14 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                     ),
                                                 ],
                                               );
-                                              if (columnUsersRecord.liked!
+                                              if (!(columnUsersRecord.liked!
                                                       .toList()
                                                       .contains(
                                                           matchesItem.uid) ||
                                                   columnUsersRecord
                                                       .isPremium! ||
                                                   !getRemoteConfigBool(
-                                                      'check_premium')) {
+                                                      'check_premium'))) {
                                                 return ClipRect(
                                                   child: ImageFiltered(
                                                     imageFilter:
