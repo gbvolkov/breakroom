@@ -105,7 +105,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                 showModalBottomSheet(
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
-                  barrierColor: FlutterFlowTheme.of(context).alternate,
                   context: context,
                   builder: (context) {
                     return Padding(
