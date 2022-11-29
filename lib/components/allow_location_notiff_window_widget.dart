@@ -17,7 +17,7 @@ class _AllowLocationNotiffWindowWidgetState
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 200),
+      padding: EdgeInsetsDirectional.fromSTEB(32, 0, 32, 200),
       child: Container(
         width: MediaQuery.of(context).size.width * 2.7,
         height: 204,
