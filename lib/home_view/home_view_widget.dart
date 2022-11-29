@@ -111,10 +111,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                   builder: (context) {
                     return Padding(
                       padding: MediaQuery.of(context).viewInsets,
-                      child: Container(
-                        height: 204,
-                        child: AllowLocationNotiffWindowWidget(),
-                      ),
+                      child: AllowLocationNotiffWindowWidget(),
                     );
                   },
                 ).then((value) => setState(() {}));
