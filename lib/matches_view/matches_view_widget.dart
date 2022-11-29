@@ -214,27 +214,38 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                             matches[matchesIndex];
                                         return InkWell(
                                           onTap: () async {
-                                            context.pushNamed(
-                                              'HomeDetailsView',
-                                              queryParams: {
-                                                'userProfile': serializeParam(
-                                                  matchesItem,
-                                                  ParamType.Document,
-                                                ),
-                                                'mode': serializeParam(
-                                                  columnUsersRecord.liked!
-                                                          .toList()
-                                                          .contains(
-                                                              matchesItem.uid)
-                                                      ? 'match'
-                                                      : 'like',
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                              extra: <String, dynamic>{
-                                                'userProfile': matchesItem,
-                                              },
-                                            );
+                                            if (columnUsersRecord.liked!
+                                                    .toList()
+                                                    .contains(
+                                                        matchesItem.uid) ||
+                                                columnUsersRecord.isPremium! ||
+                                                !getRemoteConfigBool(
+                                                    'check_premium')) {
+                                              context.pushNamed(
+                                                'HomeDetailsView',
+                                                queryParams: {
+                                                  'userProfile': serializeParam(
+                                                    matchesItem,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'mode': serializeParam(
+                                                    columnUsersRecord.liked!
+                                                            .toList()
+                                                            .contains(
+                                                                matchesItem.uid)
+                                                        ? 'match'
+                                                        : 'like',
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'userProfile': matchesItem,
+                                                },
+                                              );
+                                            } else {
+                                              context
+                                                  .pushNamed('GetPremiumView');
+                                            }
                                           },
                                           child: Card(
                                             clipBehavior:
