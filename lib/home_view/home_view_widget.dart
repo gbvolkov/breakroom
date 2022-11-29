@@ -98,8 +98,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
       if (userDoc != null) {
         if (userDoc!.isComplete!) {
           setState(() => FFAppState().tmpIntention = userDoc!.intention!);
-          if (!((await getPermissionStatus(locationPermission)) &&
-              functions.isLocationSet(currentUserLocationValue))) {
+          if ((await getPermissionStatus(locationPermission)) &&
+              functions.isLocationSet(currentUserLocationValue)) {
+            setState(() => FFAppState().isFirstAtHome = true);
+          } else {
             if (functions.isLocationSet(userDoc!.geoposition)) {
               if (FFAppState().isFirstAtHome) {
                 showModalBottomSheet(
