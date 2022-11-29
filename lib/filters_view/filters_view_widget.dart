@@ -411,52 +411,48 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   ),
                                 ],
                               ),
-                              if (widget.user!.isPremium! ||
-                                  !getRemoteConfigBool('check_premium'))
-                                Align(
-                                  alignment: AlignmentDirectional(0, 0),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 16, 0, 0),
-                                    child: FFButtonWidget(
-                                      onPressed: () async {
-                                        if (widget.user!.isPremium! ||
-                                            !getRemoteConfigBool(
-                                                'check_premium')) {
-                                          setState(() => FFAppState()
-                                              .filterName = 'Advanced filters');
-                                          await pageViewController?.nextPage(
-                                            duration:
-                                                Duration(milliseconds: 300),
-                                            curve: Curves.ease,
-                                          );
-                                        } else {
-                                          context.pushNamed('GetPremiumView');
-                                        }
-                                      },
-                                      text: 'Advanced filters',
-                                      options: FFButtonOptions(
-                                        width: 170,
-                                        height: 40,
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
-                                            .override(
-                                              fontFamily: 'Roboto',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                            ),
-                                        elevation: 0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                        ),
-                                        borderRadius: BorderRadius.circular(8),
+                              Align(
+                                alignment: AlignmentDirectional(0, 0),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      if (widget.user!.isPremium! ||
+                                          !getRemoteConfigBool(
+                                              'check_premium')) {
+                                        setState(() => FFAppState().filterName =
+                                            'Advanced filters');
+                                        await pageViewController?.nextPage(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.ease,
+                                        );
+                                      } else {
+                                        context.pushNamed('GetPremiumView');
+                                      }
+                                    },
+                                    text: 'Advanced filters',
+                                    options: FFButtonOptions(
+                                      width: 170,
+                                      height: 40,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                          ),
+                                      elevation: 0,
+                                      borderSide: BorderSide(
+                                        color: Colors.transparent,
                                       ),
+                                      borderRadius: BorderRadius.circular(8),
                                     ),
                                   ),
                                 ),
+                              ),
                             ],
                           ),
                           Column(
@@ -853,92 +849,27 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 FFAppState().fltrGender = ccInterestedInValue!);
                             if (widget.user!.isPremium! ||
                                 !getRemoteConfigBool('check_premium')) {
-                              var confirmDialogResponse =
-                                  await showDialog<bool>(
-                                        context: context,
-                                        builder: (alertDialogContext) {
-                                          return AlertDialog(
-                                            title: Text('Seet your location'),
-                                            content: Text(
-                                                'Please confirm if we can use ${FFAppState().fltrAddress} as your location.(${FFAppState().fltrLocation?.toString()}'),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, false),
-                                                child: Text(
-                                                    'No, use my device location'),
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                    alertDialogContext, true),
-                                                child: Text('Yep, please'),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      ) ??
-                                      false;
-                              if (confirmDialogResponse) {
-                                final usersUpdateData = createUsersRecordData(
-                                  filter: createFilterStruct(
-                                    ageRangeExt: false,
-                                    distance: sliderDistanceValue,
-                                    location: FFAppState().fltrLocation,
-                                    address: FFAppState().fltrAddress,
-                                    ageRange: createIntRangeStruct(
-                                      min: FFAppState().fltrAgeMin,
-                                      max: FFAppState().fltrAgeMax,
-                                      clearUnsetFields: false,
-                                    ),
-                                    gender: FFAppState().fltrGender,
-                                    fieldValues: {
-                                      'lookingFor': FFAppState().fltrLookingFor,
-                                      'industries':
-                                          FFAppState().fltrIndusrtries,
-                                    },
+                              final usersUpdateData = createUsersRecordData(
+                                filter: createFilterStruct(
+                                  ageRangeExt: false,
+                                  distance: sliderDistanceValue,
+                                  location: FFAppState().fltrLocation,
+                                  address: FFAppState().fltrAddress,
+                                  ageRange: createIntRangeStruct(
+                                    min: FFAppState().fltrAgeMin,
+                                    max: FFAppState().fltrAgeMax,
                                     clearUnsetFields: false,
                                   ),
-                                  geoposition: FFAppState().fltrLocation,
-                                );
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Done!',
-                                      style: TextStyle(
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                      ),
-                                    ),
-                                    duration: Duration(milliseconds: 4000),
-                                    backgroundColor: Color(0x00000000),
-                                  ),
-                                );
-                              } else {
-                                final usersUpdateData = createUsersRecordData(
-                                  filter: createFilterStruct(
-                                    ageRangeExt: false,
-                                    distance: sliderDistanceValue,
-                                    location: FFAppState().fltrLocation,
-                                    address: FFAppState().fltrAddress,
-                                    ageRange: createIntRangeStruct(
-                                      min: FFAppState().fltrAgeMin,
-                                      max: FFAppState().fltrAgeMax,
-                                      clearUnsetFields: false,
-                                    ),
-                                    gender: FFAppState().fltrGender,
-                                    fieldValues: {
-                                      'lookingFor': FFAppState().fltrLookingFor,
-                                      'industries':
-                                          FFAppState().fltrIndusrtries,
-                                    },
-                                    clearUnsetFields: false,
-                                  ),
-                                );
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                              }
+                                  gender: FFAppState().fltrGender,
+                                  fieldValues: {
+                                    'lookingFor': FFAppState().fltrLookingFor,
+                                    'industries': FFAppState().fltrIndusrtries,
+                                  },
+                                  clearUnsetFields: false,
+                                ),
+                              );
+                              await currentUserReference!
+                                  .update(usersUpdateData);
                             } else {
                               final usersUpdateData = createUsersRecordData(
                                 filter: createFilterStruct(
