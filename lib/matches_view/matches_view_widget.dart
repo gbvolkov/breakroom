@@ -5,6 +5,7 @@ import '../components/gender_icon_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'dart:ui';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -243,85 +244,124 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                               borderRadius:
                                                   BorderRadius.circular(16),
                                             ),
-                                            child: Stack(
-                                              children: [
-                                                Image.network(
-                                                  valueOrDefault<String>(
-                                                    matchesItem.photoUrl,
-                                                    'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                  ),
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                Container(
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    image: DecorationImage(
-                                                      fit: BoxFit.cover,
-                                                      image: Image.network(
-                                                        '',
-                                                      ).image,
+                                            child: Builder(builder: (_) {
+                                              final child = Stack(
+                                                children: [
+                                                  Image.network(
+                                                    valueOrDefault<String>(
+                                                      matchesItem.photoUrl,
+                                                      'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                     ),
-                                                    gradient: LinearGradient(
-                                                      colors: [
-                                                        Color(0x00C4C4C4),
-                                                        Color(0xC9000000)
-                                                      ],
-                                                      stops: [0, 1],
-                                                      begin:
-                                                          AlignmentDirectional(
-                                                              0, -1),
-                                                      end: AlignmentDirectional(
-                                                          0, 1),
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                  Container(
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: Image.network(
+                                                          '',
+                                                        ).image,
+                                                      ),
+                                                      gradient: LinearGradient(
+                                                        colors: [
+                                                          Color(0x00C4C4C4),
+                                                          Color(0xC9000000)
+                                                        ],
+                                                        stops: [0, 1],
+                                                        begin:
+                                                            AlignmentDirectional(
+                                                                0, -1),
+                                                        end:
+                                                            AlignmentDirectional(
+                                                                0, 1),
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(8, 0, 8, 8),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          GenderIconWidget(
-                                                            gender: matchesItem
-                                                                .gender,
-                                                            maleIcon: Icon(
-                                                              FFIcons.kmale,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              size: 16,
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                8, 0, 8, 8),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            GenderIconWidget(
+                                                              gender:
+                                                                  matchesItem
+                                                                      .gender,
+                                                              maleIcon: Icon(
+                                                                FFIcons.kmale,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                size: 16,
+                                                              ),
+                                                              femaleIcon: Icon(
+                                                                FFIcons.kfemale,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                size: 16,
+                                                              ),
                                                             ),
-                                                            femaleIcon: Icon(
-                                                              FFIcons.kfemale,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              size: 16,
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          4,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                '${matchesItem.firstName}, ${functions.getAge(matchesItem.birthDay).toString()}',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .subtitle2
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryColor,
+                                                                      fontSize:
+                                                                          14,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Padding(
+                                                          ],
+                                                        ),
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1, 0),
+                                                          child: Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        4,
                                                                         0,
+                                                                        4,
                                                                         0,
                                                                         0),
                                                             child: Text(
-                                                              '${matchesItem.firstName}, ${functions.getAge(matchesItem.birthDay).toString()}',
+                                                              matchesItem
+                                                                  .education!,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .subtitle2
+                                                                  .bodyText1
                                                                   .override(
                                                                     fontFamily:
                                                                         'Roboto',
@@ -329,145 +369,143 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                                             context)
                                                                         .primaryColor,
                                                                     fontSize:
-                                                                        14,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
+                                                                        12,
                                                                   ),
                                                             ),
                                                           ),
-                                                        ],
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1, 0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      4, 0, 0),
-                                                          child: Text(
-                                                            matchesItem
-                                                                .education!,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  fontSize: 12,
-                                                                ),
+                                                        ),
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1, 0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        0,
+                                                                        4,
+                                                                        0,
+                                                                        0),
+                                                            child: Text(
+                                                              matchesItem.bio!,
+                                                              maxLines: 2,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyText2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryColor,
+                                                                    fontSize: 8,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300,
+                                                                  ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1, 0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      4, 0, 0),
-                                                          child: Text(
-                                                            matchesItem.bio!,
-                                                            maxLines: 2,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText2
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryColor,
-                                                                  fontSize: 8,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          1.1, 0.95),
-                                                  child: FlutterFlowIconButton(
-                                                    borderColor:
-                                                        Colors.transparent,
-                                                    borderRadius: 30,
-                                                    borderWidth: 1,
-                                                    buttonSize: 60,
-                                                    icon: Icon(
-                                                      Icons.chat,
-                                                      color: Color(0xA3F5F5F5),
-                                                      size: 30,
+                                                      ],
                                                     ),
-                                                    onPressed: () async {
-                                                      if (columnUsersRecord
-                                                              .isPremium! ||
-                                                          !getRemoteConfigBool(
-                                                              'check_premium') ||
-                                                          columnUsersRecord
-                                                              .liked!
-                                                              .toList()
-                                                              .contains(
-                                                                  matchesItem
-                                                                      .uid)) {
-                                                        context.pushNamed(
-                                                          'Chat',
-                                                          queryParams: {
-                                                            'chatUser':
-                                                                serializeParam(
-                                                              matchesItem,
-                                                              ParamType
-                                                                  .Document,
-                                                            ),
-                                                            'route':
-                                                                serializeParam(
-                                                              'matchesview',
-                                                              ParamType.String,
-                                                            ),
-                                                          }.withoutNulls,
-                                                          extra: <String,
-                                                              dynamic>{
-                                                            'chatUser':
-                                                                matchesItem,
-                                                          },
-                                                        );
-                                                      } else {
-                                                        context.pushNamed(
-                                                            'GetPremiumView');
-                                                      }
-                                                    },
                                                   ),
-                                                ),
-                                                if (columnUsersRecord.liked!
-                                                    .toList()
-                                                    .contains(matchesItem.uid))
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -0.9, -0.97),
-                                                    child: Icon(
-                                                      FFIcons.kheartsIcons,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      size: 24,
+                                                            1.1, 0.95),
+                                                    child:
+                                                        FlutterFlowIconButton(
+                                                      borderColor:
+                                                          Colors.transparent,
+                                                      borderRadius: 30,
+                                                      borderWidth: 1,
+                                                      buttonSize: 60,
+                                                      icon: Icon(
+                                                        Icons.chat,
+                                                        color:
+                                                            Color(0xA3F5F5F5),
+                                                        size: 30,
+                                                      ),
+                                                      onPressed: () async {
+                                                        if (columnUsersRecord
+                                                                .isPremium! ||
+                                                            !getRemoteConfigBool(
+                                                                'check_premium') ||
+                                                            columnUsersRecord
+                                                                .liked!
+                                                                .toList()
+                                                                .contains(
+                                                                    matchesItem
+                                                                        .uid)) {
+                                                          context.pushNamed(
+                                                            'Chat',
+                                                            queryParams: {
+                                                              'chatUser':
+                                                                  serializeParam(
+                                                                matchesItem,
+                                                                ParamType
+                                                                    .Document,
+                                                              ),
+                                                              'route':
+                                                                  serializeParam(
+                                                                'matchesview',
+                                                                ParamType
+                                                                    .String,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              'chatUser':
+                                                                  matchesItem,
+                                                            },
+                                                          );
+                                                        } else {
+                                                          context.pushNamed(
+                                                              'GetPremiumView');
+                                                        }
+                                                      },
                                                     ),
                                                   ),
-                                              ],
-                                            ),
+                                                  if (columnUsersRecord.liked!
+                                                      .toList()
+                                                      .contains(
+                                                          matchesItem.uid))
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              -0.9, -0.97),
+                                                      child: Icon(
+                                                        FFIcons.kheartsIcons,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        size: 24,
+                                                      ),
+                                                    ),
+                                                ],
+                                              );
+                                              if (columnUsersRecord.liked!
+                                                      .toList()
+                                                      .contains(
+                                                          matchesItem.uid) ||
+                                                  columnUsersRecord
+                                                      .isPremium! ||
+                                                  !getRemoteConfigBool(
+                                                      'check_premium')) {
+                                                return ClipRect(
+                                                  child: ImageFiltered(
+                                                    imageFilter:
+                                                        ImageFilter.blur(
+                                                      sigmaX: 8,
+                                                      sigmaY: 8,
+                                                    ),
+                                                    child: child,
+                                                  ),
+                                                );
+                                              }
+                                              return child;
+                                            }),
                                           ),
                                         );
                                       },
