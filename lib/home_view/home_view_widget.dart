@@ -1,6 +1,7 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
+import '../components/allow_location_notiff_window_widget.dart';
 import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
 import '../components/likes_limit_exceed_widget_widget.dart';
@@ -97,9 +98,30 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
       if (userDoc != null) {
         if (userDoc!.isComplete!) {
           setState(() => FFAppState().tmpIntention = userDoc!.intention!);
-          if (!(await getPermissionStatus(locationPermission)) ||
-              !functions.isLocationSet(userDoc!.geoposition)) {
-            context.pushNamed('SetYourLocationView');
+          if (!((await getPermissionStatus(locationPermission)) &&
+              functions.isLocationSet(currentUserLocationValue))) {
+            if (functions.isLocationSet(userDoc!.geoposition)) {
+              if (FFAppState().isFirstAtHome) {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  barrierColor: FlutterFlowTheme.of(context).alternate,
+                  context: context,
+                  builder: (context) {
+                    return Padding(
+                      padding: MediaQuery.of(context).viewInsets,
+                      child: Container(
+                        height: 204,
+                        child: AllowLocationNotiffWindowWidget(),
+                      ),
+                    );
+                  },
+                ).then((value) => setState(() {}));
+              }
+              setState(() => FFAppState().isFirstAtHome = false);
+            } else {
+              context.pushNamed('SetYourLocationView');
+            }
           }
 
           final usersUpdateData = createUsersRecordData(

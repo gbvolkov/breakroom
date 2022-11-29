@@ -322,6 +322,8 @@ class FFAppState {
   bool resetLinkAvailability = true;
 
   LatLng? tmpLocation = LatLng(50.4501, 30.5234);
+
+  bool isFirstAtHome = true;
 }
 
 LatLng? _latLngFromString(String? val) {
