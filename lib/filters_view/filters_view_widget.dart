@@ -588,17 +588,9 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       locationPermission)) &&
                                                   functions.isLocationSet(
                                                       currentUserLocationValue)) {
-                                                if (functions.isLocationSet(
-                                                    currentUserLocationValue)) {
-                                                  setState(() => FFAppState()
-                                                          .tmpLocation =
-                                                      currentUserLocationValue);
-                                                } else {
-                                                  setState(() => FFAppState()
-                                                          .tmpLocation =
-                                                      widget.user!.geoposition);
-                                                }
-
+                                                setState(() => FFAppState()
+                                                        .tmpLocation =
+                                                    currentUserLocationValue);
                                                 address = await actions
                                                     .getAddressFromLocation(
                                                   FFAppState().tmpLocation!,
@@ -642,6 +634,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                   setState(() => FFAppState()
                                                       .fltrAddress = address!);
                                                 }
+                                              } else {
+                                                setState(() => FFAppState()
+                                                        .tmpLocation =
+                                                    widget.user!.geoposition);
                                               }
 
                                               setState(() {});

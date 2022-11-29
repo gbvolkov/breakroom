@@ -4,7 +4,6 @@ import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/empty_candidates_list_widget_widget.dart';
 import '../components/gender_icon_widget.dart';
 import '../components/likes_limit_exceed_widget_widget.dart';
-import '../components/notifications_bell_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -209,15 +208,6 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                   fontSize: 38,
                                 ),
                           ),
-                          if (columnUsersRecord.isPremium ?? true)
-                            InkWell(
-                              onTap: () async {
-                                context.goNamed('NotificationsView');
-                              },
-                              child: NotificationsBellWidget(
-                                notiffTS: columnUsersRecord.notiffReadTS,
-                              ),
-                            ),
                           InkWell(
                             onTap: () async {
                               currentUserLocationValue =
