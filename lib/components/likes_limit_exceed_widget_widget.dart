@@ -137,7 +137,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             revenue_cat.offerings!.current!
                                                 .annual!.product.priceString,
                                             style: FlutterFlowTheme.of(context)
@@ -277,7 +277,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             revenue_cat
                                                 .offerings!
                                                 .current!
@@ -403,7 +403,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             revenue_cat.offerings!.current!
                                                 .monthly!.product.priceString,
                                             style: FlutterFlowTheme.of(context)
