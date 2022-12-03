@@ -1,4 +1,3 @@
-import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -6,7 +5,6 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -419,29 +417,7 @@ class _LikesLimitExceedWidgetWidgetState
                         didPurchase = await revenue_cat.purchasePackage(
                             revenue_cat
                                 .offerings!.current!.threeMonth!.identifier);
-                        if (didPurchase!) {
-                          final usersUpdateData = createUsersRecordData(
-                            isPremium: true,
-                          );
-                          await currentUserReference!.update(usersUpdateData);
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Unable to putrchase!',
-                                style: TextStyle(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                              ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor:
-                                  FlutterFlowTheme.of(context).alternate,
-                            ),
-                          );
-                        }
-
-                        Navigator.pop(context);
+                        Navigator.pop(context, didPurchase);
 
                         setState(() {});
                       },
