@@ -102,358 +102,400 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                             PageController(initialPage: 0),
                         scrollDirection: Axis.horizontal,
                         children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: Text(
-                                  'I\'m interested in',
-                                  style: FlutterFlowTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: FlutterFlowChoiceChips(
-                                  initiallySelected: [FFAppState().fltrGender],
-                                  options: FFAppState()
-                                      .interestedInList
-                                      .map((label) => ChipData(label))
-                                      .toList(),
-                                  onChanged: (val) => setState(
-                                      () => ccInterestedInValue = val?.first),
-                                  selectedChipStyle: ChipStyle(
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                    iconColor: Colors.white,
-                                    iconSize: 18,
-                                    elevation: 0,
+                          StreamBuilder<UsersRecord>(
+                            stream:
+                                UsersRecord.getDocument(widget.user!.reference),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: CircularProgressIndicator(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
                                   ),
-                                  unselectedChipStyle: ChipStyle(
-                                    backgroundColor:
-                                        FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Roboto',
-                                          fontWeight: FontWeight.w300,
-                                        ),
-                                    iconColor: Color(0xFF323B45),
-                                    iconSize: 18,
-                                    elevation: 0,
-                                  ),
-                                  chipSpacing: 4,
-                                  multiselect: false,
-                                  initialized: ccInterestedInValue != null,
-                                  alignment: WrapAlignment.spaceEvenly,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: Text(
-                                  'Age',
-                                  style: FlutterFlowTheme.of(context)
-                                      .title3
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                              ),
-                              Column(
+                                );
+                              }
+                              final columnUsersRecord = snapshot.data!;
+                              return Column(
                                 mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: Stack(
-                                      children: [
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 150,
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFFF5F5F5),
-                                            borderRadius:
-                                                BorderRadius.circular(16),
+                                        0, 0, 0, 8),
+                                    child: Text(
+                                      'I\'m interested in',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16, 16, 16, 0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 16),
+                                    child: FlutterFlowChoiceChips(
+                                      initiallySelected: [
+                                        FFAppState().fltrGender
+                                      ],
+                                      options: FFAppState()
+                                          .interestedInList
+                                          .map((label) => ChipData(label))
+                                          .toList(),
+                                      onChanged: (val) => setState(() =>
+                                          ccInterestedInValue = val?.first),
+                                      selectedChipStyle: ChipStyle(
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .alternate,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryColor,
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                        iconColor: Colors.white,
+                                        iconSize: 18,
+                                        elevation: 0,
+                                      ),
+                                      unselectedChipStyle: ChipStyle(
+                                        backgroundColor:
+                                            FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .subtitle2
+                                            .override(
+                                              fontFamily: 'Roboto',
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                        iconColor: Color(0xFF323B45),
+                                        iconSize: 18,
+                                        elevation: 0,
+                                      ),
+                                      chipSpacing: 4,
+                                      multiselect: false,
+                                      initialized: ccInterestedInValue != null,
+                                      alignment: WrapAlignment.spaceEvenly,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 8),
+                                    child: Text(
+                                      'Age',
+                                      style: FlutterFlowTheme.of(context)
+                                          .title3
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                    ),
+                                  ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 16),
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 150,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFFF5F5F5),
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(16, 16, 16, 0),
+                                                child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 0, 8),
-                                                      child: Text(
-                                                        'Between ${formatNumber(
-                                                          FFAppState()
-                                                              .fltrAgeMin,
-                                                          formatType:
-                                                              FormatType.custom,
-                                                          format: '###',
-                                                          locale: '',
-                                                        )} and ${formatNumber(
-                                                          FFAppState()
-                                                              .fltrAgeMax,
-                                                          formatType:
-                                                              FormatType.custom,
-                                                          format: '###',
-                                                          locale: '',
-                                                        )}',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
+                                                    Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      0, 0, 8),
+                                                          child: Text(
+                                                            'Between ${formatNumber(
+                                                              FFAppState()
+                                                                  .fltrAgeMin,
+                                                              formatType:
+                                                                  FormatType
+                                                                      .custom,
+                                                              format: '###',
+                                                              locale: '',
+                                                            )} and ${formatNumber(
+                                                              FFAppState()
+                                                                  .fltrAgeMax,
+                                                              formatType:
+                                                                  FormatType
+                                                                      .custom,
+                                                              format: '###',
+                                                              locale: '',
+                                                            )}',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
                                                                 .subtitle1,
-                                                      ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  height: 50,
-                                                  child: custom_widgets
-                                                      .CustomRangeSlider(
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      height: 50,
+                                                      child: custom_widgets
+                                                          .CustomRangeSlider(
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    height: 50,
-                                                    minValue: 18,
-                                                    maxValue: 100,
-                                                    rangeStart:
-                                                        FFAppState().fltrAgeMin,
-                                                    rangeEnd:
-                                                        FFAppState().fltrAgeMax,
-                                                    activeColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .alternate,
-                                                    inactiveColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondaryText,
-                                                    onValueChanged: () async {
-                                                      setState(() => FFAppState()
-                                                              .fltrAgeMin =
-                                                          FFAppState()
-                                                              .rangeSliderStart);
-                                                      setState(() => FFAppState()
-                                                              .fltrAgeMax =
-                                                          FFAppState()
-                                                              .rangeSliderEnd);
-                                                    },
-                                                  ),
+                                                        height: 50,
+                                                        minValue: 18,
+                                                        maxValue: 100,
+                                                        rangeStart: FFAppState()
+                                                            .fltrAgeMin,
+                                                        rangeEnd: FFAppState()
+                                                            .fltrAgeMax,
+                                                        activeColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        inactiveColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        onValueChanged:
+                                                            () async {
+                                                          setState(() => FFAppState()
+                                                                  .fltrAgeMin =
+                                                              FFAppState()
+                                                                  .rangeSliderStart);
+                                                          setState(() => FFAppState()
+                                                                  .fltrAgeMax =
+                                                              FFAppState()
+                                                                  .rangeSliderEnd);
+                                                        },
+                                                      ),
+                                                    ),
+                                                    if (false)
+                                                      Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            'See people 2 years either\nside if I run out',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1,
+                                                          ),
+                                                          Expanded(
+                                                            child:
+                                                                SwitchListTile(
+                                                              value: switchListTileValue ??=
+                                                                  FFAppState()
+                                                                      .fltrAgeRangeExt,
+                                                              onChanged:
+                                                                  (newValue) async {
+                                                                setState(() =>
+                                                                    switchListTileValue =
+                                                                        newValue!);
+                                                              },
+                                                              tileColor: Color(
+                                                                  0xFFF5F5F5),
+                                                              activeColor: Color(
+                                                                  0xFF27AE60),
+                                                              activeTrackColor:
+                                                                  Color(
+                                                                      0xFFA0E0BC),
+                                                              dense: false,
+                                                              controlAffinity:
+                                                                  ListTileControlAffinity
+                                                                      .trailing,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                  ],
                                                 ),
-                                                if (false)
-                                                  Row(
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 16),
+                                        child: Stack(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  AlignmentDirectional(-1, 0),
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 90,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondaryBackground,
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                ),
+                                              ),
+                                            ),
+                                            Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(8, 8, 8, 8),
+                                                  child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Text(
-                                                        'See people 2 years either\nside if I run out',
+                                                        'Distance Preference',
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1,
+                                                                .subtitle1,
                                                       ),
-                                                      Expanded(
-                                                        child: SwitchListTile(
-                                                          value: switchListTileValue ??=
-                                                              FFAppState()
-                                                                  .fltrAgeRangeExt,
-                                                          onChanged:
-                                                              (newValue) async {
-                                                            setState(() =>
-                                                                switchListTileValue =
-                                                                    newValue!);
-                                                          },
-                                                          tileColor:
-                                                              Color(0xFFF5F5F5),
-                                                          activeColor:
-                                                              Color(0xFF27AE60),
-                                                          activeTrackColor:
-                                                              Color(0xFFA0E0BC),
-                                                          dense: false,
-                                                          controlAffinity:
-                                                              ListTileControlAffinity
-                                                                  .trailing,
+                                                      Text(
+                                                        formatNumber(
+                                                          sliderDistanceValue,
+                                                          formatType:
+                                                              FormatType.custom,
+                                                          format: '###',
+                                                          locale: '',
                                                         ),
+                                                        maxLines: 2,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .normal,
+                                                                ),
                                                       ),
                                                     ],
                                                   ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, 0),
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(-1, 0),
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 90,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                            ),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 8, 8, 8),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Distance Preference',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .subtitle1,
-                                                  ),
-                                                  Text(
-                                                    formatNumber(
-                                                      sliderDistanceValue,
-                                                      formatType:
-                                                          FormatType.custom,
-                                                      format: '###',
-                                                      locale: '',
-                                                    ),
-                                                    maxLines: 2,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyText1
-                                                        .override(
-                                                          fontFamily: 'Roboto',
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Slider(
-                                              activeColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              inactiveColor: Color(0xFFC0C0C0),
-                                              min: 0,
-                                              max: 100,
-                                              value: sliderDistanceValue ??=
-                                                  FFAppState().fltrDistance,
-                                              onChanged: (newValue) async {
-                                                setState(() =>
-                                                    sliderDistanceValue =
-                                                        newValue);
-                                                setState(() =>
-                                                    FFAppState().fltrDistance =
+                                                ),
+                                                Slider(
+                                                  activeColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
+                                                  inactiveColor:
+                                                      Color(0xFFC0C0C0),
+                                                  min: 0,
+                                                  max: 100,
+                                                  value: sliderDistanceValue ??=
+                                                      FFAppState().fltrDistance,
+                                                  onChanged: (newValue) async {
+                                                    setState(() =>
+                                                        sliderDistanceValue =
+                                                            newValue);
+                                                    setState(() => FFAppState()
+                                                            .fltrDistance =
                                                         sliderDistanceValue!);
-                                              },
+                                                  },
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                      ],
+                                      ),
+                                    ],
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(0, 0),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 16, 0, 0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          if (columnUsersRecord.isPremium! ||
+                                              !getRemoteConfigBool(
+                                                  'check_premium')) {
+                                            setState(() =>
+                                                FFAppState().filterName =
+                                                    'Advanced filters');
+                                            await pageViewController?.nextPage(
+                                              duration:
+                                                  Duration(milliseconds: 300),
+                                              curve: Curves.ease,
+                                            );
+                                          } else {
+                                            context.pushNamed('GetPremiumView');
+                                          }
+                                        },
+                                        text: 'Advanced filters',
+                                        options: FFButtonOptions(
+                                          width: 170,
+                                          height: 40,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .subtitle1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                              ),
+                                          elevation: 0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
-                              ),
-                              Align(
-                                alignment: AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      if (widget.user!.isPremium! ||
-                                          !getRemoteConfigBool(
-                                              'check_premium')) {
-                                        setState(() => FFAppState().filterName =
-                                            'Advanced filters');
-                                        await pageViewController?.nextPage(
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.ease,
-                                        );
-                                      } else {
-                                        context.pushNamed('GetPremiumView');
-                                      }
-                                    },
-                                    text: 'Advanced filters',
-                                    options: FFButtonOptions(
-                                      width: 170,
-                                      height: 40,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                          ),
-                                      elevation: 0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                      ),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              );
+                            },
                           ),
                           Column(
                             mainAxisSize: MainAxisSize.max,
@@ -591,53 +633,54 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                 setState(() => FFAppState()
                                                         .tmpLocation =
                                                     currentUserLocationValue);
-                                                address = await actions
-                                                    .getAddressFromLocation(
-                                                  FFAppState().tmpLocation!,
-                                                );
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Please, confirm your location.'),
-                                                              content: Text(
-                                                                  'Your location will be set to ${address}'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: Text(
-                                                                      'Cancel'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: Text(
-                                                                      'Confirm'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ) ??
-                                                        false;
-                                                if (confirmDialogResponse) {
-                                                  setState(() => FFAppState()
-                                                          .fltrLocation =
-                                                      FFAppState().tmpLocation);
-                                                  setState(() => FFAppState()
-                                                      .fltrAddress = address!);
-                                                }
                                               } else {
                                                 setState(() => FFAppState()
                                                         .tmpLocation =
                                                     widget.user!.geoposition);
+                                              }
+
+                                              address = await actions
+                                                  .getAddressFromLocation(
+                                                FFAppState().tmpLocation!,
+                                              );
+                                              var confirmDialogResponse =
+                                                  await showDialog<bool>(
+                                                        context: context,
+                                                        builder:
+                                                            (alertDialogContext) {
+                                                          return AlertDialog(
+                                                            title: Text(
+                                                                'Please, confirm your location.'),
+                                                            content: Text(
+                                                                'Your location will be set to ${address}'),
+                                                            actions: [
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        false),
+                                                                child: Text(
+                                                                    'Cancel'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(
+                                                                        alertDialogContext,
+                                                                        true),
+                                                                child: Text(
+                                                                    'Confirm'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ) ??
+                                                      false;
+                                              if (confirmDialogResponse) {
+                                                setState(() => FFAppState()
+                                                        .fltrLocation =
+                                                    FFAppState().tmpLocation);
+                                                setState(() => FFAppState()
+                                                    .fltrAddress = address!);
                                               }
 
                                               setState(() {});
