@@ -331,6 +331,51 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                               },
                                             ),
                                           ),
+                                          if (!stackUsersRecord.blocked!
+                                                  .toList()
+                                                  .contains(
+                                                      columnUsersRecord.uid) &&
+                                              columnUsersRecord.blocked!
+                                                  .toList()
+                                                  .contains(
+                                                      stackUsersRecord.uid))
+                                            Container(
+                                              width: double.infinity,
+                                              height: 80,
+                                              decoration: BoxDecoration(),
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    -0.84, -0.25),
+                                                child: Icon(
+                                                  Icons.lock_outline_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  size: 24,
+                                                ),
+                                              ),
+                                            ),
+                                          if (stackUsersRecord.blocked!
+                                              .toList()
+                                              .contains(columnUsersRecord.uid))
+                                            Container(
+                                              width: double.infinity,
+                                              height: 80,
+                                              decoration: BoxDecoration(
+                                                color: Color(0x7FF5F5F5),
+                                              ),
+                                              child: Align(
+                                                alignment: AlignmentDirectional(
+                                                    -0.84, -0.25),
+                                                child: Icon(
+                                                  Icons.block,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  size: 24,
+                                                ),
+                                              ),
+                                            ),
                                           InkWell(
                                             onTap: () async {
                                               if (!stackUsersRecord.blocked!
@@ -364,7 +409,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     .showSnackBar(
                                                   SnackBar(
                                                     content: Text(
-                                                      'User ${columnUsersRecord.displayName} has blocked you.',
+                                                      'User ${stackUsersRecord.displayName} has blocked you.',
                                                       style: TextStyle(
                                                         color:
                                                             FlutterFlowTheme.of(
