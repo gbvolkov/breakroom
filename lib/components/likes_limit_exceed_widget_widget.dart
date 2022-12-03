@@ -491,7 +491,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                     revenue_cat
                                                         .offerings!
                                                         .current!
-                                                        .annual!
+                                                        .monthly!
                                                         .product
                                                         .price,
                                                     1),
