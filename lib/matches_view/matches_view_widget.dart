@@ -557,11 +557,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       .isPremium! ||
                                                   !getRemoteConfigBool(
                                                       'check_premium'))) {
-                                                return ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(0),
-                                                  child: BackdropFilter(
-                                                    filter: ImageFilter.blur(
+                                                return ClipRect(
+                                                  child: ImageFiltered(
+                                                    imageFilter:
+                                                        ImageFilter.blur(
                                                       sigmaX: 8,
                                                       sigmaY: 8,
                                                     ),
