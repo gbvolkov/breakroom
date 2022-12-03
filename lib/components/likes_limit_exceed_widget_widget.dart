@@ -127,36 +127,59 @@ class _LikesLimitExceedWidgetWidgetState
                                   child: ClipRRect(
                                     child: Container(
                                       width: 100,
-                                      height: 22,
+                                      height: 32,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
                                         maxHeight: double.infinity,
                                       ),
                                       decoration: BoxDecoration(),
-                                      child: Row(
+                                      child: Column(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
                                         children: [
-                                          AutoSizeText(
-                                            revenue_cat.offerings!.current!
-                                                .annual!.product.priceString,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              AutoSizeText(
+                                                revenue_cat
+                                                    .offerings!
+                                                    .current!
+                                                    .annual!
+                                                    .product
+                                                    .priceString,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            '/m',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  fontSize: 14,
-                                                ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 2, 0, 0),
+                                            child: Text(
+                                              formatNumber(
+                                                revenue_cat.offerings!.current!
+                                                    .annual!.product.price,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.automatic,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 10,
+                                                      ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -267,46 +290,66 @@ class _LikesLimitExceedWidgetWidgetState
                                   child: ClipRRect(
                                     child: Container(
                                       width: 100,
-                                      height: 22,
+                                      height: 32,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
                                         maxHeight: double.infinity,
                                       ),
                                       decoration: BoxDecoration(),
-                                      child: Row(
+                                      child: Column(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
                                         children: [
-                                          AutoSizeText(
-                                            revenue_cat
-                                                .offerings!
-                                                .current!
-                                                .threeMonth!
-                                                .product
-                                                .priceString,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              AutoSizeText(
+                                                revenue_cat
+                                                    .offerings!
+                                                    .current!
+                                                    .threeMonth!
+                                                    .product
+                                                    .priceString,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryColor,
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            '/m',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryColor,
-                                                  fontSize: 14,
-                                                ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 2, 0, 0),
+                                            child: Text(
+                                              formatNumber(
+                                                revenue_cat.offerings!.current!
+                                                    .threeMonth!.product.price,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.automatic,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primaryColor,
+                                                        fontSize: 10,
+                                                      ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -393,36 +436,59 @@ class _LikesLimitExceedWidgetWidgetState
                                   child: ClipRRect(
                                     child: Container(
                                       width: 100,
-                                      height: 22,
+                                      height: 32,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
                                         maxHeight: double.infinity,
                                       ),
                                       decoration: BoxDecoration(),
-                                      child: Row(
+                                      child: Column(
                                         mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
                                         children: [
-                                          AutoSizeText(
-                                            revenue_cat.offerings!.current!
-                                                .monthly!.product.priceString,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              AutoSizeText(
+                                                revenue_cat
+                                                    .offerings!
+                                                    .current!
+                                                    .monthly!
+                                                    .product
+                                                    .priceString,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 14,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            '/m',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyText1
-                                                .override(
-                                                  fontFamily: 'Roboto',
-                                                  fontSize: 14,
-                                                ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 2, 0, 0),
+                                            child: Text(
+                                              formatNumber(
+                                                revenue_cat.offerings!.current!
+                                                    .monthly!.product.price,
+                                                formatType: FormatType.decimal,
+                                                decimalType:
+                                                    DecimalType.automatic,
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyText1
+                                                      .override(
+                                                        fontFamily: 'Roboto',
+                                                        fontSize: 10,
+                                                      ),
+                                            ),
                                           ),
                                         ],
                                       ),
