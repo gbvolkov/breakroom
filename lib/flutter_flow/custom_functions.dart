@@ -673,3 +673,13 @@ DocumentReference? getChatUser(
     return null;
   }
 }
+
+double mdiv(
+  double? dividend,
+  int? divider,
+) {
+  if ((divider ?? 0) == 0) {
+    divider = 1;
+  }
+  return (dividend ?? 0) / (divider!);
+}
