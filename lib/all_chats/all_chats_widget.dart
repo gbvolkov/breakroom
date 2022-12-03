@@ -345,7 +345,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                               decoration: BoxDecoration(),
                                               child: Align(
                                                 alignment: AlignmentDirectional(
-                                                    -0.84, -0.25),
+                                                    -0.84, 0),
                                                 child: Icon(
                                                   Icons.lock_outline_rounded,
                                                   color: FlutterFlowTheme.of(
@@ -366,7 +366,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                               ),
                                               child: Align(
                                                 alignment: AlignmentDirectional(
-                                                    -0.84, -0.25),
+                                                    -0.84, 0),
                                                 child: Icon(
                                                   Icons.block,
                                                   color: FlutterFlowTheme.of(
