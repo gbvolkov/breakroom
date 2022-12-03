@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/likes_limit_exceed_widget_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -233,201 +234,211 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              buttonSize: 30,
-                              fillColor: FlutterFlowTheme.of(context).alternate,
-                              icon: Icon(
-                                Icons.check_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                size: 16,
+                      if (false)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                buttonSize: 30,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                icon: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Message them before matching',
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 0, 0),
+                                  child: Text(
+                                    'Message them before matching',
+                                    maxLines: 2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              buttonSize: 30,
-                              fillColor: FlutterFlowTheme.of(context).alternate,
-                              icon: Icon(
-                                Icons.check_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                size: 16,
+                      if (false)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                buttonSize: 30,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                icon: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Control your profile –hide ads, who can see your profile, who you see',
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 0, 0),
+                                  child: Text(
+                                    'Control your profile –hide ads, who can see your profile, who you see',
+                                    maxLines: 2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              buttonSize: 30,
-                              fillColor: FlutterFlowTheme.of(context).alternate,
-                              icon: Icon(
-                                Icons.check_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                size: 16,
+                      if (false)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                buttonSize: 30,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                icon: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Priority likes',
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 0, 0),
+                                  child: Text(
+                                    'Priority likes',
+                                    maxLines: 2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              buttonSize: 30,
-                              fillColor: FlutterFlowTheme.of(context).alternate,
-                              icon: Icon(
-                                Icons.check_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                size: 16,
+                      if (false)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                buttonSize: 30,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                icon: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Boost your profile 2x per month',
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 0, 0),
+                                  child: Text(
+                                    'Boost your profile 2x per month',
+                                    maxLines: 2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            FlutterFlowIconButton(
-                              borderColor: Colors.transparent,
-                              borderRadius: 30,
-                              buttonSize: 30,
-                              fillColor: FlutterFlowTheme.of(context).alternate,
-                              icon: Icon(
-                                Icons.check_rounded,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                size: 16,
+                      if (false)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              FlutterFlowIconButton(
+                                borderColor: Colors.transparent,
+                                borderRadius: 30,
+                                buttonSize: 30,
+                                fillColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                icon: Icon(
+                                  Icons.check_rounded,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                  size: 16,
+                                ),
+                                onPressed: () {
+                                  print('IconButton pressed ...');
+                                },
                               ),
-                              onPressed: () {
-                                print('IconButton pressed ...');
-                              },
-                            ),
-                            Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                child: Text(
-                                  'Change location',
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .subtitle2
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16, 0, 0, 0),
+                                  child: Text(
+                                    'Change location',
+                                    maxLines: 2,
+                                    style: FlutterFlowTheme.of(context)
+                                        .subtitle2
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                         child: Row(
@@ -476,6 +487,44 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                           child: InkWell(
                             onTap: () async {
                               await revenue_cat.restorePurchases();
+                              final isEntitled =
+                                  await revenue_cat.isEntitled('premium');
+                              if (isEntitled == null) {
+                                return;
+                              } else if (!isEntitled) {
+                                await revenue_cat.loadOfferings();
+                              }
+
+                              if (isEntitled) {
+                                final usersUpdateData = createUsersRecordData(
+                                  isPremium: true,
+                                );
+                                await currentUserReference!
+                                    .update(usersUpdateData);
+                                if (widget.back == 'HomeView') {
+                                  if (Navigator.of(context).canPop()) {
+                                    context.pop();
+                                  }
+                                  context.pushNamed('HomeView');
+                                } else {
+                                  context.pop();
+                                }
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'You did not purchase premium subscription',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                  ),
+                                );
+                              }
                             },
                             child: Container(
                               width: 150,
@@ -519,18 +568,61 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                             ),
                             FFButtonWidget(
                               onPressed: () async {
-                                final usersUpdateData = createUsersRecordData(
-                                  isPremium: true,
-                                );
-                                await currentUserReference!
-                                    .update(usersUpdateData);
-                                if (widget.back == 'HomeView') {
-                                  if (Navigator.of(context).canPop()) {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  context: context,
+                                  builder: (context) {
+                                    return Padding(
+                                      padding:
+                                          MediaQuery.of(context).viewInsets,
+                                      child: LikesLimitExceedWidgetWidget(
+                                        user: widget.user,
+                                        showTime: false,
+                                        back: widget.back,
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => setState(() {}));
+
+                                final isEntitled =
+                                    await revenue_cat.isEntitled('premium');
+                                if (isEntitled == null) {
+                                  return;
+                                } else if (!isEntitled) {
+                                  await revenue_cat.loadOfferings();
+                                }
+
+                                if (isEntitled) {
+                                  final usersUpdateData = createUsersRecordData(
+                                    isPremium: true,
+                                  );
+                                  await currentUserReference!
+                                      .update(usersUpdateData);
+                                  if (widget.back == 'HomeView') {
+                                    if (Navigator.of(context).canPop()) {
+                                      context.pop();
+                                    }
+                                    context.pushNamed('HomeView');
+                                  } else {
                                     context.pop();
                                   }
-                                  context.pushNamed('HomeView');
                                 } else {
-                                  context.pop();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'You did not purchase premium subscription',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryColor,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .alternate,
+                                    ),
+                                  );
                                 }
                               },
                               text: 'Continue',
