@@ -46,7 +46,7 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                     Image.asset(
                       'assets/images/Frame_3183535.png',
                       width: MediaQuery.of(context).size.width,
-                      height: 250,
+                      height: 200,
                       fit: BoxFit.cover,
                     ),
                     FlutterFlowIconButton(
