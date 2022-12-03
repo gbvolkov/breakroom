@@ -492,9 +492,8 @@ class _LikesLimitExceedWidgetWidgetState
                     alignment: AlignmentDirectional(-1, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        didPurchase = await revenue_cat.purchasePackage(
-                            revenue_cat
-                                .offerings!.current!.threeMonth!.identifier);
+                        didPurchase = await revenue_cat
+                            .purchasePackage(FFAppState().selectedPackage);
                         Navigator.pop(context, didPurchase);
 
                         setState(() {});
