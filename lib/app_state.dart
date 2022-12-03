@@ -324,6 +324,8 @@ class FFAppState {
   LatLng? tmpLocation = LatLng(50.4501, 30.5234);
 
   bool isFirstAtHome = true;
+
+  String selectedPackage = '';
 }
 
 LatLng? _latLngFromString(String? val) {

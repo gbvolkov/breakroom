@@ -75,77 +75,29 @@ class _LikesLimitExceedWidgetWidgetState
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Container(
-                        width: 100,
-                        height: 120,
-                        decoration: BoxDecoration(),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 22,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: Text(
-                                  '12 months',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 17,
-                                      ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 32,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 22,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      revenue_cat.offerings!.current!.annual!
-                                          .product.priceString,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 120,
+                            decoration: BoxDecoration(),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 22,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
                                     ),
-                                    Text(
-                                      '/m',
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      '12 months',
+                                      textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -153,12 +105,82 @@ class _LikesLimitExceedWidgetWidgetState
                                             fontSize: 17,
                                           ),
                                     ),
-                                  ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 32,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 22,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          revenue_cat.offerings!.current!
+                                              .annual!.product.priceString,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        Text(
+                                          '/m',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 17,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (FFAppState().selectedPackage !=
+                              revenue_cat
+                                  .offerings!.current!.annual!.identifier)
+                            InkWell(
+                              onTap: () async {
+                                setState(() => FFAppState().selectedPackage =
+                                    revenue_cat.offerings!.current!.annual!
+                                        .identifier);
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Color(0x7FF5F5F5),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                        ],
                       ),
                     ),
                     Card(
@@ -166,119 +188,143 @@ class _LikesLimitExceedWidgetWidgetState
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Container(
-                        width: 100,
-                        height: 120,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFFEE837B),
-                              Color(0xFFF95A82),
-                              Color(0xFFEA3C7D)
-                            ],
-                            stops: [0.13, 0.69, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 120,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xFFEE837B),
+                                  Color(0xFFF95A82),
+                                  Color(0xFFEA3C7D)
+                                ],
+                                stops: [0.13, 0.69, 1],
+                                begin: AlignmentDirectional(0, -1),
+                                end: AlignmentDirectional(0, 1),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 22,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      '3 months',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                            fontSize: 17,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 32,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                    child: AutoSizeText(
+                                      'With a 50% savings',
+                                      textAlign: TextAlign.center,
+                                      maxLines: 2,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText1
+                                          .override(
+                                            fontFamily: 'Roboto',
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryColor,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 22,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          revenue_cat.offerings!.current!
+                                              .threeMonth!.product.priceString,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        Text(
+                                          '/m',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryColor,
+                                                fontSize: 17,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                          if (FFAppState().selectedPackage !=
+                              revenue_cat
+                                  .offerings!.current!.threeMonth!.identifier)
+                            InkWell(
+                              onTap: () async {
+                                setState(() => FFAppState().selectedPackage =
+                                    revenue_cat.offerings!.current!.threeMonth!
+                                        .identifier);
+                              },
                               child: Container(
-                                width: 83,
-                                height: 22,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: Text(
-                                  '3 months',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                        fontSize: 17,
-                                      ),
+                                width: 100,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Color(0x7FF5F5F5),
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 32,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: AutoSizeText(
-                                  'With a 50% savings',
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .primaryColor,
-                                      ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 22,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      revenue_cat.offerings!.current!
-                                          .threeMonth!.product.priceString,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                    Text(
-                                      '/m',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontSize: 17,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
                     ),
                     Card(
@@ -287,77 +333,29 @@ class _LikesLimitExceedWidgetWidgetState
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Container(
-                        width: 100,
-                        height: 120,
-                        decoration: BoxDecoration(),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 22,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: Text(
-                                  '1 month',
-                                  textAlign: TextAlign.center,
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
-                                      .override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 17,
-                                      ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 32,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Container(
-                                width: 83,
-                                height: 22,
-                                constraints: BoxConstraints(
-                                  maxWidth: double.infinity,
-                                  maxHeight: double.infinity,
-                                ),
-                                decoration: BoxDecoration(),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      revenue_cat.offerings!.current!.monthly!
-                                          .product.priceString,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1
-                                          .override(
-                                            fontFamily: 'Roboto',
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w600,
-                                          ),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 120,
+                            decoration: BoxDecoration(),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 22,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
                                     ),
-                                    Text(
-                                      '/m',
+                                    decoration: BoxDecoration(),
+                                    child: Text(
+                                      '1 month',
+                                      textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -365,12 +363,82 @@ class _LikesLimitExceedWidgetWidgetState
                                             fontSize: 17,
                                           ),
                                     ),
-                                  ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 16, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 32,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Container(
+                                    width: 83,
+                                    height: 22,
+                                    constraints: BoxConstraints(
+                                      maxWidth: double.infinity,
+                                      maxHeight: double.infinity,
+                                    ),
+                                    decoration: BoxDecoration(),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          revenue_cat.offerings!.current!
+                                              .monthly!.product.priceString,
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600,
+                                              ),
+                                        ),
+                                        Text(
+                                          '/m',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyText1
+                                              .override(
+                                                fontFamily: 'Roboto',
+                                                fontSize: 17,
+                                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (FFAppState().selectedPackage !=
+                              revenue_cat
+                                  .offerings!.current!.monthly!.identifier)
+                            InkWell(
+                              onTap: () async {
+                                setState(() => FFAppState().selectedPackage =
+                                    revenue_cat.offerings!.current!.monthly!
+                                        .identifier);
+                              },
+                              child: Container(
+                                width: 100,
+                                height: 120,
+                                decoration: BoxDecoration(
+                                  color: Color(0x7FF5F5F5),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
+                        ],
                       ),
                     ),
                   ],
@@ -441,6 +509,15 @@ class _LikesLimitExceedWidgetWidgetState
                       ),
                     ),
                   ),
+                  if (FFAppState().selectedPackage == null ||
+                      FFAppState().selectedPackage == '')
+                    Container(
+                      width: double.infinity,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: Color(0x80F5F5F5),
+                      ),
+                    ),
                 ],
               ),
             ),
