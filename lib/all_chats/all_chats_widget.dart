@@ -368,7 +368,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                 alignment: AlignmentDirectional(
                                                     -0.84, 0),
                                                 child: Icon(
-                                                  Icons.block,
+                                                  Icons
+                                                      .speaker_notes_off_outlined,
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,

@@ -499,7 +499,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                         borderWidth: 1,
                                                         buttonSize: 60,
                                                         icon: Icon(
-                                                          Icons.block,
+                                                          Icons
+                                                              .speaker_notes_off_outlined,
                                                           color:
                                                               Color(0xA3F5F5F5),
                                                           size: 30,
@@ -556,10 +557,11 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       .isPremium! ||
                                                   !getRemoteConfigBool(
                                                       'check_premium'))) {
-                                                return ClipRect(
-                                                  child: ImageFiltered(
-                                                    imageFilter:
-                                                        ImageFilter.blur(
+                                                return ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(0),
+                                                  child: BackdropFilter(
+                                                    filter: ImageFilter.blur(
                                                       sigmaX: 8,
                                                       sigmaY: 8,
                                                     ),
