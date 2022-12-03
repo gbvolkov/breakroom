@@ -139,7 +139,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         children: [
                                           AutoSizeText(
                                             revenue_cat.offerings!.current!
-                                                .annual!.identifier,
+                                                .annual!.product.priceString,
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyText1
                                                 .override(
