@@ -550,7 +550,17 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                   );
                                                 } else {
                                                   context.pushNamed(
-                                                      'GetPremiumView');
+                                                    'GetPremiumView',
+                                                    queryParams: {
+                                                      'user': serializeParam(
+                                                        columnUsersRecord,
+                                                        ParamType.Document,
+                                                      ),
+                                                    }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      'user': columnUsersRecord,
+                                                    },
+                                                  );
                                                 }
                                               },
                                               text: 'Chat',
@@ -1056,7 +1066,21 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         _shouldSetState = true;
                                                         if (clikesState == 0) {
                                                           context.pushNamed(
-                                                              'GetPremiumView');
+                                                            'GetPremiumView',
+                                                            queryParams: {
+                                                              'user':
+                                                                  serializeParam(
+                                                                columnUsersRecord,
+                                                                ParamType
+                                                                    .Document,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              'user':
+                                                                  columnUsersRecord,
+                                                            },
+                                                          );
 
                                                           if (_shouldSetState)
                                                             setState(() {});

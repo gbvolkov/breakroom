@@ -121,9 +121,6 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'EditNameView': (data) async => EditNameViewWidget(),
   'EditProfileView': (data) async => EditProfileViewWidget(),
   'EditBioView': (data) async => EditBioViewWidget(),
-  'GetPremiumView': (data) async => GetPremiumViewWidget(
-        back: getParameter(data, 'back'),
-      ),
   'FiltersView': (data) async => FiltersViewWidget(
         user: await getDocumentParameter(data, 'user', UsersRecord.serializer),
       ),
@@ -154,7 +151,10 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
             await getDocumentParameter(data, 'match', UsersRecord.serializer),
       ),
   'MatchesView': (data) async => NavBarPage(initialPage: 'MatchesView'),
-  'GetPremium1View': (data) async => GetPremium1ViewWidget(),
+  'GetPremiumView': (data) async => GetPremiumViewWidget(
+        user: await getDocumentParameter(data, 'user', UsersRecord.serializer),
+        back: getParameter(data, 'back'),
+      ),
   'YouHavePaidView': (data) async => YouHavePaidViewWidget(),
   'AboutUsView': (data) async => AboutUsViewWidget(),
   'SettingsView': (data) async => SettingsViewWidget(),

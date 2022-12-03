@@ -27,8 +27,6 @@ export 'edit_name_view/edit_name_view_widget.dart' show EditNameViewWidget;
 export 'edit_profile_view/edit_profile_view_widget.dart'
     show EditProfileViewWidget;
 export 'edit_bio_view/edit_bio_view_widget.dart' show EditBioViewWidget;
-export 'get_premium_view/get_premium_view_widget.dart'
-    show GetPremiumViewWidget;
 export 'filters_view/filters_view_widget.dart' show FiltersViewWidget;
 export 'filter_industries_view/filter_industries_view_widget.dart'
     show FilterIndustriesViewWidget;
@@ -46,8 +44,8 @@ export 'add_users_to_group/add_users_to_group_widget.dart'
     show AddUsersToGroupWidget;
 export 'new_match_view/new_match_view_widget.dart' show NewMatchViewWidget;
 export 'matches_view/matches_view_widget.dart' show MatchesViewWidget;
-export 'get_premium1_view/get_premium1_view_widget.dart'
-    show GetPremium1ViewWidget;
+export 'get_premium_view/get_premium_view_widget.dart'
+    show GetPremiumViewWidget;
 export 'you_have_paid_view/you_have_paid_view_widget.dart'
     show YouHavePaidViewWidget;
 export 'about_us_view/about_us_view_widget.dart' show AboutUsViewWidget;

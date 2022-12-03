@@ -228,14 +228,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => EditBioViewWidget(),
             ),
             FFRoute(
-              name: 'GetPremiumView',
-              path: 'getPremiumView',
-              requireAuth: true,
-              builder: (context, params) => GetPremiumViewWidget(
-                back: params.getParam('back', ParamType.String),
-              ),
-            ),
-            FFRoute(
               name: 'FiltersView',
               path: 'filtersView',
               requireAuth: true,
@@ -346,10 +338,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : MatchesViewWidget(),
             ),
             FFRoute(
-              name: 'GetPremium1View',
-              path: 'getPremium1View',
+              name: 'GetPremiumView',
+              path: 'getPremiumView',
               requireAuth: true,
-              builder: (context, params) => GetPremium1ViewWidget(),
+              asyncParams: {
+                'user': getDoc('users', UsersRecord.serializer),
+              },
+              builder: (context, params) => GetPremiumViewWidget(
+                user: params.getParam('user', ParamType.Document),
+                back: params.getParam('back', ParamType.String),
+              ),
             ),
             FFRoute(
               name: 'YouHavePaidView',

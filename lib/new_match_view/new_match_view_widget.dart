@@ -354,7 +354,18 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                               },
                             );
                           } else {
-                            context.pushNamed('GetPremiumView');
+                            context.pushNamed(
+                              'GetPremiumView',
+                              queryParams: {
+                                'user': serializeParam(
+                                  widget.me,
+                                  ParamType.Document,
+                                ),
+                              }.withoutNulls,
+                              extra: <String, dynamic>{
+                                'user': widget.me,
+                              },
+                            );
                           }
                         },
                         text: 'Start chat',

@@ -29,6 +29,8 @@ class LikesLimitExceedWidgetWidget extends StatefulWidget {
 
 class _LikesLimitExceedWidgetWidgetState
     extends State<LikesLimitExceedWidgetWidget> {
+  bool? didPurchase;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,14 +59,15 @@ class _LikesLimitExceedWidgetWidgetState
                         ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
-                  child: Text(
-                    'Your daily 10 likes limit has been reached.\nPlease, subscribe to unlock the unlimited likes',
-                    textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText2,
+                if (widget.showTime ?? true)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    child: Text(
+                      'Your daily 10 likes limit has been reached.\nPlease, subscribe to unlock the unlimited likes',
+                      textAlign: TextAlign.center,
+                      style: FlutterFlowTheme.of(context).bodyText2,
+                    ),
                   ),
-                ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -374,17 +377,18 @@ class _LikesLimitExceedWidgetWidgetState
                     ),
                   ],
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
-                  child: Text(
-                    functions.getTimeToNoon(),
-                    style: FlutterFlowTheme.of(context).bodyText1.override(
-                          fontFamily: 'Roboto',
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,
-                        ),
+                if (widget.showTime ?? true)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                    child: Text(
+                      functions.getTimeToNoon(),
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Roboto',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
                   ),
-                ),
               ],
             ),
             Padding(
@@ -412,11 +416,34 @@ class _LikesLimitExceedWidgetWidgetState
                     alignment: AlignmentDirectional(-1, 0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        final usersUpdateData = createUsersRecordData(
-                          isPremium: true,
-                        );
-                        await currentUserReference!.update(usersUpdateData);
+                        didPurchase = await revenue_cat.purchasePackage(
+                            revenue_cat
+                                .offerings!.current!.threeMonth!.identifier);
+                        if (didPurchase!) {
+                          final usersUpdateData = createUsersRecordData(
+                            isPremium: true,
+                          );
+                          await currentUserReference!.update(usersUpdateData);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Unable to putrchase!',
+                                style: TextStyle(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).alternate,
+                            ),
+                          );
+                        }
+
                         Navigator.pop(context);
+
+                        setState(() {});
                       },
                       text: 'Continue',
                       options: FFButtonOptions(
