@@ -465,7 +465,18 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               curve: Curves.ease,
                                             );
                                           } else {
-                                            context.pushNamed('GetPremiumView');
+                                            context.pushNamed(
+                                              'GetPremiumView',
+                                              queryParams: {
+                                                'user': serializeParam(
+                                                  widget.user,
+                                                  ParamType.Document,
+                                                ),
+                                              }.withoutNulls,
+                                              extra: <String, dynamic>{
+                                                'user': widget.user,
+                                              },
+                                            );
                                           }
                                         },
                                         text: 'Advanced filters',

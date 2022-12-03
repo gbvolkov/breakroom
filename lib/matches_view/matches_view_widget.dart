@@ -243,8 +243,22 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                 },
                                               );
                                             } else {
-                                              context
-                                                  .pushNamed('GetPremiumView');
+                                              context.pushNamed(
+                                                'GetPremiumView',
+                                                queryParams: {
+                                                  'back': serializeParam(
+                                                    'MatchesView',
+                                                    ParamType.String,
+                                                  ),
+                                                  'user': serializeParam(
+                                                    columnUsersRecord,
+                                                    ParamType.Document,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'user': columnUsersRecord,
+                                                },
+                                              );
                                             }
                                           },
                                           child: Card(
