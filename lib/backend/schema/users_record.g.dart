@@ -285,6 +285,14 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(DateTime)));
     }
+    value = object.blocked;
+    if (value != null) {
+      result
+        ..add('blocked')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -471,6 +479,12 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.lastLikeTime = serializers.deserialize(value,
               specifiedType: const FullType(DateTime)) as DateTime?;
           break;
+        case 'blocked':
+          result.blocked.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -562,6 +576,8 @@ class _$UsersRecord extends UsersRecord {
   @override
   final DateTime? lastLikeTime;
   @override
+  final BuiltList<String>? blocked;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -606,6 +622,7 @@ class _$UsersRecord extends UsersRecord {
       this.isPremium,
       this.likesCount,
       this.lastLikeTime,
+      this.blocked,
       this.ffRef})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(filter, r'UsersRecord', 'filter');
@@ -660,6 +677,7 @@ class _$UsersRecord extends UsersRecord {
         isPremium == other.isPremium &&
         likesCount == other.likesCount &&
         lastLikeTime == other.lastLikeTime &&
+        blocked == other.blocked &&
         ffRef == other.ffRef;
   }
 
@@ -683,25 +701,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode), education.hashCode), bodyType.hashCode),
-                                                                                interests.hashCode),
-                                                                            lookingFor.hashCode),
-                                                                        height.hashCode),
-                                                                    weight.hashCode),
-                                                                workoutStatus.hashCode),
-                                                            drinkingStatus.hashCode),
-                                                        smokingStatus.hashCode),
-                                                    spiritualStatus.hashCode),
-                                                photos.hashCode),
-                                            touched.hashCode),
-                                        filter.hashCode),
-                                    liked.hashCode),
-                                disliked.hashCode),
-                            isComplete.hashCode),
-                        notiffReadTS.hashCode),
-                    isPremium.hashCode),
-                likesCount.hashCode),
-            lastLikeTime.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode), education.hashCode), bodyType.hashCode), interests.hashCode),
+                                                                                lookingFor.hashCode),
+                                                                            height.hashCode),
+                                                                        weight.hashCode),
+                                                                    workoutStatus.hashCode),
+                                                                drinkingStatus.hashCode),
+                                                            smokingStatus.hashCode),
+                                                        spiritualStatus.hashCode),
+                                                    photos.hashCode),
+                                                touched.hashCode),
+                                            filter.hashCode),
+                                        liked.hashCode),
+                                    disliked.hashCode),
+                                isComplete.hashCode),
+                            notiffReadTS.hashCode),
+                        isPremium.hashCode),
+                    likesCount.hashCode),
+                lastLikeTime.hashCode),
+            blocked.hashCode),
         ffRef.hashCode));
   }
 
@@ -746,6 +764,7 @@ class _$UsersRecord extends UsersRecord {
           ..add('isPremium', isPremium)
           ..add('likesCount', likesCount)
           ..add('lastLikeTime', lastLikeTime)
+          ..add('blocked', blocked)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -922,6 +941,11 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   set lastLikeTime(DateTime? lastLikeTime) =>
       _$this._lastLikeTime = lastLikeTime;
 
+  ListBuilder<String>? _blocked;
+  ListBuilder<String> get blocked =>
+      _$this._blocked ??= new ListBuilder<String>();
+  set blocked(ListBuilder<String>? blocked) => _$this._blocked = blocked;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -971,6 +995,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _isPremium = $v.isPremium;
       _likesCount = $v.likesCount;
       _lastLikeTime = $v.lastLikeTime;
+      _blocked = $v.blocked?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -1034,6 +1059,7 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               isPremium: isPremium,
               likesCount: likesCount,
               lastLikeTime: lastLikeTime,
+              blocked: _blocked?.build(),
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
@@ -1053,6 +1079,9 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
         _liked?.build();
         _$failedField = 'disliked';
         _disliked?.build();
+
+        _$failedField = 'blocked';
+        _blocked?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'UsersRecord', _$failedField, e.toString());

@@ -90,6 +90,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   DateTime? get lastLikeTime;
 
+  BuiltList<String>? get blocked;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -127,7 +129,8 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..disliked = ListBuilder()
     ..isComplete = false
     ..isPremium = false
-    ..likesCount = 0;
+    ..likesCount = 0
+    ..blocked = ListBuilder();
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -225,7 +228,8 @@ Map<String, dynamic> createUsersRecordData({
         ..notiffReadTS = notiffReadTS
         ..isPremium = isPremium
         ..likesCount = likesCount
-        ..lastLikeTime = lastLikeTime,
+        ..lastLikeTime = lastLikeTime
+        ..blocked = null,
     ),
   );
 
