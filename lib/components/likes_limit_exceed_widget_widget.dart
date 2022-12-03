@@ -165,13 +165,20 @@ class _LikesLimitExceedWidgetWidgetState
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 2, 0, 0),
                                             child: Text(
-                                              formatNumber(
-                                                revenue_cat.offerings!.current!
-                                                    .annual!.product.price,
+                                              '${formatNumber(
+                                                functions.mdiv(
+                                                    revenue_cat
+                                                        .offerings!
+                                                        .current!
+                                                        .annual!
+                                                        .product
+                                                        .price,
+                                                    12),
                                                 formatType: FormatType.decimal,
                                                 decimalType:
                                                     DecimalType.automatic,
-                                              ),
+                                                currency: '',
+                                              )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText1
@@ -331,13 +338,20 @@ class _LikesLimitExceedWidgetWidgetState
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 2, 0, 0),
                                             child: Text(
-                                              formatNumber(
-                                                revenue_cat.offerings!.current!
-                                                    .threeMonth!.product.price,
+                                              '${formatNumber(
+                                                functions.mdiv(
+                                                    revenue_cat
+                                                        .offerings!
+                                                        .current!
+                                                        .threeMonth!
+                                                        .product
+                                                        .price,
+                                                    3),
                                                 formatType: FormatType.decimal,
                                                 decimalType:
                                                     DecimalType.automatic,
-                                              ),
+                                                currency: '',
+                                              )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText1
@@ -474,13 +488,20 @@ class _LikesLimitExceedWidgetWidgetState
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 2, 0, 0),
                                             child: Text(
-                                              formatNumber(
-                                                revenue_cat.offerings!.current!
-                                                    .monthly!.product.price,
+                                              '${formatNumber(
+                                                functions.mdiv(
+                                                    revenue_cat
+                                                        .offerings!
+                                                        .current!
+                                                        .annual!
+                                                        .product
+                                                        .price,
+                                                    1),
                                                 formatType: FormatType.decimal,
                                                 decimalType:
                                                     DecimalType.automatic,
-                                              ),
+                                                currency: '',
+                                              )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyText1
