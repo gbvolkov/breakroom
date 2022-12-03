@@ -38,8 +38,8 @@ export 'login_set_new_password_view/login_set_new_password_view_widget.dart'
     show LoginSetNewPasswordViewWidget;
 export 'introduction_view/introduction_view_widget.dart'
     show IntroductionViewWidget;
-export 'all_chats/all_chats_widget.dart' show AllChatsWidget;
 export 'chat/chat_widget.dart' show ChatWidget;
+export 'all_chats/all_chats_widget.dart' show AllChatsWidget;
 export 'invite_user/invite_user_widget.dart' show InviteUserWidget;
 export 'invite_users/invite_users_widget.dart' show InviteUsersWidget;
 export 'add_users_to_group/add_users_to_group_widget.dart'

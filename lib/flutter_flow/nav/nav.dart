@@ -280,14 +280,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => IntroductionViewWidget(),
             ),
             FFRoute(
-              name: 'AllChats',
-              path: 'allChats',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'AllChats')
-                  : AllChatsWidget(),
-            ),
-            FFRoute(
               name: 'Chat',
               path: 'chat',
               requireAuth: true,
@@ -300,6 +292,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                     'chatRef', ParamType.DocumentReference, false, 'chats'),
                 route: params.getParam('route', ParamType.String),
               ),
+            ),
+            FFRoute(
+              name: 'AllChats',
+              path: 'allChats',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'AllChats')
+                  : AllChatsWidget(),
             ),
             FFRoute(
               name: 'InviteUser',

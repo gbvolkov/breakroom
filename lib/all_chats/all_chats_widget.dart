@@ -80,326 +80,319 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            if (false)
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                child: TextFormField(
-                  controller: txtSearchController,
-                  onChanged: (_) => EasyDebounce.debounce(
-                    'txtSearchController',
-                    Duration(milliseconds: 2000),
-                    () => setState(() {}),
+        child: StreamBuilder<UsersRecord>(
+          stream: UsersRecord.getDocument(currentUserReference!),
+          builder: (context, snapshot) {
+            // Customize what your widget looks like when it's loading.
+            if (!snapshot.hasData) {
+              return Center(
+                child: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: CircularProgressIndicator(
+                    color: FlutterFlowTheme.of(context).primaryColor,
                   ),
-                  obscureText: false,
-                  decoration: InputDecoration(
-                    hintText: 'Search',
-                    hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Color(0x00000000),
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    filled: true,
-                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 18,
-                    ),
-                    suffixIcon: txtSearchController!.text.isNotEmpty
-                        ? InkWell(
-                            onTap: () async {
-                              txtSearchController?.clear();
-                              setState(() {});
-                            },
-                            child: Icon(
-                              Icons.clear,
-                              color: Color(0xFF757575),
-                              size: 22,
-                            ),
-                          )
-                        : null,
-                  ),
-                  style: FlutterFlowTheme.of(context).subtitle2,
                 ),
-              ),
-            Expanded(
-              child: StreamBuilder<List<ChatsRecord>>(
-                stream: queryChatsRecord(
-                  queryBuilder: (chatsRecord) => chatsRecord
-                      .where('users', arrayContains: currentUserReference)
-                      .orderBy('last_message_time', descending: true),
-                ),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+              );
+            }
+            final columnUsersRecord = snapshot.data!;
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                if (false)
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    child: TextFormField(
+                      controller: txtSearchController,
+                      onChanged: (_) => EasyDebounce.debounce(
+                        'txtSearchController',
+                        Duration(milliseconds: 2000),
+                        () => setState(() {}),
+                      ),
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 1,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        filled: true,
+                        fillColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 18,
+                        ),
+                        suffixIcon: txtSearchController!.text.isNotEmpty
+                            ? InkWell(
+                                onTap: () async {
+                                  txtSearchController?.clear();
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.clear,
+                                  color: Color(0xFF757575),
+                                  size: 22,
+                                ),
+                              )
+                            : null,
                       ),
-                    );
-                  }
-                  List<ChatsRecord> containerChatsRecordList = snapshot.data!;
-                  return Container(
-                    decoration: BoxDecoration(),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
-                      child: Builder(
-                        builder: (context) {
-                          final chats = containerChatsRecordList
-                              .where((e) => !e.isDeleted!)
-                              .toList();
-                          if (chats.isEmpty) {
-                            return EmptyListWidgetWidget();
-                          }
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            scrollDirection: Axis.vertical,
-                            itemCount: chats.length,
-                            itemBuilder: (context, chatsIndex) {
-                              final chatsItem = chats[chatsIndex];
-                              return FutureBuilder<UsersRecord>(
-                                future: UsersRecord.getDocumentOnce(
-                                    functions.getChatUser(
-                                        chatsItem.userA,
-                                        chatsItem.userB,
-                                        currentUserReference!)!),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50,
-                                        height: 50,
-                                        child: CircularProgressIndicator(
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  final stackUsersRecord = snapshot.data!;
-                                  return Stack(
-                                    children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: 80,
-                                        decoration: BoxDecoration(),
-                                        child: StreamBuilder<FFChatInfo>(
-                                          stream: FFChatManager.instance
-                                              .getChatInfo(
-                                                  chatRecord: chatsItem),
-                                          builder: (context, snapshot) {
-                                            final chatInfo = snapshot.data ??
-                                                FFChatInfo(chatsItem);
-                                            return FFChatPreview(
-                                              onTap: () => context.pushNamed(
-                                                'Chat',
-                                                queryParams: {
-                                                  'chatUser': serializeParam(
-                                                    chatInfo.otherUsers
-                                                                .length ==
-                                                            1
-                                                        ? chatInfo
-                                                            .otherUsersList
-                                                            .first
-                                                        : null,
-                                                    ParamType.Document,
-                                                  ),
-                                                  'chatRef': serializeParam(
-                                                    chatInfo
-                                                        .chatRecord.reference,
-                                                    ParamType.DocumentReference,
-                                                  ),
-                                                }.withoutNulls,
-                                                extra: <String, dynamic>{
-                                                  'chatUser': chatInfo
-                                                              .otherUsers
-                                                              .length ==
-                                                          1
-                                                      ? chatInfo
-                                                          .otherUsersList.first
-                                                      : null,
-                                                },
-                                              ),
-                                              lastChatText:
-                                                  chatInfo.chatPreviewMessage(),
-                                              lastChatTime:
-                                                  chatsItem.lastMessageTime,
-                                              seen: chatsItem.lastMessageSeenBy!
-                                                  .contains(
-                                                      currentUserReference),
-                                              title:
-                                                  chatInfo.chatPreviewTitle(),
-                                              userProfilePic:
-                                                  chatInfo.chatPreviewPic(),
-                                              color: Color(0x00000000),
-                                              unreadColor:
+                      style: FlutterFlowTheme.of(context).subtitle2,
+                    ),
+                  ),
+                Expanded(
+                  child: StreamBuilder<List<ChatsRecord>>(
+                    stream: queryChatsRecord(
+                      queryBuilder: (chatsRecord) => chatsRecord
+                          .where('users', arrayContains: currentUserReference)
+                          .orderBy('last_message_time', descending: true),
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                            ),
+                          ),
+                        );
+                      }
+                      List<ChatsRecord> containerChatsRecordList =
+                          snapshot.data!;
+                      return Container(
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 2, 0, 0),
+                          child: Builder(
+                            builder: (context) {
+                              final chats = containerChatsRecordList
+                                  .where((e) => !e.isDeleted!)
+                                  .toList();
+                              if (chats.isEmpty) {
+                                return EmptyListWidgetWidget();
+                              }
+                              return ListView.builder(
+                                padding: EdgeInsets.zero,
+                                scrollDirection: Axis.vertical,
+                                itemCount: chats.length,
+                                itemBuilder: (context, chatsIndex) {
+                                  final chatsItem = chats[chatsIndex];
+                                  return FutureBuilder<UsersRecord>(
+                                    future: UsersRecord.getDocumentOnce(
+                                        functions.getChatUser(
+                                            chatsItem.userA,
+                                            chatsItem.userB,
+                                            currentUserReference!)!),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircularProgressIndicator(
+                                              color:
                                                   FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              titleTextStyle:
-                                                  GoogleFonts.getFont(
-                                                'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 14,
-                                              ),
-                                              dateTextStyle:
-                                                  GoogleFonts.getFont(
-                                                'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                              ),
-                                              previewTextStyle:
-                                                  GoogleFonts.getFont(
-                                                'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                fontWeight: FontWeight.normal,
-                                                fontSize: 14,
-                                              ),
-                                              contentPadding:
-                                                  EdgeInsetsDirectional
-                                                      .fromSTEB(3, 3, 3, 3),
-                                              borderRadius:
-                                                  BorderRadius.circular(0),
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () async {
-                                          context.pushNamed(
-                                            'Chat',
-                                            queryParams: {
-                                              'chatRef': serializeParam(
-                                                chatsItem.reference,
-                                                ParamType.DocumentReference,
-                                              ),
-                                              'chatUser': serializeParam(
-                                                stackUsersRecord,
-                                                ParamType.Document,
-                                              ),
-                                              'route': serializeParam(
-                                                'allchats',
-                                                ParamType.String,
-                                              ),
-                                            }.withoutNulls,
-                                            extra: <String, dynamic>{
-                                              'chatUser': stackUsersRecord,
-                                            },
-                                          );
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 80,
-                                          decoration: BoxDecoration(),
-                                          child: Slidable(
-                                            actionPane:
-                                                const SlidableScrollActionPane(),
-                                            secondaryActions: [
-                                              IconSlideAction(
-                                                caption: 'Block',
-                                                color: Colors.blue,
-                                                icon: FontAwesomeIcons.ban,
-                                                onTap: () async {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets,
-                                                        child:
-                                                            MenuReportUserWidget(),
-                                                      );
+                                                      .primaryColor,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      final stackUsersRecord = snapshot.data!;
+                                      return Stack(
+                                        children: [
+                                          Container(
+                                            width: double.infinity,
+                                            height: 80,
+                                            decoration: BoxDecoration(),
+                                            child: StreamBuilder<FFChatInfo>(
+                                              stream: FFChatManager.instance
+                                                  .getChatInfo(
+                                                      chatRecord: chatsItem),
+                                              builder: (context, snapshot) {
+                                                final chatInfo =
+                                                    snapshot.data ??
+                                                        FFChatInfo(chatsItem);
+                                                return FFChatPreview(
+                                                  onTap: () =>
+                                                      context.pushNamed(
+                                                    'Chat',
+                                                    queryParams: {
+                                                      'chatUser':
+                                                          serializeParam(
+                                                        chatInfo.otherUsers
+                                                                    .length ==
+                                                                1
+                                                            ? chatInfo
+                                                                .otherUsersList
+                                                                .first
+                                                            : null,
+                                                        ParamType.Document,
+                                                      ),
+                                                      'chatRef': serializeParam(
+                                                        chatInfo.chatRecord
+                                                            .reference,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                    }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      'chatUser': chatInfo
+                                                                  .otherUsers
+                                                                  .length ==
+                                                              1
+                                                          ? chatInfo
+                                                              .otherUsersList
+                                                              .first
+                                                          : null,
                                                     },
-                                                  ).then((value) => setState(
-                                                      () => choice = value));
-
-                                                  if (choice == 'unmatch') {
-                                                    var confirmDialogResponse =
-                                                        await showDialog<bool>(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: Text(
-                                                                      'Confirm unmatch'),
-                                                                  content: Text(
-                                                                      'Are you sure you want to unmatch ${stackUsersRecord.displayName}?'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                      child: Text(
-                                                                          'Cancel'),
-                                                                    ),
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                      child: Text(
-                                                                          'Confirm'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            ) ??
-                                                            false;
-                                                    if (confirmDialogResponse) {
-                                                      final usersUpdateData = {
-                                                        'liked': FieldValue
-                                                            .arrayRemove([
-                                                          stackUsersRecord.uid
-                                                        ]),
-                                                      };
-                                                      await currentUserReference!
-                                                          .update(
-                                                              usersUpdateData);
-                                                    }
-                                                  } else {
-                                                    if (choice == 'report') {
+                                                  ),
+                                                  lastChatText: chatInfo
+                                                      .chatPreviewMessage(),
+                                                  lastChatTime:
+                                                      chatsItem.lastMessageTime,
+                                                  seen: chatsItem
+                                                      .lastMessageSeenBy!
+                                                      .contains(
+                                                          currentUserReference),
+                                                  title: chatInfo
+                                                      .chatPreviewTitle(),
+                                                  userProfilePic:
+                                                      chatInfo.chatPreviewPic(),
+                                                  color: Color(0x00000000),
+                                                  unreadColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .alternate,
+                                                  titleTextStyle:
+                                                      GoogleFonts.getFont(
+                                                    'Roboto',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 14,
+                                                  ),
+                                                  dateTextStyle:
+                                                      GoogleFonts.getFont(
+                                                    'Roboto',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryText,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 14,
+                                                  ),
+                                                  previewTextStyle:
+                                                      GoogleFonts.getFont(
+                                                    'Roboto',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 14,
+                                                  ),
+                                                  contentPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(3, 3, 3, 3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(0),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () async {
+                                              if (!stackUsersRecord.blocked!
+                                                  .toList()
+                                                  .contains(
+                                                      columnUsersRecord.uid)) {
+                                                context.pushNamed(
+                                                  'Chat',
+                                                  queryParams: {
+                                                    'chatRef': serializeParam(
+                                                      chatsItem.reference,
+                                                      ParamType
+                                                          .DocumentReference,
+                                                    ),
+                                                    'chatUser': serializeParam(
+                                                      stackUsersRecord,
+                                                      ParamType.Document,
+                                                    ),
+                                                    'route': serializeParam(
+                                                      'allchats',
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
+                                                  extra: <String, dynamic>{
+                                                    'chatUser':
+                                                        stackUsersRecord,
+                                                  },
+                                                );
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      'User ${columnUsersRecord.displayName} has blocked you.',
+                                                      style: TextStyle(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                      ),
+                                                    ),
+                                                    duration: Duration(
+                                                        milliseconds: 4000),
+                                                    backgroundColor:
+                                                        Color(0x00000000),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 80,
+                                              decoration: BoxDecoration(),
+                                              child: Slidable(
+                                                actionPane:
+                                                    const SlidableScrollActionPane(),
+                                                secondaryActions: [
+                                                  IconSlideAction(
+                                                    caption: 'Block',
+                                                    color: Colors.blue,
+                                                    icon: FontAwesomeIcons.ban,
+                                                    onTap: () async {
                                                       await showModalBottomSheet(
                                                         isScrollControlled:
                                                             true,
@@ -413,165 +406,251 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                         context)
                                                                     .viewInsets,
                                                             child:
-                                                                ReportUserDialogWidget(),
+                                                                MenuReportUserWidget(),
                                                           );
                                                         },
                                                       ).then((value) =>
                                                           setState(() =>
-                                                              report = value));
+                                                              choice = value));
 
-                                                      if (report != null &&
-                                                          report != '') {
-                                                        final complaintsCreateData =
-                                                            createComplaintsRecordData(
-                                                          reporter:
-                                                              currentUserReference,
-                                                          referredUser:
+                                                      if (choice == 'unmatch') {
+                                                        var confirmDialogResponse =
+                                                            await showDialog<
+                                                                    bool>(
+                                                                  context:
+                                                                      context,
+                                                                  builder:
+                                                                      (alertDialogContext) {
+                                                                    return AlertDialog(
+                                                                      title: Text(
+                                                                          'Confirm unmatch'),
+                                                                      content: Text(
+                                                                          'Are you sure you want to unmatch ${stackUsersRecord.displayName}?'),
+                                                                      actions: [
+                                                                        TextButton(
+                                                                          onPressed: () => Navigator.pop(
+                                                                              alertDialogContext,
+                                                                              false),
+                                                                          child:
+                                                                              Text('Cancel'),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed: () => Navigator.pop(
+                                                                              alertDialogContext,
+                                                                              true),
+                                                                          child:
+                                                                              Text('Confirm'),
+                                                                        ),
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                ) ??
+                                                                false;
+                                                        if (confirmDialogResponse) {
+                                                          final usersUpdateData =
+                                                              {
+                                                            'liked': FieldValue
+                                                                .arrayRemove([
                                                               stackUsersRecord
-                                                                  .reference,
-                                                          report: report,
-                                                          complaintTS:
-                                                              getCurrentTimestamp,
-                                                        );
-                                                        var complaintsRecordReference =
-                                                            ComplaintsRecord
-                                                                .collection
-                                                                .doc();
-                                                        await complaintsRecordReference
-                                                            .set(
-                                                                complaintsCreateData);
-                                                        reportDoc = ComplaintsRecord
-                                                            .getDocumentFromData(
-                                                                complaintsCreateData,
-                                                                complaintsRecordReference);
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Your report has been sent. Our support service will get back soon.',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyText2
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Roboto',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryColor,
-                                                                    fontSize:
-                                                                        18,
-                                                                  ),
-                                                            ),
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    4000),
+                                                                  .uid
+                                                            ]),
+                                                          };
+                                                          await currentUserReference!
+                                                              .update(
+                                                                  usersUpdateData);
+                                                        }
+                                                      } else {
+                                                        if (choice ==
+                                                            'report') {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
                                                             backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                          ),
-                                                        );
-                                                      }
-                                                    } else {
-                                                      if (choice == 'block') {
-                                                        ScaffoldMessenger.of(
-                                                                context)
-                                                            .showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Please define the requirements!',
-                                                              style: TextStyle(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                                fontSize: 24,
-                                                              ),
-                                                            ),
-                                                            duration: Duration(
-                                                                milliseconds:
-                                                                    4000),
-                                                            backgroundColor:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBtnText,
-                                                          ),
-                                                        );
-                                                      }
-                                                    }
-                                                  }
-
-                                                  setState(() {});
-                                                },
-                                              ),
-                                              IconSlideAction(
-                                                caption: 'Delete',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .systemError,
-                                                icon: Icons
-                                                    .delete_forever_outlined,
-                                                onTap: () async {
-                                                  var confirmDialogResponse =
-                                                      await showDialog<bool>(
+                                                                Colors
+                                                                    .transparent,
                                                             context: context,
-                                                            builder:
-                                                                (alertDialogContext) {
-                                                              return AlertDialog(
-                                                                title: Text(
-                                                                    'Delete chat'),
-                                                                content: Text(
-                                                                    'The chat will be removed completely. Please confirm'),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            alertDialogContext,
-                                                                            false),
-                                                                    child: Text(
-                                                                        'Cancel'),
-                                                                  ),
-                                                                  TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.pop(
-                                                                            alertDialogContext,
-                                                                            true),
-                                                                    child: Text(
-                                                                        'Confirm'),
-                                                                  ),
-                                                                ],
+                                                            builder: (context) {
+                                                              return Padding(
+                                                                padding: MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets,
+                                                                child:
+                                                                    ReportUserDialogWidget(),
                                                               );
                                                             },
-                                                          ) ??
-                                                          false;
-                                                  if (confirmDialogResponse) {
-                                                    await chatsItem.reference
-                                                        .delete();
-                                                  }
-                                                },
+                                                          ).then((value) =>
+                                                              setState(() =>
+                                                                  report =
+                                                                      value));
+
+                                                          if (report != null &&
+                                                              report != '') {
+                                                            final complaintsCreateData =
+                                                                createComplaintsRecordData(
+                                                              reporter:
+                                                                  currentUserReference,
+                                                              referredUser:
+                                                                  stackUsersRecord
+                                                                      .reference,
+                                                              report: report,
+                                                              complaintTS:
+                                                                  getCurrentTimestamp,
+                                                            );
+                                                            var complaintsRecordReference =
+                                                                ComplaintsRecord
+                                                                    .collection
+                                                                    .doc();
+                                                            await complaintsRecordReference
+                                                                .set(
+                                                                    complaintsCreateData);
+                                                            reportDoc = ComplaintsRecord
+                                                                .getDocumentFromData(
+                                                                    complaintsCreateData,
+                                                                    complaintsRecordReference);
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'Your report has been sent. Our support service will get back soon.',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText2
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryColor,
+                                                                        fontSize:
+                                                                            18,
+                                                                      ),
+                                                                ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                              ),
+                                                            );
+                                                          }
+                                                        } else {
+                                                          if (choice ==
+                                                              'block') {
+                                                            final usersUpdateData =
+                                                                {
+                                                              'blocked': FieldValue
+                                                                  .arrayUnion([
+                                                                stackUsersRecord
+                                                                    .uid
+                                                              ]),
+                                                            };
+                                                            await currentUserReference!
+                                                                .update(
+                                                                    usersUpdateData);
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'Not implemented yet',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                    fontSize:
+                                                                        24,
+                                                                  ),
+                                                                ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBtnText,
+                                                              ),
+                                                            );
+                                                          }
+                                                        }
+                                                      }
+
+                                                      setState(() {});
+                                                    },
+                                                  ),
+                                                  IconSlideAction(
+                                                    caption: 'Delete',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .systemError,
+                                                    icon: Icons
+                                                        .delete_forever_outlined,
+                                                    onTap: () async {
+                                                      var confirmDialogResponse =
+                                                          await showDialog<
+                                                                  bool>(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    (alertDialogContext) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        'Delete chat'),
+                                                                    content: Text(
+                                                                        'The chat will be removed completely. Please confirm'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                        child: Text(
+                                                                            'Cancel'),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed: () => Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                        child: Text(
+                                                                            'Confirm'),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ) ??
+                                                              false;
+                                                      if (confirmDialogResponse) {
+                                                        await chatsItem
+                                                            .reference
+                                                            .delete();
+                                                      }
+                                                    },
+                                                  ),
+                                                ],
+                                                child: ListTile(
+                                                  tileColor: Color(0xFFF5F5F5),
+                                                  dense: false,
+                                                ),
                                               ),
-                                            ],
-                                            child: ListTile(
-                                              tileColor: Color(0xFFF5F5F5),
-                                              dense: false,
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    ],
+                                        ],
+                                      );
+                                    },
                                   );
                                 },
                               );
                             },
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
