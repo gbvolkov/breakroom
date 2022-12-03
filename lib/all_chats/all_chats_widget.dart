@@ -206,8 +206,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                 itemCount: chats.length,
                                 itemBuilder: (context, chatsIndex) {
                                   final chatsItem = chats[chatsIndex];
-                                  return FutureBuilder<UsersRecord>(
-                                    future: UsersRecord.getDocumentOnce(
+                                  return StreamBuilder<UsersRecord>(
+                                    stream: UsersRecord.getDocument(
                                         functions.getChatUser(
                                             chatsItem.userA,
                                             chatsItem.userB,
