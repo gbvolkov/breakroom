@@ -434,7 +434,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     const SlidableScrollActionPane(),
                                                 secondaryActions: [
                                                   IconSlideAction(
-                                                    caption: 'Block',
+                                                    caption: '...',
                                                     color: Colors.blue,
                                                     icon: FontAwesomeIcons.ban,
                                                     onTap: () async {
@@ -451,7 +451,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                         context)
                                                                     .viewInsets,
                                                             child:
-                                                                MenuReportUserWidget(),
+                                                                MenuReportUserWidget(
+                                                              isBlocked: columnUsersRecord
+                                                                  .blocked!
+                                                                  .toList()
+                                                                  .contains(
+                                                                      stackUsersRecord
+                                                                          .uid),
+                                                            ),
                                                           );
                                                         },
                                                       ).then((value) =>
@@ -594,30 +601,22 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                             await currentUserReference!
                                                                 .update(
                                                                     usersUpdateData);
-                                                            ScaffoldMessenger
-                                                                    .of(context)
-                                                                .showSnackBar(
-                                                              SnackBar(
-                                                                content: Text(
-                                                                  'Not implemented yet',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .alternate,
-                                                                    fontSize:
-                                                                        24,
-                                                                  ),
-                                                                ),
-                                                                duration: Duration(
-                                                                    milliseconds:
-                                                                        4000),
-                                                                backgroundColor:
-                                                                    FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryBtnText,
-                                                              ),
-                                                            );
+                                                          } else {
+                                                            if (choice ==
+                                                                'unblock') {
+                                                              final usersUpdateData =
+                                                                  {
+                                                                'blocked':
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  stackUsersRecord
+                                                                      .uid
+                                                                ]),
+                                                              };
+                                                              await currentUserReference!
+                                                                  .update(
+                                                                      usersUpdateData);
+                                                            }
                                                           }
                                                         }
                                                       }

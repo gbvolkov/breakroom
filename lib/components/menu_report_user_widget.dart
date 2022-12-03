@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MenuReportUserWidget extends StatefulWidget {
-  const MenuReportUserWidget({Key? key}) : super(key: key);
+  const MenuReportUserWidget({
+    Key? key,
+    this.isBlocked,
+  }) : super(key: key);
+
+  final bool? isBlocked;
 
   @override
   _MenuReportUserWidgetState createState() => _MenuReportUserWidgetState();
@@ -90,9 +95,17 @@ class _MenuReportUserWidgetState extends State<MenuReportUserWidget> {
                 ),
                 FFButtonWidget(
                   onPressed: () async {
-                    Navigator.pop(context, 'block');
+                    Navigator.pop(
+                        context,
+                        valueOrDefault<String>(
+                          widget.isBlocked! ? 'unblock' : 'block',
+                          'block',
+                        ));
                   },
-                  text: 'Block',
+                  text: valueOrDefault<String>(
+                    widget.isBlocked! ? 'Unblock' : 'Block',
+                    'Block',
+                  ),
                   options: FFButtonOptions(
                     width: double.infinity,
                     height: 60,
