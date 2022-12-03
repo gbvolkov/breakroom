@@ -177,7 +177,6 @@ class _LikesLimitExceedWidgetWidgetState
                                                 formatType: FormatType.decimal,
                                                 decimalType:
                                                     DecimalType.automatic,
-                                                currency: '',
                                               )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -350,7 +349,6 @@ class _LikesLimitExceedWidgetWidgetState
                                                 formatType: FormatType.decimal,
                                                 decimalType:
                                                     DecimalType.automatic,
-                                                currency: '',
                                               )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -500,7 +498,6 @@ class _LikesLimitExceedWidgetWidgetState
                                                 formatType: FormatType.decimal,
                                                 decimalType:
                                                     DecimalType.automatic,
-                                                currency: '',
                                               )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)

@@ -681,5 +681,5 @@ double mdiv(
   if ((divider ?? 0) == 0) {
     divider = 1;
   }
-  return (dividend ?? 0) / (divider!);
+  return (((dividend ?? 0) / (divider!)) * 100).round().toDouble() / 100;
 }
