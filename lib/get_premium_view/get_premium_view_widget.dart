@@ -25,6 +25,7 @@ class GetPremiumViewWidget extends StatefulWidget {
 }
 
 class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
+  bool? didPurchase;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -583,17 +584,10 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                                       ),
                                     );
                                   },
-                                ).then((value) => setState(() {}));
+                                ).then((value) =>
+                                    setState(() => didPurchase = value));
 
-                                final isEntitled =
-                                    await revenue_cat.isEntitled('premium');
-                                if (isEntitled == null) {
-                                  return;
-                                } else if (!isEntitled) {
-                                  await revenue_cat.loadOfferings();
-                                }
-
-                                if (isEntitled) {
+                                if (didPurchase!) {
                                   final usersUpdateData = createUsersRecordData(
                                     isPremium: true,
                                   );
@@ -624,6 +618,8 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                                     ),
                                   );
                                 }
+
+                                setState(() {});
                               },
                               text: 'Continue',
                               options: FFButtonOptions(
