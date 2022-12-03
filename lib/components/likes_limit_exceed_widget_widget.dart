@@ -68,6 +68,7 @@ class _LikesLimitExceedWidgetWidgetState
                   ),
                 Row(
                   mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -78,7 +79,7 @@ class _LikesLimitExceedWidgetWidgetState
                       child: Stack(
                         children: [
                           Container(
-                            width: 100,
+                            width: 110,
                             height: 120,
                             decoration: BoxDecoration(),
                             child: Column(
@@ -125,7 +126,7 @@ class _LikesLimitExceedWidgetWidgetState
                                       0, 8, 0, 0),
                                   child: ClipRRect(
                                     child: Container(
-                                      width: 83,
+                                      width: 100,
                                       height: 22,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
@@ -144,7 +145,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Roboto',
-                                                  fontSize: 17,
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -154,7 +155,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Roboto',
-                                                  fontSize: 17,
+                                                  fontSize: 14,
                                                 ),
                                           ),
                                         ],
@@ -175,7 +176,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         .identifier);
                               },
                               child: Container(
-                                width: 100,
+                                width: 110,
                                 height: 120,
                                 decoration: BoxDecoration(
                                   color: Color(0x7FF5F5F5),
@@ -193,7 +194,7 @@ class _LikesLimitExceedWidgetWidgetState
                       child: Stack(
                         children: [
                           Container(
-                            width: 100,
+                            width: 110,
                             height: 120,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
@@ -265,7 +266,7 @@ class _LikesLimitExceedWidgetWidgetState
                                       0, 8, 0, 0),
                                   child: ClipRRect(
                                     child: Container(
-                                      width: 83,
+                                      width: 100,
                                       height: 22,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
@@ -291,7 +292,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
-                                                  fontSize: 17,
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -304,7 +305,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .primaryColor,
-                                                  fontSize: 17,
+                                                  fontSize: 14,
                                                 ),
                                           ),
                                         ],
@@ -325,7 +326,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         .identifier);
                               },
                               child: Container(
-                                width: 100,
+                                width: 110,
                                 height: 120,
                                 decoration: BoxDecoration(
                                   color: Color(0x7FF5F5F5),
@@ -344,7 +345,7 @@ class _LikesLimitExceedWidgetWidgetState
                       child: Stack(
                         children: [
                           Container(
-                            width: 100,
+                            width: 110,
                             height: 120,
                             decoration: BoxDecoration(),
                             child: Column(
@@ -391,7 +392,7 @@ class _LikesLimitExceedWidgetWidgetState
                                       0, 8, 0, 0),
                                   child: ClipRRect(
                                     child: Container(
-                                      width: 83,
+                                      width: 100,
                                       height: 22,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
@@ -410,7 +411,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Roboto',
-                                                  fontSize: 17,
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                           ),
@@ -420,7 +421,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                 .bodyText1
                                                 .override(
                                                   fontFamily: 'Roboto',
-                                                  fontSize: 17,
+                                                  fontSize: 14,
                                                 ),
                                           ),
                                         ],
@@ -441,7 +442,7 @@ class _LikesLimitExceedWidgetWidgetState
                                         .identifier);
                               },
                               child: Container(
-                                width: 100,
+                                width: 110,
                                 height: 120,
                                 decoration: BoxDecoration(
                                   color: Color(0x7FF5F5F5),
