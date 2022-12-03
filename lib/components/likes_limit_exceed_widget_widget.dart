@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -132,7 +133,8 @@ class _LikesLimitExceedWidgetWidgetState
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '\$89.99',
+                                      revenue_cat.offerings!.current!.annual!
+                                          .product.priceString,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -247,7 +249,8 @@ class _LikesLimitExceedWidgetWidgetState
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '\$89.99',
+                                      revenue_cat.offerings!.current!
+                                          .threeMonth!.product.priceString,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(
@@ -342,7 +345,8 @@ class _LikesLimitExceedWidgetWidgetState
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      '\$89.99',
+                                      revenue_cat.offerings!.current!.monthly!
+                                          .product.priceString,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText1
                                           .override(

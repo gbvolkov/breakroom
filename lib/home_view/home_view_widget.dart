@@ -16,6 +16,7 @@ import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
 import '../flutter_flow/random_data_util.dart' as random_data;
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +93,25 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
+      final isEntitled = await revenue_cat.isEntitled('premium');
+      if (isEntitled == null) {
+        return;
+      } else if (!isEntitled) {
+        await revenue_cat.loadOfferings();
+      }
+
+      if (isEntitled) {
+        final usersUpdateData = createUsersRecordData(
+          isPremium: true,
+        );
+        await currentUserReference!.update(usersUpdateData);
+      } else {
+        final usersUpdateData = createUsersRecordData(
+          isPremium: false,
+        );
+        await currentUserReference!.update(usersUpdateData);
+      }
+
       userDoc = await actions.getUserDocument(
         currentUserReference!,
       );
