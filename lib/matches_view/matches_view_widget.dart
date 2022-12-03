@@ -420,63 +420,115 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       ],
                                                     ),
                                                   ),
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            1.1, 0.95),
-                                                    child:
-                                                        FlutterFlowIconButton(
-                                                      borderColor:
-                                                          Colors.transparent,
-                                                      borderRadius: 30,
-                                                      borderWidth: 1,
-                                                      buttonSize: 60,
-                                                      icon: Icon(
-                                                        Icons.chat,
-                                                        color:
-                                                            Color(0xA3F5F5F5),
-                                                        size: 30,
-                                                      ),
-                                                      onPressed: () async {
-                                                        if (columnUsersRecord
-                                                                .isPremium! ||
-                                                            !getRemoteConfigBool(
-                                                                'check_premium') ||
-                                                            columnUsersRecord
-                                                                .liked!
-                                                                .toList()
-                                                                .contains(
-                                                                    matchesItem
-                                                                        .uid)) {
-                                                          context.pushNamed(
-                                                            'Chat',
-                                                            queryParams: {
-                                                              'chatUser':
-                                                                  serializeParam(
-                                                                matchesItem,
-                                                                ParamType
-                                                                    .Document,
-                                                              ),
-                                                              'route':
-                                                                  serializeParam(
-                                                                'matchesview',
-                                                                ParamType
-                                                                    .String,
-                                                              ),
-                                                            }.withoutNulls,
-                                                            extra: <String,
-                                                                dynamic>{
-                                                              'chatUser':
+                                                  if (!matchesItem.blocked!
+                                                      .toList()
+                                                      .contains(
+                                                          columnUsersRecord
+                                                              .uid))
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              1.1, 0.95),
+                                                      child:
+                                                          FlutterFlowIconButton(
+                                                        borderColor:
+                                                            Colors.transparent,
+                                                        borderRadius: 30,
+                                                        borderWidth: 1,
+                                                        buttonSize: 60,
+                                                        icon: Icon(
+                                                          Icons.chat,
+                                                          color:
+                                                              Color(0xA3F5F5F5),
+                                                          size: 30,
+                                                        ),
+                                                        onPressed: () async {
+                                                          if (columnUsersRecord
+                                                                  .isPremium! ||
+                                                              !getRemoteConfigBool(
+                                                                  'check_premium') ||
+                                                              columnUsersRecord
+                                                                  .liked!
+                                                                  .toList()
+                                                                  .contains(
+                                                                      matchesItem
+                                                                          .uid)) {
+                                                            context.pushNamed(
+                                                              'Chat',
+                                                              queryParams: {
+                                                                'chatUser':
+                                                                    serializeParam(
                                                                   matchesItem,
-                                                            },
-                                                          );
-                                                        } else {
-                                                          context.pushNamed(
-                                                              'GetPremiumView');
-                                                        }
-                                                      },
+                                                                  ParamType
+                                                                      .Document,
+                                                                ),
+                                                                'route':
+                                                                    serializeParam(
+                                                                  'matchesview',
+                                                                  ParamType
+                                                                      .String,
+                                                                ),
+                                                              }.withoutNulls,
+                                                              extra: <String,
+                                                                  dynamic>{
+                                                                'chatUser':
+                                                                    matchesItem,
+                                                              },
+                                                            );
+                                                          } else {
+                                                            context.pushNamed(
+                                                                'GetPremiumView');
+                                                          }
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
+                                                  if (matchesItem.blocked!
+                                                      .toList()
+                                                      .contains(
+                                                          columnUsersRecord
+                                                              .uid))
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              1.1, 0.95),
+                                                      child:
+                                                          FlutterFlowIconButton(
+                                                        borderColor:
+                                                            Colors.transparent,
+                                                        borderRadius: 30,
+                                                        borderWidth: 1,
+                                                        buttonSize: 60,
+                                                        icon: Icon(
+                                                          Icons.block,
+                                                          color:
+                                                              Color(0xA3F5F5F5),
+                                                          size: 30,
+                                                        ),
+                                                        onPressed: () async {
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                              content: Text(
+                                                                'User ${matchesItem.displayName} has blocked you.',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                              ),
+                                                              duration: Duration(
+                                                                  milliseconds:
+                                                                      4000),
+                                                              backgroundColor:
+                                                                  Color(
+                                                                      0x00000000),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
                                                   if (columnUsersRecord.liked!
                                                       .toList()
                                                       .contains(

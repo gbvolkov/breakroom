@@ -433,63 +433,116 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                           ),
                                         ],
                                       ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          if (columnUsersRecord.isPremium! ||
-                                              !getRemoteConfigBool(
-                                                  'check_premium') ||
-                                              (columnUsersRecord.liked!
-                                                      .toList()
-                                                      .contains(widget
-                                                          .userProfile!.uid) &&
-                                                  widget.userProfile!.liked!
-                                                      .toList()
-                                                      .contains(
-                                                          columnUsersRecord
-                                                              .uid))) {
-                                            context.pushNamed(
-                                              'Chat',
-                                              queryParams: {
-                                                'chatUser': serializeParam(
-                                                  widget.userProfile,
-                                                  ParamType.Document,
+                                      if (widget.userProfile!.blocked!
+                                          .toList()
+                                          .contains(columnUsersRecord.uid))
+                                        FFButtonWidget(
+                                          onPressed: () async {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'User ${widget.userProfile!.displayName} has blocked you.',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                  ),
                                                 ),
-                                                'route': serializeParam(
-                                                  'homedetailsview',
-                                                  ParamType.String,
-                                                ),
-                                              }.withoutNulls,
-                                              extra: <String, dynamic>{
-                                                'chatUser': widget.userProfile,
-                                              },
-                                            );
-                                          } else {
-                                            context.pushNamed('GetPremiumView');
-                                          }
-                                        },
-                                        text: 'Chat',
-                                        options: FFButtonOptions(
-                                          width: 90,
-                                          height: 35,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .subtitle1
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    Color(0x00000000),
                                               ),
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1,
+                                            );
+                                          },
+                                          text: 'Chat',
+                                          options: FFButtonOptions(
+                                            width: 90,
+                                            height: 35,
+                                            color: Color(0x68F95A82),
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
                                         ),
-                                      ),
+                                      if (!widget.userProfile!.blocked!
+                                          .toList()
+                                          .contains(columnUsersRecord.uid))
+                                        FFButtonWidget(
+                                          onPressed: () async {
+                                            if (columnUsersRecord.isPremium! ||
+                                                !getRemoteConfigBool(
+                                                    'check_premium') ||
+                                                (columnUsersRecord.liked!
+                                                        .toList()
+                                                        .contains(widget
+                                                            .userProfile!
+                                                            .uid) &&
+                                                    widget.userProfile!.liked!
+                                                        .toList()
+                                                        .contains(
+                                                            columnUsersRecord
+                                                                .uid))) {
+                                              context.pushNamed(
+                                                'Chat',
+                                                queryParams: {
+                                                  'chatUser': serializeParam(
+                                                    widget.userProfile,
+                                                    ParamType.Document,
+                                                  ),
+                                                  'route': serializeParam(
+                                                    'homedetailsview',
+                                                    ParamType.String,
+                                                  ),
+                                                }.withoutNulls,
+                                                extra: <String, dynamic>{
+                                                  'chatUser':
+                                                      widget.userProfile,
+                                                },
+                                              );
+                                            } else {
+                                              context
+                                                  .pushNamed('GetPremiumView');
+                                            }
+                                          },
+                                          text: 'Chat',
+                                          options: FFButtonOptions(
+                                            width: 90,
+                                            height: 35,
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .subtitle1
+                                                    .override(
+                                                      fontFamily: 'Roboto',
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryColor,
+                                                    ),
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                        ),
                                     ],
                                   ),
                                 ),
