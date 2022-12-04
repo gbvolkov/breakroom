@@ -729,7 +729,8 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                               () => didPurchase = value));
 
                                           _shouldSetState = true;
-                                          if (didPurchase!) {
+                                          if ((didPurchase != null) &&
+                                              didPurchase!) {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(

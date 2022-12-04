@@ -580,7 +580,7 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                                 ).then((value) =>
                                     setState(() => didPurchase = value));
 
-                                if (didPurchase!) {
+                                if ((didPurchase != null) && didPurchase!) {
                                   if (widget.back == 'HomeView') {
                                     if (Navigator.of(context).canPop()) {
                                       context.pop();
