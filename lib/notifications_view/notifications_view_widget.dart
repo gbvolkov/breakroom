@@ -354,7 +354,11 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                     isPremium: columnUsersRecord
                                                             .isPremium! ||
                                                         !getRemoteConfigBool(
-                                                            'check_premium'),
+                                                            'check_premium') ||
+                                                        revenue_cat
+                                                            .activeEntitlementIds
+                                                            .contains(FFAppState()
+                                                                .entSeeNotiff),
                                                   ),
                                                 );
                                               },
@@ -467,7 +471,11 @@ class _NotificationsViewWidgetState extends State<NotificationsViewWidget> {
                                                     isPremium: columnUsersRecord
                                                             .isPremium! ||
                                                         !getRemoteConfigBool(
-                                                            'check_premium'),
+                                                            'check_premium') ||
+                                                        revenue_cat
+                                                            .activeEntitlementIds
+                                                            .contains(FFAppState()
+                                                                .entSeeNotiff),
                                                   ),
                                                 );
                                               },
