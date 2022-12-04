@@ -94,47 +94,49 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-      final isEntitled = await revenue_cat.isEntitled('premium');
-      if (isEntitled == null) {
-        return;
-      } else if (!isEntitled) {
-        await revenue_cat.loadOfferings();
-      }
-
-      if (isEntitled) {
-        if (FFAppState().cHomeVisits == 0) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Congrats, you are on Premium!',
-                style: TextStyle(
-                  color: FlutterFlowTheme.of(context).alternate,
-                  fontSize: 14,
-                ),
-              ),
-              duration: Duration(milliseconds: 4000),
-              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            ),
-          );
+      if ((isAndroid && getRemoteConfigBool('isDroidSub')) ||
+          (isiOS && getRemoteConfigBool('isiOSSub'))) {
+        final isEntitled = await revenue_cat.isEntitled('premium');
+        if (isEntitled == null) {
+          return;
+        } else if (!isEntitled) {
+          await revenue_cat.loadOfferings();
         }
-      } else {
-        if (FFAppState().cHomeVisits == 0) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Subscribe to Premium to unlock full features!',
-                style: TextStyle(
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  fontSize: 14,
+
+        if (isEntitled) {
+          if (FFAppState().cHomeVisits == 0) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Congrats, you are on Premium!',
+                  style: TextStyle(
+                    color: FlutterFlowTheme.of(context).alternate,
+                    fontSize: 14,
+                  ),
                 ),
+                duration: Duration(milliseconds: 4000),
+                backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
               ),
-              duration: Duration(milliseconds: 4000),
-              backgroundColor: FlutterFlowTheme.of(context).alternate,
-            ),
-          );
+            );
+          }
+        } else {
+          if (FFAppState().cHomeVisits == 0) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Subscribe to Premium to unlock full features!',
+                  style: TextStyle(
+                    color: FlutterFlowTheme.of(context).primaryColor,
+                    fontSize: 14,
+                  ),
+                ),
+                duration: Duration(milliseconds: 4000),
+                backgroundColor: FlutterFlowTheme.of(context).alternate,
+              ),
+            );
+          }
         }
       }
-
       setState(() => FFAppState().cHomeVisits = FFAppState().cHomeVisits + 1);
       userDoc = await actions.getUserDocument(
         currentUserReference!,
