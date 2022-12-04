@@ -8,6 +8,8 @@ Future initializeFirebaseRemoteConfig() async {
   await FirebaseRemoteConfig.instance.setDefaults(const {
     'build': '20221119.0200.2',
     'check_premium': false,
+    'isDroidSub': false,
+    'isiOSSub': false,
   });
   await FirebaseRemoteConfig.instance.fetchAndActivate();
 }
