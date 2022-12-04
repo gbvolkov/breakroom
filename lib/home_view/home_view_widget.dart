@@ -106,35 +106,11 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
           isPremium: true,
         );
         await currentUserReference!.update(usersUpdateData);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Congat\'s! You have premium subscription!',
-              style: TextStyle(
-                color: FlutterFlowTheme.of(context).alternate,
-              ),
-            ),
-            duration: Duration(milliseconds: 4000),
-            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-          ),
-        );
       } else {
         final usersUpdateData = createUsersRecordData(
           isPremium: false,
         );
         await currentUserReference!.update(usersUpdateData);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'To ulock full features, please obtain premium subscription.',
-              style: TextStyle(
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-              ),
-            ),
-            duration: Duration(milliseconds: 4000),
-            backgroundColor: FlutterFlowTheme.of(context).alternate,
-          ),
-        );
       }
 
       userDoc = await actions.getUserDocument(
