@@ -79,6 +79,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
     ),
   };
   ChatsRecord? groupChat;
+  bool? didPurchase;
   int? clikesState;
   late SwipeableCardSectionController swipeableStackController;
   String? uid;
@@ -722,8 +723,30 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                 ),
                                               );
                                             },
-                                          ).then((value) => setState(() {}));
+                                          ).then((value) => setState(
+                                              () => didPurchase = value));
 
+                                          _shouldSetState = true;
+                                          if (didPurchase!) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'You\'ve unlocked unlimited likes!',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .alternate,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                              ),
+                                            );
+                                          }
                                           if (Navigator.of(context).canPop()) {
                                             context.pop();
                                           }

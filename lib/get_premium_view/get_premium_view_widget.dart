@@ -588,11 +588,6 @@ class _GetPremiumViewWidgetState extends State<GetPremiumViewWidget> {
                                     setState(() => didPurchase = value));
 
                                 if (didPurchase!) {
-                                  final usersUpdateData = createUsersRecordData(
-                                    isPremium: true,
-                                  );
-                                  await currentUserReference!
-                                      .update(usersUpdateData);
                                   if (widget.back == 'HomeView') {
                                     if (Navigator.of(context).canPop()) {
                                       context.pop();

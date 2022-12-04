@@ -1,3 +1,4 @@
+import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -5,6 +6,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -491,7 +493,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                     revenue_cat
                                                         .offerings!
                                                         .current!
-                                                        .annual!
+                                                        .monthly!
                                                         .product
                                                         .price,
                                                     1),
@@ -579,6 +581,12 @@ class _LikesLimitExceedWidgetWidgetState
                       onPressed: () async {
                         didPurchase = await revenue_cat
                             .purchasePackage(FFAppState().selectedPackage);
+                        if (didPurchase!) {
+                          final usersUpdateData = createUsersRecordData(
+                            isPremium: true,
+                          );
+                          await currentUserReference!.update(usersUpdateData);
+                        }
                         Navigator.pop(context, didPurchase);
 
                         setState(() {});
