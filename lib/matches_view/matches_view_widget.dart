@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -220,7 +221,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                         matchesItem.uid) ||
                                                 columnUsersRecord.isPremium! ||
                                                 !getRemoteConfigBool(
-                                                    'check_premium')) {
+                                                    'check_premium') ||
+                                                revenue_cat.activeEntitlementIds
+                                                    .contains(FFAppState()
+                                                        .entSeeWhoLikes)) {
                                               context.pushNamed(
                                                 'HomeDetailsView',
                                                 queryParams: {
@@ -466,7 +470,12 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                                   .toList()
                                                                   .contains(
                                                                       matchesItem
-                                                                          .uid)) {
+                                                                          .uid) ||
+                                                              revenue_cat
+                                                                  .activeEntitlementIds
+                                                                  .contains(
+                                                                      FFAppState()
+                                                                          .entChatToNotMatched)) {
                                                             context.pushNamed(
                                                               'Chat',
                                                               queryParams: {
@@ -491,7 +500,21 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                             );
                                                           } else {
                                                             context.pushNamed(
-                                                                'GetPremiumView');
+                                                              'GetPremiumView',
+                                                              queryParams: {
+                                                                'user':
+                                                                    serializeParam(
+                                                                  columnUsersRecord,
+                                                                  ParamType
+                                                                      .Document,
+                                                                ),
+                                                              }.withoutNulls,
+                                                              extra: <String,
+                                                                  dynamic>{
+                                                                'user':
+                                                                    columnUsersRecord,
+                                                              },
+                                                            );
                                                           }
                                                         },
                                                       ),
@@ -570,7 +593,11 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                   columnUsersRecord
                                                       .isPremium! ||
                                                   !getRemoteConfigBool(
-                                                      'check_premium'))) {
+                                                      'check_premium') ||
+                                                  revenue_cat
+                                                      .activeEntitlementIds
+                                                      .contains(FFAppState()
+                                                          .entSeeWhoLikes))) {
                                                 return ClipRect(
                                                   child: ImageFiltered(
                                                     imageFilter:

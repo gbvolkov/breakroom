@@ -349,6 +349,8 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                 return;
                                               }
 
+                                              setState(() =>
+                                                  FFAppState().cHomeVisits = 0);
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 SnackBar(
@@ -358,13 +360,16 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryText,
+                                                              .alternate,
+                                                      fontSize: 14,
                                                     ),
                                                   ),
                                                   duration: Duration(
                                                       milliseconds: 4000),
                                                   backgroundColor:
-                                                      Color(0x00000000),
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primaryBackground,
                                                 ),
                                               );
                                               await Future.delayed(

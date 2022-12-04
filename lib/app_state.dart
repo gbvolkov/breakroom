@@ -326,6 +326,24 @@ class FFAppState {
   bool isFirstAtHome = true;
 
   String selectedPackage = '';
+
+  String entRewindDisliked = 'rewind_disliked';
+
+  String entSeeNotiff = 'see_notiff';
+
+  String entSeeWhoLikes = 'see_who_likes';
+
+  String entAdvFilter = 'adv_filter';
+
+  String entUnlimLikes = 'unlim_likes';
+
+  String entPremium = 'premium';
+
+  String entChatToNotMatched = 'chat_to_not_matched';
+
+  String entResetLocation = 'reset_location';
+
+  int cHomeVisits = 0;
 }
 
 LatLng? _latLngFromString(String? val) {

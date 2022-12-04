@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -340,7 +341,9 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                       child: FFButtonWidget(
                         onPressed: () async {
                           if (widget.me!.isPremium! ||
-                              !getRemoteConfigBool('check_premium')) {
+                              !getRemoteConfigBool('check_premium') ||
+                              revenue_cat.activeEntitlementIds
+                                  .contains(FFAppState().entChatToNotMatched)) {
                             context.pushNamed(
                               'Chat',
                               queryParams: {

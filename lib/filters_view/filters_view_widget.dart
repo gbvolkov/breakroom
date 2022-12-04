@@ -9,6 +9,7 @@ import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -455,7 +456,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         onPressed: () async {
                                           if (columnUsersRecord.isPremium! ||
                                               !getRemoteConfigBool(
-                                                  'check_premium')) {
+                                                  'check_premium') ||
+                                              revenue_cat.activeEntitlementIds
+                                                  .contains(FFAppState()
+                                                      .entAdvFilter)) {
                                             setState(() =>
                                                 FFAppState().filterName =
                                                     'Advanced filters');
@@ -621,7 +625,9 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ],
                                   ),
                                   if (widget.user!.isPremium! ||
-                                      !getRemoteConfigBool('check_premium'))
+                                      !getRemoteConfigBool('check_premium') ||
+                                      revenue_cat.activeEntitlementIds.contains(
+                                          FFAppState().entResetLocation))
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
@@ -898,7 +904,9 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                             setState(() =>
                                 FFAppState().fltrGender = ccInterestedInValue!);
                             if (widget.user!.isPremium! ||
-                                !getRemoteConfigBool('check_premium')) {
+                                !getRemoteConfigBool('check_premium') ||
+                                revenue_cat.activeEntitlementIds
+                                    .contains(FFAppState().entResetLocation)) {
                               final usersUpdateData = createUsersRecordData(
                                 filter: createFilterStruct(
                                   ageRangeExt: false,

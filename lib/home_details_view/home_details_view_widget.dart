@@ -2,6 +2,7 @@ import '../auth/auth_util.dart';
 import '../backend/backend.dart';
 import '../backend/push_notifications/push_notifications_util.dart';
 import '../components/gender_icon_widget.dart';
+import '../components/likes_limit_exceed_widget_widget.dart';
 import '../flutter_flow/chat/index.dart';
 import '../flutter_flow/flutter_flow_expanded_image_view.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -11,6 +12,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,6 +38,7 @@ class HomeDetailsViewWidget extends StatefulWidget {
 
 class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
   ChatsRecord? groupChat;
+  bool? didPurchase;
   int? clikesState;
   PageController? pageViewController;
   LatLng? currentUserLocationValue;
@@ -529,7 +532,11 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                             .toList()
                                                             .contains(
                                                                 columnUsersRecord
-                                                                    .uid))) {
+                                                                    .uid)) ||
+                                                    revenue_cat
+                                                        .activeEntitlementIds
+                                                        .contains(FFAppState()
+                                                            .entChatToNotMatched)) {
                                                   context.pushNamed(
                                                     'Chat',
                                                     queryParams: {
@@ -1059,29 +1066,69 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                           columnUsersRecord
                                                               .lastLikeTime,
                                                           columnUsersRecord
-                                                              .isPremium,
+                                                                  .isPremium! ||
+                                                              revenue_cat
+                                                                  .activeEntitlementIds
+                                                                  .contains(
+                                                                      FFAppState()
+                                                                          .entUnlimLikes),
                                                           getRemoteConfigBool(
                                                               'check_premium'),
                                                         );
                                                         _shouldSetState = true;
                                                         if (clikesState == 0) {
-                                                          context.pushNamed(
-                                                            'GetPremiumView',
-                                                            queryParams: {
-                                                              'user':
-                                                                  serializeParam(
-                                                                columnUsersRecord,
-                                                                ParamType
-                                                                    .Document,
-                                                              ),
-                                                            }.withoutNulls,
-                                                            extra: <String,
-                                                                dynamic>{
-                                                              'user':
-                                                                  columnUsersRecord,
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Padding(
+                                                                padding: MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets,
+                                                                child:
+                                                                    LikesLimitExceedWidgetWidget(
+                                                                  showTime:
+                                                                      true,
+                                                                  user:
+                                                                      columnUsersRecord,
+                                                                ),
+                                                              );
                                                             },
-                                                          );
+                                                          ).then((value) =>
+                                                              setState(() =>
+                                                                  didPurchase =
+                                                                      value));
 
+                                                          _shouldSetState =
+                                                              true;
+                                                          if (didPurchase!) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'You\'ve unlocked unlimited likes!',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                  ),
+                                                                ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryBackground,
+                                                              ),
+                                                            );
+                                                          }
                                                           if (_shouldSetState)
                                                             setState(() {});
                                                           return;

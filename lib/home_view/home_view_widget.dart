@@ -102,17 +102,40 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
       }
 
       if (isEntitled) {
-        final usersUpdateData = createUsersRecordData(
-          isPremium: true,
-        );
-        await currentUserReference!.update(usersUpdateData);
+        if (FFAppState().cHomeVisits == 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Congrats, you are on Premium!',
+                style: TextStyle(
+                  color: FlutterFlowTheme.of(context).alternate,
+                  fontSize: 14,
+                ),
+              ),
+              duration: Duration(milliseconds: 4000),
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            ),
+          );
+        }
       } else {
-        final usersUpdateData = createUsersRecordData(
-          isPremium: false,
-        );
-        await currentUserReference!.update(usersUpdateData);
+        if (FFAppState().cHomeVisits == 0) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Subscribe to Premium to unlock full features!',
+                style: TextStyle(
+                  color: FlutterFlowTheme.of(context).primaryColor,
+                  fontSize: 14,
+                ),
+              ),
+              duration: Duration(milliseconds: 4000),
+              backgroundColor: FlutterFlowTheme.of(context).alternate,
+            ),
+          );
+        }
       }
 
+      setState(() => FFAppState().cHomeVisits = FFAppState().cHomeVisits + 1);
       userDoc = await actions.getUserDocument(
         currentUserReference!,
       );
@@ -678,7 +701,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                             await actions.canProcessLikeAction(
                                           columnUsersRecord.likesCount,
                                           columnUsersRecord.lastLikeTime,
-                                          columnUsersRecord.isPremium,
+                                          columnUsersRecord.isPremium! ||
+                                              revenue_cat.activeEntitlementIds
+                                                  .contains(FFAppState()
+                                                      .entUnlimLikes),
                                           getRemoteConfigBool('check_premium'),
                                         );
                                         _shouldSetState = true;
@@ -1506,7 +1532,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                             },
                           ),
                           if (!(columnUsersRecord.isPremium! ||
-                                  !getRemoteConfigBool('check_premium'))
+                                  !getRemoteConfigBool('check_premium') ||
+                                  revenue_cat.activeEntitlementIds
+                                      .contains(FFAppState().entRewindDisliked))
                               ? false
                               : (FFAppState().dislikedUsers.length > 0))
                             Align(

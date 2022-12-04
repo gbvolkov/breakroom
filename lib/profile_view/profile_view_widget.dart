@@ -10,6 +10,7 @@ import '../flutter_flow/upload_media.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/permissions_util.dart';
+import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -859,7 +860,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                       if (columnUsersRecord.isPremium! ||
-                                          !getRemoteConfigBool('check_premium'))
+                                          !getRemoteConfigBool(
+                                              'check_premium') ||
+                                          revenue_cat.activeEntitlementIds
+                                              .contains(FFAppState()
+                                                  .entResetLocation))
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -960,22 +965,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0, 0, 0, 4),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                  'UploadPhotosView');
-                                            },
-                                            child: Text(
-                                              'Photos',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                            ),
+                                          child: Text(
+                                            'Photos',
+                                            style: FlutterFlowTheme.of(context)
+                                                .subtitle1
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  fontWeight: FontWeight.bold,
+                                                ),
                                           ),
                                         ),
                                       ),

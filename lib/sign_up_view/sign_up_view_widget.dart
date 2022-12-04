@@ -876,6 +876,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     [])
                                                 .toList(),
                                           );
+                                          setState(() =>
+                                              FFAppState().cHomeVisits = 0);
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
