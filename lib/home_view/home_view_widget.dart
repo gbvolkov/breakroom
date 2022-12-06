@@ -822,31 +822,36 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                             [matchedUsers[index]!.reference],
                                           );
                                           _shouldSetState = true;
-                                          triggerPushNotification(
-                                            notificationTitle:
-                                                'You have match!',
-                                            notificationText:
-                                                'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
-                                              functions.getAge(
-                                                  currentUserDocument!
-                                                      .birthDay),
-                                              formatType: FormatType.custom,
-                                              format: '###',
-                                              locale: '',
-                                            )}!',
-                                            notificationImageUrl:
-                                                currentUserPhoto,
-                                            userRefs: [
-                                              matchedUsers[index]!.reference
-                                            ],
-                                            initialPageName: 'HomeDetailsView',
-                                            parameterData: {
-                                              'userProfile':
-                                                  currentUserReference,
-                                              'mode': 'Match',
-                                              'backPage': 'push',
-                                            },
-                                          );
+                                          if (matchedUsers[index]!.notiffAll! ||
+                                              matchedUsers[index]!
+                                                  .nofittMatches!) {
+                                            triggerPushNotification(
+                                              notificationTitle:
+                                                  'You have match!',
+                                              notificationText:
+                                                  'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                functions.getAge(
+                                                    currentUserDocument!
+                                                        .birthDay),
+                                                formatType: FormatType.custom,
+                                                format: '###',
+                                                locale: '',
+                                              )}!',
+                                              notificationImageUrl:
+                                                  currentUserPhoto,
+                                              userRefs: [
+                                                matchedUsers[index]!.reference
+                                              ],
+                                              initialPageName:
+                                                  'HomeDetailsView',
+                                              parameterData: {
+                                                'userProfile':
+                                                    currentUserReference,
+                                                'mode': 'Match',
+                                                'backPage': 'push',
+                                              },
+                                            );
+                                          }
 
                                           final notificationsCreateData =
                                               createNotificationsRecordData(
@@ -888,30 +893,35 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                             },
                                           );
                                         } else {
-                                          triggerPushNotification(
-                                            notificationTitle:
-                                                'Somebody likes you!',
-                                            notificationText:
-                                                'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
-                                              functions.getAge(
-                                                  currentUserDocument!
-                                                      .birthDay),
-                                              formatType: FormatType.custom,
-                                              format: '###',
-                                              locale: '',
-                                            )} likes you!',
-                                            notificationImageUrl:
-                                                currentUserPhoto,
-                                            userRefs: [
-                                              matchedUsers[index]!.reference
-                                            ],
-                                            initialPageName: 'HomeDetailsView',
-                                            parameterData: {
-                                              'userProfile':
-                                                  currentUserReference,
-                                              'backPage': 'push',
-                                            },
-                                          );
+                                          if (matchedUsers[index]!.notiffAll! ||
+                                              matchedUsers[index]!
+                                                  .notiffLikes!) {
+                                            triggerPushNotification(
+                                              notificationTitle:
+                                                  'Somebody likes you!',
+                                              notificationText:
+                                                  'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                functions.getAge(
+                                                    currentUserDocument!
+                                                        .birthDay),
+                                                formatType: FormatType.custom,
+                                                format: '###',
+                                                locale: '',
+                                              )} likes you!',
+                                              notificationImageUrl:
+                                                  currentUserPhoto,
+                                              userRefs: [
+                                                matchedUsers[index]!.reference
+                                              ],
+                                              initialPageName:
+                                                  'HomeDetailsView',
+                                              parameterData: {
+                                                'userProfile':
+                                                    currentUserReference,
+                                                'backPage': 'push',
+                                              },
+                                            );
+                                          }
 
                                           final notificationsCreateData =
                                               createNotificationsRecordData(

@@ -89,39 +89,37 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
           onTap: () => FocusScope.of(context).unfocus(),
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
-                    child: Container(
-                      width: double.infinity,
-                      height: MediaQuery.of(context).size.height * 1,
-                      child: PageView(
-                        controller: pageViewController ??=
-                            PageController(initialPage: 0),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          StreamBuilder<UsersRecord>(
-                            stream:
-                                UsersRecord.getDocument(widget.user!.reference),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                    ),
-                                  ),
-                                );
-                              }
-                              final columnUsersRecord = snapshot.data!;
-                              return Column(
+            child: StreamBuilder<UsersRecord>(
+              stream: UsersRecord.getDocument(widget.user!.reference),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).primaryColor,
+                      ),
+                    ),
+                  );
+                }
+                final columnUsersRecord = snapshot.data!;
+                return Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                        child: Container(
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.height * 1,
+                          child: PageView(
+                            controller: pageViewController ??=
+                                PageController(initialPage: 0),
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -509,299 +507,90 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ),
                                   ),
                                 ],
-                              );
-                            },
-                          ),
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Stack(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    children: [
-                                      Align(
-                                        alignment: AlignmentDirectional(-1, 0),
-                                        child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 60,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            borderRadius:
-                                                BorderRadius.circular(16),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 8, 0),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Location',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .subtitle1,
-                                            ),
-                                            Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.5,
-                                              height: 70,
-                                              decoration: BoxDecoration(),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      FFAppState().fltrAddress,
-                                                      maxLines: 2,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily:
-                                                                'Roboto',
-                                                            fontWeight:
-                                                                FontWeight.w300,
-                                                          ),
-                                                    ),
-                                                  ),
-                                                  FlutterFlowIconButton(
-                                                    borderColor:
-                                                        Colors.transparent,
-                                                    borderRadius: 30,
-                                                    buttonSize: 32,
-                                                    icon: Icon(
-                                                      Icons
-                                                          .chevron_right_rounded,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      size: 20,
-                                                    ),
-                                                    onPressed: () async {
-                                                      context.pushNamed(
-                                                        'ChooseLocationPage',
-                                                        queryParams: {
-                                                          'currentLocation':
-                                                              serializeParam(
-                                                            FFAppState()
-                                                                .fltrLocation,
-                                                            ParamType.LatLng,
-                                                          ),
-                                                          'user':
-                                                              serializeParam(
-                                                            widget.user,
-                                                            ParamType.Document,
-                                                          ),
-                                                        }.withoutNulls,
-                                                        extra: <String,
-                                                            dynamic>{
-                                                          'user': widget.user,
-                                                        },
-                                                      );
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  if (widget.user!.isPremium! ||
-                                      !getRemoteConfigBool('check_premium') ||
-                                      revenue_cat.activeEntitlementIds.contains(
-                                          FFAppState().entResetLocation))
+                              ),
+                              Visibility(
+                                visible: columnUsersRecord.isPremium! ||
+                                    !getRemoteConfigBool('check_premium') ||
+                                    revenue_cat.activeEntitlementIds
+                                        .contains(FFAppState().entAdvFilter),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
                                     Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                          CrossAxisAlignment.stretch,
                                       children: [
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 8),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              currentUserLocationValue =
-                                                  await getCurrentUserLocation(
-                                                      defaultLocation:
-                                                          LatLng(0.0, 0.0));
-                                              if ((await getPermissionStatus(
-                                                      locationPermission)) &&
-                                                  functions.isLocationSet(
-                                                      currentUserLocationValue)) {
-                                                setState(() => FFAppState()
-                                                        .tmpLocation =
-                                                    currentUserLocationValue);
-                                              } else {
-                                                setState(() => FFAppState()
-                                                        .tmpLocation =
-                                                    widget.user!.geoposition);
-                                              }
-
-                                              address = await actions
-                                                  .getAddressFromLocation(
-                                                FFAppState().tmpLocation!,
-                                              );
-                                              var confirmDialogResponse =
-                                                  await showDialog<bool>(
-                                                        context: context,
-                                                        builder:
-                                                            (alertDialogContext) {
-                                                          return AlertDialog(
-                                                            title: Text(
-                                                                'Please, confirm your location.'),
-                                                            content: Text(
-                                                                'Your location will be set to ${address}'),
-                                                            actions: [
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext,
-                                                                        false),
-                                                                child: Text(
-                                                                    'Cancel'),
-                                                              ),
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(
-                                                                        alertDialogContext,
-                                                                        true),
-                                                                child: Text(
-                                                                    'Confirm'),
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      ) ??
-                                                      false;
-                                              if (confirmDialogResponse) {
-                                                setState(() => FFAppState()
-                                                        .fltrLocation =
-                                                    FFAppState().tmpLocation);
-                                                setState(() => FFAppState()
-                                                    .fltrAddress = address!);
-                                              }
-
-                                              setState(() {});
-                                            },
-                                            child: Container(
-                                              width: 100,
-                                              height: 40,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
+                                        Stack(
+                                          alignment: AlignmentDirectional(0, 0),
+                                          children: [
+                                            Align(
                                               alignment:
-                                                  AlignmentDirectional(1, -1),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 4, 0),
-                                                child: Text(
-                                                  'Reset location',
-                                                  textAlign: TextAlign.end,
-                                                  style: FlutterFlowTheme.of(
+                                                  AlignmentDirectional(-1, 0),
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                height: 60,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
-                                                      ),
+                                                      .secondaryBackground,
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
-                                    child: Stack(
-                                      alignment: AlignmentDirectional(0, -1),
-                                      children: [
-                                        InkWell(
-                                          onTap: () async {
-                                            setState(() => FFAppState()
-                                                    .advancedFilterName =
-                                                'Advanced2');
-
-                                            context.pushNamed(
-                                              'FilterIndustriesView',
-                                              queryParams: {
-                                                'selectedIndustries':
-                                                    serializeParam(
-                                                  FFAppState().fltrIndusrtries,
-                                                  ParamType.String,
-                                                  true,
-                                                ),
-                                              }.withoutNulls,
-                                            );
-                                          },
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            height: 100,
-                                            decoration: BoxDecoration(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              borderRadius:
-                                                  BorderRadius.circular(16),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  8, 8, 8, 0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      'Industry',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .subtitle1,
-                                                    ),
-                                                    Row(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 0, 8, 0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Location',
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .subtitle1,
+                                                  ),
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.5,
+                                                    height: 70,
+                                                    decoration: BoxDecoration(),
+                                                    child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       children: [
+                                                        Expanded(
+                                                          child: Text(
+                                                            FFAppState()
+                                                                .fltrAddress,
+                                                            maxLines: 2,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                          ),
+                                                        ),
                                                         FlutterFlowIconButton(
                                                           borderColor: Colors
                                                               .transparent,
@@ -816,49 +605,303 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                             size: 20,
                                                           ),
                                                           onPressed: () async {
-                                                            setState(() =>
-                                                                FFAppState()
-                                                                        .advancedFilterName =
-                                                                    'Advanced2');
-
                                                             context.pushNamed(
-                                                              'FilterIndustriesView',
+                                                              'ChooseLocationPage',
                                                               queryParams: {
-                                                                'selectedIndustries':
+                                                                'currentLocation':
                                                                     serializeParam(
                                                                   FFAppState()
-                                                                      .fltrIndusrtries,
+                                                                      .fltrLocation,
                                                                   ParamType
-                                                                      .String,
-                                                                  true,
+                                                                      .LatLng,
+                                                                ),
+                                                                'user':
+                                                                    serializeParam(
+                                                                  widget.user,
+                                                                  ParamType
+                                                                      .Document,
                                                                 ),
                                                               }.withoutNulls,
+                                                              extra: <String,
+                                                                  dynamic>{
+                                                                'user':
+                                                                    widget.user,
+                                                              },
                                                             );
                                                           },
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        if (widget.user!.isPremium! ||
+                                            !getRemoteConfigBool(
+                                                'check_premium') ||
+                                            revenue_cat.activeEntitlementIds
+                                                .contains(FFAppState()
+                                                    .entResetLocation))
+                                          Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 8),
+                                                child: InkWell(
+                                                  onTap: () async {
+                                                    currentUserLocationValue =
+                                                        await getCurrentUserLocation(
+                                                            defaultLocation:
+                                                                LatLng(
+                                                                    0.0, 0.0));
+                                                    if ((await getPermissionStatus(
+                                                            locationPermission)) &&
+                                                        functions.isLocationSet(
+                                                            currentUserLocationValue)) {
+                                                      setState(() => FFAppState()
+                                                              .tmpLocation =
+                                                          currentUserLocationValue);
+                                                    } else {
+                                                      setState(() =>
+                                                          FFAppState()
+                                                                  .tmpLocation =
+                                                              widget.user!
+                                                                  .geoposition);
+                                                    }
+
+                                                    address = await actions
+                                                        .getAddressFromLocation(
+                                                      FFAppState().tmpLocation!,
+                                                    );
+                                                    var confirmDialogResponse =
+                                                        await showDialog<bool>(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return AlertDialog(
+                                                                  title: Text(
+                                                                      'Please, confirm your location.'),
+                                                                  content: Text(
+                                                                      'Your location will be set to ${address}'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                      child: Text(
+                                                                          'Cancel'),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                      child: Text(
+                                                                          'Confirm'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            ) ??
+                                                            false;
+                                                    if (confirmDialogResponse) {
+                                                      setState(() => FFAppState()
+                                                              .fltrLocation =
+                                                          FFAppState()
+                                                              .tmpLocation);
+                                                      setState(() =>
+                                                          FFAppState()
+                                                                  .fltrAddress =
+                                                              address!);
+                                                    }
+
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    width: 100,
+                                                    height: 40,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                    ),
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            1, -1),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 4, 0),
+                                                      child: Text(
+                                                        'Reset location',
+                                                        textAlign:
+                                                            TextAlign.end,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .alternate,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(-1, 0),
-                                                child: Text(
-                                                  functions.stringifyList(
-                                                      FFAppState()
-                                                          .fltrIndusrtries
-                                                          .toList(),
-                                                      2),
-                                                  maxLines: 3,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyText1
-                                                      .override(
-                                                        fontFamily: 'Roboto',
-                                                        fontWeight:
-                                                            FontWeight.w300,
+                                            ],
+                                          ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 16),
+                                          child: Stack(
+                                            alignment:
+                                                AlignmentDirectional(0, -1),
+                                            children: [
+                                              InkWell(
+                                                onTap: () async {
+                                                  setState(() => FFAppState()
+                                                          .advancedFilterName =
+                                                      'Advanced2');
+
+                                                  context.pushNamed(
+                                                    'FilterIndustriesView',
+                                                    queryParams: {
+                                                      'selectedIndustries':
+                                                          serializeParam(
+                                                        FFAppState()
+                                                            .fltrIndusrtries,
+                                                        ParamType.String,
+                                                        true,
                                                       ),
+                                                    }.withoutNulls,
+                                                  );
+                                                },
+                                                child: Container(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  height: 100,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondaryBackground,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(8, 8, 8, 0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0, 0, 0, 8),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text(
+                                                            'Industry',
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .subtitle1,
+                                                          ),
+                                                          Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              FlutterFlowIconButton(
+                                                                borderColor: Colors
+                                                                    .transparent,
+                                                                borderRadius:
+                                                                    30,
+                                                                buttonSize: 32,
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .chevron_right_rounded,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                  size: 20,
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  setState(() =>
+                                                                      FFAppState()
+                                                                              .advancedFilterName =
+                                                                          'Advanced2');
+
+                                                                  context
+                                                                      .pushNamed(
+                                                                    'FilterIndustriesView',
+                                                                    queryParams:
+                                                                        {
+                                                                      'selectedIndustries':
+                                                                          serializeParam(
+                                                                        FFAppState()
+                                                                            .fltrIndusrtries,
+                                                                        ParamType
+                                                                            .String,
+                                                                        true,
+                                                                      ),
+                                                                    }.withoutNulls,
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              -1, 0),
+                                                      child: Text(
+                                                        functions.stringifyList(
+                                                            FFAppState()
+                                                                .fltrIndusrtries
+                                                                .toList(),
+                                                            2),
+                                                        maxLines: 3,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyText1
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Roboto',
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
@@ -866,122 +909,127 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: double.infinity,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0xFFEE837B),
+                                  Color(0xFFF95A82),
+                                  Color(0xFFEA3C7D)
+                                ],
+                                stops: [0, 0.6, 1],
+                                begin: AlignmentDirectional(0, -1),
+                                end: AlignmentDirectional(0, 1),
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                setState(() => FFAppState().fltrGender =
+                                    ccInterestedInValue!);
+                                if (widget.user!.isPremium! ||
+                                    !getRemoteConfigBool('check_premium') ||
+                                    revenue_cat.activeEntitlementIds.contains(
+                                        FFAppState().entResetLocation)) {
+                                  final usersUpdateData = createUsersRecordData(
+                                    filter: createFilterStruct(
+                                      ageRangeExt: false,
+                                      distance: sliderDistanceValue,
+                                      location: FFAppState().fltrLocation,
+                                      address: FFAppState().fltrAddress,
+                                      ageRange: createIntRangeStruct(
+                                        min: FFAppState().fltrAgeMin,
+                                        max: FFAppState().fltrAgeMax,
+                                        clearUnsetFields: false,
+                                      ),
+                                      gender: FFAppState().fltrGender,
+                                      fieldValues: {
+                                        'lookingFor':
+                                            FFAppState().fltrLookingFor,
+                                        'industries':
+                                            FFAppState().fltrIndusrtries,
+                                      },
+                                      clearUnsetFields: false,
+                                    ),
+                                  );
+                                  await currentUserReference!
+                                      .update(usersUpdateData);
+                                } else {
+                                  final usersUpdateData = createUsersRecordData(
+                                    filter: createFilterStruct(
+                                      ageRangeExt: false,
+                                      distance: sliderDistanceValue,
+                                      location: FFAppState().fltrLocation,
+                                      address: FFAppState().fltrAddress,
+                                      ageRange: createIntRangeStruct(
+                                        min: FFAppState().fltrAgeMin,
+                                        max: FFAppState().fltrAgeMax,
+                                        clearUnsetFields: false,
+                                      ),
+                                      gender: FFAppState().fltrGender,
+                                      fieldValues: {
+                                        'lookingFor':
+                                            FFAppState().fltrLookingFor,
+                                        'industries':
+                                            FFAppState().fltrIndusrtries,
+                                      },
+                                      clearUnsetFields: false,
+                                    ),
+                                  );
+                                  await currentUserReference!
+                                      .update(usersUpdateData);
+                                }
+
+                                if (Navigator.of(context).canPop()) {
+                                  context.pop();
+                                }
+                                context.pushNamed('HomeView');
+                              },
+                              text: 'Save',
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 48,
+                                color: Colors.transparent,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .subtitle1
+                                    .override(
+                                      fontFamily: 'Roboto',
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryColor,
+                                    ),
+                                elevation: 0,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: double.infinity,
-                        height: 48,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFFEE837B),
-                              Color(0xFFF95A82),
-                              Color(0xFFEA3C7D)
-                            ],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                        child: FFButtonWidget(
-                          onPressed: () async {
-                            setState(() =>
-                                FFAppState().fltrGender = ccInterestedInValue!);
-                            if (widget.user!.isPremium! ||
-                                !getRemoteConfigBool('check_premium') ||
-                                revenue_cat.activeEntitlementIds
-                                    .contains(FFAppState().entResetLocation)) {
-                              final usersUpdateData = createUsersRecordData(
-                                filter: createFilterStruct(
-                                  ageRangeExt: false,
-                                  distance: sliderDistanceValue,
-                                  location: FFAppState().fltrLocation,
-                                  address: FFAppState().fltrAddress,
-                                  ageRange: createIntRangeStruct(
-                                    min: FFAppState().fltrAgeMin,
-                                    max: FFAppState().fltrAgeMax,
-                                    clearUnsetFields: false,
-                                  ),
-                                  gender: FFAppState().fltrGender,
-                                  fieldValues: {
-                                    'lookingFor': FFAppState().fltrLookingFor,
-                                    'industries': FFAppState().fltrIndusrtries,
-                                  },
-                                  clearUnsetFields: false,
-                                ),
-                              );
-                              await currentUserReference!
-                                  .update(usersUpdateData);
-                            } else {
-                              final usersUpdateData = createUsersRecordData(
-                                filter: createFilterStruct(
-                                  ageRangeExt: false,
-                                  distance: sliderDistanceValue,
-                                  location: FFAppState().fltrLocation,
-                                  address: FFAppState().fltrAddress,
-                                  ageRange: createIntRangeStruct(
-                                    min: FFAppState().fltrAgeMin,
-                                    max: FFAppState().fltrAgeMax,
-                                    clearUnsetFields: false,
-                                  ),
-                                  gender: FFAppState().fltrGender,
-                                  fieldValues: {
-                                    'lookingFor': FFAppState().fltrLookingFor,
-                                    'industries': FFAppState().fltrIndusrtries,
-                                  },
-                                  clearUnsetFields: false,
-                                ),
-                              );
-                              await currentUserReference!
-                                  .update(usersUpdateData);
-                            }
-
-                            if (Navigator.of(context).canPop()) {
-                              context.pop();
-                            }
-                            context.pushNamed('HomeView');
-                          },
-                          text: 'Save',
-                          options: FFButtonOptions(
-                            width: double.infinity,
-                            height: 48,
-                            color: Colors.transparent,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
-                                .override(
-                                  fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                ),
-                            elevation: 0,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
           ),
         ),

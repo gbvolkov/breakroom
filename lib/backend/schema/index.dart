@@ -9,3 +9,4 @@ export 'structs/double_range_struct.dart';
 export 'structs/filter_struct.dart';
 export 'structs/int_range_struct.dart';
 export 'structs/photo_struct.dart';
+export 'structs/notif_settings_struct.dart';

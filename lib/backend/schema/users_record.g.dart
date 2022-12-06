@@ -293,6 +293,34 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
+    value = object.notiffAll;
+    if (value != null) {
+      result
+        ..add('notiffAll')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.notiffLikes;
+    if (value != null) {
+      result
+        ..add('notiffLikes')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.nofittMatches;
+    if (value != null) {
+      result
+        ..add('nofittMatches')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.notiffMsgs;
+    if (value != null) {
+      result
+        ..add('notiffMsgs')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -485,6 +513,22 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'notiffAll':
+          result.notiffAll = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'notiffLikes':
+          result.notiffLikes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'nofittMatches':
+          result.nofittMatches = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'notiffMsgs':
+          result.notiffMsgs = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -578,6 +622,14 @@ class _$UsersRecord extends UsersRecord {
   @override
   final BuiltList<String>? blocked;
   @override
+  final bool? notiffAll;
+  @override
+  final bool? notiffLikes;
+  @override
+  final bool? nofittMatches;
+  @override
+  final bool? notiffMsgs;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -623,6 +675,10 @@ class _$UsersRecord extends UsersRecord {
       this.likesCount,
       this.lastLikeTime,
       this.blocked,
+      this.notiffAll,
+      this.notiffLikes,
+      this.nofittMatches,
+      this.notiffMsgs,
       this.ffRef})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(filter, r'UsersRecord', 'filter');
@@ -678,6 +734,10 @@ class _$UsersRecord extends UsersRecord {
         likesCount == other.likesCount &&
         lastLikeTime == other.lastLikeTime &&
         blocked == other.blocked &&
+        notiffAll == other.notiffAll &&
+        notiffLikes == other.notiffLikes &&
+        nofittMatches == other.nofittMatches &&
+        notiffMsgs == other.notiffMsgs &&
         ffRef == other.ffRef;
   }
 
@@ -701,25 +761,25 @@ class _$UsersRecord extends UsersRecord {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode), education.hashCode), bodyType.hashCode), interests.hashCode),
-                                                                                lookingFor.hashCode),
-                                                                            height.hashCode),
-                                                                        weight.hashCode),
-                                                                    workoutStatus.hashCode),
-                                                                drinkingStatus.hashCode),
-                                                            smokingStatus.hashCode),
-                                                        spiritualStatus.hashCode),
-                                                    photos.hashCode),
-                                                touched.hashCode),
-                                            filter.hashCode),
-                                        liked.hashCode),
-                                    disliked.hashCode),
-                                isComplete.hashCode),
-                            notiffReadTS.hashCode),
-                        isPremium.hashCode),
-                    likesCount.hashCode),
-                lastLikeTime.hashCode),
-            blocked.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode), education.hashCode), bodyType.hashCode), interests.hashCode), lookingFor.hashCode), height.hashCode), weight.hashCode), workoutStatus.hashCode),
+                                                                                drinkingStatus.hashCode),
+                                                                            smokingStatus.hashCode),
+                                                                        spiritualStatus.hashCode),
+                                                                    photos.hashCode),
+                                                                touched.hashCode),
+                                                            filter.hashCode),
+                                                        liked.hashCode),
+                                                    disliked.hashCode),
+                                                isComplete.hashCode),
+                                            notiffReadTS.hashCode),
+                                        isPremium.hashCode),
+                                    likesCount.hashCode),
+                                lastLikeTime.hashCode),
+                            blocked.hashCode),
+                        notiffAll.hashCode),
+                    notiffLikes.hashCode),
+                nofittMatches.hashCode),
+            notiffMsgs.hashCode),
         ffRef.hashCode));
   }
 
@@ -765,6 +825,10 @@ class _$UsersRecord extends UsersRecord {
           ..add('likesCount', likesCount)
           ..add('lastLikeTime', lastLikeTime)
           ..add('blocked', blocked)
+          ..add('notiffAll', notiffAll)
+          ..add('notiffLikes', notiffLikes)
+          ..add('nofittMatches', nofittMatches)
+          ..add('notiffMsgs', notiffMsgs)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -946,6 +1010,23 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _$this._blocked ??= new ListBuilder<String>();
   set blocked(ListBuilder<String>? blocked) => _$this._blocked = blocked;
 
+  bool? _notiffAll;
+  bool? get notiffAll => _$this._notiffAll;
+  set notiffAll(bool? notiffAll) => _$this._notiffAll = notiffAll;
+
+  bool? _notiffLikes;
+  bool? get notiffLikes => _$this._notiffLikes;
+  set notiffLikes(bool? notiffLikes) => _$this._notiffLikes = notiffLikes;
+
+  bool? _nofittMatches;
+  bool? get nofittMatches => _$this._nofittMatches;
+  set nofittMatches(bool? nofittMatches) =>
+      _$this._nofittMatches = nofittMatches;
+
+  bool? _notiffMsgs;
+  bool? get notiffMsgs => _$this._notiffMsgs;
+  set notiffMsgs(bool? notiffMsgs) => _$this._notiffMsgs = notiffMsgs;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -996,6 +1077,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _likesCount = $v.likesCount;
       _lastLikeTime = $v.lastLikeTime;
       _blocked = $v.blocked?.toBuilder();
+      _notiffAll = $v.notiffAll;
+      _notiffLikes = $v.notiffLikes;
+      _nofittMatches = $v.nofittMatches;
+      _notiffMsgs = $v.notiffMsgs;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -1060,6 +1145,10 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
               likesCount: likesCount,
               lastLikeTime: lastLikeTime,
               blocked: _blocked?.build(),
+              notiffAll: notiffAll,
+              notiffLikes: notiffLikes,
+              nofittMatches: nofittMatches,
+              notiffMsgs: notiffMsgs,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;

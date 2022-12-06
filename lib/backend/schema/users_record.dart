@@ -92,6 +92,14 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
 
   BuiltList<String>? get blocked;
 
+  bool? get notiffAll;
+
+  bool? get notiffLikes;
+
+  bool? get nofittMatches;
+
+  bool? get notiffMsgs;
+
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference? get ffRef;
   DocumentReference get reference => ffRef!;
@@ -130,7 +138,11 @@ abstract class UsersRecord implements Built<UsersRecord, UsersRecordBuilder> {
     ..isComplete = false
     ..isPremium = false
     ..likesCount = 0
-    ..blocked = ListBuilder();
+    ..blocked = ListBuilder()
+    ..notiffAll = false
+    ..notiffLikes = false
+    ..nofittMatches = false
+    ..notiffMsgs = false;
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('users');
@@ -186,6 +198,10 @@ Map<String, dynamic> createUsersRecordData({
   bool? isPremium,
   int? likesCount,
   DateTime? lastLikeTime,
+  bool? notiffAll,
+  bool? notiffLikes,
+  bool? nofittMatches,
+  bool? notiffMsgs,
 }) {
   final firestoreData = serializers.toFirestore(
     UsersRecord.serializer,
@@ -229,7 +245,11 @@ Map<String, dynamic> createUsersRecordData({
         ..isPremium = isPremium
         ..likesCount = likesCount
         ..lastLikeTime = lastLikeTime
-        ..blocked = null,
+        ..blocked = null
+        ..notiffAll = notiffAll
+        ..notiffLikes = notiffLikes
+        ..nofittMatches = nofittMatches
+        ..notiffMsgs = notiffMsgs,
     ),
   );
 

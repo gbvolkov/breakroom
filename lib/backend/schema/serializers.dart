@@ -32,6 +32,7 @@ const kDocumentReferenceField = 'Document__Reference__Field';
   IntRangeStruct,
   DoubleRangeStruct,
   FilterStruct,
+  NotifSettingsStruct,
 ])
 final Serializers serializers = (_$serializers.toBuilder()
       ..add(DocumentReferenceSerializer())
