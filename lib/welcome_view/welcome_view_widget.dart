@@ -1,6 +1,9 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -12,6 +15,7 @@ class WelcomeViewWidget extends StatefulWidget {
 }
 
 class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
+  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -161,11 +165,47 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                         height: 56,
                         fit: BoxFit.cover,
                       ),
-                      Image.asset(
-                        'assets/images/GoogleSignIn.png',
-                        width: 56,
-                        height: 56,
-                        fit: BoxFit.cover,
+                      InkWell(
+                        onTap: () async {
+                          currentUserLocationValue =
+                              await getCurrentUserLocation(
+                                  defaultLocation: LatLng(0.0, 0.0));
+                          GoRouter.of(context).prepareAuthEvent();
+                          final user = await signInWithGoogle(context);
+                          if (user == null) {
+                            return;
+                          }
+                          setState(() => FFAppState().cHomeVisits = 0);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Welcome to Breakroom!',
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                            ),
+                          );
+                          await Future.delayed(
+                              const Duration(milliseconds: 3000));
+
+                          final usersUpdateData = createUsersRecordData(
+                            geoposition: currentUserLocationValue,
+                          );
+                          await currentUserReference!.update(usersUpdateData);
+
+                          context.pushNamedAuth('HomeView', mounted);
+                        },
+                        child: Image.asset(
+                          'assets/images/GoogleSignIn.png',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       Image.asset(
                         'assets/images/FacebookSignIn.png',

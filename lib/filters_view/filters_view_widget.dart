@@ -508,34 +508,280 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   ),
                                 ],
                               ),
-                              Visibility(
-                                visible: columnUsersRecord.isPremium! ||
-                                    !getRemoteConfigBool('check_premium') ||
-                                    revenue_cat.activeEntitlementIds
-                                        .contains(FFAppState().entAdvFilter),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.stretch,
-                                      children: [
-                                        Stack(
-                                          alignment: AlignmentDirectional(0, 0),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Stack(
+                                        alignment: AlignmentDirectional(0, 0),
+                                        children: [
+                                          Align(
+                                            alignment:
+                                                AlignmentDirectional(-1, 0),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: 60,
+                                              decoration: BoxDecoration(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryBackground,
+                                                borderRadius:
+                                                    BorderRadius.circular(16),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 8, 0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  'Location',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .subtitle1,
+                                                ),
+                                                Container(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.5,
+                                                  height: 70,
+                                                  decoration: BoxDecoration(),
+                                                  child: Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          FFAppState()
+                                                              .fltrAddress,
+                                                          maxLines: 2,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w300,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                      FlutterFlowIconButton(
+                                                        borderColor:
+                                                            Colors.transparent,
+                                                        borderRadius: 30,
+                                                        buttonSize: 32,
+                                                        icon: Icon(
+                                                          Icons
+                                                              .chevron_right_rounded,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                          size: 20,
+                                                        ),
+                                                        onPressed: () async {
+                                                          context.pushNamed(
+                                                            'ChooseLocationPage',
+                                                            queryParams: {
+                                                              'currentLocation':
+                                                                  serializeParam(
+                                                                FFAppState()
+                                                                    .fltrLocation,
+                                                                ParamType
+                                                                    .LatLng,
+                                                              ),
+                                                              'user':
+                                                                  serializeParam(
+                                                                widget.user,
+                                                                ParamType
+                                                                    .Document,
+                                                              ),
+                                                            }.withoutNulls,
+                                                            extra: <String,
+                                                                dynamic>{
+                                                              'user':
+                                                                  widget.user,
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      if (widget.user!.isPremium! ||
+                                          !getRemoteConfigBool(
+                                              'check_premium') ||
+                                          revenue_cat.activeEntitlementIds
+                                              .contains(FFAppState()
+                                                  .entResetLocation))
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
-                                            Align(
-                                              alignment:
-                                                  AlignmentDirectional(-1, 0),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 0, 8),
+                                              child: InkWell(
+                                                onTap: () async {
+                                                  currentUserLocationValue =
+                                                      await getCurrentUserLocation(
+                                                          defaultLocation:
+                                                              LatLng(0.0, 0.0));
+                                                  if ((await getPermissionStatus(
+                                                          locationPermission)) &&
+                                                      functions.isLocationSet(
+                                                          currentUserLocationValue)) {
+                                                    setState(() => FFAppState()
+                                                            .tmpLocation =
+                                                        currentUserLocationValue);
+                                                  } else {
+                                                    setState(() => FFAppState()
+                                                            .tmpLocation =
+                                                        widget
+                                                            .user!.geoposition);
+                                                  }
+
+                                                  address = await actions
+                                                      .getAddressFromLocation(
+                                                    FFAppState().tmpLocation!,
+                                                  );
+                                                  var confirmDialogResponse =
+                                                      await showDialog<bool>(
+                                                            context: context,
+                                                            builder:
+                                                                (alertDialogContext) {
+                                                              return AlertDialog(
+                                                                title: Text(
+                                                                    'Please, confirm your location.'),
+                                                                content: Text(
+                                                                    'Your location will be set to ${address}'),
+                                                                actions: [
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            false),
+                                                                    child: Text(
+                                                                        'Cancel'),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(
+                                                                            alertDialogContext,
+                                                                            true),
+                                                                    child: Text(
+                                                                        'Confirm'),
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            },
+                                                          ) ??
+                                                          false;
+                                                  if (confirmDialogResponse) {
+                                                    setState(() => FFAppState()
+                                                            .fltrLocation =
+                                                        FFAppState()
+                                                            .tmpLocation);
+                                                    setState(() => FFAppState()
+                                                            .fltrAddress =
+                                                        address!);
+                                                  }
+
+                                                  setState(() {});
+                                                },
+                                                child: Container(
+                                                  width: 100,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          1, -1),
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 4, 0),
+                                                    child: Text(
+                                                      'Reset location',
+                                                      textAlign: TextAlign.end,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyText1
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Roboto',
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .alternate,
+                                                              ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 0, 16),
+                                        child: Stack(
+                                          alignment:
+                                              AlignmentDirectional(0, -1),
+                                          children: [
+                                            InkWell(
+                                              onTap: () async {
+                                                setState(() => FFAppState()
+                                                        .advancedFilterName =
+                                                    'Advanced2');
+
+                                                context.pushNamed(
+                                                  'FilterIndustriesView',
+                                                  queryParams: {
+                                                    'selectedIndustries':
+                                                        serializeParam(
+                                                      FFAppState()
+                                                          .fltrIndusrtries,
+                                                      ParamType.String,
+                                                      true,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              },
                                               child: Container(
                                                 width: MediaQuery.of(context)
                                                     .size
                                                     .width,
-                                                height: 60,
+                                                height: 100,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
@@ -547,90 +793,96 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 8, 0),
-                                              child: Row(
+                                                  .fromSTEB(8, 8, 8, 0),
+                                              child: Column(
                                                 mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  Text(
-                                                    'Location',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .subtitle1,
-                                                  ),
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.5,
-                                                    height: 70,
-                                                    decoration: BoxDecoration(),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                0, 0, 0, 8),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .center,
                                                       children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            FFAppState()
-                                                                .fltrAddress,
-                                                            maxLines: 2,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
-                                                                ),
-                                                          ),
+                                                        Text(
+                                                          'Industry',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .subtitle1,
                                                         ),
-                                                        FlutterFlowIconButton(
-                                                          borderColor: Colors
-                                                              .transparent,
-                                                          borderRadius: 30,
-                                                          buttonSize: 32,
-                                                          icon: Icon(
-                                                            Icons
-                                                                .chevron_right_rounded,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            size: 20,
-                                                          ),
-                                                          onPressed: () async {
-                                                            context.pushNamed(
-                                                              'ChooseLocationPage',
-                                                              queryParams: {
-                                                                'currentLocation':
-                                                                    serializeParam(
-                                                                  FFAppState()
-                                                                      .fltrLocation,
-                                                                  ParamType
-                                                                      .LatLng,
-                                                                ),
-                                                                'user':
-                                                                    serializeParam(
-                                                                  widget.user,
-                                                                  ParamType
-                                                                      .Document,
-                                                                ),
-                                                              }.withoutNulls,
-                                                              extra: <String,
-                                                                  dynamic>{
-                                                                'user':
-                                                                    widget.user,
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            FlutterFlowIconButton(
+                                                              borderColor: Colors
+                                                                  .transparent,
+                                                              borderRadius: 30,
+                                                              buttonSize: 32,
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .chevron_right_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                size: 20,
+                                                              ),
+                                                              onPressed:
+                                                                  () async {
+                                                                setState(() =>
+                                                                    FFAppState()
+                                                                            .advancedFilterName =
+                                                                        'Advanced2');
+
+                                                                context
+                                                                    .pushNamed(
+                                                                  'FilterIndustriesView',
+                                                                  queryParams: {
+                                                                    'selectedIndustries':
+                                                                        serializeParam(
+                                                                      FFAppState()
+                                                                          .fltrIndusrtries,
+                                                                      ParamType
+                                                                          .String,
+                                                                      true,
+                                                                    ),
+                                                                  }.withoutNulls,
+                                                                );
                                                               },
-                                                            );
-                                                          },
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        AlignmentDirectional(
+                                                            -1, 0),
+                                                    child: Text(
+                                                      functions.stringifyList(
+                                                          FFAppState()
+                                                              .fltrIndusrtries
+                                                              .toList(),
+                                                          2),
+                                                      maxLines: 3,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .bodyText1
+                                                          .override(
+                                                            fontFamily:
+                                                                'Roboto',
+                                                            fontWeight:
+                                                                FontWeight.w300,
+                                                          ),
                                                     ),
                                                   ),
                                                 ],
@@ -638,279 +890,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                             ),
                                           ],
                                         ),
-                                        if (widget.user!.isPremium! ||
-                                            !getRemoteConfigBool(
-                                                'check_premium') ||
-                                            revenue_cat.activeEntitlementIds
-                                                .contains(FFAppState()
-                                                    .entResetLocation))
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 0, 8),
-                                                child: InkWell(
-                                                  onTap: () async {
-                                                    currentUserLocationValue =
-                                                        await getCurrentUserLocation(
-                                                            defaultLocation:
-                                                                LatLng(
-                                                                    0.0, 0.0));
-                                                    if ((await getPermissionStatus(
-                                                            locationPermission)) &&
-                                                        functions.isLocationSet(
-                                                            currentUserLocationValue)) {
-                                                      setState(() => FFAppState()
-                                                              .tmpLocation =
-                                                          currentUserLocationValue);
-                                                    } else {
-                                                      setState(() =>
-                                                          FFAppState()
-                                                                  .tmpLocation =
-                                                              widget.user!
-                                                                  .geoposition);
-                                                    }
-
-                                                    address = await actions
-                                                        .getAddressFromLocation(
-                                                      FFAppState().tmpLocation!,
-                                                    );
-                                                    var confirmDialogResponse =
-                                                        await showDialog<bool>(
-                                                              context: context,
-                                                              builder:
-                                                                  (alertDialogContext) {
-                                                                return AlertDialog(
-                                                                  title: Text(
-                                                                      'Please, confirm your location.'),
-                                                                  content: Text(
-                                                                      'Your location will be set to ${address}'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                      child: Text(
-                                                                          'Cancel'),
-                                                                    ),
-                                                                    TextButton(
-                                                                      onPressed: () => Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                      child: Text(
-                                                                          'Confirm'),
-                                                                    ),
-                                                                  ],
-                                                                );
-                                                              },
-                                                            ) ??
-                                                            false;
-                                                    if (confirmDialogResponse) {
-                                                      setState(() => FFAppState()
-                                                              .fltrLocation =
-                                                          FFAppState()
-                                                              .tmpLocation);
-                                                      setState(() =>
-                                                          FFAppState()
-                                                                  .fltrAddress =
-                                                              address!);
-                                                    }
-
-                                                    setState(() {});
-                                                  },
-                                                  child: Container(
-                                                    width: 100,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8),
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            1, -1),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 4, 0),
-                                                      child: Text(
-                                                        'Reset location',
-                                                        textAlign:
-                                                            TextAlign.end,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 16),
-                                          child: Stack(
-                                            alignment:
-                                                AlignmentDirectional(0, -1),
-                                            children: [
-                                              InkWell(
-                                                onTap: () async {
-                                                  setState(() => FFAppState()
-                                                          .advancedFilterName =
-                                                      'Advanced2');
-
-                                                  context.pushNamed(
-                                                    'FilterIndustriesView',
-                                                    queryParams: {
-                                                      'selectedIndustries':
-                                                          serializeParam(
-                                                        FFAppState()
-                                                            .fltrIndusrtries,
-                                                        ParamType.String,
-                                                        true,
-                                                      ),
-                                                    }.withoutNulls,
-                                                  );
-                                                },
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  height: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryBackground,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                  ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(8, 8, 8, 0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 0, 8),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            'Industry',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .subtitle1,
-                                                          ),
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: [
-                                                              FlutterFlowIconButton(
-                                                                borderColor: Colors
-                                                                    .transparent,
-                                                                borderRadius:
-                                                                    30,
-                                                                buttonSize: 32,
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .chevron_right_rounded,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primaryText,
-                                                                  size: 20,
-                                                                ),
-                                                                onPressed:
-                                                                    () async {
-                                                                  setState(() =>
-                                                                      FFAppState()
-                                                                              .advancedFilterName =
-                                                                          'Advanced2');
-
-                                                                  context
-                                                                      .pushNamed(
-                                                                    'FilterIndustriesView',
-                                                                    queryParams:
-                                                                        {
-                                                                      'selectedIndustries':
-                                                                          serializeParam(
-                                                                        FFAppState()
-                                                                            .fltrIndusrtries,
-                                                                        ParamType
-                                                                            .String,
-                                                                        true,
-                                                                      ),
-                                                                    }.withoutNulls,
-                                                                  );
-                                                                },
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -1, 0),
-                                                      child: Text(
-                                                        functions.stringifyList(
-                                                            FFAppState()
-                                                                .fltrIndusrtries
-                                                                .toList(),
-                                                            2),
-                                                        maxLines: 3,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w300,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                             ],
                           ),
