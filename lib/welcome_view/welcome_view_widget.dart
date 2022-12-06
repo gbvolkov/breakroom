@@ -159,11 +159,47 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Image.asset(
-                        'assets/images/AppleSignIn.png',
-                        width: 56,
-                        height: 56,
-                        fit: BoxFit.cover,
+                      InkWell(
+                        onTap: () async {
+                          currentUserLocationValue =
+                              await getCurrentUserLocation(
+                                  defaultLocation: LatLng(0.0, 0.0));
+                          GoRouter.of(context).prepareAuthEvent();
+                          final user = await signInWithApple(context);
+                          if (user == null) {
+                            return;
+                          }
+                          setState(() => FFAppState().cHomeVisits = 0);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Welcome to Breakroom!',
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                            ),
+                          );
+                          await Future.delayed(
+                              const Duration(milliseconds: 3000));
+
+                          final usersUpdateData = createUsersRecordData(
+                            geoposition: currentUserLocationValue,
+                          );
+                          await currentUserReference!.update(usersUpdateData);
+
+                          context.pushNamedAuth('HomeView', mounted);
+                        },
+                        child: Image.asset(
+                          'assets/images/AppleSignIn.png',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       InkWell(
                         onTap: () async {
