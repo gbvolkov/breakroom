@@ -383,28 +383,52 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                   .toList()
                                                   .contains(
                                                       columnUsersRecord.uid)) {
-                                                context.pushNamed(
-                                                  'Chat',
-                                                  queryParams: {
-                                                    'chatRef': serializeParam(
-                                                      chatsItem.reference,
-                                                      ParamType
-                                                          .DocumentReference,
-                                                    ),
-                                                    'chatUser': serializeParam(
-                                                      stackUsersRecord,
-                                                      ParamType.Document,
-                                                    ),
-                                                    'route': serializeParam(
-                                                      'allchats',
-                                                      ParamType.String,
-                                                    ),
-                                                  }.withoutNulls,
-                                                  extra: <String, dynamic>{
-                                                    'chatUser':
+                                                if (!columnUsersRecord.blocked!
+                                                    .toList()
+                                                    .contains(
+                                                        stackUsersRecord.uid)) {
+                                                  context.pushNamed(
+                                                    'Chat',
+                                                    queryParams: {
+                                                      'chatRef': serializeParam(
+                                                        chatsItem.reference,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                      'chatUser':
+                                                          serializeParam(
                                                         stackUsersRecord,
-                                                  },
-                                                );
+                                                        ParamType.Document,
+                                                      ),
+                                                      'route': serializeParam(
+                                                        'allchats',
+                                                        ParamType.String,
+                                                      ),
+                                                    }.withoutNulls,
+                                                    extra: <String, dynamic>{
+                                                      'chatUser':
+                                                          stackUsersRecord,
+                                                    },
+                                                  );
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'User ${stackUsersRecord.displayName} has been blocked.',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          Color(0x00000000),
+                                                    ),
+                                                  );
+                                                }
                                               } else {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(

@@ -468,28 +468,56 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                             ],
                                           ),
                                           if (stackUsersRecord.blocked!
-                                              .toList()
-                                              .contains(columnUsersRecord.uid))
+                                                  .toList()
+                                                  .contains(
+                                                      columnUsersRecord.uid) ||
+                                              columnUsersRecord.blocked!
+                                                  .toList()
+                                                  .contains(
+                                                      stackUsersRecord.uid))
                                             FFButtonWidget(
                                               onPressed: () async {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'User ${widget.userProfile!.displayName} has blocked you.',
-                                                      style: TextStyle(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .alternate,
+                                                if (!widget
+                                                    .userProfile!.blocked!
+                                                    .toList()
+                                                    .contains(columnUsersRecord
+                                                        .uid)) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'User ${widget.userProfile!.displayName} has been blocked.',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                        ),
                                                       ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          Color(0x00000000),
                                                     ),
-                                                    duration: Duration(
-                                                        milliseconds: 4000),
-                                                    backgroundColor:
-                                                        Color(0x00000000),
-                                                  ),
-                                                );
+                                                  );
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                        'User ${widget.userProfile!.displayName} has blocked you.',
+                                                        style: TextStyle(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                        ),
+                                                      ),
+                                                      duration: Duration(
+                                                          milliseconds: 4000),
+                                                      backgroundColor:
+                                                          Color(0x00000000),
+                                                    ),
+                                                  );
+                                                }
                                               },
                                               text: 'Chat',
                                               options: FFButtonOptions(
@@ -513,9 +541,14 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                     BorderRadius.circular(8),
                                               ),
                                             ),
-                                          if (!stackUsersRecord.blocked!
-                                              .toList()
-                                              .contains(columnUsersRecord.uid))
+                                          if (!(stackUsersRecord.blocked!
+                                                  .toList()
+                                                  .contains(
+                                                      columnUsersRecord.uid) ||
+                                              columnUsersRecord.blocked!
+                                                  .toList()
+                                                  .contains(
+                                                      stackUsersRecord.uid)))
                                             FFButtonWidget(
                                               onPressed: () async {
                                                 if (columnUsersRecord

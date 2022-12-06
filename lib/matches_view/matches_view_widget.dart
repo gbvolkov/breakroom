@@ -135,12 +135,15 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                 child: Icon(
                                   Icons.clear,
                                   color: Color(0xFF757575),
-                                  size: 22,
+                                  size: 24,
                                 ),
                               )
                             : null,
                       ),
-                      style: FlutterFlowTheme.of(context).subtitle2,
+                      style: FlutterFlowTheme.of(context).subtitle2.override(
+                            fontFamily: 'Roboto',
+                            fontSize: 16,
+                          ),
                     ),
                     Expanded(
                       child: StreamBuilder<List<UsersRecord>>(
@@ -438,11 +441,15 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       ],
                                                     ),
                                                   ),
-                                                  if (!matchesItem.blocked!
-                                                      .toList()
-                                                      .contains(
-                                                          columnUsersRecord
-                                                              .uid))
+                                                  if (!(matchesItem.blocked!
+                                                          .toList()
+                                                          .contains(
+                                                              columnUsersRecord
+                                                                  .uid) ||
+                                                      columnUsersRecord.blocked!
+                                                          .toList()
+                                                          .contains(
+                                                              matchesItem.uid)))
                                                     Align(
                                                       alignment:
                                                           AlignmentDirectional(
@@ -520,10 +527,14 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                       ),
                                                     ),
                                                   if (matchesItem.blocked!
-                                                      .toList()
-                                                      .contains(
-                                                          columnUsersRecord
-                                                              .uid))
+                                                          .toList()
+                                                          .contains(
+                                                              columnUsersRecord
+                                                                  .uid) ||
+                                                      columnUsersRecord.blocked!
+                                                          .toList()
+                                                          .contains(
+                                                              matchesItem.uid))
                                                     Align(
                                                       alignment:
                                                           AlignmentDirectional(
@@ -543,27 +554,56 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                           size: 30,
                                                         ),
                                                         onPressed: () async {
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                            SnackBar(
-                                                              content: Text(
-                                                                'User ${matchesItem.displayName} has blocked you.',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
+                                                          if (columnUsersRecord
+                                                              .blocked!
+                                                              .toList()
+                                                              .contains(
+                                                                  matchesItem
+                                                                      .uid)) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'User ${matchesItem.displayName} has been blocked.',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                  ),
                                                                 ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    Color(
+                                                                        0x00000000),
                                                               ),
-                                                              duration: Duration(
-                                                                  milliseconds:
-                                                                      4000),
-                                                              backgroundColor:
-                                                                  Color(
-                                                                      0x00000000),
-                                                            ),
-                                                          );
+                                                            );
+                                                          } else {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                content: Text(
+                                                                  'User ${matchesItem.displayName} has blocked you.',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .alternate,
+                                                                  ),
+                                                                ),
+                                                                duration: Duration(
+                                                                    milliseconds:
+                                                                        4000),
+                                                                backgroundColor:
+                                                                    Color(
+                                                                        0x00000000),
+                                                              ),
+                                                            );
+                                                          }
                                                         },
                                                       ),
                                                     ),

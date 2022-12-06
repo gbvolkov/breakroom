@@ -315,86 +315,171 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 48,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFFEE837B),
-                            Color(0xFFF95A82),
-                            Color(0xFFEA3C7D)
-                          ],
-                          stops: [0, 0.6, 1],
-                          begin: AlignmentDirectional(0, -1),
-                          end: AlignmentDirectional(0, 1),
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                    Align(
-                      alignment: AlignmentDirectional(-1, 0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          if (widget.me!.isPremium! ||
-                              !getRemoteConfigBool('check_premium') ||
-                              revenue_cat.activeEntitlementIds
-                                  .contains(FFAppState().entChatToNotMatched)) {
-                            context.pushNamed(
-                              'Chat',
-                              queryParams: {
-                                'chatUser': serializeParam(
-                                  widget.match,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'chatUser': widget.match,
-                              },
-                            );
-                          } else {
-                            context.pushNamed(
-                              'GetPremiumView',
-                              queryParams: {
-                                'user': serializeParam(
-                                  widget.me,
-                                  ParamType.Document,
-                                ),
-                              }.withoutNulls,
-                              extra: <String, dynamic>{
-                                'user': widget.me,
-                              },
-                            );
-                          }
-                        },
-                        text: 'Start chat',
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 48,
-                          color: Colors.transparent,
-                          textStyle: FlutterFlowTheme.of(context)
-                              .subtitle1
-                              .override(
-                                fontFamily: 'Roboto',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                              ),
-                          elevation: 0,
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 1,
+              if (!(widget.me!.blocked!.toList().contains(widget.match!.uid) ||
+                  widget.match!.blocked!.toList().contains(widget.me!.uid)))
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFFEE837B),
+                              Color(0xFFF95A82),
+                              Color(0xFFEA3C7D)
+                            ],
+                            stops: [0, 0.6, 1],
+                            begin: AlignmentDirectional(0, -1),
+                            end: AlignmentDirectional(0, 1),
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                    ),
-                  ],
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if (widget.me!.isPremium! ||
+                                !getRemoteConfigBool('check_premium') ||
+                                revenue_cat.activeEntitlementIds.contains(
+                                    FFAppState().entChatToNotMatched)) {
+                              context.pushNamed(
+                                'Chat',
+                                queryParams: {
+                                  'chatUser': serializeParam(
+                                    widget.match,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'chatUser': widget.match,
+                                },
+                              );
+                            } else {
+                              context.pushNamed(
+                                'GetPremiumView',
+                                queryParams: {
+                                  'user': serializeParam(
+                                    widget.me,
+                                    ParamType.Document,
+                                  ),
+                                }.withoutNulls,
+                                extra: <String, dynamic>{
+                                  'user': widget.me,
+                                },
+                              );
+                            }
+                          },
+                          text: 'Start chat',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 48,
+                            color: Colors.transparent,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle1
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              if (widget.me!.blocked!.toList().contains(widget.match!.uid) ||
+                  widget.match!.blocked!.toList().contains(widget.me!.uid))
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0x80EE837B),
+                              Color(0x7FF95A82),
+                              Color(0x7FEA3C7D)
+                            ],
+                            stops: [0, 0.6, 1],
+                            begin: AlignmentDirectional(0, -1),
+                            end: AlignmentDirectional(0, 1),
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional(-1, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if (widget.me!.blocked!
+                                .toList()
+                                .contains(widget.match!.uid)) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'User ${widget.match!.displayName}is blocked by you.',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor: Color(0x00000000),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'User ${widget.match!.uid} has blocked you.',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor: Color(0x00000000),
+                                ),
+                              );
+                            }
+                          },
+                          text: 'Start chat',
+                          options: FFButtonOptions(
+                            width: double.infinity,
+                            height: 48,
+                            color: Colors.transparent,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .subtitle1
+                                .override(
+                                  fontFamily: 'Roboto',
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),
