@@ -71,7 +71,7 @@ class _NotificationSettingsViewWidgetState
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 50,
+                              height: 54,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -102,7 +102,6 @@ class _NotificationSettingsViewWidgetState
                                               switchAllNotificationsValue1 =
                                                   newValue!);
                                         },
-                                        tileColor: Color(0xFFF5F5F5),
                                         activeColor: Color(0xFF27AE60),
                                         activeTrackColor: Color(0xFFA0E0BC),
                                         dense: false,
@@ -143,7 +142,7 @@ class _NotificationSettingsViewWidgetState
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                height: 54,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -175,7 +174,6 @@ class _NotificationSettingsViewWidgetState
                                                 switchAllNotificationsValue2 =
                                                     newValue!);
                                           },
-                                          tileColor: Color(0xFFF5F5F5),
                                           activeColor: Color(0xFF27AE60),
                                           activeTrackColor: Color(0xFFA0E0BC),
                                           dense: false,
@@ -207,7 +205,7 @@ class _NotificationSettingsViewWidgetState
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                height: 54,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -239,7 +237,6 @@ class _NotificationSettingsViewWidgetState
                                                 switchReceivedLikeNotificationsValue =
                                                     newValue!);
                                           },
-                                          tileColor: Color(0xFFF5F5F5),
                                           activeColor: Color(0xFF27AE60),
                                           activeTrackColor: Color(0xFFA0E0BC),
                                           dense: false,
@@ -271,7 +268,7 @@ class _NotificationSettingsViewWidgetState
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: 50,
+                                height: 54,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -303,7 +300,6 @@ class _NotificationSettingsViewWidgetState
                                                 switchMatchNotificationsValue =
                                                     newValue!);
                                           },
-                                          tileColor: Color(0xFFF5F5F5),
                                           activeColor: Color(0xFF27AE60),
                                           activeTrackColor: Color(0xFFA0E0BC),
                                           dense: false,
@@ -333,7 +329,7 @@ class _NotificationSettingsViewWidgetState
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 50,
+                              height: 54,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
@@ -365,7 +361,6 @@ class _NotificationSettingsViewWidgetState
                                               switchMessagesNotificationsValue =
                                                   newValue!);
                                         },
-                                        tileColor: Color(0xFFF5F5F5),
                                         activeColor: Color(0xFF27AE60),
                                         activeTrackColor: Color(0xFFA0E0BC),
                                         dense: false,

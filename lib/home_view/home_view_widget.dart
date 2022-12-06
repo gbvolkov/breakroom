@@ -1096,7 +1096,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                                 .fromSTEB(16, 0,
                                                                     0, 0),
                                                         child: Container(
-                                                          width: 90,
+                                                          width: 120,
                                                           height: 35,
                                                           child: Stack(
                                                             children: [
@@ -1106,7 +1106,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                                         0, 0),
                                                                 child:
                                                                     Container(
-                                                                  width: 100,
+                                                                  width: 120,
                                                                   height: 100,
                                                                   decoration:
                                                                       BoxDecoration(
@@ -1142,7 +1142,7 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                                     Padding(
                                                                       padding: EdgeInsetsDirectional
                                                                           .fromSTEB(
-                                                                              4,
+                                                                              2,
                                                                               0,
                                                                               0,
                                                                               0),
@@ -1462,64 +1462,74 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                                   ),
                                                 ),
                                               ),
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      1,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    shape: BoxShape.rectangle,
+                                              if (true)
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            1,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      shape: BoxShape.rectangle,
+                                                    ),
+                                                    child: Icon(
+                                                      FFIcons.kicDislike,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                      size: 100,
+                                                    ),
+                                                  ).animateOnActionTrigger(
+                                                    animationsMap[
+                                                        'containerOnActionTriggerAnimation1']!,
                                                   ),
-                                                  child: Icon(
-                                                    FFIcons.kicDislike,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryBackground,
-                                                    size: 100,
-                                                  ),
-                                                ).animateOnActionTrigger(
-                                                  animationsMap[
-                                                      'containerOnActionTriggerAnimation1']!,
                                                 ),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      1,
-                                                  decoration: BoxDecoration(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .systemSuccess,
-                                                    shape: BoxShape.rectangle,
+                                              if (true)
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0, 0),
+                                                  child: Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            1,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .systemSuccess,
+                                                      shape: BoxShape.rectangle,
+                                                    ),
+                                                    child: Icon(
+                                                      FFIcons.kicLike,
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                      size: 100,
+                                                    ),
+                                                  ).animateOnActionTrigger(
+                                                    animationsMap[
+                                                        'containerOnActionTriggerAnimation2']!,
                                                   ),
-                                                  child: Icon(
-                                                    FFIcons.kicLike,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryBackground,
-                                                    size: 100,
-                                                  ),
-                                                ).animateOnActionTrigger(
-                                                  animationsMap[
-                                                      'containerOnActionTriggerAnimation2']!,
                                                 ),
-                                              ),
                                             ],
                                           ),
                                         );
