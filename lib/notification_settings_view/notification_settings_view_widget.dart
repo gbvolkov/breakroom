@@ -168,89 +168,93 @@ class _NotificationSettingsViewWidgetState
                             ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Expanded(
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: Stack(
-                                alignment: AlignmentDirectional(0, 0),
-                                children: [
-                                  Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 54,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Receive all notifications',
-                                            style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
-                                          ),
-                                          Expanded(
-                                            child: SwitchListTile(
-                                              value:
-                                                  switchAllNotificationsValue2 ??=
-                                                      columnUsersRecord
-                                                          .notiffAll!,
-                                              onChanged: (newValue) async {
-                                                setState(() =>
-                                                    switchAllNotificationsValue2 =
-                                                        newValue!);
-                                                if (newValue!) {
-                                                  final usersUpdateData =
-                                                      createUsersRecordData(
-                                                    notiffAll: true,
-                                                  );
-                                                  await columnUsersRecord
-                                                      .reference
-                                                      .update(usersUpdateData);
-                                                } else {
-                                                  final usersUpdateData =
-                                                      createUsersRecordData(
-                                                    notiffAll: false,
-                                                  );
-                                                  await columnUsersRecord
-                                                      .reference
-                                                      .update(usersUpdateData);
-                                                }
-                                              },
-                                              activeColor: Color(0xFF27AE60),
-                                              activeTrackColor:
-                                                  Color(0xFFA0E0BC),
-                                              dense: false,
-                                              controlAffinity:
-                                                  ListTileControlAffinity
-                                                      .trailing,
-                                            ),
-                                          ),
-                                        ],
+                    if (false)
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                child: Stack(
+                                  alignment: AlignmentDirectional(0, 0),
+                                  children: [
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 54,
+                                      decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    Align(
+                                      alignment: AlignmentDirectional(0, 0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            8, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Receive all notifications',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .subtitle2,
+                                            ),
+                                            Expanded(
+                                              child: SwitchListTile(
+                                                value:
+                                                    switchAllNotificationsValue2 ??=
+                                                        columnUsersRecord
+                                                            .notiffAll!,
+                                                onChanged: (newValue) async {
+                                                  setState(() =>
+                                                      switchAllNotificationsValue2 =
+                                                          newValue!);
+                                                  if (newValue!) {
+                                                    final usersUpdateData =
+                                                        createUsersRecordData(
+                                                      notiffAll: true,
+                                                    );
+                                                    await columnUsersRecord
+                                                        .reference
+                                                        .update(
+                                                            usersUpdateData);
+                                                  } else {
+                                                    final usersUpdateData =
+                                                        createUsersRecordData(
+                                                      notiffAll: false,
+                                                    );
+                                                    await columnUsersRecord
+                                                        .reference
+                                                        .update(
+                                                            usersUpdateData);
+                                                  }
+                                                },
+                                                activeColor: Color(0xFF27AE60),
+                                                activeTrackColor:
+                                                    Color(0xFFA0E0BC),
+                                                dense: false,
+                                                controlAffinity:
+                                                    ListTileControlAffinity
+                                                        .trailing,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                       child: Row(

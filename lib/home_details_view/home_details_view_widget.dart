@@ -82,7 +82,10 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
           ),
           onPressed: () async {
             if (widget.backPage == 'push') {
-              context.goNamed('HomeView');
+              if (Navigator.of(context).canPop()) {
+                context.pop();
+              }
+              context.pushNamed('HomeView');
             } else {
               context.pop();
             }
@@ -317,155 +320,180 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                onTap: () async {
-                                                  await Navigator.push(
-                                                    context,
-                                                    PageTransition(
-                                                      type: PageTransitionType
-                                                          .fade,
-                                                      child:
-                                                          FlutterFlowExpandedImageView(
-                                                        image: Image.network(
+                                          ClipRRect(
+                                            child: Container(
+                                              decoration: BoxDecoration(),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      await Navigator.push(
+                                                        context,
+                                                        PageTransition(
+                                                          type:
+                                                              PageTransitionType
+                                                                  .fade,
+                                                          child:
+                                                              FlutterFlowExpandedImageView(
+                                                            image:
+                                                                Image.network(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                widget
+                                                                    .userProfile!
+                                                                    .photoUrl,
+                                                                'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                              ),
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                            ),
+                                                            allowRotation:
+                                                                false,
+                                                            tag: valueOrDefault<
+                                                                String>(
+                                                              widget
+                                                                  .userProfile!
+                                                                  .photoUrl,
+                                                              'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                            ),
+                                                            useHeroAnimation:
+                                                                true,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Hero(
+                                                      tag: valueOrDefault<
+                                                          String>(
+                                                        widget.userProfile!
+                                                            .photoUrl,
+                                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                      ),
+                                                      transitionOnUserGestures:
+                                                          true,
+                                                      child: Container(
+                                                        width: 64,
+                                                        height: 64,
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                        ),
+                                                        child: Image.network(
                                                           valueOrDefault<
                                                               String>(
                                                             widget.userProfile!
                                                                 .photoUrl,
                                                             'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                           ),
-                                                          fit: BoxFit.contain,
+                                                          fit: BoxFit.cover,
                                                         ),
-                                                        allowRotation: false,
-                                                        tag: valueOrDefault<
-                                                            String>(
-                                                          widget.userProfile!
-                                                              .photoUrl,
-                                                          'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                        ),
-                                                        useHeroAnimation: true,
                                                       ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: Hero(
-                                                  tag: valueOrDefault<String>(
-                                                    widget
-                                                        .userProfile!.photoUrl,
-                                                    'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                  ),
-                                                  transitionOnUserGestures:
-                                                      true,
-                                                  child: Container(
-                                                    width: 64,
-                                                    height: 64,
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Image.network(
-                                                      valueOrDefault<String>(
-                                                        widget.userProfile!
-                                                            .photoUrl,
-                                                        'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                      ),
-                                                      fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(8, 0, 0, 0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0, 0, 0, 4),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .title3
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                          ),
-                                                          Container(
-                                                            decoration:
-                                                                BoxDecoration(),
-                                                            child:
-                                                                GenderIconWidget(
-                                                              gender: widget
-                                                                  .userProfile!
-                                                                  .gender,
-                                                              maleIcon: Icon(
-                                                                FFIcons.kmale,
-                                                                color: Colors
-                                                                    .black,
-                                                                size: 24,
-                                                              ),
-                                                              femaleIcon: Icon(
-                                                                FFIcons.kfemale,
-                                                                color: Colors
-                                                                    .black,
-                                                                size: 24,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Row(
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(
+                                                                8, 0, 0, 0),
+                                                    child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          '${widget.userProfile!.industry}, ${widget.userProfile!.occupation}',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .subtitle2
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Roboto',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w300,
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      0, 0, 4),
+                                                          child: Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                '${widget.userProfile!.firstName}, ${functions.getAge(widget.userProfile!.birthDay).toString()}',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .title3
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Roboto',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
                                                               ),
+                                                              Container(
+                                                                decoration:
+                                                                    BoxDecoration(),
+                                                                child:
+                                                                    GenderIconWidget(
+                                                                  gender: widget
+                                                                      .userProfile!
+                                                                      .gender,
+                                                                  maleIcon:
+                                                                      Icon(
+                                                                    FFIcons
+                                                                        .kmale,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 24,
+                                                                  ),
+                                                                  femaleIcon:
+                                                                      Icon(
+                                                                    FFIcons
+                                                                        .kfemale,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    size: 24,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              '${widget.userProfile!.industry}, ${widget.userProfile!.occupation}',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .subtitle2
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Roboto',
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w300,
+                                                                  ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                            ],
+                                            ),
                                           ),
                                           if (stackUsersRecord.blocked!
                                                   .toList()
@@ -1242,9 +1270,9 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                             notificationTitle:
                                                                 'You have match!',
                                                             notificationText:
-                                                                'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                                'Congrats! You have match with ${columnUsersRecord.firstName}, ${formatNumber(
                                                               functions.getAge(
-                                                                  currentUserDocument!
+                                                                  columnUsersRecord
                                                                       .birthDay),
                                                               formatType:
                                                                   FormatType
@@ -1253,7 +1281,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                               locale: '',
                                                             )}!',
                                                             notificationImageUrl:
-                                                                currentUserPhoto,
+                                                                columnUsersRecord
+                                                                    .photoUrl,
                                                             userRefs: [
                                                               widget
                                                                   .userProfile!
@@ -1329,9 +1358,9 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                             notificationTitle:
                                                                 'Somebody likes you!',
                                                             notificationText:
-                                                                'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                                'Congrats! ${columnUsersRecord.firstName}, ${formatNumber(
                                                               functions.getAge(
-                                                                  currentUserDocument!
+                                                                  columnUsersRecord
                                                                       .birthDay),
                                                               formatType:
                                                                   FormatType
@@ -1340,7 +1369,8 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                               locale: '',
                                                             )} likes you!',
                                                             notificationImageUrl:
-                                                                currentUserPhoto,
+                                                                columnUsersRecord
+                                                                    .photoUrl,
                                                             userRefs: [
                                                               widget
                                                                   .userProfile!

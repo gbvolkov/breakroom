@@ -829,16 +829,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                               notificationTitle:
                                                   'You have match!',
                                               notificationText:
-                                                  'Congrats! You have match with ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                  'Congrats! You have match with ${columnUsersRecord.firstName}, ${formatNumber(
                                                 functions.getAge(
-                                                    currentUserDocument!
-                                                        .birthDay),
+                                                    columnUsersRecord.birthDay),
                                                 formatType: FormatType.custom,
                                                 format: '###',
                                                 locale: '',
                                               )}!',
                                               notificationImageUrl:
-                                                  currentUserPhoto,
+                                                  columnUsersRecord.photoUrl,
                                               userRefs: [
                                                 matchedUsers[index]!.reference
                                               ],
@@ -900,16 +899,15 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                               notificationTitle:
                                                   'Somebody likes you!',
                                               notificationText:
-                                                  'Congrats! ${valueOrDefault(currentUserDocument?.firstName, '')}, ${formatNumber(
+                                                  'Congrats! ${columnUsersRecord.firstName}, ${formatNumber(
                                                 functions.getAge(
-                                                    currentUserDocument!
-                                                        .birthDay),
+                                                    columnUsersRecord.birthDay),
                                                 formatType: FormatType.custom,
                                                 format: '###',
                                                 locale: '',
                                               )} likes you!',
                                               notificationImageUrl:
-                                                  currentUserPhoto,
+                                                  columnUsersRecord.photoUrl,
                                               userRefs: [
                                                 matchedUsers[index]!.reference
                                               ],
