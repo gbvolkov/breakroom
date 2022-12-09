@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeViewWidget extends StatefulWidget {
   const WelcomeViewWidget({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -165,7 +168,9 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                               await getCurrentUserLocation(
                                   defaultLocation: LatLng(0.0, 0.0));
                           if (false) {
-                            setState(() => FFAppState().cHomeVisits = 0);
+                            setState(() {
+                              FFAppState().cHomeVisits = 0;
+                            });
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(
@@ -223,7 +228,9 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                           if (user == null) {
                             return;
                           }
-                          setState(() => FFAppState().cHomeVisits = 0);
+                          setState(() {
+                            FFAppState().cHomeVisits = 0;
+                          });
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(

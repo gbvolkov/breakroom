@@ -8,9 +8,11 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/upload_media.dart';
 import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
+import 'package:styled_divider/styled_divider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileViewWidget extends StatefulWidget {
   const EditProfileViewWidget({Key? key}) : super(key: key);
@@ -29,6 +31,8 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -198,8 +202,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditNameView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -241,8 +247,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditNameView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -273,8 +281,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditBioView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -313,8 +323,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditBioView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -345,8 +357,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditIndustryView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -378,8 +392,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditIndustryView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -410,8 +426,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditOccupationView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -443,8 +461,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditOccupationView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -481,8 +501,9 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 'Birthday',
                               );
                               if (userBDay1 != null) {
-                                setState(
-                                    () => FFAppState().usrBDay = userBDay1);
+                                setState(() {
+                                  FFAppState().usrBDay = userBDay1;
+                                });
                               }
 
                               setState(() {});
@@ -518,8 +539,9 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                       'Birthday',
                                     );
                                     if (userBDay != null) {
-                                      setState(() =>
-                                          FFAppState().usrBDay = userBDay);
+                                      setState(() {
+                                        FFAppState().usrBDay = userBDay;
+                                      });
                                     }
 
                                     setState(() {});
@@ -553,8 +575,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditGenderView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -581,8 +605,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditGenderView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -613,8 +639,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditGenderPrefsView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -646,8 +674,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditGenderPrefsView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -678,8 +708,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditStatusView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -711,8 +743,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditStatusView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -726,8 +760,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditInterestsView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -763,8 +799,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditInterestsView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],
@@ -841,8 +879,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             onTap: () async {
                               context.pushNamed('EditBasicsView');
 
-                              setState(() => FFAppState().usrFirstName =
-                                  FFAppState().usrFirstName);
+                              setState(() {
+                                FFAppState().usrFirstName =
+                                    FFAppState().usrFirstName;
+                              });
                             },
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
@@ -878,8 +918,10 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   onPressed: () async {
                                     context.pushNamed('EditBasicsView');
 
-                                    setState(() => FFAppState().usrFirstName =
-                                        FFAppState().usrFirstName);
+                                    setState(() {
+                                      FFAppState().usrFirstName =
+                                          FFAppState().usrFirstName;
+                                    });
                                   },
                                 ),
                               ],

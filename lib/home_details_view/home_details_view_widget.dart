@@ -13,12 +13,12 @@ import '../custom_code/actions/index.dart' as actions;
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    as smooth_page_indicator;
+import 'package:styled_divider/styled_divider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class HomeDetailsViewWidget extends StatefulWidget {
   const HomeDetailsViewWidget({
@@ -40,7 +40,6 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
   ChatsRecord? groupChat;
   bool? didPurchase;
   int? clikesState;
-  PageController? pageViewController;
   LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -53,17 +52,22 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
     if (currentUserLocationValue == null) {
-      return Center(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(
-            color: FlutterFlowTheme.of(context).primaryColor,
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: CircularProgressIndicator(
+              color: FlutterFlowTheme.of(context).primaryColor,
+            ),
           ),
         ),
       );
     }
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -138,147 +142,6 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                       ),
                     ),
                   ),
-                  if (FFAppState().tmpInteger == 8576)
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: AlignmentDirectional(0, -1),
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
-                                child: Stack(
-                                  children: [
-                                    PageView(
-                                      controller: pageViewController ??=
-                                          PageController(initialPage: 0),
-                                      scrollDirection: Axis.horizontal,
-                                      children: [
-                                        Stack(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(0),
-                                              child: Image.network(
-                                                valueOrDefault<String>(
-                                                  functions.getPhotosListValue(
-                                                      widget
-                                                          .userProfile!.photos!
-                                                          .toList(),
-                                                      0),
-                                                  'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                                ),
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    1,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, -1),
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    1,
-                                                decoration: BoxDecoration(
-                                                  gradient: LinearGradient(
-                                                    colors: [
-                                                      Colors.transparent,
-                                                      Color(0x4E000000)
-                                                    ],
-                                                    stops: [0, 1],
-                                                    begin: AlignmentDirectional(
-                                                        0, -1),
-                                                    end: AlignmentDirectional(
-                                                        0, 1),
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(0),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Image.network(
-                                          valueOrDefault<String>(
-                                            functions.getPhotosListValue(
-                                                widget.userProfile!.photos!
-                                                    .toList(),
-                                                1),
-                                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                          ),
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Image.network(
-                                          valueOrDefault<String>(
-                                            functions.getPhotosListValue(
-                                                widget.userProfile!.photos!
-                                                    .toList(),
-                                                2),
-                                            'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
-                                          ),
-                                          width: 100,
-                                          height: 100,
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ],
-                                    ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0, 1),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 10),
-                                        child: smooth_page_indicator
-                                            .SmoothPageIndicator(
-                                          controller: pageViewController ??=
-                                              PageController(initialPage: 0),
-                                          count: 3,
-                                          axisDirection: Axis.horizontal,
-                                          onDotClicked: (i) {
-                                            pageViewController!.animateToPage(
-                                              i,
-                                              duration:
-                                                  Duration(milliseconds: 500),
-                                              curve: Curves.ease,
-                                            );
-                                          },
-                                          effect: smooth_page_indicator
-                                              .ExpandingDotsEffect(
-                                            expansionFactor: 2,
-                                            spacing: 8,
-                                            radius: 16,
-                                            dotWidth: 8,
-                                            dotHeight: 8,
-                                            dotColor: Color(0xFF9E9E9E),
-                                            activeDotColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryColor,
-                                            paintStyle: PaintingStyle.fill,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                     child: StreamBuilder<UsersRecord>(
@@ -1031,16 +894,16 @@ class _HomeDetailsViewWidgetState extends State<HomeDetailsViewWidget> {
                                                         await currentUserReference!
                                                             .update(
                                                                 usersUpdateData);
-                                                        setState(() =>
-                                                            FFAppState()
-                                                                    .swipeAction =
-                                                                'left');
-                                                        setState(() =>
-                                                            FFAppState()
-                                                                .dislikedUsers
-                                                                .add(widget
-                                                                    .userProfile!
-                                                                    .uid!));
+                                                        setState(() {
+                                                          FFAppState()
+                                                                  .swipeAction =
+                                                              'left';
+                                                          setState(() => FFAppState()
+                                                              .addToDislikedUsers(
+                                                                  widget
+                                                                      .userProfile!
+                                                                      .uid!));
+                                                        });
                                                         if (Navigator.of(
                                                                 context)
                                                             .canPop()) {

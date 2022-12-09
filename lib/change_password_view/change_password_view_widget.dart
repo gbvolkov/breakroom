@@ -7,6 +7,7 @@ import '../custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChangePasswordViewWidget extends StatefulWidget {
   const ChangePasswordViewWidget({Key? key}) : super(key: key);
@@ -35,7 +36,9 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().tmpError = '');
+      setState(() {
+        FFAppState().tmpError = '';
+      });
       setState(() {
         currentPasswordTextFieldController?.clear();
         newPassword1TextFieldController?.clear();
@@ -61,6 +64,8 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -394,7 +399,9 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                             var _shouldSetState = false;
                             if (newPassword1TextFieldController!.text ==
                                 newPassword2TextFieldController!.text) {
-                              setState(() => FFAppState().tmpError = '');
+                              setState(() {
+                                FFAppState().tmpError = '';
+                              });
                               reauthUserResult1 = await actions.reauthUser(
                                 currentUserEmail,
                                 currentPasswordTextFieldController!.text,
@@ -403,8 +410,10 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                               _shouldSetState = true;
                               if (reauthUserResult1 != null &&
                                   reauthUserResult1 != '') {
-                                setState(() => FFAppState().tmpError =
-                                    'Your current password is invalid');
+                                setState(() {
+                                  FFAppState().tmpError =
+                                      'Your current password is invalid';
+                                });
                                 if (_shouldSetState) setState(() {});
                                 return;
                               }
@@ -429,16 +438,20 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                                   ),
                                 );
                               } else {
-                                setState(() => FFAppState().tmpError =
-                                    'Error occured while changing user password');
+                                setState(() {
+                                  FFAppState().tmpError =
+                                      'Error occured while changing user password';
+                                });
                                 if (_shouldSetState) setState(() {});
                                 return;
                               }
 
                               context.goNamed('LoginDetailsView');
                             } else {
-                              setState(() => FFAppState().tmpError =
-                                  'Please enter the same new passwords');
+                              setState(() {
+                                FFAppState().tmpError =
+                                    'Please enter the same new passwords';
+                              });
                             }
 
                             if (_shouldSetState) setState(() {});

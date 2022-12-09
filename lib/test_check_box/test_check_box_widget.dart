@@ -7,6 +7,7 @@ import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class TestCheckBoxWidget extends StatefulWidget {
   const TestCheckBoxWidget({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _TestCheckBoxWidgetState extends State<TestCheckBoxWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -108,18 +111,18 @@ class _TestCheckBoxWidgetState extends State<TestCheckBoxWidget> {
                                 FFButtonWidget(
                                   onPressed: () async {
                                     if (FFAppState().isSelectAllVisible) {
-                                      setState(() => FFAppState()
-                                          .isSelectAllVisible = false);
-                                      setState(() =>
-                                          FFAppState().fltrIndusrtries =
-                                              containerIndustriesRecordList
-                                                  .map((e) => e.industry!)
-                                                  .toList());
+                                      setState(() {
+                                        FFAppState().isSelectAllVisible = false;
+                                        FFAppState().fltrIndusrtries =
+                                            containerIndustriesRecordList
+                                                .map((e) => e.industry!)
+                                                .toList();
+                                      });
                                     } else {
-                                      setState(() => FFAppState()
-                                          .isSelectAllVisible = true);
-                                      setState(() =>
-                                          FFAppState().fltrIndusrtries = []);
+                                      setState(() {
+                                        FFAppState().isSelectAllVisible = true;
+                                        FFAppState().fltrIndusrtries = [];
+                                      });
                                     }
 
                                     if (Navigator.of(context).canPop()) {
@@ -178,8 +181,10 @@ class _TestCheckBoxWidgetState extends State<TestCheckBoxWidget> {
                                 defaultSelected:
                                     FFAppState().fltrIndusrtries.toList(),
                                 onValue: () async {
-                                  setState(() => FFAppState().fltrIndusrtries =
-                                      FFAppState().mcbSelectedValues.toList());
+                                  setState(() {
+                                    FFAppState().fltrIndusrtries =
+                                        FFAppState().mcbSelectedValues.toList();
+                                  });
                                 },
                               ),
                             ),

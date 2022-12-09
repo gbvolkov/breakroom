@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditIndustryViewWidget extends StatefulWidget {
   const EditIndustryViewWidget({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _EditIndustryViewWidgetState extends State<EditIndustryViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -171,8 +174,9 @@ class _EditIndustryViewWidgetState extends State<EditIndustryViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() =>
-                                FFAppState().usrIndustry = ddIndustryValue!);
+                            setState(() {
+                              FFAppState().usrIndustry = ddIndustryValue!;
+                            });
                             context.pop();
                           },
                           text: 'Save',

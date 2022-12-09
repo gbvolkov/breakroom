@@ -11,6 +11,7 @@ import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class MatchesViewWidget extends StatefulWidget {
   const MatchesViewWidget({Key? key}) : super(key: key);
@@ -37,6 +38,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

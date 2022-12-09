@@ -7,6 +7,7 @@ import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LikesLimitExceedWidgetWidget extends StatefulWidget {
   const LikesLimitExceedWidgetWidget({
@@ -31,6 +32,8 @@ class _LikesLimitExceedWidgetWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: MediaQuery.of(context).size.width * 3.43,
       height: 439,
@@ -200,9 +203,10 @@ class _LikesLimitExceedWidgetWidgetState
                                   .offerings!.current!.annual!.identifier)
                             InkWell(
                               onTap: () async {
-                                setState(() => FFAppState().selectedPackage =
-                                    revenue_cat.offerings!.current!.annual!
-                                        .identifier);
+                                setState(() {
+                                  FFAppState().selectedPackage = revenue_cat
+                                      .offerings!.current!.annual!.identifier;
+                                });
                               },
                               child: Container(
                                 width: 110,
@@ -376,9 +380,13 @@ class _LikesLimitExceedWidgetWidgetState
                                   .offerings!.current!.threeMonth!.identifier)
                             InkWell(
                               onTap: () async {
-                                setState(() => FFAppState().selectedPackage =
-                                    revenue_cat.offerings!.current!.threeMonth!
-                                        .identifier);
+                                setState(() {
+                                  FFAppState().selectedPackage = revenue_cat
+                                      .offerings!
+                                      .current!
+                                      .threeMonth!
+                                      .identifier;
+                                });
                               },
                               child: Container(
                                 width: 110,
@@ -521,9 +529,10 @@ class _LikesLimitExceedWidgetWidgetState
                                   .offerings!.current!.monthly!.identifier)
                             InkWell(
                               onTap: () async {
-                                setState(() => FFAppState().selectedPackage =
-                                    revenue_cat.offerings!.current!.monthly!
-                                        .identifier);
+                                setState(() {
+                                  FFAppState().selectedPackage = revenue_cat
+                                      .offerings!.current!.monthly!.identifier;
+                                });
                               },
                               child: Container(
                                 width: 110,

@@ -6,6 +6,7 @@ import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditStatusViewWidget extends StatefulWidget {
   const EditStatusViewWidget({Key? key}) : super(key: key);
@@ -22,12 +23,16 @@ class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrIntention);
+      setState(() {
+        FFAppState().mrbSelectedValue = FFAppState().usrIntention;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -122,8 +127,10 @@ class _EditStatusViewWidgetState extends State<EditStatusViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrIntention =
-                                FFAppState().mrbSelectedValue);
+                            setState(() {
+                              FFAppState().usrIntention =
+                                  FFAppState().mrbSelectedValue;
+                            });
                             context.pop();
                           },
                           text: 'Save',

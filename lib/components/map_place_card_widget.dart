@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/lat_lng.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class MapPlaceCardWidget extends StatefulWidget {
   const MapPlaceCardWidget({
@@ -19,6 +20,8 @@ class MapPlaceCardWidget extends StatefulWidget {
 class _MapPlaceCardWidgetState extends State<MapPlaceCardWidget> {
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       height: double.infinity,

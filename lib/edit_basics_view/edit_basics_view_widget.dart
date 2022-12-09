@@ -8,6 +8,7 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditBasicsViewWidget extends StatefulWidget {
   const EditBasicsViewWidget({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -119,9 +122,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                       onTap: () async {
                                         context.pushNamed('EditLookingForView');
 
-                                        setState(() =>
-                                            FFAppState().usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                        setState(() {
+                                          FFAppState().usrWorkoutStatus =
+                                              FFAppState().usrWorkoutStatus;
+                                        });
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -160,10 +164,11 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               context.pushNamed(
                                                   'EditLookingForView');
 
-                                              setState(() => FFAppState()
-                                                      .usrWorkoutStatus =
-                                                  FFAppState()
-                                                      .usrWorkoutStatus);
+                                              setState(() {
+                                                FFAppState().usrWorkoutStatus =
+                                                    FFAppState()
+                                                        .usrWorkoutStatus;
+                                              });
                                             },
                                           ),
                                         ],
@@ -220,9 +225,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         onTap: () async {
                                           context.pushNamed('EditHeightView');
 
-                                          setState(() => FFAppState()
-                                                  .usrWorkoutStatus =
-                                              FFAppState().usrWorkoutStatus);
+                                          setState(() {
+                                            FFAppState().usrWorkoutStatus =
+                                                FFAppState().usrWorkoutStatus;
+                                          });
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
@@ -251,10 +257,12 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                                 context.pushNamed(
                                                     'EditHeightView');
 
-                                                setState(() => FFAppState()
-                                                        .usrWorkoutStatus =
-                                                    FFAppState()
-                                                        .usrWorkoutStatus);
+                                                setState(() {
+                                                  FFAppState()
+                                                          .usrWorkoutStatus =
+                                                      FFAppState()
+                                                          .usrWorkoutStatus;
+                                                });
                                               },
                                             ),
                                           ],
@@ -304,9 +312,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                       onTap: () async {
                                         context.pushNamed('EditDrinkPrefsView');
 
-                                        setState(() =>
-                                            FFAppState().usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                        setState(() {
+                                          FFAppState().usrWorkoutStatus =
+                                              FFAppState().usrWorkoutStatus;
+                                        });
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -334,10 +343,11 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               context.pushNamed(
                                                   'EditDrinkPrefsView');
 
-                                              setState(() => FFAppState()
-                                                      .usrWorkoutStatus =
-                                                  FFAppState()
-                                                      .usrWorkoutStatus);
+                                              setState(() {
+                                                FFAppState().usrWorkoutStatus =
+                                                    FFAppState()
+                                                        .usrWorkoutStatus;
+                                              });
                                             },
                                           ),
                                         ],
@@ -383,9 +393,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     onTap: () async {
                                       context.pushNamed('EditSmokingPrefsView');
 
-                                      setState(() =>
-                                          FFAppState().usrWorkoutStatus =
-                                              FFAppState().usrWorkoutStatus);
+                                      setState(() {
+                                        FFAppState().usrWorkoutStatus =
+                                            FFAppState().usrWorkoutStatus;
+                                      });
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -417,9 +428,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                             context.pushNamed(
                                                 'EditSmokingPrefsView');
 
-                                            setState(() => FFAppState()
-                                                    .usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                            setState(() {
+                                              FFAppState().usrWorkoutStatus =
+                                                  FFAppState().usrWorkoutStatus;
+                                            });
                                           },
                                         ),
                                       ],
@@ -468,9 +480,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         context.pushNamed(
                                             'EditSpiritualStatusView');
 
-                                        setState(() =>
-                                            FFAppState().usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                        setState(() {
+                                          FFAppState().usrWorkoutStatus =
+                                              FFAppState().usrWorkoutStatus;
+                                        });
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -498,10 +511,11 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               context.pushNamed(
                                                   'EditSpiritualStatusView');
 
-                                              setState(() => FFAppState()
-                                                      .usrWorkoutStatus =
-                                                  FFAppState()
-                                                      .usrWorkoutStatus);
+                                              setState(() {
+                                                FFAppState().usrWorkoutStatus =
+                                                    FFAppState()
+                                                        .usrWorkoutStatus;
+                                              });
                                             },
                                           ),
                                         ],
@@ -551,9 +565,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         context
                                             .pushNamed('EditWorkoutPrefsView');
 
-                                        setState(() =>
-                                            FFAppState().usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                        setState(() {
+                                          FFAppState().usrWorkoutStatus =
+                                              FFAppState().usrWorkoutStatus;
+                                        });
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -581,10 +596,11 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               context.pushNamed(
                                                   'EditWorkoutPrefsView');
 
-                                              setState(() => FFAppState()
-                                                      .usrWorkoutStatus =
-                                                  FFAppState()
-                                                      .usrWorkoutStatus);
+                                              setState(() {
+                                                FFAppState().usrWorkoutStatus =
+                                                    FFAppState()
+                                                        .usrWorkoutStatus;
+                                              });
                                             },
                                           ),
                                         ],
@@ -634,9 +650,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         context
                                             .pushNamed('EditChildrenPrefsView');
 
-                                        setState(() =>
-                                            FFAppState().usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                        setState(() {
+                                          FFAppState().usrWorkoutStatus =
+                                              FFAppState().usrWorkoutStatus;
+                                        });
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -664,10 +681,11 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               context.pushNamed(
                                                   'EditChildrenPrefsView');
 
-                                              setState(() => FFAppState()
-                                                      .usrWorkoutStatus =
-                                                  FFAppState()
-                                                      .usrWorkoutStatus);
+                                              setState(() {
+                                                FFAppState().usrWorkoutStatus =
+                                                    FFAppState()
+                                                        .usrWorkoutStatus;
+                                              });
                                             },
                                           ),
                                         ],
@@ -716,9 +734,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                       onTap: () async {
                                         context.pushNamed('EditEducationView');
 
-                                        setState(() =>
-                                            FFAppState().usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                        setState(() {
+                                          FFAppState().usrWorkoutStatus =
+                                              FFAppState().usrWorkoutStatus;
+                                        });
                                       },
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
@@ -746,10 +765,11 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               context.pushNamed(
                                                   'EditEducationView');
 
-                                              setState(() => FFAppState()
-                                                      .usrWorkoutStatus =
-                                                  FFAppState()
-                                                      .usrWorkoutStatus);
+                                              setState(() {
+                                                FFAppState().usrWorkoutStatus =
+                                                    FFAppState()
+                                                        .usrWorkoutStatus;
+                                              });
                                             },
                                           ),
                                         ],
@@ -795,9 +815,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     onTap: () async {
                                       context.pushNamed('EditBodyTypeView');
 
-                                      setState(() =>
-                                          FFAppState().usrWorkoutStatus =
-                                              FFAppState().usrWorkoutStatus);
+                                      setState(() {
+                                        FFAppState().usrWorkoutStatus =
+                                            FFAppState().usrWorkoutStatus;
+                                      });
                                     },
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
@@ -824,9 +845,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                             context
                                                 .pushNamed('EditBodyTypeView');
 
-                                            setState(() => FFAppState()
-                                                    .usrWorkoutStatus =
-                                                FFAppState().usrWorkoutStatus);
+                                            setState(() {
+                                              FFAppState().usrWorkoutStatus =
+                                                  FFAppState().usrWorkoutStatus;
+                                            });
                                           },
                                         ),
                                       ],

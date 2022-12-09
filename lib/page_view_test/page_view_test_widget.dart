@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class PageViewTestWidget extends StatefulWidget {
   const PageViewTestWidget({Key? key}) : super(key: key);
@@ -18,6 +19,8 @@ class _PageViewTestWidgetState extends State<PageViewTestWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -140,7 +143,9 @@ class _PageViewTestWidgetState extends State<PageViewTestWidget> {
                   width: 100,
                   height: MediaQuery.of(context).size.height * 0.4,
                   onValueChanged: () async {
-                    setState(() => FFAppState().option = 1);
+                    setState(() {
+                      FFAppState().option = 1;
+                    });
                   },
                 ),
               ),
@@ -156,7 +161,9 @@ class _PageViewTestWidgetState extends State<PageViewTestWidget> {
                   rangeEnd: 50,
                   activeColor: FlutterFlowTheme.of(context).alternate,
                   onValueChanged: () async {
-                    setState(() => FFAppState().option = 1);
+                    setState(() {
+                      FFAppState().option = 1;
+                    });
                   },
                 ),
               ),

@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ReportUserDialogWidget extends StatefulWidget {
   const ReportUserDialogWidget({Key? key}) : super(key: key);
@@ -28,6 +29,8 @@ class _ReportUserDialogWidgetState extends State<ReportUserDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
       child: Column(

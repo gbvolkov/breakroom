@@ -8,6 +8,7 @@ import '../flutter_flow/permissions_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SetYourLocationViewWidget extends StatefulWidget {
   const SetYourLocationViewWidget({Key? key}) : super(key: key);
@@ -23,6 +24,8 @@ class _SetYourLocationViewWidgetState extends State<SetYourLocationViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

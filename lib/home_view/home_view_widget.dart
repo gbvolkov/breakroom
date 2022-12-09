@@ -23,6 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
 class HomeViewWidget extends StatefulWidget {
@@ -137,16 +138,22 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
           }
         }
       }
-      setState(() => FFAppState().cHomeVisits = FFAppState().cHomeVisits + 1);
+      setState(() {
+        FFAppState().cHomeVisits = FFAppState().cHomeVisits + 1;
+      });
       userDoc = await actions.getUserDocument(
         currentUserReference!,
       );
       if (userDoc != null) {
         if (userDoc!.isComplete!) {
-          setState(() => FFAppState().tmpIntention = userDoc!.intention!);
+          setState(() {
+            FFAppState().tmpIntention = userDoc!.intention!;
+          });
           if ((await getPermissionStatus(locationPermission)) &&
               functions.isLocationSet(currentUserLocationValue)) {
-            setState(() => FFAppState().isFirstAtHome = true);
+            setState(() {
+              FFAppState().isFirstAtHome = true;
+            });
           } else {
             if (functions.isLocationSet(userDoc!.geoposition)) {
               if (FFAppState().isFirstAtHome) {
@@ -162,7 +169,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                   },
                 ).then((value) => setState(() {}));
               }
-              setState(() => FFAppState().isFirstAtHome = false);
+              setState(() {
+                FFAppState().isFirstAtHome = false;
+              });
             } else {
               context.pushNamed('SetYourLocationView');
             }
@@ -174,7 +183,9 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
           );
           await currentUserReference!.update(usersUpdateData);
           if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
-            setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
+            setState(() {
+              setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
+            });
 
             context.goNamed('IntroductionView');
           }
@@ -223,17 +234,22 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
     if (currentUserLocationValue == null) {
-      return Center(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(
-            color: FlutterFlowTheme.of(context).primaryColor,
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: CircularProgressIndicator(
+              color: FlutterFlowTheme.of(context).primaryColor,
+            ),
           ),
         ),
       );
     }
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -377,8 +393,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                           0, 0, 4, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          setState(() => FFAppState()
-                                              .tmpIntention = 'Social');
+                                          setState(() {
+                                            FFAppState().tmpIntention =
+                                                'Social';
+                                          });
 
                                           final usersUpdateData =
                                               createUsersRecordData(
@@ -458,8 +476,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                           4, 0, 0, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          setState(() => FFAppState()
-                                              .tmpIntention = 'Dating');
+                                          setState(() {
+                                            FFAppState().tmpIntention =
+                                                'Dating';
+                                          });
 
                                           final usersUpdateData =
                                               createUsersRecordData(
@@ -654,10 +674,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                     return FlutterFlowSwipeableStack(
                                       topCardHeightFraction: 0.78,
                                       middleCardHeightFraction: 0.68,
-                                      botttomCardHeightFraction: 0.75,
+                                      bottomCardHeightFraction: 0.75,
                                       topCardWidthFraction: 0.9,
                                       middleCardWidthFraction: 0.85,
-                                      botttomCardWidthFraction: 0.8,
+                                      bottomCardWidthFraction: 0.8,
                                       onSwipeFn: (index) {},
                                       onLeftSwipe: (index) async {
                                         if (animationsMap[
@@ -678,9 +698,11 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                         };
                                         await currentUserReference!
                                             .update(usersUpdateData);
-                                        setState(() => FFAppState()
-                                            .dislikedUsers
-                                            .add(matchedUsers[index]!.uid!));
+                                        setState(() {
+                                          setState(() => FFAppState()
+                                              .addToDislikedUsers(
+                                                  matchedUsers[index]!.uid!));
+                                        });
                                         if (Navigator.of(context).canPop()) {
                                           context.pop();
                                         }
@@ -1583,8 +1605,10 @@ class _HomeViewWidgetState extends State<HomeViewWidget>
                                   };
                                   await columnUsersRecord.reference
                                       .update(usersUpdateData);
-                                  setState(() =>
-                                      FFAppState().dislikedUsers.remove(uid!));
+                                  setState(() {
+                                    setState(() => FFAppState()
+                                        .removeFromDislikedUsers(uid!));
+                                  });
                                   if (Navigator.of(context).canPop()) {
                                     context.pop();
                                   }

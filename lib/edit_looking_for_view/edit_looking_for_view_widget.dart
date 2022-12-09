@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditLookingForViewWidget extends StatefulWidget {
   const EditLookingForViewWidget({Key? key}) : super(key: key);
@@ -19,6 +20,8 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -114,8 +117,10 @@ class _EditLookingForViewWidgetState extends State<EditLookingForViewWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             if (FFAppState().mcbSelectedValues.length > 0) {
-                              setState(() => FFAppState().usrLookingFor =
-                                  FFAppState().mcbSelectedValues.toList());
+                              setState(() {
+                                FFAppState().usrLookingFor =
+                                    FFAppState().mcbSelectedValues.toList();
+                              });
                               context.pop();
                             } else {
                               await showDialog(

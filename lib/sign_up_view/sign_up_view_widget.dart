@@ -10,6 +10,7 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SignUpViewWidget extends StatefulWidget {
   const SignUpViewWidget({
@@ -55,6 +56,8 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -240,8 +243,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             size: 24,
                                           ),
                                           onPressed: () async {
-                                            setState(() => FFAppState()
-                                                .agreeCheck = false);
+                                            setState(() {
+                                              FFAppState().agreeCheck = false;
+                                            });
                                           },
                                         ),
                                       if (!FFAppState().agreeCheck)
@@ -255,8 +259,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             size: 24,
                                           ),
                                           onPressed: () async {
-                                            setState(() =>
-                                                FFAppState().agreeCheck = true);
+                                            setState(() {
+                                              FFAppState().agreeCheck = true;
+                                            });
                                           },
                                         ),
                                       Text(
@@ -327,8 +332,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                   confirmPasswordTextFieldController
                                                       ?.clear();
                                                 });
-                                                setState(() => FFAppState()
-                                                    .tmpBool = false);
+                                                setState(() {
+                                                  FFAppState().tmpBool = false;
+                                                });
                                                 await signUpPageViewController
                                                     ?.nextPage(
                                                   duration: Duration(
@@ -527,11 +533,13 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     .text ==
                                                 confirmPasswordTextFieldController!
                                                     .text)) {
-                                          setState(() =>
-                                              FFAppState().tmpBool = true);
+                                          setState(() {
+                                            FFAppState().tmpBool = true;
+                                          });
                                         } else {
-                                          setState(() =>
-                                              FFAppState().tmpBool = false);
+                                          setState(() {
+                                            FFAppState().tmpBool = false;
+                                          });
                                         }
                                       },
                                     ),
@@ -635,11 +643,13 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     .text ==
                                                 confirmPasswordTextFieldController!
                                                     .text)) {
-                                          setState(() =>
-                                              FFAppState().tmpBool = true);
+                                          setState(() {
+                                            FFAppState().tmpBool = true;
+                                          });
                                         } else {
-                                          setState(() =>
-                                              FFAppState().tmpBool = false);
+                                          setState(() {
+                                            FFAppState().tmpBool = false;
+                                          });
                                         }
                                       },
                                     ),
@@ -876,8 +886,9 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                     [])
                                                 .toList(),
                                           );
-                                          setState(() =>
-                                              FFAppState().cHomeVisits = 0);
+                                          setState(() {
+                                            FFAppState().cHomeVisits = 0;
+                                          });
                                           await showModalBottomSheet(
                                             isScrollControlled: true,
                                             backgroundColor: Colors.transparent,
@@ -892,8 +903,10 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                             },
                                           ).then((value) => setState(() {}));
 
-                                          setState(() => FFAppState()
-                                              .preventIntroduction = true);
+                                          setState(() {
+                                            FFAppState().preventIntroduction =
+                                                true;
+                                          });
 
                                           context.goNamedAuth(
                                               'CreateProfileView', mounted);

@@ -3,11 +3,13 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_swipeable_stack.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
 class IntroductionViewWidget extends StatefulWidget {
@@ -55,7 +57,9 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget>
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().tmpInteger = 2);
+      setState(() {
+        FFAppState().tmpInteger = 2;
+      });
       if (animationsMap['stackOnActionTriggerAnimation1'] != null) {
         await animationsMap['stackOnActionTriggerAnimation1']!.controller
           ..reset()
@@ -79,6 +83,8 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -103,13 +109,14 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget>
                 child: FlutterFlowSwipeableStack(
                   topCardHeightFraction: 0.78,
                   middleCardHeightFraction: 0.68,
-                  botttomCardHeightFraction: 0.75,
+                  bottomCardHeightFraction: 0.75,
                   topCardWidthFraction: 0.9,
                   middleCardWidthFraction: 0.85,
-                  botttomCardWidthFraction: 0.8,
+                  bottomCardWidthFraction: 0.8,
                   onSwipeFn: (index) async {
-                    setState(() =>
-                        FFAppState().tmpInteger = FFAppState().tmpInteger + -1);
+                    setState(() {
+                      FFAppState().tmpInteger = FFAppState().tmpInteger + -1;
+                    });
                     if (FFAppState().tmpInteger == 0) {
                       context.goNamed('HomeView');
                     } else {
@@ -119,8 +126,9 @@ class _IntroductionViewWidgetState extends State<IntroductionViewWidget>
                   onLeftSwipe: (index) {},
                   onRightSwipe: (index) {},
                   onUpSwipe: (index) async {
-                    setState(() =>
-                        FFAppState().tmpInteger = FFAppState().tmpInteger + -1);
+                    setState(() {
+                      FFAppState().tmpInteger = FFAppState().tmpInteger + -1;
+                    });
                     if (FFAppState().tmpInteger == 0) {
                       context.goNamed('HomeView');
                     } else {

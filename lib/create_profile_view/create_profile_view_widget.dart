@@ -12,6 +12,7 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class CreateProfileViewWidget extends StatefulWidget {
   const CreateProfileViewWidget({Key? key}) : super(key: key);
@@ -56,6 +57,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -373,8 +376,9 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                               'Birthday',
                                             );
                                             if (userBDay != null) {
-                                              setState(() => FFAppState()
-                                                  .usrBDay = userBDay);
+                                              setState(() {
+                                                FFAppState().usrBDay = userBDay;
+                                              });
                                             }
 
                                             setState(() {});
@@ -750,8 +754,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       buttonHeight: 50.0,
                                       defaultSelected: FFAppState().usrGender,
                                       onValue: () async {
-                                        setState(() => FFAppState().usrGender =
-                                            FFAppState().mrbSelectedValue);
+                                        setState(() {
+                                          FFAppState().usrGender =
+                                              FFAppState().mrbSelectedValue;
+                                        });
                                       },
                                     ),
                                   ),
@@ -781,9 +787,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     defaultSelected:
                                         FFAppState().usrGenderPreference,
                                     onValue: () async {
-                                      setState(() =>
-                                          FFAppState().usrGenderPreference =
-                                              FFAppState().mrbSelectedValue);
+                                      setState(() {
+                                        FFAppState().usrGenderPreference =
+                                            FFAppState().mrbSelectedValue;
+                                      });
                                     },
                                   ),
                                 ),
@@ -904,8 +911,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonHeight: 50.0,
                                   defaultSelected: FFAppState().usrIntention,
                                   onValue: () async {
-                                    setState(() => FFAppState().usrIntention =
-                                        FFAppState().mrbSelectedValue);
+                                    setState(() {
+                                      FFAppState().usrIntention =
+                                          FFAppState().mrbSelectedValue;
+                                    });
                                   },
                                 ),
                               ),
@@ -1023,9 +1032,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   defaultSelected:
                                       FFAppState().usrChildfreeStatus,
                                   onValue: () async {
-                                    setState(() =>
-                                        FFAppState().usrChildfreeStatus =
-                                            FFAppState().mrbSelectedValue);
+                                    setState(() {
+                                      FFAppState().usrChildfreeStatus =
+                                          FFAppState().mrbSelectedValue;
+                                    });
                                   },
                                 ),
                               ),
@@ -1140,8 +1150,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 buttonHeight: 50.0,
                                 defaultSelected: FFAppState().usrReligion,
                                 onValue: () async {
-                                  setState(() => FFAppState().usrReligion =
-                                      FFAppState().mrbSelectedValue);
+                                  setState(() {
+                                    FFAppState().usrReligion =
+                                        FFAppState().mrbSelectedValue;
+                                  });
                                 },
                               ),
                             ),
@@ -1257,8 +1269,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonHeight: 50.0,
                                   defaultSelected: FFAppState().usrEducation,
                                   onValue: () async {
-                                    setState(() => FFAppState().usrEducation =
-                                        FFAppState().mrbSelectedValue);
+                                    setState(() {
+                                      FFAppState().usrEducation =
+                                          FFAppState().mrbSelectedValue;
+                                    });
                                   },
                                 ),
                               ),
@@ -1375,8 +1389,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonHeight: 50.0,
                                   defaultSelected: FFAppState().usrBodyType,
                                   onValue: () async {
-                                    setState(() => FFAppState().usrBodyType =
-                                        FFAppState().mrbSelectedValue);
+                                    setState(() {
+                                      FFAppState().usrBodyType =
+                                          FFAppState().mrbSelectedValue;
+                                    });
                                   },
                                 ),
                               ),
@@ -1610,9 +1626,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          setState(() =>
-                                              FFAppState().usrInterests =
-                                                  choiceChipsValues!.toList());
+                                          setState(() {
+                                            FFAppState().usrInterests =
+                                                choiceChipsValues!.toList();
+                                          });
                                           await pageViewController?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
@@ -1677,10 +1694,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   defaultSelected:
                                       FFAppState().usrLookingFor.toList(),
                                   onValue: () async {
-                                    setState(() => FFAppState().usrLookingFor =
-                                        FFAppState()
-                                            .mcbSelectedValues
-                                            .toList());
+                                    setState(() {
+                                      FFAppState().usrLookingFor = FFAppState()
+                                          .mcbSelectedValues
+                                          .toList();
+                                    });
                                   },
                                 ),
                               ),
@@ -1792,8 +1810,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     height: 260,
                                     personHeight: FFAppState().usrHeight,
                                     onValueChanged: () async {
-                                      setState(() => FFAppState().usrHeight =
-                                          FFAppState().nmpPickedNumber);
+                                      setState(() {
+                                        FFAppState().usrHeight =
+                                            FFAppState().nmpPickedNumber;
+                                      });
                                     },
                                   ),
                                 ),
@@ -1934,9 +1954,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrWorkoutStatus,
                                         onValue: () async {
-                                          setState(() => FFAppState()
-                                                  .usrWorkoutStatus =
-                                              FFAppState().mrbSelectedValue);
+                                          setState(() {
+                                            FFAppState().usrWorkoutStatus =
+                                                FFAppState().mrbSelectedValue;
+                                          });
                                         },
                                       ),
                                     ),
@@ -1978,9 +1999,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrDrinkingStatus,
                                         onValue: () async {
-                                          setState(() => FFAppState()
-                                                  .usrDrinkingStatus =
-                                              FFAppState().mrbSelectedValue);
+                                          setState(() {
+                                            FFAppState().usrDrinkingStatus =
+                                                FFAppState().mrbSelectedValue;
+                                          });
                                         },
                                       ),
                                     ),
@@ -2022,9 +2044,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrSmokingStatus,
                                         onValue: () async {
-                                          setState(() => FFAppState()
-                                                  .usrSmokingStatus =
-                                              FFAppState().mrbSelectedValue);
+                                          setState(() {
+                                            FFAppState().usrSmokingStatus =
+                                                FFAppState().mrbSelectedValue;
+                                          });
                                         },
                                       ),
                                     ),
@@ -2064,9 +2087,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrSpiritualStatus,
                                         onValue: () async {
-                                          setState(() => FFAppState()
-                                                  .usrSpiritualStatus =
-                                              FFAppState().mrbSelectedValue);
+                                          setState(() {
+                                            FFAppState().usrSpiritualStatus =
+                                                FFAppState().mrbSelectedValue;
+                                          });
                                         },
                                       ),
                                     ),

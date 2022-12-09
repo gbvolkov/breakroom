@@ -16,6 +16,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ProfileViewWidget extends StatefulWidget {
   const ProfileViewWidget({Key? key}) : super(key: key);
@@ -49,14 +50,20 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
       userAddress = await actions.getAddressFromLocation(
         userDoc!.geoposition!,
       );
-      setState(() => FFAppState().usrAddress = userAddress!);
-      setState(() => FFAppState().blnImageDeleteMode = false);
-      setState(() => FFAppState().markedElements = []);
+      setState(() {
+        FFAppState().usrAddress = userAddress!;
+        FFAppState().blnImageDeleteMode = false;
+      });
+      setState(() {
+        FFAppState().markedElements = [];
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -488,10 +495,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                   context.pushNamed(
                                                       'EditProfileView');
 
-                                                  setState(() => FFAppState()
-                                                          .usrFirstName =
-                                                      FFAppState()
-                                                          .usrFirstName);
+                                                  setState(() {
+                                                    FFAppState().usrFirstName =
+                                                        FFAppState()
+                                                            .usrFirstName;
+                                                  });
                                                 },
                                                 text: 'Edit profile',
                                                 options: FFButtonOptions(
@@ -949,8 +957,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     await currentUserReference!
                                                         .update(
                                                             usersUpdateData);
-                                                    setState(() => FFAppState()
-                                                        .usrAddress = address!);
+                                                    setState(() {
+                                                      FFAppState().usrAddress =
+                                                          address!;
+                                                    });
                                                   }
                                                 }
 
@@ -1032,10 +1042,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           );
                                                         },
                                                         onLongPress: () async {
-                                                          setState(() =>
-                                                              FFAppState()
-                                                                      .blnImageDeleteMode =
-                                                                  true);
+                                                          setState(() {
+                                                            FFAppState()
+                                                                    .blnImageDeleteMode =
+                                                                true;
+                                                          });
                                                         },
                                                         child: Image.network(
                                                           userPhotosItem.image!,
@@ -1057,17 +1068,19 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                 .markedElements
                                                                 .contains(
                                                                     userPhotosIndex)) {
-                                                              setState(() =>
-                                                                  FFAppState()
-                                                                      .markedElements
-                                                                      .remove(
-                                                                          userPhotosIndex));
+                                                              setState(() {
+                                                                setState(() =>
+                                                                    FFAppState()
+                                                                        .removeFromMarkedElements(
+                                                                            userPhotosIndex));
+                                                              });
                                                             } else {
-                                                              setState(() =>
-                                                                  FFAppState()
-                                                                      .markedElements
-                                                                      .add(
-                                                                          userPhotosIndex));
+                                                              setState(() {
+                                                                setState(() =>
+                                                                    FFAppState()
+                                                                        .addToMarkedElements(
+                                                                            userPhotosIndex));
+                                                              });
                                                             }
                                                           },
                                                           child: Material(
@@ -1253,10 +1266,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                   alignment: AlignmentDirectional(-1, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      setState(() =>
-                                          FFAppState().markedElements = []);
-                                      setState(() => FFAppState()
-                                          .blnImageDeleteMode = false);
+                                      setState(() {
+                                        FFAppState().markedElements = [];
+                                        FFAppState().blnImageDeleteMode = false;
+                                      });
                                     },
                                     text: 'Cancel',
                                     options: FFButtonOptions(
@@ -1314,10 +1327,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       };
                                       await columnUsersRecord.reference
                                           .update(usersUpdateData);
-                                      setState(() =>
-                                          FFAppState().markedElements = []);
-                                      setState(() => FFAppState()
-                                          .blnImageDeleteMode = false);
+                                      setState(() {
+                                        FFAppState().markedElements = [];
+                                        FFAppState().blnImageDeleteMode = false;
+                                      });
 
                                       setState(() {});
                                     },

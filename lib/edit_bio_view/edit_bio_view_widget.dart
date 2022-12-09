@@ -6,6 +6,7 @@ import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditBioViewWidget extends StatefulWidget {
   const EditBioViewWidget({Key? key}) : super(key: key);
@@ -23,8 +24,10 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().bioCharCounter =
-          functions.stringLength(txtBioController!.text));
+      setState(() {
+        FFAppState().bioCharCounter =
+            functions.stringLength(txtBioController!.text);
+      });
     });
 
     txtBioController = TextEditingController(text: FFAppState().usrBio);
@@ -38,6 +41,8 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -186,8 +191,9 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                       alignment: AlignmentDirectional(-1, 0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          setState(() =>
-                              FFAppState().usrBio = txtBioController!.text);
+                          setState(() {
+                            FFAppState().usrBio = txtBioController!.text;
+                          });
                           context.pop();
                         },
                         text: 'Save',

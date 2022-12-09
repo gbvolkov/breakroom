@@ -6,6 +6,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditInterestsViewWidget extends StatefulWidget {
   const EditInterestsViewWidget({Key? key}) : super(key: key);
@@ -21,6 +22,8 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -182,8 +185,10 @@ class _EditInterestsViewWidgetState extends State<EditInterestsViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrInterests =
-                                ccInterestsValues!.toList());
+                            setState(() {
+                              FFAppState().usrInterests =
+                                  ccInterestsValues!.toList();
+                            });
                             context.pop();
                           },
                           text: 'Save',

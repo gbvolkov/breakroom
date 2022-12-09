@@ -19,6 +19,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
 class TestNewHomeWidget extends StatefulWidget {
@@ -49,7 +50,9 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
       );
       if (userDoc != null) {
         if (userDoc!.isComplete!) {
-          setState(() => FFAppState().tmpIntention = userDoc!.intention!);
+          setState(() {
+            FFAppState().tmpIntention = userDoc!.intention!;
+          });
           if (!(await getPermissionStatus(locationPermission)) ||
               !functions.isLocationSet(userDoc!.geoposition)) {
             context.pushNamed('SetYourLocationView');
@@ -61,7 +64,9 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
           );
           await currentUserReference!.update(usersUpdateData);
           if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
-            setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
+            setState(() {
+              setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
+            });
 
             context.goNamed('IntroductionView');
           }
@@ -104,17 +109,22 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
     if (currentUserLocationValue == null) {
-      return Center(
-        child: SizedBox(
-          width: 50,
-          height: 50,
-          child: CircularProgressIndicator(
-            color: FlutterFlowTheme.of(context).primaryColor,
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 50,
+            height: 50,
+            child: CircularProgressIndicator(
+              color: FlutterFlowTheme.of(context).primaryColor,
+            ),
           ),
         ),
       );
     }
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -267,8 +277,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           0, 0, 4, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          setState(() => FFAppState()
-                                              .tmpIntention = 'Social');
+                                          setState(() {
+                                            FFAppState().tmpIntention =
+                                                'Social';
+                                          });
 
                                           final usersUpdateData =
                                               createUsersRecordData(
@@ -336,8 +348,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           4, 0, 0, 0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          setState(() => FFAppState()
-                                              .tmpIntention = 'Dating');
+                                          setState(() {
+                                            FFAppState().tmpIntention =
+                                                'Dating';
+                                          });
 
                                           final usersUpdateData =
                                               createUsersRecordData(
@@ -519,10 +533,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                     return FlutterFlowSwipeableStack(
                                       topCardHeightFraction: 0.78,
                                       middleCardHeightFraction: 0.68,
-                                      botttomCardHeightFraction: 0.75,
+                                      bottomCardHeightFraction: 0.75,
                                       topCardWidthFraction: 0.9,
                                       middleCardWidthFraction: 0.85,
-                                      botttomCardWidthFraction: 0.8,
+                                      bottomCardWidthFraction: 0.8,
                                       onSwipeFn: (index) {},
                                       onLeftSwipe: (index) async {
                                         // addToDislikedLike
@@ -535,9 +549,11 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         };
                                         await currentUserReference!
                                             .update(usersUpdateData);
-                                        setState(() => FFAppState()
-                                            .dislikedUsers
-                                            .add(matchedUsers[index]!.uid!));
+                                        setState(() {
+                                          setState(() => FFAppState()
+                                              .addToDislikedUsers(
+                                                  matchedUsers[index]!.uid!));
+                                        });
                                       },
                                       onRightSwipe: (index) async {
                                         var _shouldSetState = false;
@@ -1287,8 +1303,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                   };
                                   await columnUsersRecord.reference
                                       .update(usersUpdateData);
-                                  setState(() =>
-                                      FFAppState().dislikedUsers.remove(uid!));
+                                  setState(() {
+                                    setState(() => FFAppState()
+                                        .removeFromDislikedUsers(uid!));
+                                  });
                                   if (Navigator.of(context).canPop()) {
                                     context.pop();
                                   }
