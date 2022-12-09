@@ -9,6 +9,7 @@ import '../custom_code/actions/index.dart' as actions;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChooseLocationPageWidget extends StatefulWidget {
   const ChooseLocationPageWidget({
@@ -34,6 +35,8 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: false,
@@ -119,12 +122,15 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                       alignment: AlignmentDirectional(0.04, 0.93),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          setState(() =>
-                              FFAppState().fltrLocation = googleMapsCenter);
+                          setState(() {
+                            FFAppState().fltrLocation = googleMapsCenter;
+                          });
                           address = await actions.getAddressFromLocation(
                             FFAppState().fltrLocation!,
                           );
-                          setState(() => FFAppState().fltrAddress = address!);
+                          setState(() {
+                            FFAppState().fltrAddress = address!;
+                          });
 
                           setState(() {});
                         },
@@ -203,10 +209,12 @@ class _ChooseLocationPageWidgetState extends State<ChooseLocationPageWidget> {
                                         FFAppState().fltrLocation,
                                         FFAppState().fltrAddress,
                                       );
-                                      setState(() => FFAppState().fltrLocation =
-                                          place!.latLng);
-                                      setState(() => FFAppState().fltrAddress =
-                                          place!.address);
+                                      setState(() {
+                                        FFAppState().fltrLocation =
+                                            place!.latLng;
+                                        FFAppState().fltrAddress =
+                                            place!.address;
+                                      });
                                       await googleMapsController.future.then(
                                         (c) => c.animateCamera(
                                           CameraUpdate.newLatLng(FFAppState()

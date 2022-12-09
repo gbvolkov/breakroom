@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
-import '../../backend/backend.dart';
-
 Future<UsersRecord?> getUserDocument(DocumentReference userRef) async {
   UsersRecord userRecord = await UsersRecord.getDocumentOnce(userRef);
   return userRecord;

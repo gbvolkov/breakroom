@@ -8,10 +8,10 @@ class FlutterFlowSwipeableStack extends StatefulWidget {
     Key? key,
     required this.topCardHeightFraction,
     required this.middleCardHeightFraction,
-    required this.botttomCardHeightFraction,
+    required this.bottomCardHeightFraction,
     required this.topCardWidthFraction,
     required this.middleCardWidthFraction,
-    required this.botttomCardWidthFraction,
+    required this.bottomCardWidthFraction,
     required this.itemBuilder,
     required this.itemCount,
     required this.controller,
@@ -27,9 +27,9 @@ class FlutterFlowSwipeableStack extends StatefulWidget {
   final double topCardHeightFraction;
   final double middleCardHeightFraction;
   final double topCardWidthFraction;
-  final double botttomCardHeightFraction;
+  final double bottomCardHeightFraction;
   final double middleCardWidthFraction;
-  final double botttomCardWidthFraction;
+  final double bottomCardWidthFraction;
   final Widget Function(BuildContext, int) itemBuilder;
   final SwipeableCardSectionController controller;
   final int itemCount;
@@ -64,8 +64,8 @@ class _FFSwipeableStackState extends State<FlutterFlowSwipeableStack> {
             context: context,
             cardWidthTopMul: widget.topCardWidthFraction,
             cardHeightTopMul: widget.topCardHeightFraction,
-            cardWidthBottomMul: widget.botttomCardWidthFraction,
-            cardHeightBottomMul: widget.botttomCardHeightFraction,
+            cardWidthBottomMul: widget.bottomCardWidthFraction,
+            cardHeightBottomMul: widget.bottomCardHeightFraction,
             cardWidthMiddleMul: widget.middleCardWidthFraction,
             cardHeightMiddleMul: widget.middleCardHeightFraction,
             items: getItems(widget.itemCount, context, widget.itemBuilder),

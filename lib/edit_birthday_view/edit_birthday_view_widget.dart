@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditBirthdayViewWidget extends StatefulWidget {
   const EditBirthdayViewWidget({Key? key}) : super(key: key);
@@ -28,6 +29,8 @@ class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -166,8 +169,9 @@ class _EditBirthdayViewWidgetState extends State<EditBirthdayViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrBDay =
-                                calBDaySelectedDay?.start);
+                            setState(() {
+                              FFAppState().usrBDay = calBDaySelectedDay?.start;
+                            });
                             context.pop();
                           },
                           text: 'Save',

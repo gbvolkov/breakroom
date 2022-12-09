@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class RateUsComponentWidget extends StatefulWidget {
   const RateUsComponentWidget({Key? key}) : super(key: key);
@@ -31,6 +32,8 @@ class _RateUsComponentWidgetState extends State<RateUsComponentWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       height: double.infinity,

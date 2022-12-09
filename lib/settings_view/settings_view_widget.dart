@@ -5,8 +5,10 @@ import '../components/rate_us_component_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SettingsViewWidget extends StatefulWidget {
   const SettingsViewWidget({Key? key}) : super(key: key);
@@ -20,6 +22,8 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -622,7 +626,9 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                 await signOut();
                                 _navigate = () =>
                                     context.goNamedAuth('WelcomeView', mounted);
-                                setState(() => FFAppState().dislikedUsers = []);
+                                setState(() {
+                                  FFAppState().dislikedUsers = [];
+                                });
                               }
 
                               _navigate();
@@ -719,8 +725,9 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                                         await signOut();
                                         _navigate = () => context.goNamedAuth(
                                             'WelcomeView', mounted);
-                                        setState(() =>
-                                            FFAppState().dislikedUsers = []);
+                                        setState(() {
+                                          FFAppState().dislikedUsers = [];
+                                        });
                                       }
 
                                       _navigate();
@@ -840,7 +847,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                     child: Text(
-                      '20221206.2200.20',
+                      '20221208.0000.21',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Roboto',
                             color: FlutterFlowTheme.of(context).secondaryText,

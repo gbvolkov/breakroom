@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditWorkoutPrefsViewWidget extends StatefulWidget {
   const EditWorkoutPrefsViewWidget({Key? key}) : super(key: key);
@@ -20,6 +21,8 @@ class _EditWorkoutPrefsViewWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -118,8 +121,10 @@ class _EditWorkoutPrefsViewWidgetState
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrWorkoutStatus =
-                                FFAppState().mrbSelectedValue);
+                            setState(() {
+                              FFAppState().usrWorkoutStatus =
+                                  FFAppState().mrbSelectedValue;
+                            });
                             context.pop();
                           },
                           text: 'Save',

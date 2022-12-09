@@ -5,6 +5,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditBodyTypeViewWidget extends StatefulWidget {
   const EditBodyTypeViewWidget({Key? key}) : super(key: key);
@@ -18,6 +19,8 @@ class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -116,8 +119,10 @@ class _EditBodyTypeViewWidgetState extends State<EditBodyTypeViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrBodyType =
-                                FFAppState().mrbSelectedValue);
+                            setState(() {
+                              FFAppState().usrBodyType =
+                                  FFAppState().mrbSelectedValue;
+                            });
                             context.pop();
                           },
                           text: 'Save',

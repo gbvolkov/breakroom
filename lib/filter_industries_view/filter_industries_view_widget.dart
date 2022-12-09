@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class FilterIndustriesViewWidget extends StatefulWidget {
   const FilterIndustriesViewWidget({
@@ -28,6 +29,8 @@ class _FilterIndustriesViewWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -112,15 +115,17 @@ class _FilterIndustriesViewWidgetState
                             FFButtonWidget(
                               onPressed: () async {
                                 if (FFAppState().isSelectAllVisible) {
-                                  setState(() =>
-                                      FFAppState().isSelectAllVisible = false);
+                                  setState(() {
+                                    FFAppState().isSelectAllVisible = false;
+                                  });
                                   setState(() => ccIndustriesValues.value =
                                       List.from(containerIndustriesRecordList
                                           .map((e) => e.industry!)
                                           .toList()));
                                 } else {
-                                  setState(() =>
-                                      FFAppState().isSelectAllVisible = true);
+                                  setState(() {
+                                    FFAppState().isSelectAllVisible = true;
+                                  });
                                   setState(() => ccIndustriesValues.value = []);
                                 }
                               },
@@ -234,8 +239,10 @@ class _FilterIndustriesViewWidgetState
                               alignment: AlignmentDirectional(-1, 0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  setState(() => FFAppState().fltrIndusrtries =
-                                      ccIndustriesValues.value!.toList());
+                                  setState(() {
+                                    FFAppState().fltrIndusrtries =
+                                        ccIndustriesValues.value!.toList();
+                                  });
                                   context.pop();
                                 },
                                 text: 'Save',

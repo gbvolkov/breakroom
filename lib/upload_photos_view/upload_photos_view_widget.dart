@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class UploadPhotosViewWidget extends StatefulWidget {
   const UploadPhotosViewWidget({
@@ -38,13 +39,17 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().photosCollection = widget.photos!.toList());
-      setState(() => FFAppState().lastUploadedURL = '');
+      setState(() {
+        FFAppState().photosCollection = widget.photos!.toList();
+        FFAppState().lastUploadedURL = '';
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
@@ -196,13 +201,13 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                                 0,
                                               ),
                                             );
-                                            setState(() =>
-                                                FFAppState().photosCollection =
-                                                    photoCollectionResult!
-                                                        .toList());
-                                            setState(() =>
-                                                FFAppState().lastUploadedURL =
-                                                    uploadedFileUrl);
+                                            setState(() {
+                                              FFAppState().photosCollection =
+                                                  photoCollectionResult!
+                                                      .toList();
+                                              FFAppState().lastUploadedURL =
+                                                  uploadedFileUrl;
+                                            });
                                           }
                                         }
 
@@ -266,10 +271,11 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                             '.',
                                             photoCollectionIndex,
                                           );
-                                          setState(() =>
-                                              FFAppState().photosCollection =
-                                                  photosCollectionResultRemove!
-                                                      .toList());
+                                          setState(() {
+                                            FFAppState().photosCollection =
+                                                photosCollectionResultRemove!
+                                                    .toList();
+                                          });
 
                                           setState(() {});
                                         },

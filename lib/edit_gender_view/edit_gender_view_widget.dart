@@ -6,6 +6,7 @@ import '../custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditGenderViewWidget extends StatefulWidget {
   const EditGenderViewWidget({Key? key}) : super(key: key);
@@ -22,12 +23,16 @@ class _EditGenderViewWidgetState extends State<EditGenderViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().mrbSelectedValue = FFAppState().usrGender);
+      setState(() {
+        FFAppState().mrbSelectedValue = FFAppState().usrGender;
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -147,8 +152,10 @@ class _EditGenderViewWidgetState extends State<EditGenderViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrGender =
-                                FFAppState().mrbSelectedValue);
+                            setState(() {
+                              FFAppState().usrGender =
+                                  FFAppState().mrbSelectedValue;
+                            });
                             context.pop();
                           },
                           text: 'Save',

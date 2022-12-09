@@ -5,10 +5,12 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'dart:ui';
+import 'package:styled_divider/styled_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
 class TestAnythingYouWantWidget extends StatefulWidget {
@@ -44,7 +46,9 @@ class _TestAnythingYouWantWidgetState extends State<TestAnythingYouWantWidget>
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().tmpString = '');
+      setState(() {
+        FFAppState().tmpString = '';
+      });
     });
 
     swipeableStackController = SwipeableCardSectionController();
@@ -58,6 +62,8 @@ class _TestAnythingYouWantWidgetState extends State<TestAnythingYouWantWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -139,7 +145,9 @@ class _TestAnythingYouWantWidgetState extends State<TestAnythingYouWantWidget>
             children: [
               FFButtonWidget(
                 onPressed: () async {
-                  setState(() => FFAppState().tmpString = 'NOPE');
+                  setState(() {
+                    FFAppState().tmpString = 'NOPE';
+                  });
                 },
                 text: 'NOPE',
                 options: FFButtonOptions(
@@ -156,7 +164,9 @@ class _TestAnythingYouWantWidgetState extends State<TestAnythingYouWantWidget>
               ),
               FFButtonWidget(
                 onPressed: () async {
-                  setState(() => FFAppState().tmpString = 'YES');
+                  setState(() {
+                    FFAppState().tmpString = 'YES';
+                  });
                 },
                 text: 'YES\n',
                 options: FFButtonOptions(
@@ -187,16 +197,20 @@ class _TestAnythingYouWantWidgetState extends State<TestAnythingYouWantWidget>
                 child: FlutterFlowSwipeableStack(
                   topCardHeightFraction: 0.72,
                   middleCardHeightFraction: 0.68,
-                  botttomCardHeightFraction: 0.75,
+                  bottomCardHeightFraction: 0.75,
                   topCardWidthFraction: 0.9,
                   middleCardWidthFraction: 0.85,
-                  botttomCardWidthFraction: 0.8,
+                  bottomCardWidthFraction: 0.8,
                   onSwipeFn: (index) {},
                   onLeftSwipe: (index) async {
-                    setState(() => FFAppState().tmpString = 'NOPE');
+                    setState(() {
+                      FFAppState().tmpString = 'NOPE';
+                    });
                   },
                   onRightSwipe: (index) async {
-                    setState(() => FFAppState().tmpString = 'YES');
+                    setState(() {
+                      FFAppState().tmpString = 'YES';
+                    });
                   },
                   onUpSwipe: (index) {},
                   onDownSwipe: (index) {},

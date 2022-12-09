@@ -3,6 +3,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class DeletePhotoWidgetWidget extends StatefulWidget {
   const DeletePhotoWidgetWidget({Key? key}) : super(key: key);
@@ -15,6 +16,8 @@ class DeletePhotoWidgetWidget extends StatefulWidget {
 class _DeletePhotoWidgetWidgetState extends State<DeletePhotoWidgetWidget> {
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 16),
       child: Column(

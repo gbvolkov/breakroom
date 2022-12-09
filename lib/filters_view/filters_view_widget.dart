@@ -13,6 +13,7 @@ import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class FiltersViewWidget extends StatefulWidget {
   const FiltersViewWidget({
@@ -44,6 +45,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -64,7 +67,9 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
             if ((pageViewController?.page?.round() ?? 0) == 0) {
               context.pop();
             } else {
-              setState(() => FFAppState().filterName = 'Filter');
+              setState(() {
+                FFAppState().filterName = 'Filter';
+              });
               await pageViewController?.previousPage(
                 duration: Duration(milliseconds: 300),
                 curve: Curves.ease,
@@ -115,6 +120,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                           width: double.infinity,
                           height: MediaQuery.of(context).size.height * 1,
                           child: PageView(
+                            physics: const NeverScrollableScrollPhysics(),
                             controller: pageViewController ??=
                                 PageController(initialPage: 0),
                             scrollDirection: Axis.horizontal,
@@ -289,14 +295,16 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                                 .secondaryText,
                                                         onValueChanged:
                                                             () async {
-                                                          setState(() => FFAppState()
-                                                                  .fltrAgeMin =
-                                                              FFAppState()
-                                                                  .rangeSliderStart);
-                                                          setState(() => FFAppState()
-                                                                  .fltrAgeMax =
-                                                              FFAppState()
-                                                                  .rangeSliderEnd);
+                                                          setState(() {
+                                                            FFAppState()
+                                                                    .fltrAgeMin =
+                                                                FFAppState()
+                                                                    .rangeSliderStart;
+                                                            FFAppState()
+                                                                    .fltrAgeMax =
+                                                                FFAppState()
+                                                                    .rangeSliderEnd;
+                                                          });
                                                         },
                                                       ),
                                                     ),
@@ -433,9 +441,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                     setState(() =>
                                                         sliderDistanceValue =
                                                             newValue);
-                                                    setState(() => FFAppState()
-                                                            .fltrDistance =
-                                                        sliderDistanceValue!);
+                                                    setState(() {
+                                                      FFAppState()
+                                                              .fltrDistance =
+                                                          sliderDistanceValue!;
+                                                    });
                                                   },
                                                 ),
                                               ],
@@ -458,9 +468,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               revenue_cat.activeEntitlementIds
                                                   .contains(FFAppState()
                                                       .entAdvFilter)) {
-                                            setState(() =>
-                                                FFAppState().filterName =
-                                                    'Advanced filters');
+                                            setState(() {
+                                              FFAppState().filterName =
+                                                  'Advanced filters';
+                                            });
                                             await pageViewController?.nextPage(
                                               duration:
                                                   Duration(milliseconds: 300),
@@ -656,14 +667,16 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           locationPermission)) &&
                                                       functions.isLocationSet(
                                                           currentUserLocationValue)) {
-                                                    setState(() => FFAppState()
-                                                            .tmpLocation =
-                                                        currentUserLocationValue);
+                                                    setState(() {
+                                                      FFAppState().tmpLocation =
+                                                          currentUserLocationValue;
+                                                    });
                                                   } else {
-                                                    setState(() => FFAppState()
-                                                            .tmpLocation =
-                                                        widget
-                                                            .user!.geoposition);
+                                                    setState(() {
+                                                      FFAppState().tmpLocation =
+                                                          widget.user!
+                                                              .geoposition;
+                                                    });
                                                   }
 
                                                   address = await actions
@@ -703,13 +716,14 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           ) ??
                                                           false;
                                                   if (confirmDialogResponse) {
-                                                    setState(() => FFAppState()
-                                                            .fltrLocation =
-                                                        FFAppState()
-                                                            .tmpLocation);
-                                                    setState(() => FFAppState()
-                                                            .fltrAddress =
-                                                        address!);
+                                                    setState(() {
+                                                      FFAppState()
+                                                              .fltrLocation =
+                                                          FFAppState()
+                                                              .tmpLocation;
+                                                      FFAppState().fltrAddress =
+                                                          address!;
+                                                    });
                                                   }
 
                                                   setState(() {});
@@ -760,9 +774,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                           children: [
                                             InkWell(
                                               onTap: () async {
-                                                setState(() => FFAppState()
-                                                        .advancedFilterName =
-                                                    'Advanced2');
+                                                setState(() {
+                                                  FFAppState()
+                                                          .advancedFilterName =
+                                                      'Advanced2';
+                                                });
 
                                                 context.pushNamed(
                                                   'FilterIndustriesView',
@@ -837,10 +853,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                               ),
                                                               onPressed:
                                                                   () async {
-                                                                setState(() =>
-                                                                    FFAppState()
-                                                                            .advancedFilterName =
-                                                                        'Advanced2');
+                                                                setState(() {
+                                                                  FFAppState()
+                                                                          .advancedFilterName =
+                                                                      'Advanced2';
+                                                                });
 
                                                                 context
                                                                     .pushNamed(
@@ -926,8 +943,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                setState(() => FFAppState().fltrGender =
-                                    ccInterestedInValue!);
+                                setState(() {
+                                  FFAppState().fltrGender =
+                                      ccInterestedInValue!;
+                                });
                                 if (widget.user!.isPremium! ||
                                     !getRemoteConfigBool('check_premium') ||
                                     revenue_cat.activeEntitlementIds.contains(

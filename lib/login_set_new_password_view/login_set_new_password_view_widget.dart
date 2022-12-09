@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class LoginSetNewPasswordViewWidget extends StatefulWidget {
   const LoginSetNewPasswordViewWidget({Key? key}) : super(key: key);
@@ -41,6 +42,8 @@ class _LoginSetNewPasswordViewWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

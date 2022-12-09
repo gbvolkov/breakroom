@@ -10,6 +10,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPasswordViewWidget extends StatefulWidget {
   const ForgotPasswordViewWidget({Key? key}) : super(key: key);
@@ -40,8 +41,10 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().resetPwdSendState = 'Send');
-      setState(() => FFAppState().resetLinkAvailability = true);
+      setState(() {
+        FFAppState().resetPwdSendState = 'Send';
+        FFAppState().resetLinkAvailability = true;
+      });
     });
 
     newPassword1TextFieldController = TextEditingController();
@@ -57,6 +60,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
   void dispose() {
     newPassword1TextFieldController?.dispose();
     newPassword2TextFieldController?.dispose();
+    pinCodeController?.dispose();
     timerController?.dispose();
     txtEmailController?.dispose();
     super.dispose();
@@ -64,6 +68,8 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -298,9 +304,11 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                               .secondaryText,
                                                         ),
                                                 onEnded: () async {
-                                                  setState(() => FFAppState()
-                                                          .resetLinkAvailability =
-                                                      true);
+                                                  setState(() {
+                                                    FFAppState()
+                                                            .resetLinkAvailability =
+                                                        true;
+                                                  });
                                                   timerController?.onExecute
                                                       .add(
                                                     StopWatchExecute.reset,
@@ -373,12 +381,14 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                     );
                                                     if (error == null ||
                                                         error == '') {
-                                                      setState(() => FFAppState()
-                                                              .resetPwdSendState =
-                                                          'Resend link');
-                                                      setState(() => FFAppState()
-                                                              .resetLinkAvailability =
-                                                          false);
+                                                      setState(() {
+                                                        FFAppState()
+                                                                .resetPwdSendState =
+                                                            'Resend link';
+                                                        FFAppState()
+                                                                .resetLinkAvailability =
+                                                            false;
+                                                      });
                                                       await Future.delayed(
                                                           const Duration(
                                                               milliseconds:

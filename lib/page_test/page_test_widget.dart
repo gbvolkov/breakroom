@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
 
 class PageTestWidget extends StatefulWidget {
@@ -37,6 +38,8 @@ class _PageTestWidgetState extends State<PageTestWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -75,10 +78,10 @@ class _PageTestWidgetState extends State<PageTestWidget> {
                   FlutterFlowSwipeableStack(
                     topCardHeightFraction: 0.72,
                     middleCardHeightFraction: 0.68,
-                    botttomCardHeightFraction: 0.75,
+                    bottomCardHeightFraction: 0.75,
                     topCardWidthFraction: 0.9,
                     middleCardWidthFraction: 0.85,
-                    botttomCardWidthFraction: 0.8,
+                    bottomCardWidthFraction: 0.8,
                     onSwipeFn: (index) {},
                     onLeftSwipe: (index) {},
                     onRightSwipe: (index) {},

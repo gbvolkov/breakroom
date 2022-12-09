@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,7 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  FFAppState(); // Initialize FFAppState
+  final appState = FFAppState(); // Initialize FFAppState
   await revenue_cat.initialize(
     "",
     "goog_BvCtvsAIvQWrnhSkMtSifJdArhD",
@@ -27,7 +28,10 @@ void main() async {
 
   await initializeFirebaseRemoteConfig();
 
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => appState,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatefulWidget {

@@ -7,6 +7,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class NotificationsBellWidget extends StatefulWidget {
   const NotificationsBellWidget({
@@ -24,6 +25,8 @@ class NotificationsBellWidget extends StatefulWidget {
 class _NotificationsBellWidgetState extends State<NotificationsBellWidget> {
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return StreamBuilder<List<NotificationsRecord>>(
       stream: queryNotificationsRecord(
         queryBuilder: (notificationsRecord) => notificationsRecord

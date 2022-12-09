@@ -4,6 +4,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class EditNameViewWidget extends StatefulWidget {
   const EditNameViewWidget({Key? key}) : super(key: key);
@@ -35,6 +36,8 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryColor,
@@ -238,10 +241,12 @@ class _EditNameViewWidgetState extends State<EditNameViewWidget> {
                         alignment: AlignmentDirectional(-1, 0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            setState(() => FFAppState().usrFirstName =
-                                txtFirstNameController!.text);
-                            setState(() => FFAppState().usrLastName =
-                                txtLastNameController!.text);
+                            setState(() {
+                              FFAppState().usrFirstName =
+                                  txtFirstNameController!.text;
+                              FFAppState().usrLastName =
+                                  txtLastNameController!.text;
+                            });
                             context.pop();
                           },
                           text: 'Save',

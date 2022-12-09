@@ -11,6 +11,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class ChangeEmailViewWidget extends StatefulWidget {
   const ChangeEmailViewWidget({Key? key}) : super(key: key);
@@ -33,7 +34,9 @@ class _ChangeEmailViewWidgetState extends State<ChangeEmailViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() => FFAppState().tmpError = '');
+      setState(() {
+        FFAppState().tmpError = '';
+      });
       setState(() {
         emailTextFieldController?.clear();
         passwordTextFieldController?.clear();
@@ -54,6 +57,8 @@ class _ChangeEmailViewWidgetState extends State<ChangeEmailViewWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -280,18 +285,24 @@ class _ChangeEmailViewWidgetState extends State<ChangeEmailViewWidget> {
                         child: FFButtonWidget(
                           onPressed: () async {
                             var _shouldSetState = false;
-                            setState(() => FFAppState().tmpError = '');
+                            setState(() {
+                              FFAppState().tmpError = '';
+                            });
                             if (currentUserEmail ==
                                 emailTextFieldController!.text) {
-                              setState(() => FFAppState().tmpError =
-                                  'New email shouldn\'t be equal to old email');
+                              setState(() {
+                                FFAppState().tmpError =
+                                    'New email shouldn\'t be equal to old email';
+                              });
                               if (_shouldSetState) setState(() {});
                               return;
                             }
                             if (!functions
                                 .isEmailValid(emailTextFieldController!.text)) {
-                              setState(() => FFAppState().tmpError =
-                                  'Please specify a valid email');
+                              setState(() {
+                                FFAppState().tmpError =
+                                    'Please specify a valid email';
+                              });
                               if (_shouldSetState) setState(() {});
                               return;
                             }
@@ -303,8 +314,10 @@ class _ChangeEmailViewWidgetState extends State<ChangeEmailViewWidget> {
                             _shouldSetState = true;
                             if (!(reauthUserResult == null ||
                                 reauthUserResult == '')) {
-                              setState(() => FFAppState().tmpError =
-                                  'Password validation failed');
+                              setState(() {
+                                FFAppState().tmpError =
+                                    'Password validation failed';
+                              });
                               if (_shouldSetState) setState(() {});
                               return;
                             }
