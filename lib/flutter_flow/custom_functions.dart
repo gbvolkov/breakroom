@@ -684,3 +684,21 @@ double mdiv(
   }
   return (((dividend ?? 0) / (divider!)) * 100).round().toDouble() / 100;
 }
+
+bool chekChatRecord(
+  ChatsRecord chat,
+  String? userName,
+  String currentUserID,
+) {
+  if (chat.isDeleted ?? true) return false;
+  if (userName == null) {
+    return true;
+  }
+  if (chat.userA?.id != currentUserID) {
+    return chat.userNameA!.contains(userName);
+  }
+  if (chat.userB?.id != currentUserID) {
+    return chat.userNameB!.contains(userName);
+  }
+  return true;
+}
