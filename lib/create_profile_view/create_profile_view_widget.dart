@@ -11,6 +11,7 @@ import '../custom_code/widgets/index.dart' as custom_widgets;
 import '../flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
   @override
   void initState() {
     super.initState();
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (!currentUserEmailVerified) {
+        context.pushNamed('VerifyEmailView');
+      }
+    });
+
     txtBioController = TextEditingController(
         text: valueOrDefault(currentUserDocument?.bio, ''));
     txtFirstNameController = TextEditingController(
