@@ -189,6 +189,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ),
             ),
             FFRoute(
+              name: 'VerifyEmailView',
+              path: 'verifyEmailView',
+              requireAuth: true,
+              builder: (context, params) => VerifyEmailViewWidget(),
+            ),
+            FFRoute(
               name: 'HomeDetailsView',
               path: 'homeDetailsView',
               requireAuth: true,

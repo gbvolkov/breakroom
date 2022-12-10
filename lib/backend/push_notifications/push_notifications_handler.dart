@@ -112,6 +112,7 @@ final pageBuilderMap = <String, Future<Widget> Function(Map<String, dynamic>)>{
   'SignUpView': (data) async => SignUpViewWidget(
         email: getParameter(data, 'email'),
       ),
+  'VerifyEmailView': (data) async => VerifyEmailViewWidget(),
   'HomeDetailsView': (data) async => HomeDetailsViewWidget(
         userProfile: await getDocumentParameter(
             data, 'userProfile', UsersRecord.serializer),

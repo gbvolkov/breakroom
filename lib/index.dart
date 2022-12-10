@@ -20,6 +20,8 @@ export 'forgot_password_view/forgot_password_view_widget.dart'
 export 'create_profile_view/create_profile_view_widget.dart'
     show CreateProfileViewWidget;
 export 'sign_up_view/sign_up_view_widget.dart' show SignUpViewWidget;
+export 'verify_email_view/verify_email_view_widget.dart'
+    show VerifyEmailViewWidget;
 export 'home_details_view/home_details_view_widget.dart'
     show HomeDetailsViewWidget;
 export 'home_view/home_view_widget.dart' show HomeViewWidget;

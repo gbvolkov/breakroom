@@ -818,98 +818,112 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                               .update(usersCreateData);
 
                                           await sendEmailVerification();
-                                          await actions.initializeUserDataState(
-                                            valueOrDefault(
-                                                currentUserDocument?.bodyType,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.childfreeStatus,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.drinkingStatus,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.education,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.gender,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.genderPreference,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.height, 0),
-                                            valueOrDefault(
-                                                currentUserDocument?.weight, 0),
-                                            valueOrDefault(
-                                                currentUserDocument?.intention,
-                                                ''),
-                                            (currentUserDocument?.lookingFor
-                                                        ?.toList() ??
-                                                    [])
-                                                .toList(),
-                                            valueOrDefault(
-                                                currentUserDocument?.religion,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.smokingStatus,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.spiritualStatus,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument
-                                                    ?.workoutStatus,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.firstName,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.lastName,
-                                                ''),
-                                            currentUserDocument!.birthDay,
-                                            valueOrDefault(
-                                                currentUserDocument?.bio, ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.industry,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.occupation,
-                                                ''),
-                                            (currentUserDocument?.interests
-                                                        ?.toList() ??
-                                                    [])
-                                                .toList(),
-                                          );
-                                          setState(() {
-                                            FFAppState().cHomeVisits = 0;
-                                          });
-                                          await showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            backgroundColor: Colors.transparent,
-                                            context: context,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: MediaQuery.of(context)
-                                                    .viewInsets,
-                                                child:
-                                                    DialogSignupCompleteWidget(),
-                                              );
-                                            },
-                                          ).then((value) => setState(() {}));
+                                          if (currentUserEmailVerified) {
+                                            await actions
+                                                .initializeUserDataState(
+                                              valueOrDefault(
+                                                  currentUserDocument?.bodyType,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.childfreeStatus,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.drinkingStatus,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.education,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument?.gender,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.genderPreference,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument?.height,
+                                                  0),
+                                              valueOrDefault(
+                                                  currentUserDocument?.weight,
+                                                  0),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.intention,
+                                                  ''),
+                                              (currentUserDocument?.lookingFor
+                                                          ?.toList() ??
+                                                      [])
+                                                  .toList(),
+                                              valueOrDefault(
+                                                  currentUserDocument?.religion,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.smokingStatus,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.spiritualStatus,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.workoutStatus,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.firstName,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument?.lastName,
+                                                  ''),
+                                              currentUserDocument!.birthDay,
+                                              valueOrDefault(
+                                                  currentUserDocument?.bio, ''),
+                                              valueOrDefault(
+                                                  currentUserDocument?.industry,
+                                                  ''),
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.occupation,
+                                                  ''),
+                                              (currentUserDocument?.interests
+                                                          ?.toList() ??
+                                                      [])
+                                                  .toList(),
+                                            );
+                                            setState(() {
+                                              FFAppState().cHomeVisits = 0;
+                                            });
+                                            await showModalBottomSheet(
+                                              isScrollControlled: true,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (context) {
+                                                return Padding(
+                                                  padding:
+                                                      MediaQuery.of(context)
+                                                          .viewInsets,
+                                                  child:
+                                                      DialogSignupCompleteWidget(),
+                                                );
+                                              },
+                                            ).then((value) => setState(() {}));
 
-                                          setState(() {
-                                            FFAppState().preventIntroduction =
-                                                true;
-                                          });
+                                            setState(() {
+                                              FFAppState().preventIntroduction =
+                                                  true;
+                                            });
 
-                                          context.goNamedAuth(
-                                              'CreateProfileView', mounted);
+                                            context.goNamedAuth(
+                                                'CreateProfileView', mounted);
+                                          } else {
+                                            context.pushNamedAuth(
+                                                'VerifyEmailView', mounted);
+                                          }
                                         },
                                         text: 'Create account',
                                         options: FFButtonOptions(
