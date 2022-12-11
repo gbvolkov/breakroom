@@ -1289,6 +1289,14 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
     _imgCollection.remove(_value);
   }
+
+  String _chatSearchStr = '';
+  String get chatSearchStr => _chatSearchStr;
+  set chatSearchStr(String _value) {
+    notifyListeners();
+
+    _chatSearchStr = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
