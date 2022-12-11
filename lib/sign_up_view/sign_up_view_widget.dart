@@ -808,6 +808,7 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                 clearUnsetFields: false,
                                                 create: true,
                                               ),
+                                              gender: 'Everyone',
                                               clearUnsetFields: false,
                                               create: true,
                                             ),

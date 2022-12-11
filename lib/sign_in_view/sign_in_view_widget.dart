@@ -329,12 +329,15 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
                                   );
                                   await Future.delayed(
                                       const Duration(milliseconds: 3000));
-
-                                  final usersUpdateData = createUsersRecordData(
-                                    geoposition: currentUserLocationValue,
-                                  );
-                                  await currentUserReference!
-                                      .update(usersUpdateData);
+                                  if (functions.isLocationSet(
+                                      currentUserLocationValue)) {
+                                    final usersUpdateData =
+                                        createUsersRecordData(
+                                      geoposition: currentUserLocationValue,
+                                    );
+                                    await currentUserReference!
+                                        .update(usersUpdateData);
+                                  }
 
                                   context.pushNamedAuth('HomeView', mounted);
                                 } else {

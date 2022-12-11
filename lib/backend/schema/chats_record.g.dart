@@ -98,6 +98,20 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.userNameA;
+    if (value != null) {
+      result
+        ..add('userNameA')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.userNameB;
+    if (value != null) {
+      result
+        ..add('userNameB')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -172,6 +186,14 @@ class _$ChatsRecordSerializer implements StructuredSerializer<ChatsRecord> {
           result.isBlockedB = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'userNameA':
+          result.userNameA = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'userNameB':
+          result.userNameB = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -207,6 +229,10 @@ class _$ChatsRecord extends ChatsRecord {
   @override
   final bool? isBlockedB;
   @override
+  final String? userNameA;
+  @override
+  final String? userNameB;
+  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$ChatsRecord([void Function(ChatsRecordBuilder)? updates]) =>
@@ -223,6 +249,8 @@ class _$ChatsRecord extends ChatsRecord {
       this.isDeleted,
       this.isBlockedA,
       this.isBlockedB,
+      this.userNameA,
+      this.userNameB,
       this.ffRef})
       : super._();
 
@@ -247,6 +275,8 @@ class _$ChatsRecord extends ChatsRecord {
         isDeleted == other.isDeleted &&
         isBlockedA == other.isBlockedA &&
         isBlockedB == other.isBlockedB &&
+        userNameA == other.userNameA &&
+        userNameB == other.userNameB &&
         ffRef == other.ffRef;
   }
 
@@ -261,16 +291,20 @@ class _$ChatsRecord extends ChatsRecord {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, users.hashCode),
-                                            userA.hashCode),
-                                        userB.hashCode),
-                                    lastMessage.hashCode),
-                                lastMessageTime.hashCode),
-                            lastMessageSentBy.hashCode),
-                        lastMessageSeenBy.hashCode),
-                    isDeleted.hashCode),
-                isBlockedA.hashCode),
-            isBlockedB.hashCode),
+                                        $jc(
+                                            $jc(
+                                                $jc($jc(0, users.hashCode),
+                                                    userA.hashCode),
+                                                userB.hashCode),
+                                            lastMessage.hashCode),
+                                        lastMessageTime.hashCode),
+                                    lastMessageSentBy.hashCode),
+                                lastMessageSeenBy.hashCode),
+                            isDeleted.hashCode),
+                        isBlockedA.hashCode),
+                    isBlockedB.hashCode),
+                userNameA.hashCode),
+            userNameB.hashCode),
         ffRef.hashCode));
   }
 
@@ -287,6 +321,8 @@ class _$ChatsRecord extends ChatsRecord {
           ..add('isDeleted', isDeleted)
           ..add('isBlockedA', isBlockedA)
           ..add('isBlockedB', isBlockedB)
+          ..add('userNameA', userNameA)
+          ..add('userNameB', userNameB)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -344,6 +380,14 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
   bool? get isBlockedB => _$this._isBlockedB;
   set isBlockedB(bool? isBlockedB) => _$this._isBlockedB = isBlockedB;
 
+  String? _userNameA;
+  String? get userNameA => _$this._userNameA;
+  set userNameA(String? userNameA) => _$this._userNameA = userNameA;
+
+  String? _userNameB;
+  String? get userNameB => _$this._userNameB;
+  set userNameB(String? userNameB) => _$this._userNameB = userNameB;
+
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -365,6 +409,8 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
       _isDeleted = $v.isDeleted;
       _isBlockedA = $v.isBlockedA;
       _isBlockedB = $v.isBlockedB;
+      _userNameA = $v.userNameA;
+      _userNameB = $v.userNameB;
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -400,6 +446,8 @@ class ChatsRecordBuilder implements Builder<ChatsRecord, ChatsRecordBuilder> {
               isDeleted: isDeleted,
               isBlockedA: isBlockedA,
               isBlockedB: isBlockedB,
+              userNameA: userNameA,
+              userNameB: userNameB,
               ffRef: ffRef);
     } catch (_) {
       late String _$failedField;
