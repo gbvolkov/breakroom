@@ -101,14 +101,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ChatViewWidget(),
             ),
             FFRoute(
-              name: 'ProfileView',
-              path: 'profileView',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'ProfileView')
-                  : ProfileViewWidget(),
-            ),
-            FFRoute(
               name: 'PhotoExpandView',
               path: 'photoExpandView',
               requireAuth: true,
@@ -119,6 +111,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 user: params.getParam('user', ParamType.Document),
                 photoidx: params.getParam('photoidx', ParamType.int),
               ),
+            ),
+            FFRoute(
+              name: 'ProfileView',
+              path: 'profileView',
+              requireAuth: true,
+              builder: (context, params) => params.isEmpty
+                  ? NavBarPage(initialPage: 'ProfileView')
+                  : ProfileViewWidget(),
             ),
             FFRoute(
               name: 'SignInView',

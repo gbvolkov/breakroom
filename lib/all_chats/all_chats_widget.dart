@@ -356,8 +356,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                           80,
                                                                       decoration:
                                                                           BoxDecoration(
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .secondaryBackground,
+                                                                        shape: BoxShape
+                                                                            .circle,
                                                                       ),
                                                                       child:
                                                                           Container(
@@ -375,11 +375,17 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                                 decoration: BoxDecoration(
                                                                                   shape: BoxShape.circle,
                                                                                 ),
-                                                                                child: CachedNetworkImage(
-                                                                                  imageUrl: contCompanionUsersRecord.photoUrl!,
-                                                                                  width: 80,
-                                                                                  height: 80,
-                                                                                  fit: BoxFit.contain,
+                                                                                child: ClipRRect(
+                                                                                  borderRadius: BorderRadius.circular(90),
+                                                                                  child: CachedNetworkImage(
+                                                                                    imageUrl: valueOrDefault<String>(
+                                                                                      contCompanionUsersRecord.photoUrl,
+                                                                                      'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
+                                                                                    ),
+                                                                                    width: 80,
+                                                                                    height: 80,
+                                                                                    fit: BoxFit.contain,
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
