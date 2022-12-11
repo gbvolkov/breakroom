@@ -35,8 +35,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
   @override
   void initState() {
     super.initState();
-    txtSearchController =
-        TextEditingController(text: FFAppState().chatSearchStr);
+    txtSearchController = TextEditingController();
   }
 
   @override
