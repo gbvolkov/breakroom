@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../components/empty_companions_list_widget_widget.dart';
 import '../components/empty_list_widget_widget.dart';
 import '../components/menu_report_user_widget.dart';
 import '../components/report_user_dialog_widget.dart';
@@ -209,217 +210,229 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                   ),
-                                  child: Builder(
-                                    builder: (context) {
-                                      final companions =
-                                          contAllChatsChatsRecordList
-                                              .where((e) =>
-                                                  functions.chekChatRecord(
-                                                      e,
-                                                      txtSearchController!.text,
-                                                      currentUserUid))
-                                              .toList();
-                                      return ListView.builder(
-                                        padding: EdgeInsets.zero,
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: companions.length,
-                                        itemBuilder:
-                                            (context, companionsIndex) {
-                                          final companionsItem =
-                                              companions[companionsIndex];
-                                          return StreamBuilder<UsersRecord>(
-                                            stream: UsersRecord.getDocument(
-                                                functions.getChatUser(
-                                                    companionsItem.userA,
-                                                    companionsItem.userB,
-                                                    currentUserReference!)!),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 50,
-                                                    height: 50,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryColor,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              final contCompanionUsersRecord =
-                                                  snapshot.data!;
-                                              return Container(
-                                                width: 80,
-                                                height: 120,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.rectangle,
-                                                ),
-                                                alignment:
-                                                    AlignmentDirectional(0, 0),
-                                                child: Align(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0, 0),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 8, 0, 0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        StreamBuilder<
-                                                            List<
-                                                                ChatMessagesRecord>>(
-                                                          stream:
-                                                              queryChatMessagesRecord(
-                                                            queryBuilder: (chatMessagesRecord) =>
-                                                                chatMessagesRecord.where(
-                                                                    'chat',
-                                                                    isEqualTo:
-                                                                        companionsItem
-                                                                            .reference),
-                                                            limit: 100,
+                                  child: Visibility(
+                                    visible:
+                                        txtSearchController!.text != null &&
+                                            txtSearchController!.text != '',
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16, 0, 8, 0),
+                                      child: Builder(
+                                        builder: (context) {
+                                          final companions =
+                                              contAllChatsChatsRecordList
+                                                  .where((e) =>
+                                                      functions.chekChatRecord(
+                                                          e,
+                                                          txtSearchController!
+                                                              .text,
+                                                          currentUserUid))
+                                                  .toList();
+                                          if (companions.isEmpty) {
+                                            return Center(
+                                              child:
+                                                  EmptyCompanionsListWidgetWidget(),
+                                            );
+                                          }
+                                          return ListView.builder(
+                                            padding: EdgeInsets.zero,
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: companions.length,
+                                            itemBuilder:
+                                                (context, companionsIndex) {
+                                              final companionsItem =
+                                                  companions[companionsIndex];
+                                              return Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 8, 0),
+                                                child:
+                                                    StreamBuilder<UsersRecord>(
+                                                  stream: UsersRecord.getDocument(
+                                                      functions.getChatUser(
+                                                          companionsItem.userA,
+                                                          companionsItem.userB,
+                                                          currentUserReference!)!),
+                                                  builder: (context, snapshot) {
+                                                    // Customize what your widget looks like when it's loading.
+                                                    if (!snapshot.hasData) {
+                                                      return Center(
+                                                        child: SizedBox(
+                                                          width: 50,
+                                                          height: 50,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryColor,
                                                           ),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            // Customize what your widget looks like when it's loading.
-                                                            if (!snapshot
-                                                                .hasData) {
-                                                              return Center(
-                                                                child: SizedBox(
-                                                                  width: 50,
-                                                                  height: 50,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryColor,
-                                                                  ),
+                                                        ),
+                                                      );
+                                                    }
+                                                    final contCompanionUsersRecord =
+                                                        snapshot.data!;
+                                                    return Container(
+                                                      width: 80,
+                                                      height: 120,
+                                                      decoration: BoxDecoration(
+                                                        shape:
+                                                            BoxShape.rectangle,
+                                                      ),
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              0, 0),
+                                                      child: Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                0, 0),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      8, 0, 0),
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              StreamBuilder<
+                                                                  List<
+                                                                      ChatMessagesRecord>>(
+                                                                stream:
+                                                                    queryChatMessagesRecord(
+                                                                  queryBuilder: (chatMessagesRecord) =>
+                                                                      chatMessagesRecord.where(
+                                                                          'chat',
+                                                                          isEqualTo:
+                                                                              companionsItem.reference),
+                                                                  limit: 100,
                                                                 ),
-                                                              );
-                                                            }
-                                                            List<ChatMessagesRecord>
-                                                                contMessagesChatMessagesRecordList =
-                                                                snapshot.data!;
-                                                            return Container(
-                                                              width: 100,
-                                                              height: 100,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                              ),
-                                                              child: Stack(
-                                                                children: [
-                                                                  ClipOval(
+                                                                builder: (context,
+                                                                    snapshot) {
+                                                                  // Customize what your widget looks like when it's loading.
+                                                                  if (!snapshot
+                                                                      .hasData) {
+                                                                    return Center(
+                                                                      child:
+                                                                          SizedBox(
+                                                                        width:
+                                                                            50,
+                                                                        height:
+                                                                            50,
+                                                                        child:
+                                                                            CircularProgressIndicator(
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryColor,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                  List<ChatMessagesRecord>
+                                                                      contMessagesChatMessagesRecordList =
+                                                                      snapshot
+                                                                          .data!;
+                                                                  return Container(
+                                                                    width: 80,
+                                                                    height: 80,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryBackground,
+                                                                    ),
                                                                     child:
                                                                         Container(
                                                                       width: 80,
                                                                       height:
                                                                           80,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                      ),
                                                                       child:
-                                                                          CachedNetworkImage(
-                                                                        imageUrl:
-                                                                            contCompanionUsersRecord.photoUrl!,
-                                                                        width:
-                                                                            80,
-                                                                        height:
-                                                                            80,
-                                                                        fit: BoxFit
-                                                                            .contain,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  if (contMessagesChatMessagesRecordList
-                                                                          .length >
-                                                                      0)
-                                                                    Align(
-                                                                      alignment:
-                                                                          AlignmentDirectional(
-                                                                              0.7,
-                                                                              -0.9),
-                                                                      child:
-                                                                          Container(
-                                                                        width:
-                                                                            32,
-                                                                        height:
-                                                                            16,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).alternate,
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(16),
-                                                                        ),
-                                                                        child:
-                                                                            Text(
-                                                                          contMessagesChatMessagesRecordList.length >= 99
-                                                                              ? '99+'
-                                                                              : contMessagesChatMessagesRecordList.length.toString(),
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .bodyText1
-                                                                              .override(
-                                                                                fontFamily: 'Roboto',
-                                                                                color: FlutterFlowTheme.of(context).primaryColor,
+                                                                          Stack(
+                                                                        children: [
+                                                                          ClipOval(
+                                                                            child:
+                                                                                Container(
+                                                                              width: 80,
+                                                                              height: 80,
+                                                                              decoration: BoxDecoration(
+                                                                                shape: BoxShape.circle,
                                                                               ),
-                                                                        ),
+                                                                              child: CachedNetworkImage(
+                                                                                imageUrl: contCompanionUsersRecord.photoUrl!,
+                                                                                width: 80,
+                                                                                height: 80,
+                                                                                fit: BoxFit.contain,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          if (contMessagesChatMessagesRecordList.length >
+                                                                              0)
+                                                                            Align(
+                                                                              alignment: AlignmentDirectional(0.7, -0.9),
+                                                                              child: Container(
+                                                                                width: 32,
+                                                                                height: 16,
+                                                                                decoration: BoxDecoration(
+                                                                                  color: FlutterFlowTheme.of(context).alternate,
+                                                                                  borderRadius: BorderRadius.circular(16),
+                                                                                ),
+                                                                                child: Text(
+                                                                                  contMessagesChatMessagesRecordList.length >= 99 ? '99+' : contMessagesChatMessagesRecordList.length.toString(),
+                                                                                  textAlign: TextAlign.center,
+                                                                                  style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                                        fontFamily: 'Roboto',
+                                                                                        color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                      ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                        ],
                                                                       ),
                                                                     ),
-                                                                ],
+                                                                  );
+                                                                },
                                                               ),
-                                                            );
-                                                          },
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      8, 0, 0),
-                                                          child: Text(
-                                                            contCompanionUsersRecord
-                                                                .displayName!,
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyText1
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Roboto',
-                                                                  fontSize: 16,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0,
+                                                                            8,
+                                                                            0,
+                                                                            0),
+                                                                child: Text(
+                                                                  contCompanionUsersRecord
+                                                                      .displayName!,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyText1
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Roboto',
+                                                                        fontSize:
+                                                                            16,
+                                                                        fontWeight:
+                                                                            FontWeight.w500,
+                                                                      ),
                                                                 ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                      ],
-                                                    ),
-                                                  ),
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               );
                                             },
                                           );
                                         },
-                                      );
-                                    },
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
