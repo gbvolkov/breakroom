@@ -113,16 +113,15 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                       onChanged: (_) => EasyDebounce.debounce(
                         'txtSearchController',
                         Duration(milliseconds: 2000),
-                        () => setState(() {}),
+                        () async {
+                          if (txtSearchController!.text == null ||
+                              txtSearchController!.text == '') {
+                            setState(() {
+                              FFAppState().chatSearchStr = '';
+                            });
+                          }
+                        },
                       ),
-                      onFieldSubmitted: (_) async {
-                        if (txtSearchController!.text == null ||
-                            txtSearchController!.text == '') {
-                          setState(() {
-                            FFAppState().chatSearchStr = '';
-                          });
-                        }
-                      },
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Search',
@@ -167,6 +166,12 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                             ? InkWell(
                                 onTap: () async {
                                   txtSearchController?.clear();
+                                  if (txtSearchController!.text == null ||
+                                      txtSearchController!.text == '') {
+                                    setState(() {
+                                      FFAppState().chatSearchStr = '';
+                                    });
+                                  }
                                   setState(() {});
                                 },
                                 child: Icon(
