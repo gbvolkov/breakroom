@@ -200,20 +200,19 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                  ),
-                                  child: Visibility(
-                                    visible:
-                                        txtSearchController!.text != null &&
-                                            txtSearchController!.text != '',
+                              if (txtSearchController!.text != null &&
+                                  txtSearchController!.text != '')
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 16),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 120,
+                                    decoration: BoxDecoration(
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16, 0, 8, 0),
@@ -271,7 +270,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     final contCompanionUsersRecord =
                                                         snapshot.data!;
                                                     return Container(
-                                                      width: 80,
+                                                      width: 100,
                                                       height: 120,
                                                       decoration: BoxDecoration(
                                                         shape:
@@ -435,7 +434,6 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                     ),
                                   ),
                                 ),
-                              ),
                               Expanded(
                                 child: Container(
                                   width: double.infinity,
