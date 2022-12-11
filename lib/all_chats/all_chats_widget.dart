@@ -274,6 +274,12 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                         snapshot.data!;
                                                     return InkWell(
                                                       onTap: () async {
+                                                        setState(() {
+                                                          setState(() => FFAppState()
+                                                              .addToRecentChats(
+                                                                  companionsItem
+                                                                      .reference));
+                                                        });
                                                         if (!contCompanionUsersRecord
                                                             .blocked!
                                                             .toList()
