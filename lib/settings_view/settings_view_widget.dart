@@ -847,7 +847,7 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
                     child: Text(
-                      '20221211.0200.25',
+                      '20221211.1200.26',
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Roboto',
                             color: FlutterFlowTheme.of(context).secondaryText,

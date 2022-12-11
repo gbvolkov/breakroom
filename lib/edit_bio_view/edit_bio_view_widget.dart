@@ -160,7 +160,7 @@ class _EditBioViewWidgetState extends State<EditBioViewWidget> {
                                     .textFieldBackground,
                               ),
                               style: FlutterFlowTheme.of(context).subtitle1,
-                              maxLines: 8,
+                              maxLines: 5,
                             ),
                           ),
                         ],
