@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/lat_lng.dart';
 
 class FFAppState extends ChangeNotifier {
@@ -22,6 +24,11 @@ class FFAppState extends ChangeNotifier {
     _whoViewedIntro =
         prefs.getStringList('ff_whoViewedIntro') ?? _whoViewedIntro;
     _build = prefs.getString('ff_build') ?? _build;
+    _recentChats = prefs
+            .getStringList('ff_recentChats')
+            ?.map((path) => path.ref)
+            .toList() ??
+        _recentChats;
   }
 
   late SharedPreferences prefs;
@@ -1296,6 +1303,29 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
 
     _chatSearchStr = _value;
+  }
+
+  List<DocumentReference> _recentChats = [];
+  List<DocumentReference> get recentChats => _recentChats;
+  set recentChats(List<DocumentReference> _value) {
+    notifyListeners();
+
+    _recentChats = _value;
+    prefs.setStringList('ff_recentChats', _value.map((x) => x.path).toList());
+  }
+
+  void addToRecentChats(DocumentReference _value) {
+    notifyListeners();
+    _recentChats.add(_value);
+    prefs.setStringList(
+        'ff_recentChats', _recentChats.map((x) => x.path).toList());
+  }
+
+  void removeFromRecentChats(DocumentReference _value) {
+    notifyListeners();
+    _recentChats.remove(_value);
+    prefs.setStringList(
+        'ff_recentChats', _recentChats.map((x) => x.path).toList());
   }
 }
 
