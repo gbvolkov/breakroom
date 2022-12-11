@@ -115,6 +115,12 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
+                      onFieldSubmitted: (_) async {
+                        setState(() {
+                          FFAppState().chatSearchStr =
+                              txtSearchController!.text;
+                        });
+                      },
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Search',
