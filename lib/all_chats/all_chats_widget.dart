@@ -115,12 +115,6 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
-                      onFieldSubmitted: (_) async {
-                        setState(() {
-                          FFAppState().chatSearchStr =
-                              txtSearchController!.text;
-                        });
-                      },
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Search',
@@ -475,8 +469,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                 .where((e) =>
                                                     functions.chekChatRecord(
                                                         e,
-                                                        txtSearchController!
-                                                            .text,
+                                                        FFAppState()
+                                                            .chatSearchStr,
                                                         currentUserUid))
                                                 .toList();
                                         if (chats.isEmpty) {
