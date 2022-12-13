@@ -32,32 +32,8 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       setState(() {
-        FFAppState().canResendVerification = false;
+        FFAppState().canResendVerification = true;
       });
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Please check your email ${widget.email}',
-            style: GoogleFonts.getFont(
-              'Open Sans',
-              color: FlutterFlowTheme.of(context).alternate,
-              fontSize: 16,
-            ),
-          ),
-          duration: Duration(milliseconds: 60000),
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          action: SnackBarAction(
-            label: 'Resend verification email',
-            textColor: Color(0x00000000),
-            onPressed: () async {
-              setState(() {
-                FFAppState().canResendVerification = true;
-              });
-            },
-          ),
-        ),
-      );
       instantTimer = InstantTimer.periodic(
         duration: Duration(milliseconds: 3000),
         callback: (timer) async {
@@ -243,31 +219,11 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
                         setState(() {
                           FFAppState().canResendVerification = false;
                         });
-                        ScaffoldMessenger.of(context).clearSnackBars();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Please check your email ${widget.email}',
-                              style: GoogleFonts.getFont(
-                                'Open Sans',
-                                color: FlutterFlowTheme.of(context).alternate,
-                                fontSize: 16,
-                              ),
-                            ),
-                            duration: Duration(milliseconds: 60000),
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            action: SnackBarAction(
-                              label: 'Resend verification email',
-                              textColor: Color(0x00000000),
-                              onPressed: () async {
-                                setState(() {
-                                  FFAppState().canResendVerification = true;
-                                });
-                              },
-                            ),
-                          ),
-                        );
+                        await Future.delayed(
+                            const Duration(milliseconds: 60000));
+                        setState(() {
+                          FFAppState().canResendVerification = true;
+                        });
                       },
                       child: Text(
                         'Resend verification link',
