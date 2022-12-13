@@ -363,8 +363,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     8, 0, 0, 8),
                                             child: Text(
-                                              dateTimeFormat(
-                                                  'yMd', FFAppState().usrBDay),
+                                              userBDay != null
+                                                  ? dateTimeFormat('yMd',
+                                                      FFAppState().usrBDay)
+                                                  : '',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .subtitle1,
