@@ -31,6 +31,33 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        FFAppState().canResendVerification = false;
+      });
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Please check your email ${widget.email}',
+            style: GoogleFonts.getFont(
+              'Open Sans',
+              color: FlutterFlowTheme.of(context).alternate,
+              fontSize: 16,
+            ),
+          ),
+          duration: Duration(milliseconds: 60000),
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          action: SnackBarAction(
+            label: 'Resend verification email',
+            textColor: Color(0x00000000),
+            onPressed: () async {
+              setState(() {
+                FFAppState().canResendVerification = true;
+              });
+            },
+          ),
+        ),
+      );
       instantTimer = InstantTimer.periodic(
         duration: Duration(milliseconds: 3000),
         callback: (timer) async {
@@ -207,23 +234,52 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: AlignmentDirectional(1, 0),
-                  child: InkWell(
-                    onTap: () async {
-                      await sendEmailVerification();
-                    },
-                    child: Text(
-                      'Resend verification link',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).primaryColor,
-                            fontWeight: FontWeight.w300,
-                            decoration: TextDecoration.underline,
+                if (FFAppState().canResendVerification)
+                  Align(
+                    alignment: AlignmentDirectional(1, 0),
+                    child: InkWell(
+                      onTap: () async {
+                        await sendEmailVerification();
+                        setState(() {
+                          FFAppState().canResendVerification = false;
+                        });
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Please check your email ${widget.email}',
+                              style: GoogleFonts.getFont(
+                                'Open Sans',
+                                color: FlutterFlowTheme.of(context).alternate,
+                                fontSize: 16,
+                              ),
+                            ),
+                            duration: Duration(milliseconds: 60000),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).primaryBackground,
+                            action: SnackBarAction(
+                              label: 'Resend verification email',
+                              textColor: Color(0x00000000),
+                              onPressed: () async {
+                                setState(() {
+                                  FFAppState().canResendVerification = true;
+                                });
+                              },
+                            ),
                           ),
+                        );
+                      },
+                      child: Text(
+                        'Resend verification link',
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).primaryColor,
+                              fontWeight: FontWeight.w300,
+                              decoration: TextDecoration.underline,
+                            ),
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
           ),

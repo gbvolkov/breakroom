@@ -1327,6 +1327,14 @@ class FFAppState extends ChangeNotifier {
     prefs.setStringList(
         'ff_recentChats', _recentChats.map((x) => x.path).toList());
   }
+
+  bool _canResendVerification = false;
+  bool get canResendVerification => _canResendVerification;
+  set canResendVerification(bool _value) {
+    notifyListeners();
+
+    _canResendVerification = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
