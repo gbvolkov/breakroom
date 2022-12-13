@@ -1,5 +1,6 @@
 import '../auth/auth_util.dart';
 import '../components/dialog_signup_complete_widget.dart';
+import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/instant_timer.dart';
@@ -10,7 +11,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class VerifyEmailViewWidget extends StatefulWidget {
-  const VerifyEmailViewWidget({Key? key}) : super(key: key);
+  const VerifyEmailViewWidget({
+    Key? key,
+    this.email,
+  }) : super(key: key);
+
+  final String? email;
 
   @override
   _VerifyEmailViewWidgetState createState() => _VerifyEmailViewWidgetState();
@@ -87,6 +93,64 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).alternate,
+      appBar: AppBar(
+        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
+        automaticallyImplyLeading: false,
+        actions: [],
+        flexibleSpace: FlexibleSpaceBar(
+          title: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                        child: FlutterFlowIconButton(
+                          borderColor: Colors.transparent,
+                          borderRadius: 30,
+                          borderWidth: 1,
+                          buttonSize: 50,
+                          icon: Icon(
+                            Icons.chevron_left,
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            size: 30,
+                          ),
+                          onPressed: () async {
+                            GoRouter.of(context).prepareAuthEvent();
+                            await signOut();
+
+                            context.pushNamedAuth(
+                              'SignUpView',
+                              mounted,
+                              queryParams: {
+                                'email': serializeParam(
+                                  widget.email,
+                                  ParamType.String,
+                                ),
+                              }.withoutNulls,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          centerTitle: true,
+          expandedTitleScale: 1.0,
+        ),
+        elevation: 0,
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -136,21 +200,6 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
                             child: Text(
                               'Verify your Email',
                               style: FlutterFlowTheme.of(context).title1,
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
-                            child: Text(
-                              'We’ve sent you a verification link to your email',
-                              textAlign: TextAlign.center,
-                              style: FlutterFlowTheme.of(context)
-                                  .subtitle1
-                                  .override(
-                                    fontFamily: 'Roboto',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                  ),
                             ),
                           ),
                         ],

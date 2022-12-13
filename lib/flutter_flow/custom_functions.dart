@@ -695,10 +695,10 @@ bool chekChatRecord(
     return true;
   }
   if (chat.userA?.id != currentUserID) {
-    return chat.userNameA!.contains(userName);
+    return chat.userNameA!.toLowerCase().contains(userName.toLowerCase());
   }
   if (chat.userB?.id != currentUserID) {
-    return chat.userNameB!.contains(userName);
+    return chat.userNameB!.toLowerCase().contains(userName.toLowerCase());
   }
   return true;
 }

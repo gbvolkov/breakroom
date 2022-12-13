@@ -167,9 +167,117 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                           currentUserLocationValue =
                               await getCurrentUserLocation(
                                   defaultLocation: LatLng(0.0, 0.0));
+                          if (!false) {
+                            GoRouter.of(context).prepareAuthEvent();
+                            final user = await signInWithApple(context);
+                            if (user == null) {
+                              return;
+                            }
+                            setState(() {
+                              FFAppState().cHomeVisits = 0;
+                              FFAppState().recentChats = [];
+                            });
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Welcome to Breakroom!',
+                                  style: TextStyle(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                              ),
+                            );
+                            await Future.delayed(
+                                const Duration(milliseconds: 3000));
+
+                            final usersUpdateData = createUsersRecordData(
+                              geoposition: currentUserLocationValue,
+                            );
+                            await currentUserReference!.update(usersUpdateData);
+
+                            context.pushNamedAuth('HomeView', mounted);
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Not implemented yet',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor: Color(0x00000000),
+                              ),
+                            );
+                          }
+                        },
+                        child: Image.asset(
+                          'assets/images/AppleSignIn.png',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          currentUserLocationValue =
+                              await getCurrentUserLocation(
+                                  defaultLocation: LatLng(0.0, 0.0));
+                          GoRouter.of(context).prepareAuthEvent();
+                          final user = await signInWithGoogle(context);
+                          if (user == null) {
+                            return;
+                          }
+                          setState(() {
+                            FFAppState().cHomeVisits = 0;
+                            FFAppState().recentChats = [];
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Welcome to Breakroom!',
+                                style: TextStyle(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              duration: Duration(milliseconds: 4000),
+                              backgroundColor: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                            ),
+                          );
+                          await Future.delayed(
+                              const Duration(milliseconds: 3000));
+
+                          final usersUpdateData = createUsersRecordData(
+                            geoposition: currentUserLocationValue,
+                          );
+                          await currentUserReference!.update(usersUpdateData);
+
+                          context.pushNamedAuth('HomeView', mounted);
+                        },
+                        child: Image.asset(
+                          'assets/images/GoogleSignIn.png',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          currentUserLocationValue =
+                              await getCurrentUserLocation(
+                                  defaultLocation: LatLng(0.0, 0.0));
                           if (false) {
                             setState(() {
                               FFAppState().cHomeVisits = 0;
+                              FFAppState().recentChats = [];
                             });
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -212,61 +320,11 @@ class _WelcomeViewWidgetState extends State<WelcomeViewWidget> {
                           }
                         },
                         child: Image.asset(
-                          'assets/images/AppleSignIn.png',
+                          'assets/images/FacebookSignIn.png',
                           width: 56,
                           height: 56,
                           fit: BoxFit.cover,
                         ),
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          currentUserLocationValue =
-                              await getCurrentUserLocation(
-                                  defaultLocation: LatLng(0.0, 0.0));
-                          GoRouter.of(context).prepareAuthEvent();
-                          final user = await signInWithGoogle(context);
-                          if (user == null) {
-                            return;
-                          }
-                          setState(() {
-                            FFAppState().cHomeVisits = 0;
-                          });
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                'Welcome to Breakroom!',
-                                style: TextStyle(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  fontSize: 14,
-                                ),
-                              ),
-                              duration: Duration(milliseconds: 4000),
-                              backgroundColor: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                            ),
-                          );
-                          await Future.delayed(
-                              const Duration(milliseconds: 3000));
-
-                          final usersUpdateData = createUsersRecordData(
-                            geoposition: currentUserLocationValue,
-                          );
-                          await currentUserReference!.update(usersUpdateData);
-
-                          context.pushNamedAuth('HomeView', mounted);
-                        },
-                        child: Image.asset(
-                          'assets/images/GoogleSignIn.png',
-                          width: 56,
-                          height: 56,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Image.asset(
-                        'assets/images/FacebookSignIn.png',
-                        width: 56,
-                        height: 56,
-                        fit: BoxFit.cover,
                       ),
                     ],
                   ),

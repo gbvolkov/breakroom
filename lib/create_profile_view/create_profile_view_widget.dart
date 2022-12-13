@@ -40,7 +40,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (!currentUserEmailVerified) {
-        context.pushNamed('VerifyEmailView');
+        context.pushNamed(
+          'VerifyEmailView',
+          queryParams: {
+            'email': serializeParam(
+              currentUserEmail,
+              ParamType.String,
+            ),
+          }.withoutNulls,
+        );
       }
     });
 

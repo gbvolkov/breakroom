@@ -844,16 +844,10 @@ class _SettingsViewWidgetState extends State<SettingsViewWidget> {
                 ),
                 Align(
                   alignment: AlignmentDirectional(1, 0),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 4),
-                    child: Text(
-                      '20221211.1200.26',
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Roboto',
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            fontSize: 12,
-                          ),
-                    ),
+                  child: Text(
+                    '20221212.2230.29',
+                    textAlign: TextAlign.end,
+                    style: FlutterFlowTheme.of(context).bodyText1,
                   ),
                 ),
               ],

@@ -923,7 +923,15 @@ class _SignUpViewWidgetState extends State<SignUpViewWidget> {
                                                 'CreateProfileView', mounted);
                                           } else {
                                             context.pushNamedAuth(
-                                                'VerifyEmailView', mounted);
+                                              'VerifyEmailView',
+                                              mounted,
+                                              queryParams: {
+                                                'email': serializeParam(
+                                                  currentUserEmail,
+                                                  ParamType.String,
+                                                ),
+                                              }.withoutNulls,
+                                            );
                                           }
                                         },
                                         text: 'Create account',

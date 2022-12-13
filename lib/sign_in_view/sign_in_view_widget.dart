@@ -310,6 +310,7 @@ class _SignInViewWidgetState extends State<SignInViewWidget> {
 
                                   setState(() {
                                     FFAppState().cHomeVisits = 0;
+                                    FFAppState().recentChats = [];
                                   });
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
