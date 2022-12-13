@@ -31,9 +31,6 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
     super.initState();
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
-        FFAppState().canResendVerification = true;
-      });
       instantTimer = InstantTimer.periodic(
         duration: Duration(milliseconds: 3000),
         callback: (timer) async {
@@ -210,32 +207,34 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
                     ),
                   ),
                 ),
-                if (FFAppState().canResendVerification)
-                  Align(
-                    alignment: AlignmentDirectional(1, 0),
-                    child: InkWell(
-                      onTap: () async {
-                        await sendEmailVerification();
-                        setState(() {
-                          FFAppState().canResendVerification = false;
-                        });
-                        await Future.delayed(
-                            const Duration(milliseconds: 60000));
-                        setState(() {
-                          FFAppState().canResendVerification = true;
-                        });
-                      },
-                      child: Text(
-                        'Resend verification link',
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                              fontWeight: FontWeight.w300,
-                              decoration: TextDecoration.underline,
-                            ),
+                Align(
+                  alignment: AlignmentDirectional(1, 0),
+                  child: InkWell(
+                    onTap: () async {
+                      await sendEmailVerification();
+                    },
+                    child: Container(
+                      width: 160,
+                      height: 30,
+                      decoration: BoxDecoration(),
+                      child: Align(
+                        alignment: AlignmentDirectional(1, 0),
+                        child: Text(
+                          'Resend verification link',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyText1
+                              .override(
+                                fontFamily: 'Roboto',
+                                color:
+                                    FlutterFlowTheme.of(context).primaryColor,
+                                fontWeight: FontWeight.w300,
+                                decoration: TextDecoration.underline,
+                              ),
+                        ),
                       ),
                     ),
                   ),
+                ),
               ],
             ),
           ),
