@@ -3,6 +3,7 @@ import '../components/dialog_signup_complete_widget.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
+import '../flutter_flow/flutter_flow_widgets.dart';
 import '../flutter_flow/instant_timer.dart';
 import '../custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
@@ -192,7 +193,7 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: Column(
-                        mainAxisSize: MainAxisSize.max,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Padding(
                             padding:
@@ -209,29 +210,28 @@ class _VerifyEmailViewWidgetState extends State<VerifyEmailViewWidget> {
                 ),
                 Align(
                   alignment: AlignmentDirectional(1, 0),
-                  child: InkWell(
-                    onTap: () async {
+                  child: FFButtonWidget(
+                    onPressed: () async {
                       await sendEmailVerification();
                     },
-                    child: Container(
-                      width: 160,
-                      height: 30,
-                      decoration: BoxDecoration(),
-                      child: Align(
-                        alignment: AlignmentDirectional(1, 0),
-                        child: Text(
-                          'Resend verification link',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyText1
-                              .override(
-                                fontFamily: 'Roboto',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
-                                fontWeight: FontWeight.w300,
-                                decoration: TextDecoration.underline,
-                              ),
-                        ),
+                    text: 'Resend verification link',
+                    options: FFButtonOptions(
+                      width: 180,
+                      height: 40,
+                      color: FlutterFlowTheme.of(context).alternate,
+                      textStyle: FlutterFlowTheme.of(context)
+                          .subtitle2
+                          .override(
+                            fontFamily: 'Roboto',
+                            color: FlutterFlowTheme.of(context).primaryColor,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w300,
+                          ),
+                      borderSide: BorderSide(
+                        color: Colors.transparent,
+                        width: 1,
                       ),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
