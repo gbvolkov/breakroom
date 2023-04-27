@@ -206,22 +206,18 @@ class _$FilterStruct extends FilterStruct {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc($jc(0, lookingFor.hashCode),
-                                    ageRangeExt.hashCode),
-                                location.hashCode),
-                            distance.hashCode),
-                        industries.hashCode),
-                    address.hashCode),
-                ageRange.hashCode),
-            gender.hashCode),
-        firestoreUtilData.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, lookingFor.hashCode);
+    _$hash = $jc(_$hash, ageRangeExt.hashCode);
+    _$hash = $jc(_$hash, location.hashCode);
+    _$hash = $jc(_$hash, distance.hashCode);
+    _$hash = $jc(_$hash, industries.hashCode);
+    _$hash = $jc(_$hash, address.hashCode);
+    _$hash = $jc(_$hash, ageRange.hashCode);
+    _$hash = $jc(_$hash, gender.hashCode);
+    _$hash = $jc(_$hash, firestoreUtilData.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -358,4 +354,4 @@ class FilterStructBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

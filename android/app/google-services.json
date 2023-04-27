@@ -7,26 +7,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:207242520990:android:f1c4b963064a7bb2f90e8f",
+        "mobilesdk_app_id": "1:207242520990:android:753cd393b86290c0f90e8f",
         "android_client_info": {
-          "package_name": "com.boji.breakroom"
+          "package_name": "com.boji.meetingapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "207242520990-k1chtvjdvr40bc81uudicipdp56c242d.apps.googleusercontent.com",
+          "client_id": "207242520990-59hlqtd74m6rfqnrk7mjdvk04h6m8uti.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.boji.breakroom",
-            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+            "package_name": "com.boji.meetingapp",
+            "certificate_hash": "fa14b4b7601a347cb1e466d225a1cdda6e3c8ebb"
           }
         },
         {
-          "client_id": "207242520990-kkecualmggs87lbsv6k67amesobigo3p.apps.googleusercontent.com",
+          "client_id": "207242520990-80ig46ms20bv2l0vijp7coll1n4nli5q.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.boji.breakroom",
-            "certificate_hash": "fa14b4b7601a347cb1e466d225a1cdda6e3c8ebb"
+            "package_name": "com.boji.meetingapp",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
           }
         },
         {

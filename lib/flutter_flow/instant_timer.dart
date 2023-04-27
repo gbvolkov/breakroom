@@ -13,7 +13,7 @@ class InstantTimer implements Timer {
   }) {
     final myTimer = Timer.periodic(duration, callback);
     if (startImmediately) {
-      callback(myTimer);
+      Future.delayed(Duration(seconds: 0)).then((_) => callback(myTimer));
     }
     return InstantTimer._(myTimer, startImmediately);
   }

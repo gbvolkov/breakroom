@@ -1,11 +1,14 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'auth/firebase_user_provider.dart';
-import 'auth/auth_util.dart';
+import 'auth/firebase_auth/firebase_user_provider.dart';
+import 'auth/firebase_auth/auth_util.dart';
+
 import 'backend/push_notifications/push_notifications_util.dart';
+import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
@@ -16,7 +19,7 @@ import 'flutter_flow/revenue_cat_util.dart' as revenue_cat;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await initFirebase();
 
   final appState = FFAppState(); // Initialize FFAppState
   await revenue_cat.initialize(
@@ -47,7 +50,7 @@ class _MyAppState extends State<MyApp> {
   Locale? _locale;
   ThemeMode _themeMode = ThemeMode.system;
 
-  late Stream<BreakroomFirebaseUser> userStream;
+  late Stream<BaseAuthUser> userStream;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -156,7 +159,7 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               FFIcons.kicHome,
-              size: 20,
+              size: 20.0,
             ),
             label: 'Home',
             tooltip: '',
@@ -164,11 +167,11 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               FFIcons.kicChat,
-              size: 24,
+              size: 24.0,
             ),
             activeIcon: Icon(
               FFIcons.kicChat,
-              size: 24,
+              size: 24.0,
             ),
             label: 'Chat',
             tooltip: '',
@@ -176,7 +179,7 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               FFIcons.kicHeart,
-              size: 20,
+              size: 20.0,
             ),
             label: 'Matches',
             tooltip: '',
@@ -184,7 +187,7 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               FFIcons.kicNotifications,
-              size: 20,
+              size: 20.0,
             ),
             label: 'Notifications',
             tooltip: '',
@@ -192,7 +195,7 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               FFIcons.kicUser,
-              size: 20,
+              size: 20.0,
             ),
             label: 'Profile',
             tooltip: '',

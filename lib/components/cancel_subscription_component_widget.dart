@@ -1,11 +1,12 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import 'package:styled_divider/styled_divider.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'cancel_subscription_component_model.dart';
+export 'cancel_subscription_component_model.dart';
 
 class CancelSubscriptionComponentWidget extends StatefulWidget {
   const CancelSubscriptionComponentWidget({Key? key}) : super(key: key);
@@ -17,7 +18,26 @@ class CancelSubscriptionComponentWidget extends StatefulWidget {
 
 class _CancelSubscriptionComponentWidgetState
     extends State<CancelSubscriptionComponentWidget> {
-  bool? switchAutomaticallyRenewValue;
+  late CancelSubscriptionComponentModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => CancelSubscriptionComponentModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +46,20 @@ class _CancelSubscriptionComponentWidgetState
     return Stack(
       children: [
         Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 1,
+          width: MediaQuery.of(context).size.width * 1.0,
+          height: MediaQuery.of(context).size.height * 1.0,
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).primaryColor,
+            color: FlutterFlowTheme.of(context).primary,
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(0),
-              bottomRight: Radius.circular(0),
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+              bottomLeft: Radius.circular(0.0),
+              bottomRight: Radius.circular(0.0),
+              topLeft: Radius.circular(16.0),
+              topRight: Radius.circular(16.0),
             ),
           ),
         ),
         Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(16, 32, 16, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -47,66 +67,68 @@ class _CancelSubscriptionComponentWidgetState
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 280,
+                    height: 280.0,
                     decoration: BoxDecoration(
                       color: Color(0xFFF8F8F9),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 4),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 8.0, 0.0, 4.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Stack(
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 children: [
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Container(
-                                      width: 60,
-                                      height: 60,
+                                      width: 60.0,
+                                      height: 60.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
                                   Image.asset(
                                     'assets/images/BreakRoom_Logo1.png',
-                                    width: 40,
-                                    height: 40,
+                                    width: 40.0,
+                                    height: 40.0,
                                     fit: BoxFit.cover,
                                   ),
                                 ],
                               ),
                               Expanded(
                                 child: Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 8, 0),
+                                        8.0, 0.0, 8.0, 0.0),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1, 0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 0, 8),
+                                                    0.0, 0.0, 0.0, 8.0),
                                             child: Text(
                                               'Monthly subscription',
                                               style: FlutterFlowTheme.of(
                                                       context)
-                                                  .title2
+                                                  .headlineMedium
                                                   .override(
                                                     fontFamily: 'Roboto',
                                                     color: FlutterFlowTheme.of(
@@ -119,7 +141,7 @@ class _CancelSubscriptionComponentWidgetState
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1, 0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
@@ -127,7 +149,7 @@ class _CancelSubscriptionComponentWidgetState
                                                 'Next subscription renewal: ',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           fontWeight:
@@ -138,7 +160,7 @@ class _CancelSubscriptionComponentWidgetState
                                                 'June 23',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           fontWeight:
@@ -158,22 +180,22 @@ class _CancelSubscriptionComponentWidgetState
                         ),
                         Divider(),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 4.0, 0.0, 16.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 25,
-                                borderWidth: 0,
-                                buttonSize: 25,
+                                borderRadius: 25.0,
+                                borderWidth: 0.0,
+                                buttonSize: 25.0,
                                 fillColor:
                                     FlutterFlowTheme.of(context).alternate,
                                 icon: Icon(
                                   Icons.check_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 10,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 10.0,
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
@@ -182,12 +204,12 @@ class _CancelSubscriptionComponentWidgetState
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 8, 0),
+                                      8.0, 0.0, 8.0, 0.0),
                                   child: Text(
                                     'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
                                     maxLines: 2,
                                     style:
-                                        FlutterFlowTheme.of(context).bodyText1,
+                                        FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                               ),
@@ -195,22 +217,22 @@ class _CancelSubscriptionComponentWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 16.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 25,
-                                borderWidth: 0,
-                                buttonSize: 25,
+                                borderRadius: 25.0,
+                                borderWidth: 0.0,
+                                buttonSize: 25.0,
                                 fillColor:
                                     FlutterFlowTheme.of(context).alternate,
                                 icon: Icon(
                                   Icons.check_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 10,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 10.0,
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
@@ -219,12 +241,12 @@ class _CancelSubscriptionComponentWidgetState
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
+                                      8.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
                                     maxLines: 2,
                                     style:
-                                        FlutterFlowTheme.of(context).bodyText1,
+                                        FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                               ),
@@ -232,22 +254,22 @@ class _CancelSubscriptionComponentWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 16.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 25,
-                                borderWidth: 0,
-                                buttonSize: 25,
+                                borderRadius: 25.0,
+                                borderWidth: 0.0,
+                                buttonSize: 25.0,
                                 fillColor:
                                     FlutterFlowTheme.of(context).alternate,
                                 icon: Icon(
                                   Icons.check_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 10,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 10.0,
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
@@ -256,12 +278,12 @@ class _CancelSubscriptionComponentWidgetState
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
+                                      8.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
                                     maxLines: 2,
                                     style:
-                                        FlutterFlowTheme.of(context).bodyText1,
+                                        FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                               ),
@@ -269,22 +291,22 @@ class _CancelSubscriptionComponentWidgetState
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 16.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 25,
-                                borderWidth: 0,
-                                buttonSize: 25,
+                                borderRadius: 25.0,
+                                borderWidth: 0.0,
+                                buttonSize: 25.0,
                                 fillColor:
                                     FlutterFlowTheme.of(context).alternate,
                                 icon: Icon(
                                   Icons.check_rounded,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
-                                  size: 10,
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 10.0,
                                 ),
                                 onPressed: () {
                                   print('IconButton pressed ...');
@@ -293,12 +315,12 @@ class _CancelSubscriptionComponentWidgetState
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8, 0, 0, 0),
+                                      8.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
                                     maxLines: 2,
                                     style:
-                                        FlutterFlowTheme.of(context).bodyText1,
+                                        FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                               ),
@@ -311,29 +333,29 @@ class _CancelSubscriptionComponentWidgetState
                 ],
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(context).size.width * 1.0,
                         child: Stack(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 1.0,
+                              height: 50.0,
                               decoration: BoxDecoration(
                                 color: Color(0xFFF8F8F9),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 0.0, 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -342,16 +364,17 @@ class _CancelSubscriptionComponentWidgetState
                                     Text(
                                       'Automatically renew subscription',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                     Expanded(
                                       child: SwitchListTile(
-                                        value: switchAutomaticallyRenewValue ??=
+                                        value: _model
+                                                .switchAutomaticallyRenewValue ??=
                                             true,
                                         onChanged: (newValue) async {
-                                          setState(() =>
-                                              switchAutomaticallyRenewValue =
-                                                  newValue!);
+                                          setState(() => _model
+                                                  .switchAutomaticallyRenewValue =
+                                              newValue!);
                                         },
                                         tileColor: Color(0xFFF5F5F5),
                                         activeColor: Color(0xFF27AE60),
@@ -373,29 +396,29 @@ class _CancelSubscriptionComponentWidgetState
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery.of(context).size.width * 1.0,
                         child: Stack(
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: AlignmentDirectional(0.0, 0.0),
                           children: [
                             Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50,
+                              width: MediaQuery.of(context).size.width * 1.0,
+                              height: 50.0,
                               decoration: BoxDecoration(
                                 color: Color(0xFFF8F8F9),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 0.0, 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
@@ -408,24 +431,31 @@ class _CancelSubscriptionComponentWidgetState
                                         },
                                         text: 'Cancel subscription',
                                         options: FFButtonOptions(
-                                          width: 130,
-                                          height: 40,
+                                          width: 130.0,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: Colors.transparent,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
                                               ),
+                                          elevation: 2.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 1,
+                                            width: 1.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),

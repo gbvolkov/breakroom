@@ -1,13 +1,15 @@
-import '../auth/auth_util.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'change_password_view_model.dart';
+export 'change_password_view_model.dart';
 
 class ChangePasswordViewWidget extends StatefulWidget {
   const ChangePasswordViewWidget({Key? key}) : super(key: key);
@@ -18,47 +20,38 @@ class ChangePasswordViewWidget extends StatefulWidget {
 }
 
 class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
-  String? reauthUserResult1;
-  bool? isPwdChanged;
-  TextEditingController? currentPasswordTextFieldController;
+  late ChangePasswordViewModel _model;
 
-  late bool currentPasswordTextFieldVisibility;
-  TextEditingController? newPassword1TextFieldController;
-
-  late bool newPassword1TextFieldVisibility;
-  TextEditingController? newPassword2TextFieldController;
-
-  late bool newPassword2TextFieldVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ChangePasswordViewModel());
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
+      FFAppState().update(() {
         FFAppState().tmpError = '';
       });
       setState(() {
-        currentPasswordTextFieldController?.clear();
-        newPassword1TextFieldController?.clear();
-        newPassword2TextFieldController?.clear();
+        _model.currentPasswordTextFieldController?.clear();
+        _model.newPassword1TextFieldController?.clear();
+        _model.newPassword2TextFieldController?.clear();
       });
     });
 
-    currentPasswordTextFieldController = TextEditingController();
-    currentPasswordTextFieldVisibility = false;
-    newPassword1TextFieldController = TextEditingController();
-    newPassword1TextFieldVisibility = false;
-    newPassword2TextFieldController = TextEditingController();
-    newPassword2TextFieldVisibility = false;
+    _model.currentPasswordTextFieldController ??= TextEditingController();
+    _model.newPassword1TextFieldController ??= TextEditingController();
+    _model.newPassword2TextFieldController ??= TextEditingController();
   }
 
   @override
   void dispose() {
-    currentPasswordTextFieldController?.dispose();
-    newPassword1TextFieldController?.dispose();
-    newPassword2TextFieldController?.dispose();
+    _model.dispose();
+
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -66,39 +59,39 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).alternate,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).alternate,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Login details',
+            style: FlutterFlowTheme.of(context).headlineSmall,
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          'Login details',
-          style: FlutterFlowTheme.of(context).title3,
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,13 +100,14 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(-1, 0),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
                         child: Text(
                           'Current Password',
                           style: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: 'Roboto',
                                 color:
@@ -123,71 +117,76 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 8.0),
                       child: TextFormField(
-                        controller: currentPasswordTextFieldController,
+                        controller: _model.currentPasswordTextFieldController,
                         autofocus: true,
-                        obscureText: !currentPasswordTextFieldVisibility,
+                        obscureText: !_model.currentPasswordTextFieldVisibility,
                         decoration: InputDecoration(
-                          labelStyle: FlutterFlowTheme.of(context).subtitle2,
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          labelStyle: FlutterFlowTheme.of(context).titleSmall,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
                           fillColor: Color(0xFFEFEFEF),
                           suffixIcon: InkWell(
                             onTap: () => setState(
-                              () => currentPasswordTextFieldVisibility =
-                                  !currentPasswordTextFieldVisibility,
+                              () => _model.currentPasswordTextFieldVisibility =
+                                  !_model.currentPasswordTextFieldVisibility,
                             ),
                             focusNode: FocusNode(skipTraversal: true),
                             child: Icon(
-                              currentPasswordTextFieldVisibility
+                              _model.currentPasswordTextFieldVisibility
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
                               color: FlutterFlowTheme.of(context).alternate,
-                              size: 22,
+                              size: 22.0,
                             ),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                        style: FlutterFlowTheme.of(context).titleMedium,
                         keyboardType: TextInputType.emailAddress,
+                        validator: _model
+                            .currentPasswordTextFieldControllerValidator
+                            .asValidator(context),
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-1, 0),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                         child: Text(
                           'New Password',
                           style: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: 'Roboto',
                                 color:
@@ -197,71 +196,76 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 8),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 8.0),
                       child: TextFormField(
-                        controller: newPassword1TextFieldController,
+                        controller: _model.newPassword1TextFieldController,
                         autofocus: true,
-                        obscureText: !newPassword1TextFieldVisibility,
+                        obscureText: !_model.newPassword1TextFieldVisibility,
                         decoration: InputDecoration(
-                          labelStyle: FlutterFlowTheme.of(context).subtitle2,
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          labelStyle: FlutterFlowTheme.of(context).titleSmall,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
                           fillColor: Color(0xFFEFEFEF),
                           suffixIcon: InkWell(
                             onTap: () => setState(
-                              () => newPassword1TextFieldVisibility =
-                                  !newPassword1TextFieldVisibility,
+                              () => _model.newPassword1TextFieldVisibility =
+                                  !_model.newPassword1TextFieldVisibility,
                             ),
                             focusNode: FocusNode(skipTraversal: true),
                             child: Icon(
-                              newPassword1TextFieldVisibility
+                              _model.newPassword1TextFieldVisibility
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
                               color: FlutterFlowTheme.of(context).alternate,
-                              size: 22,
+                              size: 22.0,
                             ),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                        style: FlutterFlowTheme.of(context).titleMedium,
                         keyboardType: TextInputType.emailAddress,
+                        validator: _model
+                            .newPassword1TextFieldControllerValidator
+                            .asValidator(context),
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-1, 0),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                         child: Text(
                           'New Password Again',
                           style: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: 'Roboto',
                                 color:
@@ -271,72 +275,77 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 16),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                       child: TextFormField(
-                        controller: newPassword2TextFieldController,
+                        controller: _model.newPassword2TextFieldController,
                         autofocus: true,
-                        obscureText: !newPassword2TextFieldVisibility,
+                        obscureText: !_model.newPassword2TextFieldVisibility,
                         decoration: InputDecoration(
-                          labelStyle: FlutterFlowTheme.of(context).subtitle2,
-                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          labelStyle: FlutterFlowTheme.of(context).titleSmall,
+                          hintStyle: FlutterFlowTheme.of(context).bodySmall,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           errorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedErrorBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                               color: Color(0x00000000),
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                           filled: true,
                           fillColor: Color(0xFFEFEFEF),
                           suffixIcon: InkWell(
                             onTap: () => setState(
-                              () => newPassword2TextFieldVisibility =
-                                  !newPassword2TextFieldVisibility,
+                              () => _model.newPassword2TextFieldVisibility =
+                                  !_model.newPassword2TextFieldVisibility,
                             ),
                             focusNode: FocusNode(skipTraversal: true),
                             child: Icon(
-                              newPassword2TextFieldVisibility
+                              _model.newPassword2TextFieldVisibility
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
                               color: FlutterFlowTheme.of(context).alternate,
-                              size: 22,
+                              size: 22.0,
                             ),
                           ),
                         ),
-                        style: FlutterFlowTheme.of(context).subtitle1,
+                        style: FlutterFlowTheme.of(context).titleMedium,
                         keyboardType: TextInputType.emailAddress,
+                        validator: _model
+                            .newPassword2TextFieldControllerValidator
+                            .asValidator(context),
                       ),
                     ),
                     if (FFAppState().tmpError != '')
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 8.0, 0.0, 16.0),
                           child: Text(
                             FFAppState().tmpError,
                             style: FlutterFlowTheme.of(context)
-                                .subtitle2
+                                .titleSmall
                                 .override(
                                   fontFamily: 'Roboto',
                                   color:
@@ -346,38 +355,42 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                         ),
                       ),
                     Align(
-                      alignment: AlignmentDirectional(1, 0),
+                      alignment: AlignmentDirectional(1.0, 0.0),
                       child: FFButtonWidget(
                         onPressed: () async {
                           context.pushNamed('ForgotPasswordView');
                         },
                         text: 'I forgot my old password',
                         options: FFButtonOptions(
-                          height: 48,
+                          height: 48.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
                           color: Colors.transparent,
                           textStyle: FlutterFlowTheme.of(context)
-                              .subtitle2
+                              .titleSmall
                               .override(
                                 fontFamily: 'Roboto',
                                 color: FlutterFlowTheme.of(context).alternate,
                               ),
-                          elevation: 0,
+                          elevation: 0.0,
                           borderSide: BorderSide(
                             color: Colors.transparent,
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                     ),
                   ],
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                   child: Stack(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -385,45 +398,47 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                               Color(0xFFF95A82),
                               Color(0xFFEA3C7D)
                             ],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                            stops: [0.0, 0.6, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             var _shouldSetState = false;
-                            if (newPassword1TextFieldController!.text ==
-                                newPassword2TextFieldController!.text) {
-                              setState(() {
+                            if (_model.newPassword1TextFieldController.text ==
+                                _model.newPassword2TextFieldController.text) {
+                              FFAppState().update(() {
                                 FFAppState().tmpError = '';
                               });
-                              reauthUserResult1 = await actions.reauthUser(
+                              _model.reauthUserResult1 =
+                                  await actions.reauthUser(
                                 currentUserEmail,
-                                currentPasswordTextFieldController!.text,
+                                _model.currentPasswordTextFieldController.text,
                                 '-',
                               );
                               _shouldSetState = true;
-                              if (reauthUserResult1 != null &&
-                                  reauthUserResult1 != '') {
-                                setState(() {
+                              if (_model.reauthUserResult1 != null &&
+                                  _model.reauthUserResult1 != '') {
+                                FFAppState().update(() {
                                   FFAppState().tmpError =
                                       'Your current password is invalid';
                                 });
                                 if (_shouldSetState) setState(() {});
                                 return;
                               }
-                              isPwdChanged = await actions.resetUserPassword(
+                              _model.isPwdChanged =
+                                  await actions.resetUserPassword(
                                 currentUserEmail,
-                                currentPasswordTextFieldController!.text,
-                                newPassword1TextFieldController!.text,
+                                _model.currentPasswordTextFieldController.text,
+                                _model.newPassword1TextFieldController.text,
                               );
                               _shouldSetState = true;
-                              if (isPwdChanged!) {
+                              if (_model.isPwdChanged!) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -438,7 +453,7 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                                   ),
                                 );
                               } else {
-                                setState(() {
+                                FFAppState().update(() {
                                   FFAppState().tmpError =
                                       'Error occured while changing user password';
                                 });
@@ -448,7 +463,7 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
 
                               context.goNamed('LoginDetailsView');
                             } else {
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().tmpError =
                                     'Please enter the same new passwords';
                               });
@@ -459,21 +474,24 @@ class _ChangePasswordViewWidgetState extends State<ChangePasswordViewWidget> {
                           text: 'Save new password',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).noColor,
                             textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
-                            elevation: 0,
+                            elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 0,
+                              width: 0.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),

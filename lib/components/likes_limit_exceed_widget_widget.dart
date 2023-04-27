@@ -1,13 +1,15 @@
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'likes_limit_exceed_widget_model.dart';
+export 'likes_limit_exceed_widget_model.dart';
 
 class LikesLimitExceedWidgetWidget extends StatefulWidget {
   const LikesLimitExceedWidgetWidget({
@@ -28,7 +30,26 @@ class LikesLimitExceedWidgetWidget extends StatefulWidget {
 
 class _LikesLimitExceedWidgetWidgetState
     extends State<LikesLimitExceedWidgetWidget> {
-  bool? didPurchase;
+  late LikesLimitExceedWidgetModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => LikesLimitExceedWidgetModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +57,12 @@ class _LikesLimitExceedWidgetWidgetState
 
     return Container(
       width: MediaQuery.of(context).size.width * 3.43,
-      height: 439,
+      height: 439.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBtnText,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -51,10 +72,10 @@ class _LikesLimitExceedWidgetWidgetState
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
                   child: Text(
                     'Switch to Premium Plus',
-                    style: FlutterFlowTheme.of(context).title3.override(
+                    style: FlutterFlowTheme.of(context).headlineSmall.override(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.bold,
                         ),
@@ -62,11 +83,12 @@ class _LikesLimitExceedWidgetWidgetState
                 ),
                 if (widget.showTime ?? true)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                     child: Text(
                       'Your daily 10 likes limit has been reached.\nPlease, subscribe to unlock the unlimited likes',
                       textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context).bodyText2,
+                      style: FlutterFlowTheme.of(context).bodySmall,
                     ),
                   ),
                 Row(
@@ -77,23 +99,23 @@ class _LikesLimitExceedWidgetWidgetState
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       color: Color(0xFFF5F5F5),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Stack(
                         children: [
                           Container(
-                            width: 110,
-                            height: 120,
+                            width: 110.0,
+                            height: 120.0,
                             decoration: BoxDecoration(),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      0.0, 8.0, 0.0, 0.0),
                                   child: Container(
-                                    width: 83,
-                                    height: 22,
+                                    width: 83.0,
+                                    height: 22.0,
                                     constraints: BoxConstraints(
                                       maxWidth: double.infinity,
                                       maxHeight: double.infinity,
@@ -103,20 +125,20 @@ class _LikesLimitExceedWidgetWidgetState
                                       '12 months',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Roboto',
-                                            fontSize: 17,
+                                            fontSize: 17.0,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 0),
+                                      0.0, 16.0, 0.0, 0.0),
                                   child: Container(
-                                    width: 83,
-                                    height: 32,
+                                    width: 83.0,
+                                    height: 32.0,
                                     constraints: BoxConstraints(
                                       maxWidth: double.infinity,
                                       maxHeight: double.infinity,
@@ -126,11 +148,11 @@ class _LikesLimitExceedWidgetWidgetState
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      0.0, 8.0, 0.0, 0.0),
                                   child: ClipRRect(
                                     child: Container(
-                                      width: 100,
-                                      height: 32,
+                                      width: 100.0,
+                                      height: 32.0,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
                                         maxHeight: double.infinity,
@@ -149,14 +171,14 @@ class _LikesLimitExceedWidgetWidgetState
                                                     .offerings!
                                                     .current!
                                                     .annual!
-                                                    .product
+                                                    .storeProduct
                                                     .priceString,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
-                                                          fontSize: 14,
+                                                          fontSize: 14.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
@@ -166,7 +188,7 @@ class _LikesLimitExceedWidgetWidgetState
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 2, 0, 0),
+                                                    0.0, 2.0, 0.0, 0.0),
                                             child: Text(
                                               '${formatNumber(
                                                 functions.mdiv(
@@ -174,7 +196,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                         .offerings!
                                                         .current!
                                                         .annual!
-                                                        .product
+                                                        .storeProduct
                                                         .price,
                                                     12),
                                                 formatType: FormatType.decimal,
@@ -183,10 +205,10 @@ class _LikesLimitExceedWidgetWidgetState
                                               )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Roboto',
-                                                        fontSize: 10,
+                                                        fontSize: 10.0,
                                                       ),
                                             ),
                                           ),
@@ -202,15 +224,19 @@ class _LikesLimitExceedWidgetWidgetState
                               revenue_cat
                                   .offerings!.current!.annual!.identifier)
                             InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
-                                setState(() {
+                                FFAppState().update(() {
                                   FFAppState().selectedPackage = revenue_cat
                                       .offerings!.current!.annual!.identifier;
                                 });
                               },
                               child: Container(
-                                width: 110,
-                                height: 120,
+                                width: 110.0,
+                                height: 120.0,
                                 decoration: BoxDecoration(
                                   color: Color(0x7FF5F5F5),
                                 ),
@@ -222,13 +248,13 @@ class _LikesLimitExceedWidgetWidgetState
                     Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Stack(
                         children: [
                           Container(
-                            width: 110,
-                            height: 120,
+                            width: 110.0,
+                            height: 120.0,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -236,9 +262,9 @@ class _LikesLimitExceedWidgetWidgetState
                                   Color(0xFFF95A82),
                                   Color(0xFFEA3C7D)
                                 ],
-                                stops: [0.13, 0.69, 1],
-                                begin: AlignmentDirectional(0, -1),
-                                end: AlignmentDirectional(0, 1),
+                                stops: [0.13, 0.69, 1.0],
+                                begin: AlignmentDirectional(0.0, -1.0),
+                                end: AlignmentDirectional(0, 1.0),
                               ),
                             ),
                             child: Column(
@@ -246,10 +272,10 @@ class _LikesLimitExceedWidgetWidgetState
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      0.0, 8.0, 0.0, 0.0),
                                   child: Container(
-                                    width: 83,
-                                    height: 22,
+                                    width: 83.0,
+                                    height: 22.0,
                                     constraints: BoxConstraints(
                                       maxWidth: double.infinity,
                                       maxHeight: double.infinity,
@@ -259,22 +285,22 @@ class _LikesLimitExceedWidgetWidgetState
                                       '3 months',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
-                                            fontSize: 17,
+                                                .primary,
+                                            fontSize: 17.0,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 0),
+                                      0.0, 16.0, 0.0, 0.0),
                                   child: Container(
-                                    width: 83,
-                                    height: 32,
+                                    width: 83.0,
+                                    height: 32.0,
                                     constraints: BoxConstraints(
                                       maxWidth: double.infinity,
                                       maxHeight: double.infinity,
@@ -285,22 +311,22 @@ class _LikesLimitExceedWidgetWidgetState
                                       textAlign: TextAlign.center,
                                       maxLines: 2,
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      0.0, 8.0, 0.0, 0.0),
                                   child: ClipRRect(
                                     child: Container(
-                                      width: 100,
-                                      height: 32,
+                                      width: 100.0,
+                                      height: 32.0,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
                                         maxHeight: double.infinity,
@@ -319,17 +345,17 @@ class _LikesLimitExceedWidgetWidgetState
                                                     .offerings!
                                                     .current!
                                                     .threeMonth!
-                                                    .product
+                                                    .storeProduct
                                                     .priceString,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
-                                                          fontSize: 14,
+                                                              .primary,
+                                                          fontSize: 14.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
@@ -339,7 +365,7 @@ class _LikesLimitExceedWidgetWidgetState
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 2, 0, 0),
+                                                    0.0, 2.0, 0.0, 0.0),
                                             child: Text(
                                               '${formatNumber(
                                                 functions.mdiv(
@@ -347,7 +373,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                         .offerings!
                                                         .current!
                                                         .threeMonth!
-                                                        .product
+                                                        .storeProduct
                                                         .price,
                                                     3),
                                                 formatType: FormatType.decimal,
@@ -356,14 +382,14 @@ class _LikesLimitExceedWidgetWidgetState
                                               )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
-                                                        fontSize: 10,
+                                                                .primary,
+                                                        fontSize: 10.0,
                                                       ),
                                             ),
                                           ),
@@ -379,8 +405,12 @@ class _LikesLimitExceedWidgetWidgetState
                               revenue_cat
                                   .offerings!.current!.threeMonth!.identifier)
                             InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
-                                setState(() {
+                                FFAppState().update(() {
                                   FFAppState().selectedPackage = revenue_cat
                                       .offerings!
                                       .current!
@@ -389,8 +419,8 @@ class _LikesLimitExceedWidgetWidgetState
                                 });
                               },
                               child: Container(
-                                width: 110,
-                                height: 120,
+                                width: 110.0,
+                                height: 120.0,
                                 decoration: BoxDecoration(
                                   color: Color(0x7FF5F5F5),
                                 ),
@@ -403,23 +433,23 @@ class _LikesLimitExceedWidgetWidgetState
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       color: Color(0xFFF5F5F5),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Stack(
                         children: [
                           Container(
-                            width: 110,
-                            height: 120,
+                            width: 110.0,
+                            height: 120.0,
                             decoration: BoxDecoration(),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      0.0, 8.0, 0.0, 0.0),
                                   child: Container(
-                                    width: 83,
-                                    height: 22,
+                                    width: 83.0,
+                                    height: 22.0,
                                     constraints: BoxConstraints(
                                       maxWidth: double.infinity,
                                       maxHeight: double.infinity,
@@ -429,20 +459,20 @@ class _LikesLimitExceedWidgetWidgetState
                                       '1 month',
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
-                                          .bodyText1
+                                          .bodyMedium
                                           .override(
                                             fontFamily: 'Roboto',
-                                            fontSize: 17,
+                                            fontSize: 17.0,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 16, 0, 0),
+                                      0.0, 16.0, 0.0, 0.0),
                                   child: Container(
-                                    width: 83,
-                                    height: 32,
+                                    width: 83.0,
+                                    height: 32.0,
                                     constraints: BoxConstraints(
                                       maxWidth: double.infinity,
                                       maxHeight: double.infinity,
@@ -452,11 +482,11 @@ class _LikesLimitExceedWidgetWidgetState
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      0.0, 8.0, 0.0, 0.0),
                                   child: ClipRRect(
                                     child: Container(
-                                      width: 100,
-                                      height: 32,
+                                      width: 100.0,
+                                      height: 32.0,
                                       constraints: BoxConstraints(
                                         maxWidth: double.infinity,
                                         maxHeight: double.infinity,
@@ -475,14 +505,14 @@ class _LikesLimitExceedWidgetWidgetState
                                                     .offerings!
                                                     .current!
                                                     .monthly!
-                                                    .product
+                                                    .storeProduct
                                                     .priceString,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
-                                                          fontSize: 14,
+                                                          fontSize: 14.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
@@ -492,7 +522,7 @@ class _LikesLimitExceedWidgetWidgetState
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0, 2, 0, 0),
+                                                    0.0, 2.0, 0.0, 0.0),
                                             child: Text(
                                               '${formatNumber(
                                                 functions.mdiv(
@@ -500,7 +530,7 @@ class _LikesLimitExceedWidgetWidgetState
                                                         .offerings!
                                                         .current!
                                                         .monthly!
-                                                        .product
+                                                        .storeProduct
                                                         .price,
                                                     1),
                                                 formatType: FormatType.decimal,
@@ -509,10 +539,10 @@ class _LikesLimitExceedWidgetWidgetState
                                               )}/m',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Roboto',
-                                                        fontSize: 10,
+                                                        fontSize: 10.0,
                                                       ),
                                             ),
                                           ),
@@ -528,15 +558,19 @@ class _LikesLimitExceedWidgetWidgetState
                               revenue_cat
                                   .offerings!.current!.monthly!.identifier)
                             InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
-                                setState(() {
+                                FFAppState().update(() {
                                   FFAppState().selectedPackage = revenue_cat
                                       .offerings!.current!.monthly!.identifier;
                                 });
                               },
                               child: Container(
-                                width: 110,
-                                height: 120,
+                                width: 110.0,
+                                height: 120.0,
                                 decoration: BoxDecoration(
                                   color: Color(0x7FF5F5F5),
                                 ),
@@ -549,12 +583,13 @@ class _LikesLimitExceedWidgetWidgetState
                 ),
                 if (widget.showTime ?? true)
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 24.0),
                     child: Text(
                       functions.getTimeToNoon(),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                      style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Roboto',
-                            fontSize: 17,
+                            fontSize: 17.0,
                             fontWeight: FontWeight.w600,
                           ),
                     ),
@@ -562,12 +597,12 @@ class _LikesLimitExceedWidgetWidgetState
               ],
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Stack(
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 48,
+                    height: 48.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -575,27 +610,27 @@ class _LikesLimitExceedWidgetWidgetState
                           Color(0xFFF95A82),
                           Color(0xFFEA3C7D)
                         ],
-                        stops: [0.13, 0.69, 1],
-                        begin: AlignmentDirectional(0, -1),
-                        end: AlignmentDirectional(0, 1),
+                        stops: [0.13, 0.69, 1.0],
+                        begin: AlignmentDirectional(0.0, -1.0),
+                        end: AlignmentDirectional(0, 1.0),
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(-1, 0),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
-                        didPurchase = await revenue_cat
+                        _model.didPurchase = await revenue_cat
                             .purchasePackage(FFAppState().selectedPackage);
-                        if (didPurchase!) {
+                        if (_model.didPurchase!) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
                                 'Congratulations! You unlock full features!',
                                 style: TextStyle(
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  fontSize: 14,
+                                  fontSize: 14.0,
                                 ),
                               ),
                               duration: Duration(milliseconds: 4000),
@@ -604,27 +639,30 @@ class _LikesLimitExceedWidgetWidgetState
                             ),
                           );
                         }
-                        Navigator.pop(context, didPurchase);
+                        Navigator.pop(context, _model.didPurchase);
 
                         setState(() {});
                       },
                       text: 'Continue',
                       options: FFButtonOptions(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: Colors.transparent,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle1
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                        elevation: 0,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Roboto',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                ),
+                        elevation: 0.0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
-                          width: 1,
+                          width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),
@@ -632,7 +670,7 @@ class _LikesLimitExceedWidgetWidgetState
                       FFAppState().selectedPackage == '')
                     Container(
                       width: double.infinity,
-                      height: 48,
+                      height: 48.0,
                       decoration: BoxDecoration(
                         color: Color(0x80F5F5F5),
                       ),

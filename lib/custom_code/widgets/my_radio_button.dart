@@ -1,10 +1,10 @@
 // Automatic FlutterFlow imports
-import '../../backend/backend.dart';
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom widgets
-import '../actions/index.dart'; // Imports custom actions
-import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/custom_code/actions/index.dart'; // Imports custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
@@ -56,7 +56,9 @@ class _MyRadioButtonState extends State<MyRadioButton> {
         widget.buttonValues!.add(defaultValue);
       }
     }
-    FFAppState().mrbSelectedValue = defaultValue;
+    setState(
+      () => FFAppState().mrbSelectedValue = defaultValue,
+    );
     widget.onValue();
     super.initState();
 
@@ -86,9 +88,7 @@ class _MyRadioButtonState extends State<MyRadioButton> {
       buttonLables: widget.buttonLabels ?? ['Option'],
       buttonValues: widget.buttonValues ?? ['Option'],
       radioButtonValue: (value) {
-        setState(() => {
-              FFAppState().mrbSelectedValue = value.toString(),
-            });
+        setState(() => FFAppState().mrbSelectedValue = value.toString());
         widget.onValue();
       },
       defaultSelected: defaultValue,

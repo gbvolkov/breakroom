@@ -1,11 +1,13 @@
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'empty_candidates_list_widget_model.dart';
+export 'empty_candidates_list_widget_model.dart';
 
 class EmptyCandidatesListWidgetWidget extends StatefulWidget {
   const EmptyCandidatesListWidgetWidget({
@@ -22,20 +24,41 @@ class EmptyCandidatesListWidgetWidget extends StatefulWidget {
 
 class _EmptyCandidatesListWidgetWidgetState
     extends State<EmptyCandidatesListWidgetWidget> {
+  late EmptyCandidatesListWidgetModel _model;
+
   LatLng? currentUserLocationValue;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => EmptyCandidatesListWidgetModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 335,
+      width: MediaQuery.of(context).size.width * 1.0,
+      height: 335.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBtnText,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -45,32 +68,32 @@ class _EmptyCandidatesListWidgetWidgetState
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
                   child: Text(
                     'That\'s it for now!',
-                    style: FlutterFlowTheme.of(context).title3.override(
+                    style: FlutterFlowTheme.of(context).headlineSmall.override(
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                   child: Text(
                     'Change your filters or check in later',
                     textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).bodyText2,
+                    style: FlutterFlowTheme.of(context).bodySmall,
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: Stack(
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 48,
+                    height: 48.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -78,15 +101,15 @@ class _EmptyCandidatesListWidgetWidgetState
                           Color(0xFFF95A82),
                           Color(0xFFEA3C7D)
                         ],
-                        stops: [0.13, 0.69, 1],
-                        begin: AlignmentDirectional(0, -1),
-                        end: AlignmentDirectional(0, 1),
+                        stops: [0.13, 0.69, 1.0],
+                        begin: AlignmentDirectional(0.0, -1.0),
+                        end: AlignmentDirectional(0, 1.0),
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(-1, 0),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         currentUserLocationValue = await getCurrentUserLocation(
@@ -112,20 +135,23 @@ class _EmptyCandidatesListWidgetWidgetState
                       text: 'Change the filter',
                       options: FFButtonOptions(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: Colors.transparent,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle1
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                        elevation: 0,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Roboto',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                ),
+                        elevation: 0.0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
-                          width: 1,
+                          width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),

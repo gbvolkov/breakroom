@@ -1,17 +1,19 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../backend/firebase_storage/storage.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/upload_media.dart';
-import '../custom_code/actions/index.dart' as actions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'upload_photos_view_model.dart';
+export 'upload_photos_view_model.dart';
 
 class UploadPhotosViewWidget extends StatefulWidget {
   const UploadPhotosViewWidget({
@@ -26,20 +28,19 @@ class UploadPhotosViewWidget extends StatefulWidget {
 }
 
 class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
-  bool isMediaUploading = false;
-  String uploadedFileUrl = '';
+  late UploadPhotosViewModel _model;
 
-  List<String>? photoCollectionResult;
-  List<String>? photosCollectionResultRemove;
-  List<PhotoStruct>? photosArray;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => UploadPhotosViewModel());
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
+      FFAppState().update(() {
         FFAppState().photosCollection = widget.photos!.toList();
         FFAppState().lastUploadedURL = '';
       });
@@ -47,46 +48,54 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
   }
 
   @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primary,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () {
+              print('IconButton pressed ...');
+            },
           ),
-          onPressed: () {
-            print('IconButton pressed ...');
-          },
+          title: Text(
+            'Page Title',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Roboto',
+                  color: Colors.white,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          'Page Title',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 32),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 32.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,12 +104,13 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(-1, 0),
+                      alignment: AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 64),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 64.0),
                         child: Text(
                           'Upload your\nphotos',
-                          style: FlutterFlowTheme.of(context).title1,
+                          style: FlutterFlowTheme.of(context).displaySmall,
                         ),
                       ),
                     ),
@@ -118,8 +128,8 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                         padding: EdgeInsets.zero,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10.0,
+                          mainAxisSpacing: 10.0,
                           childAspectRatio: 0.73,
                         ),
                         scrollDirection: Axis.vertical,
@@ -128,16 +138,20 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                           final photoCollectionItem =
                               photoCollection[photoCollectionIndex];
                           return Container(
-                            width: 116,
-                            height: 150,
+                            width: 116.0,
+                            height: 150.0,
                             child: Stack(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               children: [
                                 if (photoCollectionItem == null ||
                                     photoCollectionItem == '')
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 1),
+                                    alignment: AlignmentDirectional(-1.0, 1.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         final selectedMedia =
                                             await selectMediaWithSourceBottomSheet(
@@ -148,8 +162,10 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                             selectedMedia.every((m) =>
                                                 validateFileFormat(
                                                     m.storagePath, context))) {
-                                          setState(
-                                              () => isMediaUploading = true);
+                                          setState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
                                           var downloadUrls = <String>[];
                                           try {
                                             showUploadMessage(
@@ -157,6 +173,21 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                               'Uploading file...',
                                               showLoading: true,
                                             );
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
+
                                             downloadUrls = (await Future.wait(
                                               selectedMedia.map(
                                                 (m) async => await uploadData(
@@ -169,44 +200,50 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                           } finally {
                                             ScaffoldMessenger.of(context)
                                                 .hideCurrentSnackBar();
-                                            isMediaUploading = false;
+                                            _model.isDataUploading = false;
                                           }
-                                          if (downloadUrls.length ==
-                                              selectedMedia.length) {
-                                            setState(() => uploadedFileUrl =
-                                                downloadUrls.first);
+                                          if (selectedUploadedFiles.length ==
+                                                  selectedMedia.length &&
+                                              downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                            setState(() {
+                                              _model.uploadedLocalFile =
+                                                  selectedUploadedFiles.first;
+                                              _model.uploadedFileUrl =
+                                                  downloadUrls.first;
+                                            });
                                             showUploadMessage(
                                                 context, 'Success!');
                                           } else {
                                             setState(() {});
                                             showUploadMessage(context,
-                                                'Failed to upload media');
+                                                'Failed to upload data');
                                             return;
                                           }
                                         }
 
-                                        if (uploadedFileUrl != null &&
-                                            uploadedFileUrl != '') {
-                                          if (uploadedFileUrl !=
+                                        if (_model.uploadedFileUrl != null &&
+                                            _model.uploadedFileUrl != '') {
+                                          if (_model.uploadedFileUrl !=
                                               FFAppState().lastUploadedURL) {
-                                            photoCollectionResult =
+                                            _model.photoCollectionResult =
                                                 await actions
                                                     .setImageToCollection(
                                               FFAppState()
                                                   .photosCollection
                                                   .toList(),
-                                              uploadedFileUrl,
+                                              _model.uploadedFileUrl,
                                               valueOrDefault<int>(
                                                 photoCollectionIndex,
                                                 0,
                                               ),
                                             );
-                                            setState(() {
+                                            FFAppState().update(() {
                                               FFAppState().photosCollection =
-                                                  photoCollectionResult!
+                                                  _model.photoCollectionResult!
                                                       .toList();
                                               FFAppState().lastUploadedURL =
-                                                  uploadedFileUrl;
+                                                  _model.uploadedFileUrl;
                                             });
                                           }
                                         }
@@ -215,8 +252,8 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                       },
                                       child: Image.asset(
                                         'assets/images/photo-frame.png',
-                                        width: 105,
-                                        height: 140,
+                                        width: 105.0,
+                                        height: 140.0,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -224,27 +261,31 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                 if (photoCollectionItem != null &&
                                     photoCollectionItem != '')
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 1),
+                                    alignment: AlignmentDirectional(-1.0, 1.0),
                                     child: Image.network(
                                       photoCollectionItem,
-                                      width: 105,
-                                      height: 140,
+                                      width: 105.0,
+                                      height: 140.0,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 if (photoCollectionItem != null &&
                                     photoCollectionItem != '')
                                   Align(
-                                    alignment: AlignmentDirectional(1, -1),
+                                    alignment: AlignmentDirectional(1.0, -1.0),
                                     child: Container(
-                                      width: 24,
-                                      height: 24,
+                                      width: 24.0,
+                                      height: 24.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
                                         shape: BoxShape.circle,
                                       ),
                                       child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
@@ -253,7 +294,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                                 'Delete photo',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle2,
+                                                        .titleSmall,
                                               ),
                                               duration:
                                                   Duration(milliseconds: 4000),
@@ -262,7 +303,7 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                                       .backgroundDisable,
                                             ),
                                           );
-                                          photosCollectionResultRemove =
+                                          _model.photosCollectionResultRemove =
                                               await actions
                                                   .setImageToCollection(
                                             FFAppState()
@@ -271,10 +312,10 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                             '.',
                                             photoCollectionIndex,
                                           );
-                                          setState(() {
-                                            FFAppState().photosCollection =
-                                                photosCollectionResultRemove!
-                                                    .toList();
+                                          FFAppState().update(() {
+                                            FFAppState().photosCollection = _model
+                                                .photosCollectionResultRemove!
+                                                .toList();
                                           });
 
                                           setState(() {});
@@ -282,8 +323,8 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                                         child: Icon(
                                           Icons.close,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          size: 20,
+                                              .primary,
+                                          size: 20.0,
                                         ),
                                       ),
                                     ),
@@ -297,12 +338,12 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
                   child: Stack(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -310,25 +351,25 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                               Color(0xFFF95A82),
                               Color(0xFFEA3C7D)
                             ],
-                            stops: [0.13, 0.69, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                            stops: [0.13, 0.69, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            photosArray =
+                            _model.photosArray =
                                 await actions.packImageCollectionToPhotos(
                               FFAppState().photosCollection.toList(),
                             );
 
                             final usersUpdateData = {
                               'photos': getPhotoListFirestoreData(
-                                photosArray,
+                                _model.photosArray,
                               ),
                             };
                             await currentUserReference!.update(usersUpdateData);
@@ -340,21 +381,24 @@ class _UploadPhotosViewWidgetState extends State<UploadPhotosViewWidget> {
                           text: 'Continue',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
                             color: Colors.transparent,
                             textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
-                            elevation: 0,
+                            elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 0,
+                              width: 0.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),

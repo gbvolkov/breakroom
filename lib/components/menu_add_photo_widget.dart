@@ -1,14 +1,16 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../backend/firebase_storage/storage.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/upload_media.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'menu_add_photo_model.dart';
+export 'menu_add_photo_model.dart';
 
 class MenuAddPhotoWidget extends StatefulWidget {
   const MenuAddPhotoWidget({Key? key}) : super(key: key);
@@ -18,11 +20,26 @@ class MenuAddPhotoWidget extends StatefulWidget {
 }
 
 class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
-  bool isMediaUploading1 = false;
-  String uploadedFileUrl1 = '';
+  late MenuAddPhotoModel _model;
 
-  bool isMediaUploading2 = false;
-  String uploadedFileUrl2 = '';
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => MenuAddPhotoModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,25 +47,25 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
 
     return Container(
       width: double.infinity,
-      height: 270,
+      height: 270.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).noColor,
         boxShadow: [
           BoxShadow(
-            blurRadius: 5,
+            blurRadius: 5.0,
             color: Color(0x3B1D2429),
-            offset: Offset(0, -3),
+            offset: Offset(0.0, -3.0),
           )
         ],
         borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0),
-          bottomRight: Radius.circular(0),
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
+          bottomLeft: Radius.circular(0.0),
+          bottomRight: Radius.circular(0.0),
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
         ),
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+        padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -61,7 +78,8 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                 if (selectedMedia != null &&
                     selectedMedia.every(
                         (m) => validateFileFormat(m.storagePath, context))) {
-                  setState(() => isMediaUploading1 = true);
+                  setState(() => _model.isDataUploading1 = true);
+                  var selectedUploadedFiles = <FFUploadedFile>[];
                   var downloadUrls = <String>[];
                   try {
                     showUploadMessage(
@@ -69,6 +87,16 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                       'Uploading file...',
                       showLoading: true,
                     );
+                    selectedUploadedFiles = selectedMedia
+                        .map((m) => FFUploadedFile(
+                              name: m.storagePath.split('/').last,
+                              bytes: m.bytes,
+                              height: m.dimensions?.height,
+                              width: m.dimensions?.width,
+                              blurHash: m.blurHash,
+                            ))
+                        .toList();
+
                     downloadUrls = (await Future.wait(
                       selectedMedia.map(
                         (m) async => await uploadData(m.storagePath, m.bytes),
@@ -79,24 +107,29 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                         .toList();
                   } finally {
                     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    isMediaUploading1 = false;
+                    _model.isDataUploading1 = false;
                   }
-                  if (downloadUrls.length == selectedMedia.length) {
-                    setState(() => uploadedFileUrl1 = downloadUrls.first);
+                  if (selectedUploadedFiles.length == selectedMedia.length &&
+                      downloadUrls.length == selectedMedia.length) {
+                    setState(() {
+                      _model.uploadedLocalFile1 = selectedUploadedFiles.first;
+                      _model.uploadedFileUrl1 = downloadUrls.first;
+                    });
                     showUploadMessage(context, 'Success!');
                   } else {
                     setState(() {});
-                    showUploadMessage(context, 'Failed to upload media');
+                    showUploadMessage(context, 'Failed to upload data');
                     return;
                   }
                 }
 
-                if (uploadedFileUrl1 != null && uploadedFileUrl1 != '') {
+                if (_model.uploadedFileUrl1 != null &&
+                    _model.uploadedFileUrl1 != '') {
                   final usersUpdateData = {
                     'photos': FieldValue.arrayUnion([
                       getPhotoFirestoreData(
                         createPhotoStruct(
-                          image: uploadedFileUrl1,
+                          image: _model.uploadedFileUrl1,
                           rating: 0.0,
                           clearUnsetFields: true,
                         ),
@@ -110,21 +143,24 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
               text: 'From gallery',
               options: FFButtonOptions(
                 width: double.infinity,
-                height: 60,
+                height: 60.0,
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Roboto',
                       color: FlutterFlowTheme.of(context).primaryText,
                       fontWeight: FontWeight.normal,
                     ),
+                elevation: 2.0,
                 borderSide: BorderSide(
                   color: Colors.transparent,
-                  width: 1,
+                  width: 1.0,
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
                   final selectedMedia = await selectMedia(
@@ -133,7 +169,8 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                   if (selectedMedia != null &&
                       selectedMedia.every(
                           (m) => validateFileFormat(m.storagePath, context))) {
-                    setState(() => isMediaUploading2 = true);
+                    setState(() => _model.isDataUploading2 = true);
+                    var selectedUploadedFiles = <FFUploadedFile>[];
                     var downloadUrls = <String>[];
                     try {
                       showUploadMessage(
@@ -141,6 +178,16 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                         'Uploading file...',
                         showLoading: true,
                       );
+                      selectedUploadedFiles = selectedMedia
+                          .map((m) => FFUploadedFile(
+                                name: m.storagePath.split('/').last,
+                                bytes: m.bytes,
+                                height: m.dimensions?.height,
+                                width: m.dimensions?.width,
+                                blurHash: m.blurHash,
+                              ))
+                          .toList();
+
                       downloadUrls = (await Future.wait(
                         selectedMedia.map(
                           (m) async => await uploadData(m.storagePath, m.bytes),
@@ -151,24 +198,29 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                           .toList();
                     } finally {
                       ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                      isMediaUploading2 = false;
+                      _model.isDataUploading2 = false;
                     }
-                    if (downloadUrls.length == selectedMedia.length) {
-                      setState(() => uploadedFileUrl2 = downloadUrls.first);
+                    if (selectedUploadedFiles.length == selectedMedia.length &&
+                        downloadUrls.length == selectedMedia.length) {
+                      setState(() {
+                        _model.uploadedLocalFile2 = selectedUploadedFiles.first;
+                        _model.uploadedFileUrl2 = downloadUrls.first;
+                      });
                       showUploadMessage(context, 'Success!');
                     } else {
                       setState(() {});
-                      showUploadMessage(context, 'Failed to upload media');
+                      showUploadMessage(context, 'Failed to upload data');
                       return;
                     }
                   }
 
-                  if (uploadedFileUrl2 != null && uploadedFileUrl2 != '') {
+                  if (_model.uploadedFileUrl2 != null &&
+                      _model.uploadedFileUrl2 != '') {
                     final usersUpdateData = {
                       'photos': FieldValue.arrayUnion([
                         getPhotoFirestoreData(
                           createPhotoStruct(
-                            image: uploadedFileUrl2,
+                            image: _model.uploadedFileUrl2,
                             rating: 0.0,
                             clearUnsetFields: false,
                           ),
@@ -182,22 +234,26 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                 text: 'Take a photo',
                 options: FFButtonOptions(
                   width: double.infinity,
-                  height: 60,
+                  height: 60.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Roboto',
                         color: FlutterFlowTheme.of(context).primaryText,
                         fontWeight: FontWeight.normal,
                       ),
+                  elevation: 2.0,
                   borderSide: BorderSide(
                     color: Colors.transparent,
-                    width: 1,
+                    width: 1.0,
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
                   Navigator.pop(context);
@@ -205,17 +261,21 @@ class _MenuAddPhotoWidgetState extends State<MenuAddPhotoWidget> {
                 text: 'Cancel',
                 options: FFButtonOptions(
                   width: double.infinity,
-                  height: 60,
-                  color: FlutterFlowTheme.of(context).primaryColor,
-                  textStyle: FlutterFlowTheme.of(context).subtitle2.override(
+                  height: 60.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: FlutterFlowTheme.of(context).primary,
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         fontFamily: 'Lexend Deca',
                         color: FlutterFlowTheme.of(context).alternate,
-                        fontSize: 16,
+                        fontSize: 16.0,
                         fontWeight: FontWeight.normal,
                       ),
+                  elevation: 2.0,
                   borderSide: BorderSide(
                     color: Colors.transparent,
-                    width: 1,
+                    width: 1.0,
                   ),
                 ),
               ),

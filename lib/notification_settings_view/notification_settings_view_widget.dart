@@ -1,12 +1,14 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'notification_settings_view_model.dart';
+export 'notification_settings_view_model.dart';
 
 class NotificationSettingsViewWidget extends StatefulWidget {
   const NotificationSettingsViewWidget({Key? key}) : super(key: key);
@@ -18,50 +20,62 @@ class NotificationSettingsViewWidget extends StatefulWidget {
 
 class _NotificationSettingsViewWidgetState
     extends State<NotificationSettingsViewWidget> {
-  bool? switchAllNotificationsValue1;
-  bool? switchAllNotificationsValue2;
-  bool? switchReceivedLikeNotificationsValue;
-  bool? switchMatchNotificationsValue;
-  bool? switchMessagesNotificationsValue;
+  late NotificationSettingsViewModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => NotificationSettingsViewModel());
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).alternate,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).alternate,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          title: Text(
+            'Notifications',
+            style: FlutterFlowTheme.of(context).headlineSmall,
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          'Notifications',
-          style: FlutterFlowTheme.of(context).title3,
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 32, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 32.0, 16.0, 0.0),
             child: StreamBuilder<UsersRecord>(
               stream: UsersRecord.getDocument(currentUserReference!),
               builder: (context, snapshot) {
@@ -69,10 +83,10 @@ class _NotificationSettingsViewWidgetState
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 50,
-                      height: 50,
+                      width: 50.0,
+                      height: 50.0,
                       child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                     ),
                   );
@@ -87,24 +101,25 @@ class _NotificationSettingsViewWidgetState
                       children: [
                         Expanded(
                           child: Container(
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery.of(context).size.width * 1.0,
                             child: Stack(
-                              alignment: AlignmentDirectional(0, 0),
+                              alignment: AlignmentDirectional(0.0, 0.0),
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 54,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
+                                  height: 54.0,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        8, 0, 0, 0),
+                                        8.0, 0.0, 0.0, 0.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -113,18 +128,17 @@ class _NotificationSettingsViewWidgetState
                                         Text(
                                           'Receive all notifications',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2,
+                                              .titleSmall,
                                         ),
                                         Expanded(
                                           child: SwitchListTile(
-                                            value:
-                                                switchAllNotificationsValue1 ??=
-                                                    columnUsersRecord
-                                                        .notiffAll!,
+                                            value: _model
+                                                    .switchAllNotificationsValue1 ??=
+                                                columnUsersRecord.notiffAll!,
                                             onChanged: (newValue) async {
-                                              setState(() =>
-                                                  switchAllNotificationsValue1 =
-                                                      newValue!);
+                                              setState(() => _model
+                                                      .switchAllNotificationsValue1 =
+                                                  newValue!);
                                               if (newValue!) {
                                                 final usersUpdateData =
                                                     createUsersRecordData(
@@ -162,10 +176,11 @@ class _NotificationSettingsViewWidgetState
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 16),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 16.0),
                       child: Text(
                         'Notify me when:',
-                        style: FlutterFlowTheme.of(context).subtitle2.override(
+                        style: FlutterFlowTheme.of(context).titleSmall.override(
                               fontFamily: 'Roboto',
                               fontWeight: FontWeight.w500,
                             ),
@@ -173,30 +188,33 @@ class _NotificationSettingsViewWidgetState
                     ),
                     if (false)
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Expanded(
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 1.0,
                                 child: Stack(
-                                  alignment: AlignmentDirectional(0, 0),
+                                  alignment: AlignmentDirectional(0.0, 0.0),
                                   children: [
                                     Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 54,
+                                      width: MediaQuery.of(context).size.width *
+                                          1.0,
+                                      height: 54.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondaryBackground,
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(0, 0),
+                                      alignment: AlignmentDirectional(0.0, 0.0),
                                       child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -206,18 +224,18 @@ class _NotificationSettingsViewWidgetState
                                               'Receive all notifications',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle2,
+                                                      .titleSmall,
                                             ),
                                             Expanded(
                                               child: SwitchListTile(
-                                                value:
-                                                    switchAllNotificationsValue2 ??=
-                                                        columnUsersRecord
-                                                            .notiffAll!,
+                                                value: _model
+                                                        .switchAllNotificationsValue2 ??=
+                                                    columnUsersRecord
+                                                        .notiffAll!,
                                                 onChanged: (newValue) async {
-                                                  setState(() =>
-                                                      switchAllNotificationsValue2 =
-                                                          newValue!);
+                                                  setState(() => _model
+                                                          .switchAllNotificationsValue2 =
+                                                      newValue!);
                                                   if (newValue!) {
                                                     final usersUpdateData =
                                                         createUsersRecordData(
@@ -259,30 +277,32 @@ class _NotificationSettingsViewWidgetState
                         ),
                       ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: Container(
-                              width: MediaQuery.of(context).size.width,
+                              width: MediaQuery.of(context).size.width * 1.0,
                               child: Stack(
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 54,
+                                    width:
+                                        MediaQuery.of(context).size.width * 1.0,
+                                    height: 54.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
+                                          8.0, 0.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -291,18 +311,18 @@ class _NotificationSettingsViewWidgetState
                                           Text(
                                             'Received like',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .titleSmall,
                                           ),
                                           Expanded(
                                             child: SwitchListTile(
-                                              value:
-                                                  switchReceivedLikeNotificationsValue ??=
-                                                      columnUsersRecord
-                                                          .notiffLikes!,
+                                              value: _model
+                                                      .switchReceivedLikeNotificationsValue ??=
+                                                  columnUsersRecord
+                                                      .notiffLikes!,
                                               onChanged: (newValue) async {
-                                                setState(() =>
-                                                    switchReceivedLikeNotificationsValue =
-                                                        newValue!);
+                                                setState(() => _model
+                                                        .switchReceivedLikeNotificationsValue =
+                                                    newValue!);
                                                 if (newValue!) {
                                                   final usersUpdateData =
                                                       createUsersRecordData(
@@ -342,30 +362,32 @@ class _NotificationSettingsViewWidgetState
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Expanded(
                             child: Container(
-                              width: MediaQuery.of(context).size.width,
+                              width: MediaQuery.of(context).size.width * 1.0,
                               child: Stack(
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 54,
+                                    width:
+                                        MediaQuery.of(context).size.width * 1.0,
+                                    height: 54.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
+                                          8.0, 0.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -374,18 +396,18 @@ class _NotificationSettingsViewWidgetState
                                           Text(
                                             'Match',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .titleSmall,
                                           ),
                                           Expanded(
                                             child: SwitchListTile(
-                                              value:
-                                                  switchMatchNotificationsValue ??=
-                                                      columnUsersRecord
-                                                          .nofittMatches!,
+                                              value: _model
+                                                      .switchMatchNotificationsValue ??=
+                                                  columnUsersRecord
+                                                      .nofittMatches!,
                                               onChanged: (newValue) async {
-                                                setState(() =>
-                                                    switchMatchNotificationsValue =
-                                                        newValue!);
+                                                setState(() => _model
+                                                        .switchMatchNotificationsValue =
+                                                    newValue!);
                                                 if (newValue!) {
                                                   final usersUpdateData =
                                                       createUsersRecordData(
@@ -430,24 +452,25 @@ class _NotificationSettingsViewWidgetState
                         children: [
                           Expanded(
                             child: Container(
-                              width: MediaQuery.of(context).size.width,
+                              width: MediaQuery.of(context).size.width * 1.0,
                               child: Stack(
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 54,
+                                    width:
+                                        MediaQuery.of(context).size.width * 1.0,
+                                    height: 54.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
+                                          8.0, 0.0, 0.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -456,18 +479,17 @@ class _NotificationSettingsViewWidgetState
                                           Text(
                                             'Messages',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle2,
+                                                .titleSmall,
                                           ),
                                           Expanded(
                                             child: SwitchListTile(
-                                              value:
-                                                  switchMessagesNotificationsValue ??=
-                                                      columnUsersRecord
-                                                          .notiffMsgs!,
+                                              value: _model
+                                                      .switchMessagesNotificationsValue ??=
+                                                  columnUsersRecord.notiffMsgs!,
                                               onChanged: (newValue) async {
-                                                setState(() =>
-                                                    switchMessagesNotificationsValue =
-                                                        newValue!);
+                                                setState(() => _model
+                                                        .switchMessagesNotificationsValue =
+                                                    newValue!);
                                                 if (newValue!) {
                                                   final usersUpdateData =
                                                       createUsersRecordData(

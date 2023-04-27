@@ -1,17 +1,19 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../components/empty_matches_widget_widget.dart';
-import '../components/gender_icon_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/empty_matches_widget_widget.dart';
+import '/components/gender_icon_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:ui';
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'matches_view_model.dart';
+export 'matches_view_model.dart';
 
 class MatchesViewWidget extends StatefulWidget {
   const MatchesViewWidget({Key? key}) : super(key: key);
@@ -21,18 +23,24 @@ class MatchesViewWidget extends StatefulWidget {
 }
 
 class _MatchesViewWidgetState extends State<MatchesViewWidget> {
-  TextEditingController? txtSearchController;
+  late MatchesViewModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    txtSearchController = TextEditingController();
+    _model = createModel(context, () => MatchesViewModel());
+
+    _model.txtSearchController ??= TextEditingController();
   }
 
   @override
   void dispose() {
-    txtSearchController?.dispose();
+    _model.dispose();
+
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -40,29 +48,29 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Matches',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Matches',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Roboto',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
             child: StreamBuilder<UsersRecord>(
               stream: UsersRecord.getDocument(currentUserReference!),
               builder: (context, snapshot) {
@@ -70,10 +78,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 50,
-                      height: 50,
+                      width: 50.0,
+                      height: 50.0,
                       child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                     ),
                   );
@@ -83,43 +91,43 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     TextFormField(
-                      controller: txtSearchController,
+                      controller: _model.txtSearchController,
                       onChanged: (_) => EasyDebounce.debounce(
-                        'txtSearchController',
+                        '_model.txtSearchController',
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Search',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        hintStyle: FlutterFlowTheme.of(context).bodySmall,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         filled: true,
                         fillColor:
@@ -127,26 +135,28 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                         prefixIcon: Icon(
                           Icons.search,
                           color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 18,
+                          size: 18.0,
                         ),
-                        suffixIcon: txtSearchController!.text.isNotEmpty
+                        suffixIcon: _model.txtSearchController!.text.isNotEmpty
                             ? InkWell(
                                 onTap: () async {
-                                  txtSearchController?.clear();
+                                  _model.txtSearchController?.clear();
                                   setState(() {});
                                 },
                                 child: Icon(
                                   Icons.clear,
                                   color: Color(0xFF757575),
-                                  size: 24,
+                                  size: 24.0,
                                 ),
                               )
                             : null,
                       ),
-                      style: FlutterFlowTheme.of(context).subtitle2.override(
+                      style: FlutterFlowTheme.of(context).titleSmall.override(
                             fontFamily: 'Roboto',
-                            fontSize: 16,
+                            fontSize: 16.0,
                           ),
+                      validator: _model.txtSearchControllerValidator
+                          .asValidator(context),
                     ),
                     Expanded(
                       child: StreamBuilder<List<UsersRecord>>(
@@ -161,11 +171,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                           if (!snapshot.hasData) {
                             return Center(
                               child: SizedBox(
-                                width: 50,
-                                height: 50,
+                                width: 50.0,
+                                height: 50.0,
                                 child: CircularProgressIndicator(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
                               ),
                             );
@@ -176,7 +185,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                               .toList();
                           return Material(
                             color: Colors.transparent,
-                            elevation: 0,
+                            elevation: 0.0,
                             child: Container(
                               width: double.infinity,
                               height: double.infinity,
@@ -184,15 +193,15 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                 color: Colors.transparent,
                               ),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 8.0, 0.0, 0.0),
                                 child: Builder(
                                   builder: (context) {
                                     final matches = containerUsersRecordList
                                         .where((e) => functions.checkMatches(
                                             e,
                                             columnUsersRecord.liked!.toList(),
-                                            txtSearchController!.text))
+                                            _model.txtSearchController.text))
                                         .toList();
                                     if (matches.isEmpty) {
                                       return Center(
@@ -200,7 +209,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                           width: double.infinity,
                                           height: double.infinity,
                                           child: EmptyMatchesWidgetWidget(
-                                            search: txtSearchController!.text,
+                                            search:
+                                                _model.txtSearchController.text,
                                           ),
                                         ),
                                       );
@@ -210,8 +220,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
-                                        crossAxisSpacing: 4,
-                                        mainAxisSpacing: 4,
+                                        crossAxisSpacing: 4.0,
+                                        mainAxisSpacing: 4.0,
                                         childAspectRatio: 0.75,
                                       ),
                                       scrollDirection: Axis.vertical,
@@ -220,6 +230,10 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                         final matchesItem =
                                             matches[matchesIndex];
                                         return InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
                                           onTap: () async {
                                             if (columnUsersRecord.liked!
                                                     .toList()
@@ -277,7 +291,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                             color: Color(0xFFF5F5F5),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(16),
+                                                  BorderRadius.circular(16.0),
                                             ),
                                             child: Builder(builder: (_) {
                                               final child = Stack(
@@ -306,21 +320,21 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                           Color(0x00C4C4C4),
                                                           Color(0xC9000000)
                                                         ],
-                                                        stops: [0, 1],
+                                                        stops: [0.0, 1.0],
                                                         begin:
                                                             AlignmentDirectional(
-                                                                0, -1),
+                                                                0.0, -1.0),
                                                         end:
                                                             AlignmentDirectional(
-                                                                0, 1),
+                                                                0, 1.0),
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                8, 0, 8, 8),
+                                                            .fromSTEB(8.0, 0.0,
+                                                                8.0, 8.0),
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -332,6 +346,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                               MainAxisSize.max,
                                                           children: [
                                                             GenderIconWidget(
+                                                              key: Key(
+                                                                  'Key6u4_${matchesIndex}_of_${matches.length}'),
                                                               gender:
                                                                   matchesItem
                                                                       .gender,
@@ -340,37 +356,37 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondaryBackground,
-                                                                size: 16,
+                                                                size: 16.0,
                                                               ),
                                                               femaleIcon: Icon(
                                                                 FFIcons.kfemale,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .secondaryBackground,
-                                                                size: 16,
+                                                                size: 16.0,
                                                               ),
                                                             ),
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          4,
-                                                                          0,
-                                                                          0,
-                                                                          0),
+                                                                          4.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
                                                               child: Text(
                                                                 '${matchesItem.firstName}, ${functions.getAge(matchesItem.birthDay).toString()}',
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .subtitle2
+                                                                    .titleSmall
                                                                     .override(
                                                                       fontFamily:
                                                                           'Roboto',
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .primaryColor,
+                                                                          .primary,
                                                                       fontSize:
-                                                                          14,
+                                                                          14.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w500,
@@ -382,29 +398,29 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                         Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  -1, 0),
+                                                                  -1.0, 0.0),
                                                           child: Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        4,
-                                                                        0,
-                                                                        0),
+                                                                        0.0,
+                                                                        4.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Text(
                                                               matchesItem
                                                                   .education!,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText1
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Roboto',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primaryColor,
+                                                                        .primary,
                                                                     fontSize:
-                                                                        12,
+                                                                        12.0,
                                                                   ),
                                                             ),
                                                           ),
@@ -412,28 +428,29 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                         Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  -1, 0),
+                                                                  -1.0, 0.0),
                                                           child: Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        4,
-                                                                        0,
-                                                                        0),
+                                                                        0.0,
+                                                                        4.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Text(
                                                               matchesItem.bio!,
                                                               maxLines: 2,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .bodyText2
+                                                                  .bodySmall
                                                                   .override(
                                                                     fontFamily:
                                                                         'Roboto',
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .primaryColor,
-                                                                    fontSize: 8,
+                                                                        .primary,
+                                                                    fontSize:
+                                                                        8.0,
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .w300,
@@ -461,14 +478,14 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                           FlutterFlowIconButton(
                                                         borderColor:
                                                             Colors.transparent,
-                                                        borderRadius: 30,
-                                                        borderWidth: 1,
-                                                        buttonSize: 60,
+                                                        borderRadius: 30.0,
+                                                        borderWidth: 1.0,
+                                                        buttonSize: 60.0,
                                                         icon: Icon(
                                                           Icons.chat,
                                                           color:
                                                               Color(0xA3F5F5F5),
-                                                          size: 30,
+                                                          size: 30.0,
                                                         ),
                                                         onPressed: () async {
                                                           if (columnUsersRecord
@@ -546,15 +563,15 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                           FlutterFlowIconButton(
                                                         borderColor:
                                                             Colors.transparent,
-                                                        borderRadius: 30,
-                                                        borderWidth: 1,
-                                                        buttonSize: 60,
+                                                        borderRadius: 30.0,
+                                                        borderWidth: 1.0,
+                                                        buttonSize: 60.0,
                                                         icon: Icon(
                                                           Icons
                                                               .speaker_notes_off_outlined,
                                                           color:
                                                               Color(0xA3F5F5F5),
-                                                          size: 30,
+                                                          size: 30.0,
                                                         ),
                                                         onPressed: () async {
                                                           if (columnUsersRecord
@@ -624,7 +641,7 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                             FlutterFlowTheme.of(
                                                                     context)
                                                                 .alternate,
-                                                        size: 24,
+                                                        size: 24.0,
                                                       ),
                                                     ),
                                                 ],
@@ -645,8 +662,8 @@ class _MatchesViewWidgetState extends State<MatchesViewWidget> {
                                                   child: ImageFiltered(
                                                     imageFilter:
                                                         ImageFilter.blur(
-                                                      sigmaX: 8,
-                                                      sigmaY: 8,
+                                                      sigmaX: 8.0,
+                                                      sigmaY: 8.0,
                                                     ),
                                                     child: child,
                                                   ),

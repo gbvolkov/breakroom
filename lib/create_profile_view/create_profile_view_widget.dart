@@ -1,19 +1,22 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_choice_chips.dart';
-import '../flutter_flow/flutter_flow_drop_down.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../custom_code/widgets/index.dart' as custom_widgets;
-import '../flutter_flow/custom_functions.dart' as functions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'create_profile_view_model.dart';
+export 'create_profile_view_model.dart';
 
 class CreateProfileViewWidget extends StatefulWidget {
   const CreateProfileViewWidget({Key? key}) : super(key: key);
@@ -24,19 +27,21 @@ class CreateProfileViewWidget extends StatefulWidget {
 }
 
 class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
-  DateTime? userBDay;
-  TextEditingController? txtFirstNameController;
-  TextEditingController? txtSecondNameController;
-  String? ddIndustryValue;
-  TextEditingController? txtOccupationController;
-  TextEditingController? txtBioController;
-  PageController? pageViewController;
-  List<String>? choiceChipsValues;
+  late CreateProfileViewModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+  int get pageViewCurrentIndex => _model.pageViewController != null &&
+          _model.pageViewController!.hasClients &&
+          _model.pageViewController!.page != null
+      ? _model.pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => CreateProfileViewModel());
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (!currentUserEmailVerified) {
@@ -52,22 +57,21 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
       }
     });
 
-    txtBioController = TextEditingController(
-        text: valueOrDefault(currentUserDocument?.bio, ''));
-    txtFirstNameController = TextEditingController(
+    _model.txtFirstNameController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.firstName, ''));
-    txtSecondNameController = TextEditingController(
+    _model.txtSecondNameController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.lastName, ''));
-    txtOccupationController = TextEditingController(
+    _model.txtOccupationController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.occupation, ''));
+    _model.txtBioController ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.bio, ''));
   }
 
   @override
   void dispose() {
-    txtBioController?.dispose();
-    txtFirstNameController?.dispose();
-    txtSecondNameController?.dispose();
-    txtOccupationController?.dispose();
+    _model.dispose();
+
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -75,90 +79,92 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
-          ),
-          onPressed: () async {
-            Function() _navigate = () {};
-            if ((pageViewController?.page?.round() ?? 0) == 0) {
-              var confirmDialogResponse = await showDialog<bool>(
-                    context: context,
-                    builder: (alertDialogContext) {
-                      return AlertDialog(
-                        title: Text('Set up is not complete'),
-                        content: Text(
-                            'Do you really want to leave the app before seting up your account?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () =>
-                                Navigator.pop(alertDialogContext, false),
-                            child: Text('No'),
-                          ),
-                          TextButton(
-                            onPressed: () =>
-                                Navigator.pop(alertDialogContext, true),
-                            child: Text('Yes'),
-                          ),
-                        ],
-                      );
-                    },
-                  ) ??
-                  false;
-              if (confirmDialogResponse) {
-                GoRouter.of(context).prepareAuthEvent();
-                await signOut();
-                _navigate = () => context.goNamedAuth('WelcomeView', mounted);
-              }
-            } else {
-              await pageViewController?.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            }
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              Function() _navigate = () {};
+              if (pageViewCurrentIndex == 0) {
+                var confirmDialogResponse = await showDialog<bool>(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('Set up is not complete'),
+                          content: Text(
+                              'Do you really want to leave the app before seting up your account?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, false),
+                              child: Text('No'),
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, true),
+                              child: Text('Yes'),
+                            ),
+                          ],
+                        );
+                      },
+                    ) ??
+                    false;
+                if (confirmDialogResponse) {
+                  GoRouter.of(context).prepareAuthEvent();
+                  await authManager.signOut();
+                  GoRouter.of(context).clearRedirectLocation();
 
-            _navigate();
-          },
+                  _navigate = () => context.goNamedAuth('WelcomeView', mounted);
+                }
+              } else {
+                await _model.pageViewController?.previousPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              }
+
+              _navigate();
+            },
+          ),
+          title: Text(
+            'Page Title',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Roboto',
+                  color: Colors.white,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          'Page Title',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
                     child: PageView(
                       physics: const NeverScrollableScrollPhysics(),
-                      controller: pageViewController ??=
+                      controller: _model.pageViewController ??=
                           PageController(initialPage: 0),
                       scrollDirection: Axis.horizontal,
                       children: [
@@ -167,31 +173,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 48),
+                                      0.0, 0.0, 0.0, 48.0),
                                   child: Text(
                                     'Personal Information',
                                     style: FlutterFlowTheme.of(context)
-                                        .title1
+                                        .displaySmall
                                         .override(
                                           fontFamily: 'Roboto',
-                                          fontSize: 32,
+                                          fontSize: 32.0,
                                           fontWeight: FontWeight.bold,
                                         ),
                                   ),
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: Text(
                                     'First Name*',
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
@@ -201,64 +207,71 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 16.0),
                                 child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    controller: txtFirstNameController,
+                                  builder: (context) => TextFormField(
+                                    controller: _model.txtFirstNameController,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                       hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                          .bodySmall,
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                     keyboardType: TextInputType.name,
+                                    validator: _model
+                                        .txtFirstNameControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: Text(
                                     'Last Name*',
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
@@ -268,64 +281,71 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 16.0),
                                 child: AuthUserStreamWidget(
-                                  child: TextFormField(
-                                    controller: txtSecondNameController,
+                                  builder: (context) => TextFormField(
+                                    controller: _model.txtSecondNameController,
                                     autofocus: true,
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                       hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                          .bodySmall,
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                       filled: true,
                                       fillColor: Color(0xFFEFEFEF),
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                     keyboardType: TextInputType.name,
+                                    validator: _model
+                                        .txtSecondNameControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: Text(
                                     'Date of birth*',
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
@@ -338,16 +358,16 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 42,
+                                    height: 42.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
+                                        0.0, 0.0, 0.0, 16.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
@@ -357,35 +377,35 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1, 0),
+                                              AlignmentDirectional(-1.0, 0.0),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 0, 8),
+                                                    8.0, 0.0, 0.0, 8.0),
                                             child: Text(
-                                              userBDay != null
+                                              _model.userBDay != null
                                                   ? dateTimeFormat('yMd',
                                                       FFAppState().usrBDay)
                                                   : '',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle1,
+                                                      .titleMedium,
                                             ),
                                           ),
                                         ),
                                         FlutterFlowIconButton(
                                           borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 40,
+                                          borderRadius: 30.0,
+                                          borderWidth: 1.0,
+                                          buttonSize: 40.0,
                                           icon: Icon(
                                             Icons.calendar_today_outlined,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 22,
+                                            size: 22.0,
                                           ),
                                           onPressed: () async {
-                                            userBDay =
+                                            _model.userBDay =
                                                 await actions.vvShowDatePicker(
                                               context,
                                               FFAppState().usrBDay,
@@ -393,9 +413,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                               'Enter your birthday',
                                               'Birthday',
                                             );
-                                            if (userBDay != null) {
-                                              setState(() {
-                                                FFAppState().usrBDay = userBDay;
+                                            if (_model.userBDay != null) {
+                                              FFAppState().update(() {
+                                                FFAppState().usrBDay =
+                                                    _model.userBDay;
                                               });
                                             }
 
@@ -408,14 +429,14 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ],
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: Text(
                                     'Industry*',
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
@@ -425,10 +446,10 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 16),
+                                      0.0, 0.0, 0.0, 16.0),
                                   child: FutureBuilder<List<IndustriesRecord>>(
                                     future: queryIndustriesRecordOnce(
                                       queryBuilder: (industriesRecord) =>
@@ -439,12 +460,12 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       if (!snapshot.hasData) {
                                         return Center(
                                           child: SizedBox(
-                                            width: 50,
-                                            height: 50,
+                                            width: 50.0,
+                                            height: 50.0,
                                             child: CircularProgressIndicator(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
                                           ),
                                         );
@@ -453,42 +474,49 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           ddIndustryIndustriesRecordList =
                                           snapshot.data!;
                                       return FlutterFlowDropDown<String>(
-                                        initialOption: ddIndustryValue ??=
-                                            FFAppState().usrIndustry,
+                                        controller:
+                                            _model.ddIndustryValueController ??=
+                                                FormFieldController<String>(
+                                          _model.ddIndustryValue ??=
+                                              FFAppState().usrIndustry,
+                                        ),
                                         options: ddIndustryIndustriesRecordList
-                                            .map((e) => e.industry!)
+                                            .map((e) => e.industry)
+                                            .withoutNulls
                                             .toList()
                                             .toList(),
                                         onChanged: (val) => setState(
-                                            () => ddIndustryValue = val),
+                                            () => _model.ddIndustryValue = val),
                                         width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 50,
+                                            MediaQuery.of(context).size.width *
+                                                1.0,
+                                        height: 50.0,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1,
+                                            .titleMedium,
                                         hintText: 'Please select...',
                                         fillColor: Color(0xFFEFEFEF),
-                                        elevation: 2,
+                                        elevation: 2.0,
                                         borderColor: Colors.transparent,
-                                        borderWidth: 0,
-                                        borderRadius: 0,
+                                        borderWidth: 0.0,
+                                        borderRadius: 0.0,
                                         margin: EdgeInsetsDirectional.fromSTEB(
-                                            12, 4, 12, 4),
+                                            12.0, 4.0, 12.0, 4.0),
                                         hidesUnderline: true,
+                                        isSearchable: false,
                                       );
                                     },
                                   ),
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: Text(
                                     'Occupation*',
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
@@ -498,19 +526,19 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               AuthUserStreamWidget(
-                                child: TextFormField(
-                                  controller: txtOccupationController,
+                                builder: (context) => TextFormField(
+                                  controller: _model.txtOccupationController,
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelStyle:
-                                        FlutterFlowTheme.of(context).subtitle2,
+                                        FlutterFlowTheme.of(context).titleSmall,
                                     hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
+                                        FlutterFlowTheme.of(context).bodySmall,
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(4.0),
@@ -520,7 +548,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(4.0),
@@ -530,7 +558,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     errorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(4.0),
@@ -540,7 +568,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     focusedErrorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
                                       borderRadius: const BorderRadius.only(
                                         topLeft: Radius.circular(4.0),
@@ -550,18 +578,22 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                     filled: true,
                                     fillColor: Color(0xFFEFEFEF),
                                   ),
-                                  style: FlutterFlowTheme.of(context).subtitle1,
+                                  style:
+                                      FlutterFlowTheme.of(context).titleMedium,
+                                  validator: _model
+                                      .txtOccupationControllerValidator
+                                      .asValidator(context),
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-1, 0),
+                                alignment: AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: Text(
                                     'Bio*',
                                     style: FlutterFlowTheme.of(context)
-                                        .subtitle2
+                                        .titleSmall
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
@@ -571,58 +603,61 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                               ),
                               AuthUserStreamWidget(
-                                child: TextFormField(
-                                  controller: txtBioController,
+                                builder: (context) => TextFormField(
+                                  controller: _model.txtBioController,
                                   autofocus: true,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     labelStyle:
-                                        FlutterFlowTheme.of(context).subtitle2,
+                                        FlutterFlowTheme.of(context).titleSmall,
                                     hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
+                                        FlutterFlowTheme.of(context).bodySmall,
                                     enabledBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     errorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     focusedErrorBorder: UnderlineInputBorder(
                                       borderSide: BorderSide(
                                         color: Color(0x00000000),
-                                        width: 1,
+                                        width: 1.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     filled: true,
                                     fillColor: Color(0xFFEFEFEF),
                                   ),
-                                  style: FlutterFlowTheme.of(context).subtitle1,
+                                  style:
+                                      FlutterFlowTheme.of(context).titleMedium,
                                   maxLines: 5,
+                                  validator: _model.txtBioControllerValidator
+                                      .asValidator(context),
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 32.0),
                                 child: Stack(
                                   children: [
                                     Container(
                                       width: double.infinity,
-                                      height: 48,
+                                      height: 48.0,
                                       decoration: BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
@@ -630,41 +665,47 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             Color(0xFFF95A82),
                                             Color(0xFFEA3C7D)
                                           ],
-                                          stops: [0, 0.6, 1],
-                                          begin: AlignmentDirectional(0, -1),
-                                          end: AlignmentDirectional(0, 1),
+                                          stops: [0.0, 0.6, 1.0],
+                                          begin:
+                                              AlignmentDirectional(0.0, -1.0),
+                                          end: AlignmentDirectional(0, 1.0),
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                     Align(
-                                      alignment: AlignmentDirectional(-1, 0),
+                                      alignment:
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          if ((txtFirstNameController!.text ==
-                                                      null ||
-                                                  txtFirstNameController!.text ==
-                                                      '') ||
-                                              (txtSecondNameController!.text ==
-                                                      null ||
-                                                  txtSecondNameController!
+                                          if ((_model.txtFirstNameController.text == null ||
+                                                  _model.txtFirstNameController
                                                           .text ==
                                                       '') ||
-                                              (userBDay == null) ||
+                                              (_model.txtSecondNameController.text == null ||
+                                                  _model.txtSecondNameController
+                                                          .text ==
+                                                      '') ||
+                                              (_model.userBDay == null) ||
                                               (FFAppState().usrBDay! >=
                                                   functions.addYearsToDate(
                                                       getCurrentTimestamp,
                                                       18,
                                                       -1,
                                                       0)) ||
-                                              (ddIndustryValue == null ||
-                                                  ddIndustryValue == '') ||
-                                              (txtBioController!.text == null ||
-                                                  txtBioController!.text ==
+                                              (_model.ddIndustryValue == null ||
+                                                  _model.ddIndustryValue ==
                                                       '') ||
-                                              (txtOccupationController!.text ==
+                                              (_model.txtBioController.text ==
                                                       null ||
-                                                  txtOccupationController!
+                                                  _model.txtBioController
+                                                          .text ==
+                                                      '') ||
+                                              (_model.txtOccupationController
+                                                          .text ==
+                                                      null ||
+                                                  _model.txtOccupationController
                                                           .text ==
                                                       '')) {
                                             await showDialog(
@@ -686,7 +727,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                               },
                                             );
                                           } else {
-                                            await pageViewController?.nextPage(
+                                            await _model.pageViewController
+                                                ?.nextPage(
                                               duration:
                                                   Duration(milliseconds: 300),
                                               curve: Curves.ease,
@@ -696,25 +738,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         text: 'Next',
                                         options: FFButtonOptions(
                                           width: double.infinity,
-                                          height: 48,
+                                          height: 48.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
                                               .noColor,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle1
+                                              .titleMedium
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryColor,
+                                                        .primary,
                                               ),
-                                          elevation: 0,
+                                          elevation: 0.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 0,
+                                            width: 0.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),
@@ -732,47 +780,50 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 48),
+                                        0.0, 0.0, 0.0, 48.0),
                                     child: Text(
                                       'Gender',
-                                      style:
-                                          FlutterFlowTheme.of(context).title1,
+                                      style: FlutterFlowTheme.of(context)
+                                          .displaySmall,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Your Gender',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 32),
+                                      0.0, 0.0, 0.0, 32.0),
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width * 1.0,
+                                    height: 50.0,
                                     child: custom_widgets.MyRadioButton(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
+                                      width: MediaQuery.of(context).size.width *
+                                          1.0,
+                                      height: 50.0,
                                       buttonLabels:
                                           FFAppState().genders.toList(),
                                       buttonValues:
                                           FFAppState().genders.toList(),
                                       horizontal: false,
+                                      buttonWidth: 150.0,
                                       buttonHeight: 50.0,
                                       defaultSelected: FFAppState().usrGender,
                                       onValue: () async {
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrGender =
                                               FFAppState().mrbSelectedValue;
                                         });
@@ -781,31 +832,34 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Gender Preference',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 50,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
+                                  height: 50.0,
                                   child: custom_widgets.MyRadioButton(
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 50,
+                                    width:
+                                        MediaQuery.of(context).size.width * 1.0,
+                                    height: 50.0,
                                     buttonLabels: FFAppState().genders.toList(),
                                     buttonValues: FFAppState().genders.toList(),
                                     horizontal: false,
+                                    buttonWidth: 150.0,
                                     buttonHeight: 50.0,
                                     defaultSelected:
                                         FFAppState().usrGenderPreference,
                                     onValue: () async {
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().usrGenderPreference =
                                             FFAppState().mrbSelectedValue;
                                       });
@@ -815,13 +869,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -829,15 +883,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if ((FFAppState().usrGender == null ||
@@ -866,7 +920,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -876,23 +931,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 0,
+                                          width: 0.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -906,30 +967,33 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'Choose your status',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
-                                height: 200,
+                                width: MediaQuery.of(context).size.width * 1.0,
+                                height: 200.0,
                                 child: custom_widgets.MyRadioButton(
-                                  width: MediaQuery.of(context).size.width,
-                                  height: 200,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
+                                  height: 200.0,
                                   buttonLabels:
                                       FFAppState().intentions.toList(),
                                   buttonValues:
                                       FFAppState().intentions.toList(),
                                   horizontal: true,
+                                  buttonWidth: 150.0,
                                   buttonHeight: 50.0,
                                   defaultSelected: FFAppState().usrIntention,
                                   onValue: () async {
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrIntention =
                                           FFAppState().mrbSelectedValue;
                                     });
@@ -938,13 +1002,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -952,15 +1016,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState().usrIntention == null ||
@@ -984,7 +1048,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -994,23 +1059,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1024,21 +1095,23 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'Do you want children?',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 1.0,
                                 height:
                                     MediaQuery.of(context).size.height * 0.5,
                                 child: custom_widgets.MyRadioButton(
-                                  width: MediaQuery.of(context).size.width,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
                                   height:
                                       MediaQuery.of(context).size.height * 0.5,
                                   buttonLabels:
@@ -1046,11 +1119,12 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonValues:
                                       FFAppState().childrenOptionsList.toList(),
                                   horizontal: true,
+                                  buttonWidth: 150.0,
                                   buttonHeight: 50.0,
                                   defaultSelected:
                                       FFAppState().usrChildfreeStatus,
                                   onValue: () async {
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrChildfreeStatus =
                                           FFAppState().mrbSelectedValue;
                                     });
@@ -1059,13 +1133,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1073,15 +1147,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState().usrChildfreeStatus ==
@@ -1107,7 +1181,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1117,23 +1192,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1147,17 +1228,18 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'Religion',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width,
+                              width: MediaQuery.of(context).size.width * 1.0,
                               height: MediaQuery.of(context).size.height * 0.7,
                               child: custom_widgets.MyRadioButton(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 1.0,
                                 height:
                                     MediaQuery.of(context).size.height * 0.7,
                                 buttonLabels:
@@ -1165,10 +1247,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 buttonValues:
                                     FFAppState().religionList.toList(),
                                 horizontal: true,
+                                buttonWidth: 150.0,
                                 buttonHeight: 50.0,
                                 defaultSelected: FFAppState().usrReligion,
                                 onValue: () async {
-                                  setState(() {
+                                  FFAppState().update(() {
                                     FFAppState().usrReligion =
                                         FFAppState().mrbSelectedValue;
                                   });
@@ -1176,13 +1259,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1190,15 +1273,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState().usrReligion == null ||
@@ -1222,7 +1305,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1232,23 +1316,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1262,21 +1352,23 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'Education',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 1.0,
                                 height:
                                     MediaQuery.of(context).size.height * 0.6,
                                 child: custom_widgets.MyRadioButton(
-                                  width: MediaQuery.of(context).size.width,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
                                   height:
                                       MediaQuery.of(context).size.height * 0.6,
                                   buttonLabels:
@@ -1284,10 +1376,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonValues:
                                       FFAppState().educationList.toList(),
                                   horizontal: true,
+                                  buttonWidth: 150.0,
                                   buttonHeight: 50.0,
                                   defaultSelected: FFAppState().usrEducation,
                                   onValue: () async {
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrEducation =
                                           FFAppState().mrbSelectedValue;
                                     });
@@ -1296,13 +1389,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1310,15 +1403,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState().usrEducation == null ||
@@ -1342,7 +1435,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1352,23 +1446,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1382,21 +1482,23 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'Body type',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 1.0,
                                 height:
                                     MediaQuery.of(context).size.height * 0.6,
                                 child: custom_widgets.MyRadioButton(
-                                  width: MediaQuery.of(context).size.width,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
                                   height:
                                       MediaQuery.of(context).size.height * 0.6,
                                   buttonLabels:
@@ -1404,10 +1506,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonValues:
                                       FFAppState().bodyTypeList.toList(),
                                   horizontal: true,
+                                  buttonWidth: 150.0,
                                   buttonHeight: 50.0,
                                   defaultSelected: FFAppState().usrBodyType,
                                   onValue: () async {
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrBodyType =
                                           FFAppState().mrbSelectedValue;
                                     });
@@ -1416,13 +1519,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1430,15 +1533,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState().usrBodyType == null ||
@@ -1462,7 +1565,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1472,23 +1576,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1502,23 +1612,25 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 32.0),
                                 child: Text(
                                   'What are you \ninterested in?',
-                                  style: FlutterFlowTheme.of(context).title1,
+                                  style:
+                                      FlutterFlowTheme.of(context).displaySmall,
                                 ),
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 32.0),
                                 child: AuthUserStreamWidget(
-                                  child: FutureBuilder<List<InterestsRecord>>(
+                                  builder: (context) =>
+                                      FutureBuilder<List<InterestsRecord>>(
                                     future: queryInterestsRecordOnce(
                                       queryBuilder: (interestsRecord) =>
                                           interestsRecord.orderBy('interest'),
@@ -1528,12 +1640,12 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       if (!snapshot.hasData) {
                                         return Center(
                                           child: SizedBox(
-                                            width: 50,
-                                            height: 50,
+                                            width: 50.0,
+                                            height: 50.0,
                                             child: CircularProgressIndicator(
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
                                           ),
                                         );
@@ -1542,24 +1654,21 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           choiceChipsInterestsRecordList =
                                           snapshot.data!;
                                       return FlutterFlowChoiceChips(
-                                        initiallySelected: (currentUserDocument
-                                                ?.interests
-                                                ?.toList() ??
-                                            []),
                                         options: choiceChipsInterestsRecordList
-                                            .map((e) => e.interest!)
+                                            .map((e) => e.interest)
+                                            .withoutNulls
                                             .toList()
                                             .map((label) => ChipData(label))
                                             .toList(),
-                                        onChanged: (val) => setState(
-                                            () => choiceChipsValues = val),
+                                        onChanged: (val) => setState(() =>
+                                            _model.choiceChipsValues = val),
                                         selectedChipStyle: ChipStyle(
                                           backgroundColor:
                                               FlutterFlowTheme.of(context)
                                                   .alternate,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -1567,11 +1676,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                                         .primaryBtnText,
                                               ),
                                           iconColor: Colors.white,
-                                          iconSize: 18,
+                                          iconSize: 18.0,
                                           labelPadding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 16, 8),
-                                          elevation: 0,
+                                                  16.0, 0.0, 16.0, 8.0),
+                                          elevation: 0.0,
                                         ),
                                         unselectedChipStyle: ChipStyle(
                                           backgroundColor:
@@ -1579,19 +1688,27 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                                   .secondaryBackground,
                                           textStyle:
                                               FlutterFlowTheme.of(context)
-                                                  .subtitle2,
+                                                  .titleSmall,
                                           iconColor: Color(0xFF323B45),
-                                          iconSize: 18,
+                                          iconSize: 18.0,
                                           labelPadding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 8, 16, 8),
-                                          elevation: 0,
+                                                  16.0, 8.0, 16.0, 8.0),
+                                          elevation: 0.0,
                                         ),
-                                        chipSpacing: 15,
-                                        rowSpacing: 10,
+                                        chipSpacing: 15.0,
+                                        rowSpacing: 10.0,
                                         multiselect: true,
-                                        initialized: choiceChipsValues != null,
+                                        initialized:
+                                            _model.choiceChipsValues != null,
                                         alignment: WrapAlignment.start,
+                                        controller: _model
+                                                .choiceChipsValueController ??=
+                                            FormFieldController<List<String>>(
+                                          (currentUserDocument?.interests
+                                                  ?.toList() ??
+                                              []),
+                                        ),
                                       );
                                     },
                                   ),
@@ -1599,13 +1716,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1613,18 +1730,19 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
-                                        if (choiceChipsValues!.length <= 0) {
+                                        if (_model.choiceChipsValues!.length <=
+                                            0) {
                                           await showDialog(
                                             context: context,
                                             builder: (alertDialogContext) {
@@ -1644,11 +1762,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          setState(() {
-                                            FFAppState().usrInterests =
-                                                choiceChipsValues!.toList();
+                                          FFAppState().update(() {
+                                            FFAppState().usrInterests = _model
+                                                .choiceChipsValues!
+                                                .toList();
                                           });
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1658,23 +1778,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1688,20 +1814,22 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'What are you\nlooking for?',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Container(
-                                width: MediaQuery.of(context).size.width,
+                                width: MediaQuery.of(context).size.width * 1.0,
                                 height:
                                     MediaQuery.of(context).size.height * 0.35,
                                 child: custom_widgets.MyCheckBoxGroup(
-                                  width: MediaQuery.of(context).size.width,
+                                  width:
+                                      MediaQuery.of(context).size.width * 1.0,
                                   height:
                                       MediaQuery.of(context).size.height * 0.35,
                                   buttonLabels:
@@ -1709,10 +1837,12 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   buttonValues:
                                       FFAppState().lookingForList.toList(),
                                   horizontal: true,
+                                  buttonWidth: 150.0,
+                                  buttonHeight: 50.0,
                                   defaultSelected:
                                       FFAppState().usrLookingFor.toList(),
                                   onValue: () async {
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrLookingFor = FFAppState()
                                           .mcbSelectedValues
                                           .toList();
@@ -1722,13 +1852,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1736,15 +1866,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState()
@@ -1770,7 +1900,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1780,23 +1911,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1810,10 +1947,11 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'How tall are you?',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Row(
@@ -1821,14 +1959,14 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: 80,
-                                  height: 260,
+                                  width: 80.0,
+                                  height: 260.0,
                                   child: custom_widgets.MyNumberPicker(
-                                    width: 80,
-                                    height: 260,
+                                    width: 80.0,
+                                    height: 260.0,
                                     personHeight: FFAppState().usrHeight,
                                     onValueChanged: () async {
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().usrHeight =
                                             FFAppState().nmpPickedNumber;
                                       });
@@ -1837,18 +1975,19 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                 ),
                                 Text(
                                   'in',
-                                  style: FlutterFlowTheme.of(context).title3,
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineSmall,
                                 ),
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -1856,15 +1995,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if (FFAppState().usrHeight == null) {
@@ -1887,7 +2026,8 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                             },
                                           );
                                         } else {
-                                          await pageViewController?.nextPage(
+                                          await _model.pageViewController
+                                              ?.nextPage(
                                             duration:
                                                 Duration(milliseconds: 300),
                                             curve: Curves.ease,
@@ -1897,23 +2037,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Next',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),
@@ -1927,41 +2073,42 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Text(
                                 'Lifestyle',
-                                style: FlutterFlowTheme.of(context).title1,
+                                style:
+                                    FlutterFlowTheme.of(context).displaySmall,
                               ),
                             ),
                             Column(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Do you work out?',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
-                                      height: 50,
+                                      height: 50.0,
                                       child: custom_widgets.MyRadioButton(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.9,
-                                        height: 50,
+                                        height: 50.0,
                                         buttonLabels:
                                             FFAppState().howOftenList.toList(),
                                         buttonValues:
@@ -1972,7 +2119,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrWorkoutStatus,
                                         onValue: () async {
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().mrbSelectedValue;
                                           });
@@ -1982,31 +2129,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Do you drink?',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
-                                      height: 50,
+                                      height: 50.0,
                                       child: custom_widgets.MyRadioButton(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.9,
-                                        height: 50,
+                                        height: 50.0,
                                         buttonLabels:
                                             FFAppState().howOftenList.toList(),
                                         buttonValues:
@@ -2017,7 +2164,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrDrinkingStatus,
                                         onValue: () async {
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().usrDrinkingStatus =
                                                 FFAppState().mrbSelectedValue;
                                           });
@@ -2027,31 +2174,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Do you smoke?',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
-                                      height: 50,
+                                      height: 50.0,
                                       child: custom_widgets.MyRadioButton(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.9,
-                                        height: 50,
+                                        height: 50.0,
                                         buttonLabels:
                                             FFAppState().howOftenList.toList(),
                                         buttonValues:
@@ -2062,7 +2209,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrSmokingStatus,
                                         onValue: () async {
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().usrSmokingStatus =
                                                 FFAppState().mrbSelectedValue;
                                           });
@@ -2072,29 +2219,31 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Are you spiritual?',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 50,
+                                      width: MediaQuery.of(context).size.width *
+                                          1.0,
+                                      height: 50.0,
                                       child: custom_widgets.MyRadioButton(
                                         width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 50,
+                                            MediaQuery.of(context).size.width *
+                                                1.0,
+                                        height: 50.0,
                                         buttonLabels:
                                             FFAppState().howOftenList.toList(),
                                         buttonValues:
@@ -2105,7 +2254,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         defaultSelected:
                                             FFAppState().usrSpiritualStatus,
                                         onValue: () async {
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().usrSpiritualStatus =
                                                 FFAppState().mrbSelectedValue;
                                           });
@@ -2117,13 +2266,13 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -2131,15 +2280,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         if ((FFAppState().usrWorkoutStatus == null || FFAppState().usrWorkoutStatus == '') ||
@@ -2178,15 +2327,15 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                         } else {
                                           final usersUpdateData = {
                                             ...createUsersRecordData(
-                                              firstName:
-                                                  txtFirstNameController!.text,
-                                              lastName:
-                                                  txtSecondNameController!.text,
+                                              firstName: _model
+                                                  .txtFirstNameController.text,
+                                              lastName: _model
+                                                  .txtSecondNameController.text,
                                               birthDay: FFAppState().usrBDay,
-                                              industry: ddIndustryValue,
-                                              occupation:
-                                                  txtOccupationController!.text,
-                                              bio: txtBioController!.text,
+                                              industry: _model.ddIndustryValue,
+                                              occupation: _model
+                                                  .txtOccupationController.text,
+                                              bio: _model.txtBioController.text,
                                               gender: FFAppState().usrGender,
                                               genderPreference: FFAppState()
                                                   .usrGenderPreference,
@@ -2211,7 +2360,7 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                               spiritualStatus: FFAppState()
                                                   .usrSpiritualStatus,
                                               displayName:
-                                                  '${txtFirstNameController!.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
+                                                  '${_model.txtFirstNameController.text}, ${functions.getAge(FFAppState().usrBDay).toString()}',
                                               isComplete: true,
                                             ),
                                             'interests':
@@ -2238,23 +2387,29 @@ class _CreateProfileViewWidgetState extends State<CreateProfileViewWidget> {
                                       text: 'Save',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
                                             .noColor,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 0,
+                                          width: 0.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),

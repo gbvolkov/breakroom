@@ -1,10 +1,10 @@
 // Automatic FlutterFlow imports
-import '../../backend/backend.dart';
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom widgets
-import '../actions/index.dart'; // Imports custom actions
-import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/custom_code/actions/index.dart'; // Imports custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
@@ -43,8 +43,10 @@ class _MyNumberPickerState extends State<MyNumberPicker> {
   @override
   void initState() {
     _currentValue = min(max(widget.personHeight ?? 65, 55), 85);
-    FFAppState().nmpPickedNumber = _currentValue;
-    FFAppState().userHeight = _currentValue;
+    setState(() {
+      FFAppState().nmpPickedNumber = _currentValue;
+      FFAppState().userHeight = _currentValue;
+    });
     super.initState();
   }
 
@@ -55,9 +57,11 @@ class _MyNumberPickerState extends State<MyNumberPicker> {
       minValue: 55,
       maxValue: 85,
       onChanged: (value) {
-        FFAppState().userHeight = value;
-        FFAppState().nmpPickedNumber = value;
-        setState(() => _currentValue = value);
+        setState(() {
+          FFAppState().userHeight = value;
+          FFAppState().nmpPickedNumber = value;
+          _currentValue = value;
+        });
         widget.onValueChanged();
       }, //(value) => widget.updateCallback
       itemCount: 5,

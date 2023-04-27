@@ -1,9 +1,10 @@
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/lat_lng.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'map_place_card_model.dart';
+export 'map_place_card_model.dart';
 
 class MapPlaceCardWidget extends StatefulWidget {
   const MapPlaceCardWidget({
@@ -18,6 +19,27 @@ class MapPlaceCardWidget extends StatefulWidget {
 }
 
 class _MapPlaceCardWidgetState extends State<MapPlaceCardWidget> {
+  late MapPlaceCardModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => MapPlaceCardModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -37,7 +59,7 @@ class _MapPlaceCardWidgetState extends State<MapPlaceCardWidget> {
               widget.marker?.toString(),
               'NA',
             ),
-            style: FlutterFlowTheme.of(context).bodyText1,
+            style: FlutterFlowTheme.of(context).bodyMedium,
           ),
         ],
       ),

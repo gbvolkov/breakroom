@@ -1,10 +1,12 @@
-import '../auth/auth_util.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'dialog_remove_profile_model.dart';
+export 'dialog_remove_profile_model.dart';
 
 class DialogRemoveProfileWidget extends StatefulWidget {
   const DialogRemoveProfileWidget({Key? key}) : super(key: key);
@@ -15,66 +17,87 @@ class DialogRemoveProfileWidget extends StatefulWidget {
 }
 
 class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
+  late DialogRemoveProfileModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => DialogRemoveProfileModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: 525,
+      width: MediaQuery.of(context).size.width * 1.0,
+      height: 525.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).primaryBtnText,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
+        padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
               child: Container(
-                width: 106,
-                height: 106,
+                width: 106.0,
+                height: 106.0,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).alternate,
                   shape: BoxShape.circle,
                 ),
                 child: Align(
-                  alignment: AlignmentDirectional(0, 0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: Image.asset(
                     'assets/images/Asset_2@2x.png',
-                    width: 30,
-                    height: 30,
+                    width: 30.0,
+                    height: 30.0,
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
               child: Text(
                 'Warning!',
-                style: FlutterFlowTheme.of(context).title3.override(
+                style: FlutterFlowTheme.of(context).headlineSmall.override(
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.bold,
                     ),
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
               child: Text(
                 'You are going to completely remove your profile from BreakRoom App. All your photos, chats and matches will be deleted with no possibility of restore.\n\nAre you really sure to do this?',
                 textAlign: TextAlign.center,
-                style: FlutterFlowTheme.of(context).bodyText2,
+                style: FlutterFlowTheme.of(context).bodySmall,
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 64, 0, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 64.0, 0.0, 0.0),
               child: Stack(
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 48,
+                    height: 48.0,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
@@ -82,15 +105,15 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                           Color(0xFFF95A82),
                           Color(0xFFEA3C7D)
                         ],
-                        stops: [0.13, 0.69, 1],
-                        begin: AlignmentDirectional(0, -1),
-                        end: AlignmentDirectional(0, 1),
+                        stops: [0.13, 0.69, 1.0],
+                        begin: AlignmentDirectional(0.0, -1.0),
+                        end: AlignmentDirectional(0, 1.0),
                       ),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(-1, 0),
+                    alignment: AlignmentDirectional(-1.0, 0.0),
                     child: FFButtonWidget(
                       onPressed: () async {
                         Navigator.pop(context);
@@ -98,20 +121,23 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                       text: 'not sure',
                       options: FFButtonOptions(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: Colors.transparent,
-                        textStyle: FlutterFlowTheme.of(context)
-                            .subtitle1
-                            .override(
-                              fontFamily: 'Roboto',
-                              color: FlutterFlowTheme.of(context).primaryColor,
-                            ),
-                        elevation: 0,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontFamily: 'Roboto',
+                                  color: FlutterFlowTheme.of(context).primary,
+                                ),
+                        elevation: 0.0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
-                          width: 1,
+                          width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),
@@ -119,9 +145,9 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
               ),
             ),
             Align(
-              alignment: AlignmentDirectional(-1, 0),
+              alignment: AlignmentDirectional(-1.0, 0.0),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 32, 0, 0),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 0.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     Function() _navigate = () {};
@@ -149,12 +175,14 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                         ) ??
                         false;
                     if (confirmDialogResponse) {
-                      await deleteUser(context);
+                      await authManager.deleteUser(context);
                       GoRouter.of(context).prepareAuthEvent();
-                      await signOut();
+                      await authManager.signOut();
+                      GoRouter.of(context).clearRedirectLocation();
+
                       _navigate =
                           () => context.goNamedAuth('WelcomeView', mounted);
-                      setState(() {
+                      FFAppState().update(() {
                         FFAppState().dislikedUsers = [];
                       });
                     }
@@ -164,18 +192,22 @@ class _DialogRemoveProfileWidgetState extends State<DialogRemoveProfileWidget> {
                   text: 'Yes, delete my account',
                   options: FFButtonOptions(
                     width: double.infinity,
-                    height: 48,
+                    height: 48.0,
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: Colors.transparent,
-                    textStyle: FlutterFlowTheme.of(context).subtitle1.override(
-                          fontFamily: 'Roboto',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                        ),
-                    elevation: 0,
+                    textStyle:
+                        FlutterFlowTheme.of(context).titleMedium.override(
+                              fontFamily: 'Roboto',
+                              color: FlutterFlowTheme.of(context).primaryText,
+                            ),
+                    elevation: 0.0,
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
-                      width: 1,
+                      width: 1.0,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ),

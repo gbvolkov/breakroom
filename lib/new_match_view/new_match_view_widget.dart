@@ -1,15 +1,17 @@
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_animations.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'new_match_view_model.dart';
+export 'new_match_view_model.dart';
 
 class NewMatchViewWidget extends StatefulWidget {
   const NewMatchViewWidget({
@@ -27,6 +29,11 @@ class NewMatchViewWidget extends StatefulWidget {
 
 class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
     with TickerProviderStateMixin {
+  late NewMatchViewModel _model;
+
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
   final animationsMap = {
     'imageOnPageLoadAnimation1': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
@@ -36,15 +43,15 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 0,
-          end: 1,
+          begin: 0.0,
+          end: 1.0,
         ),
         RotateEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
           begin: -0.2,
-          end: 0,
+          end: 0.0,
         ),
       ],
     ),
@@ -62,15 +69,15 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(100, 85),
-          end: Offset(0, 0),
+          begin: Offset(100.0, 85.0),
+          end: Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 2,
-          end: 1,
+          begin: Offset(2.0, 2.0),
+          end: Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -89,15 +96,15 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: Offset(-100, 85),
-          end: Offset(0, 0),
+          begin: Offset(-100.0, 85.0),
+          end: Offset(0.0, 0.0),
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 2,
-          end: 1,
+          begin: Offset(2.0, 2.0),
+          end: Offset(1.0, 1.0),
         ),
       ],
     ),
@@ -110,121 +117,134 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
           delay: 0.ms,
           duration: 600.ms,
           begin: 0.2,
-          end: 1,
+          end: 1.0,
         ),
         ScaleEffect(
           curve: Curves.easeInOut,
           delay: 0.ms,
           duration: 600.ms,
-          begin: 3,
-          end: 1,
+          begin: Offset(3.0, 3.0),
+          end: Offset(1.0, 1.0),
         ),
       ],
     ),
   };
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => NewMatchViewModel());
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              if (Navigator.of(context).canPop()) {
+                context.pop();
+              }
+              context.pushNamed('HomeView');
+            },
           ),
-          onPressed: () async {
-            if (Navigator.of(context).canPop()) {
-              context.pop();
-            }
-            context.pushNamed('HomeView');
-          },
+          title: Text(
+            'Page Title',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Roboto',
+                  color: Colors.white,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          'Page Title',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: Container(
-                  width: MediaQuery.of(context).size.width,
+                  width: MediaQuery.of(context).size.width * 1.0,
                   child: Stack(
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Image.asset(
                           'assets/images/m12_Artboard_1.png',
-                          width: MediaQuery.of(context).size.width,
+                          width: MediaQuery.of(context).size.width * 1.0,
                           height: MediaQuery.of(context).size.height * 0.9,
                           fit: BoxFit.cover,
                         ).animateOnPageLoad(
                             animationsMap['imageOnPageLoadAnimation1']!),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0, 0),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
                               'It\'s a match!',
-                              style:
-                                  FlutterFlowTheme.of(context).title1.override(
-                                        fontFamily: 'Roboto',
-                                        fontSize: 34,
-                                        fontWeight: FontWeight.w900,
-                                      ),
+                              style: FlutterFlowTheme.of(context)
+                                  .displaySmall
+                                  .override(
+                                    fontFamily: 'Roboto',
+                                    fontSize: 34.0,
+                                    fontWeight: FontWeight.w900,
+                                  ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  32.0, 16.0, 32.0, 0.0),
                               child: Text(
                                 'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. ',
-                                style: FlutterFlowTheme.of(context).bodyText2,
+                                style: FlutterFlowTheme.of(context).bodySmall,
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 64, 0, 64),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 64.0, 0.0, 64.0),
                               child: Stack(
-                                alignment: AlignmentDirectional(0, 0),
+                                alignment: AlignmentDirectional(0.0, 0.0),
                                 children: [
                                   Align(
-                                    alignment: AlignmentDirectional(1, 1),
+                                    alignment: AlignmentDirectional(1.0, 1.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 32, 32, 0),
+                                          0.0, 32.0, 32.0, 0.0),
                                       child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           context.pushNamed(
                                             'HomeDetailsView',
@@ -245,14 +265,14 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                         },
                                         child: ClipRRect(
                                           borderRadius:
-                                              BorderRadius.circular(32),
+                                              BorderRadius.circular(32.0),
                                           child: Image.network(
                                             valueOrDefault<String>(
                                               widget.match!.photoUrl,
                                               'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                             ),
-                                            width: 150,
-                                            height: 250,
+                                            width: 150.0,
+                                            height: 250.0,
                                             fit: BoxFit.fitHeight,
                                           ),
                                         ),
@@ -261,19 +281,20 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, -1),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          32, 0, 0, 32),
+                                          32.0, 0.0, 0.0, 32.0),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(32),
+                                        borderRadius:
+                                            BorderRadius.circular(32.0),
                                         child: Image.network(
                                           valueOrDefault<String>(
                                             widget.me!.photoUrl,
                                             'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                           ),
-                                          width: 150,
-                                          height: 250,
+                                          width: 150.0,
+                                          height: 250.0,
                                           fit: BoxFit.cover,
                                         ),
                                       ).animateOnPageLoad(animationsMap[
@@ -281,10 +302,10 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Container(
-                                      width: 84,
-                                      height: 84,
+                                      width: 84.0,
+                                      height: 84.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
@@ -292,14 +313,14 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                                       ),
                                       child: FlutterFlowIconButton(
                                         borderColor: Colors.transparent,
-                                        borderRadius: 30,
-                                        borderWidth: 1,
-                                        buttonSize: 60,
+                                        borderRadius: 30.0,
+                                        borderWidth: 1.0,
+                                        buttonSize: 60.0,
                                         icon: Icon(
                                           Icons.favorite_rounded,
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
-                                          size: 35,
+                                              .primary,
+                                          size: 35.0,
                                         ),
                                         onPressed: () {
                                           print('IconButton pressed ...');
@@ -321,12 +342,13 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
               if (!(widget.me!.blocked!.toList().contains(widget.match!.uid) ||
                   widget.match!.blocked!.toList().contains(widget.me!.uid)))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 32.0),
                   child: Stack(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -334,15 +356,15 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                               Color(0xFFF95A82),
                               Color(0xFFEA3C7D)
                             ],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                            stops: [0.0, 0.6, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             if (widget.me!.isPremium! ||
@@ -379,21 +401,24 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                           text: 'Start chat',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
                             color: Colors.transparent,
                             textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
-                            elevation: 0,
+                            elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),
@@ -403,12 +428,13 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
               if (widget.me!.blocked!.toList().contains(widget.match!.uid) ||
                   widget.match!.blocked!.toList().contains(widget.me!.uid))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 32),
+                  padding:
+                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 32.0),
                   child: Stack(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -416,15 +442,15 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                               Color(0x7FF95A82),
                               Color(0x7FEA3C7D)
                             ],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                            stops: [0.0, 0.6, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             if (widget.me!.blocked!
@@ -462,21 +488,24 @@ class _NewMatchViewWidgetState extends State<NewMatchViewWidget>
                           text: 'Start chat',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
                             color: Colors.transparent,
                             textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
-                            elevation: 0,
+                            elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 1,
+                              width: 1.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),

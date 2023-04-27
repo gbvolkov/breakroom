@@ -5,7 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
 import '../../backend/backend.dart';
-import '../../auth/firebase_user_provider.dart';
+
+import '../../auth/base_auth_user_provider.dart';
 import '../../backend/push_notifications/push_notifications_handler.dart'
     show PushNotificationsHandler;
 
@@ -21,8 +22,8 @@ export 'serialization_util.dart';
 const kTransitionInfoKey = '__transition_info__';
 
 class AppStateNotifier extends ChangeNotifier {
-  BreakroomFirebaseUser? initialUser;
-  BreakroomFirebaseUser? user;
+  BaseAuthUser? initialUser;
+  BaseAuthUser? user;
   bool showSplashImage = true;
   String? _redirectLocation;
 
@@ -47,7 +48,7 @@ class AppStateNotifier extends ChangeNotifier {
   /// to perform subsequent actions (such as navigation) afterwards.
   void updateNotifyOnAuthChange(bool notify) => notifyOnAuthChange = notify;
 
-  void update(BreakroomFirebaseUser newUser) {
+  void update(BaseAuthUser newUser) {
     initialUser ??= newUser;
     user = newUser;
     // Refresh the app on auth change unless explicitly marked otherwise.
@@ -105,7 +106,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'photoExpandView',
               requireAuth: true,
               asyncParams: {
-                'user': getDoc('users', UsersRecord.serializer),
+                'user': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => PhotoExpandViewWidget(
                 user: params.getParam('user', ParamType.Document),
@@ -118,7 +119,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               requireAuth: true,
               builder: (context, params) => params.isEmpty
                   ? NavBarPage(initialPage: 'ProfileView')
-                  : ProfileViewWidget(),
+                  : NavBarPage(
+                      initialPage: 'ProfileView',
+                      page: ProfileViewWidget(),
+                    ),
             ),
             FFRoute(
               name: 'SignInView',
@@ -201,7 +205,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'homeDetailsView',
               requireAuth: true,
               asyncParams: {
-                'userProfile': getDoc('users', UsersRecord.serializer),
+                'userProfile': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => HomeDetailsViewWidget(
                 userProfile: params.getParam('userProfile', ParamType.Document),
@@ -240,7 +244,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'filtersView',
               requireAuth: true,
               asyncParams: {
-                'user': getDoc('users', UsersRecord.serializer),
+                'user': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => FiltersViewWidget(
                 user: params.getParam('user', ParamType.Document),
@@ -260,7 +264,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'chooseLocationPage',
               requireAuth: true,
               asyncParams: {
-                'user': getDoc('users', UsersRecord.serializer),
+                'user': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => ChooseLocationPageWidget(
                 currentLocation:
@@ -284,12 +288,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'chat',
               requireAuth: true,
               asyncParams: {
-                'chatUser': getDoc('users', UsersRecord.serializer),
+                'chatUser': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => ChatWidget(
                 chatUser: params.getParam('chatUser', ParamType.Document),
                 chatRef: params.getParam(
-                    'chatRef', ParamType.DocumentReference, false, 'chats'),
+                    'chatRef', ParamType.DocumentReference, false, ['chats']),
                 route: params.getParam('route', ParamType.String),
               ),
             ),
@@ -318,7 +322,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'addUsersToGroup',
               requireAuth: true,
               asyncParams: {
-                'chat': getDoc('chats', ChatsRecord.serializer),
+                'chat': getDoc(['chats'], ChatsRecord.serializer),
               },
               builder: (context, params) => AddUsersToGroupWidget(
                 chat: params.getParam('chat', ParamType.Document),
@@ -329,8 +333,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'newMatchView',
               requireAuth: true,
               asyncParams: {
-                'me': getDoc('users', UsersRecord.serializer),
-                'match': getDoc('users', UsersRecord.serializer),
+                'me': getDoc(['users'], UsersRecord.serializer),
+                'match': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => NewMatchViewWidget(
                 me: params.getParam('me', ParamType.Document),
@@ -350,7 +354,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'getPremiumView',
               requireAuth: true,
               asyncParams: {
-                'user': getDoc('users', UsersRecord.serializer),
+                'user': getDoc(['users'], UsersRecord.serializer),
               },
               builder: (context, params) => GetPremiumViewWidget(
                 user: params.getParam('user', ParamType.Document),
@@ -557,8 +561,8 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => ChangePasswordViewWidget(),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
-        ).toRoute(appStateNotifier),
-      ],
+        ),
+      ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
     );
 
@@ -604,6 +608,16 @@ extension NavigationExtensions on BuildContext {
               queryParams: queryParams,
               extra: extra,
             );
+
+  void safePop() {
+    // If there is only one route on the stack, navigate to the initial
+    // page instead of popping.
+    if (GoRouter.of(this).routerDelegate.matches.length <= 1) {
+      go('/');
+    } else {
+      pop();
+    }
+  }
 }
 
 extension GoRouterExtensions on GoRouter {
@@ -615,6 +629,7 @@ extension GoRouterExtensions on GoRouter {
           : appState.updateNotifyOnAuthChange(false);
   bool shouldRedirect(bool ignoreRedirect) =>
       !ignoreRedirect && appState.hasRedirect();
+  void clearRedirectLocation() => appState.clearRedirectLocation();
   void setRedirectLocationIfUnset(String location) =>
       (routerDelegate.refreshListenable as AppStateNotifier)
           .updateNotifyOnAuthChange(false);
@@ -667,7 +682,7 @@ class FFParameters {
     String paramName,
     ParamType type, [
     bool isList = false,
-    String? collectionName,
+    List<String>? collectionNamePath,
   ]) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -681,7 +696,7 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionName);
+    return deserializeParam<T>(param, type, isList, collectionNamePath);
   }
 }
 

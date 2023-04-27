@@ -1,9 +1,9 @@
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_timer.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_timer.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'forgot_password_view_model.dart';
+export 'forgot_password_view_model.dart';
 
 class ForgotPasswordViewWidget extends StatefulWidget {
   const ForgotPasswordViewWidget({Key? key}) : super(key: key);
@@ -21,48 +23,40 @@ class ForgotPasswordViewWidget extends StatefulWidget {
 }
 
 class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
-  StopWatchTimer? timerController;
-  String? timerValue;
-  int? timerMilliseconds;
-  String? error;
-  TextEditingController? txtEmailController;
-  PageController? pageViewController;
-  TextEditingController? pinCodeController;
-  TextEditingController? newPassword1TextFieldController;
+  late ForgotPasswordViewModel _model;
 
-  late bool newPassword1TextFieldVisibility;
-  TextEditingController? newPassword2TextFieldController;
-
-  late bool newPassword2TextFieldVisibility;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+  int get pageViewCurrentIndex => _model.pageViewController != null &&
+          _model.pageViewController!.hasClients &&
+          _model.pageViewController!.page != null
+      ? _model.pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ForgotPasswordViewModel());
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      setState(() {
+      FFAppState().update(() {
         FFAppState().resetPwdSendState = 'Send';
         FFAppState().resetLinkAvailability = true;
       });
     });
 
-    newPassword1TextFieldController = TextEditingController();
-    newPassword1TextFieldVisibility = false;
-    newPassword2TextFieldController = TextEditingController();
-    newPassword2TextFieldVisibility = false;
-    pinCodeController = TextEditingController();
-    txtEmailController = TextEditingController();
+    _model.txtEmailController ??= TextEditingController();
+    _model.newPassword1TextFieldController ??= TextEditingController();
+    _model.newPassword2TextFieldController ??= TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
   void dispose() {
-    newPassword1TextFieldController?.dispose();
-    newPassword2TextFieldController?.dispose();
-    pinCodeController?.dispose();
-    timerController?.dispose();
-    txtEmailController?.dispose();
+    _model.dispose();
+
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -70,63 +64,64 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              if (pageViewCurrentIndex == 0) {
+                context.pop();
+              } else {
+                await _model.pageViewController?.previousPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              }
+            },
           ),
-          onPressed: () async {
-            if ((pageViewController?.page?.round() ?? 0) == 0) {
-              context.pop();
-            } else {
-              await pageViewController?.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            }
-          },
+          title: Text(
+            'Page Title',
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Roboto',
+                  color: Colors.white,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          'Page Title',
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
                 child: Container(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 1,
+                  height: MediaQuery.of(context).size.height * 1.0,
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
-                    controller: pageViewController ??=
+                    controller: _model.pageViewController ??=
                         PageController(initialPage: 0),
                     scrollDirection: Axis.horizontal,
                     children: [
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -135,53 +130,53 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 48),
+                                        0.0, 0.0, 0.0, 48.0),
                                     child: Text(
                                       'Forgot password',
                                       style: FlutterFlowTheme.of(context)
-                                          .title1
+                                          .displaySmall
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 32,
+                                            fontSize: 32.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 64),
+                                        0.0, 0.0, 0.0, 64.0),
                                     child: Text(
                                       'Enter your email or phone number to receive a code and reset a password',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                                          .titleMedium,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Email',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 16),
+                                      0.0, 0.0, 0.0, 16.0),
                                   child: TextFormField(
-                                    controller: txtEmailController,
+                                    controller: _model.txtEmailController,
                                     onChanged: (_) => EasyDebounce.debounce(
-                                      'txtEmailController',
+                                      '_model.txtEmailController',
                                       Duration(milliseconds: 2000),
                                       () => setState(() {}),
                                     ),
@@ -189,66 +184,74 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                     obscureText: false,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                       hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                          .bodySmall,
                                       enabledBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: UnderlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
                                           .textFieldBackground,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              16, 0, 16, 0),
-                                      suffixIcon:
-                                          txtEmailController!.text.isNotEmpty
-                                              ? InkWell(
-                                                  onTap: () async {
-                                                    txtEmailController?.clear();
-                                                    setState(() {});
-                                                  },
-                                                  child: Icon(
-                                                    Icons.clear,
-                                                    color: Color(0xFF757575),
-                                                    size: 22,
-                                                  ),
-                                                )
-                                              : null,
+                                              16.0, 0.0, 16.0, 0.0),
+                                      suffixIcon: _model.txtEmailController!
+                                              .text.isNotEmpty
+                                          ? InkWell(
+                                              onTap: () async {
+                                                _model.txtEmailController
+                                                    ?.clear();
+                                                setState(() {});
+                                              },
+                                              child: Icon(
+                                                Icons.clear,
+                                                color: Color(0xFF757575),
+                                                size: 22.0,
+                                              ),
+                                            )
+                                          : null,
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                     keyboardType: TextInputType.emailAddress,
+                                    validator: _model
+                                        .txtEmailControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 64, 0, 0),
+                                      0.0, 64.0, 0.0, 0.0),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -261,66 +264,56 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 4, 0),
+                                                  .fromSTEB(0.0, 0.0, 4.0, 0.0),
                                               child: FlutterFlowTimer(
-                                                timerValue: timerValue ??=
+                                                initialTime:
+                                                    _model.timerMilliseconds,
+                                                getDisplayTime: (value) =>
                                                     StopWatchTimer
                                                         .getDisplayTime(
-                                                  timerMilliseconds ??= 60000,
+                                                  value,
                                                   hours: false,
                                                   minute: false,
-                                                  second: true,
                                                   milliSecond: false,
                                                 ),
-                                                timer: timerController ??=
-                                                    StopWatchTimer(
-                                                  mode: StopWatchMode.countDown,
-                                                  presetMillisecond:
-                                                      timerMilliseconds ??=
-                                                          60000,
-                                                  onChange: (value) {
-                                                    setState(() {
-                                                      timerMilliseconds = value;
-                                                      timerValue =
-                                                          StopWatchTimer
-                                                              .getDisplayTime(
-                                                        value,
-                                                        hours: false,
-                                                        minute: false,
-                                                        second: true,
-                                                        milliSecond: false,
-                                                      );
-                                                    });
-                                                  },
-                                                ),
+                                                timer: _model.timerController,
+                                                onChanged: (value, displayTime,
+                                                    shouldUpdate) {
+                                                  _model.timerMilliseconds =
+                                                      value;
+                                                  _model.timerValue =
+                                                      displayTime;
+                                                  if (shouldUpdate)
+                                                    setState(() {});
+                                                },
+                                                onEnded: () async {
+                                                  FFAppState().update(() {
+                                                    FFAppState()
+                                                            .resetLinkAvailability =
+                                                        true;
+                                                  });
+                                                  _model
+                                                      .timerController.onExecute
+                                                      .add(StopWatchExecute
+                                                          .reset);
+                                                },
                                                 textAlign: TextAlign.start,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .secondaryText,
                                                         ),
-                                                onEnded: () async {
-                                                  setState(() {
-                                                    FFAppState()
-                                                            .resetLinkAvailability =
-                                                        true;
-                                                  });
-                                                  timerController?.onExecute
-                                                      .add(
-                                                    StopWatchExecute.reset,
-                                                  );
-                                                },
                                               ),
                                             ),
                                             Text(
                                               's',
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText1
+                                                      .bodyMedium
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
@@ -333,12 +326,12 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                         ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 8, 0, 0),
+                                            0.0, 8.0, 0.0, 0.0),
                                         child: Stack(
                                           children: [
                                             Container(
                                               width: double.infinity,
-                                              height: 48,
+                                              height: 48.0,
                                               decoration: BoxDecoration(
                                                 gradient: LinearGradient(
                                                   colors: [
@@ -346,42 +339,44 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                     Color(0xFFF95A82),
                                                     Color(0xFFEA3C7D)
                                                   ],
-                                                  stops: [0, 0.6, 1],
+                                                  stops: [0.0, 0.6, 1.0],
                                                   begin: AlignmentDirectional(
-                                                      0, -1),
+                                                      0.0, -1.0),
                                                   end: AlignmentDirectional(
-                                                      0, 1),
+                                                      0, 1.0),
                                                 ),
                                                 borderRadius:
-                                                    BorderRadius.circular(8),
+                                                    BorderRadius.circular(8.0),
                                               ),
                                             ),
                                             if (!FFAppState()
                                                 .resetLinkAvailability)
                                               Container(
                                                 width: double.infinity,
-                                                height: 48,
+                                                height: 48.0,
                                                 decoration: BoxDecoration(
                                                   color: Color(0x8DF5F5F5),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                             Align(
-                                              alignment:
-                                                  AlignmentDirectional(-1, 0),
+                                              alignment: AlignmentDirectional(
+                                                  -1.0, 0.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   if (FFAppState()
                                                       .resetLinkAvailability) {
-                                                    error = await actions
+                                                    _model.error = await actions
                                                         .sendPwdResetEmail(
                                                       context,
-                                                      txtEmailController!.text,
+                                                      _model.txtEmailController
+                                                          .text,
                                                     );
-                                                    if (error == null ||
-                                                        error == '') {
-                                                      setState(() {
+                                                    if (_model.error == null ||
+                                                        _model.error == '') {
+                                                      FFAppState().update(() {
                                                         FFAppState()
                                                                 .resetPwdSendState =
                                                             'Resend link';
@@ -393,10 +388,10 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                           const Duration(
                                                               milliseconds:
                                                                   3000));
-                                                      timerController?.onExecute
-                                                          .add(
-                                                        StopWatchExecute.start,
-                                                      );
+                                                      _model.timerController
+                                                          .onExecute
+                                                          .add(StopWatchExecute
+                                                              .start);
                                                     }
                                                   }
 
@@ -406,27 +401,35 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                     .resetPwdSendState,
                                                 options: FFButtonOptions(
                                                   width: double.infinity,
-                                                  height: 48,
+                                                  height: 48.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .noColor,
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
-                                                      .subtitle1
+                                                      .titleMedium
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                       ),
-                                                  elevation: 0,
+                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
-                                                    width: 1,
+                                                    width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                             ),
@@ -439,15 +442,15 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
@@ -457,11 +460,11 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                       children: [
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(0, 0.1),
+                                              AlignmentDirectional(0.0, 0.1),
                                           child: Text(
                                             'Don\'t have an account?',
                                             style: FlutterFlowTheme.of(context)
-                                                .bodyText2,
+                                                .bodySmall,
                                           ),
                                         ),
                                         FFButtonWidget(
@@ -470,12 +473,18 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           },
                                           text: 'Sign up',
                                           options: FFButtonOptions(
-                                            width: 80,
+                                            width: 80.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText2
+                                                    .bodySmall
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
@@ -483,13 +492,13 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
-                                            elevation: 0,
+                                            elevation: 0.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 0,
+                                              width: 0.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                       ],
@@ -502,7 +511,8 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -511,57 +521,60 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 48),
+                                        0.0, 0.0, 0.0, 48.0),
                                     child: Text(
                                       'Forgot password',
                                       style: FlutterFlowTheme.of(context)
-                                          .title1
+                                          .displaySmall
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 32,
+                                            fontSize: 32.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 64),
+                                        0.0, 0.0, 0.0, 64.0),
                                     child: Text(
                                       'We’ve sent a 4-digit code to example@email.com. Enter it \nto reset your password.',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                                          .titleMedium,
                                     ),
                                   ),
                                 ),
                                 PinCodeTextField(
+                                  autoDisposeControllers: false,
                                   appContext: context,
                                   length: 4,
                                   textStyle: FlutterFlowTheme.of(context)
-                                      .title1
+                                      .displaySmall
                                       .override(
                                         fontFamily: 'Roboto',
-                                        fontSize: 32,
+                                        fontSize: 32.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   enableActiveFill: true,
                                   autoFocus: true,
+                                  enablePinAutofill: true,
+                                  errorTextSpace: 16.0,
                                   showCursor: true,
                                   cursorColor:
                                       FlutterFlowTheme.of(context).primaryText,
                                   obscureText: false,
                                   pinTheme: PinTheme(
-                                    fieldHeight: 60,
-                                    fieldWidth: 60,
-                                    borderWidth: 2,
-                                    borderRadius: BorderRadius.circular(12),
+                                    fieldHeight: 60.0,
+                                    fieldWidth: 60.0,
+                                    borderWidth: 2.0,
+                                    borderRadius: BorderRadius.circular(12.0),
                                     shape: PinCodeFieldShape.box,
                                     activeColor: FlutterFlowTheme.of(context)
                                         .backgroundLine,
@@ -576,21 +589,25 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                             .backgroundLine,
                                     selectedFillColor: Color(0xFFFFE1F0),
                                   ),
-                                  controller: pinCodeController,
-                                  onChanged: (_) => {},
+                                  controller: _model.pinCodeController,
+                                  onChanged: (_) {},
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  validator: _model.pinCodeControllerValidator
+                                      .asValidator(context),
                                 ),
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       mainAxisAlignment:
@@ -604,12 +621,18 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           },
                                           text: 'Resend code in 30s',
                                           options: FFButtonOptions(
-                                            width: 180,
+                                            width: 180.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .bodyText2
+                                                    .bodySmall
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
@@ -617,12 +640,13 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
+                                            elevation: 2.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 1.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                       ],
@@ -632,7 +656,7 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                     children: [
                                       Container(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
@@ -640,19 +664,22 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                               Color(0xFFF95A82),
                                               Color(0xFFEA3C7D)
                                             ],
-                                            stops: [0, 0.6, 1],
-                                            begin: AlignmentDirectional(0, -1),
-                                            end: AlignmentDirectional(0, 1),
+                                            stops: [0.0, 0.6, 1.0],
+                                            begin:
+                                                AlignmentDirectional(0.0, -1.0),
+                                            end: AlignmentDirectional(0, 1.0),
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: FFButtonWidget(
                                           onPressed: () async {
-                                            await pageViewController?.nextPage(
+                                            await _model.pageViewController
+                                                ?.nextPage(
                                               duration:
                                                   Duration(milliseconds: 300),
                                               curve: Curves.ease,
@@ -661,26 +688,32 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           text: 'Next',
                                           options: FFButtonOptions(
                                             width: double.infinity,
-                                            height: 48,
+                                            height: 48.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .noColor,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1
+                                                    .titleMedium
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .primaryColor,
+                                                              .primary,
                                                     ),
-                                            elevation: 0,
+                                            elevation: 0.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 1.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                       ),
@@ -693,7 +726,8 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -702,202 +736,222 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 48),
+                                        0.0, 0.0, 0.0, 48.0),
                                     child: Text(
                                       'Set a New Password',
                                       style: FlutterFlowTheme.of(context)
-                                          .title1
+                                          .displaySmall
                                           .override(
                                             fontFamily: 'Poppins',
-                                            fontSize: 32,
+                                            fontSize: 32.0,
                                             fontWeight: FontWeight.bold,
                                           ),
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 32),
+                                        0.0, 0.0, 0.0, 32.0),
                                     child: Text(
                                       'Enter a new password to be able to sign into your account',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                                          .titleMedium,
                                     ),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Password',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 16),
+                                      0.0, 0.0, 0.0, 16.0),
                                   child: TextFormField(
-                                    controller: newPassword1TextFieldController,
+                                    controller:
+                                        _model.newPassword1TextFieldController,
                                     autofocus: true,
                                     obscureText:
-                                        !newPassword1TextFieldVisibility,
+                                        !_model.newPassword1TextFieldVisibility,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                       hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                          .bodySmall,
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
                                           .textFieldBackground,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              16, 0, 16, 0),
+                                              16.0, 0.0, 16.0, 0.0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
-                                          () => newPassword1TextFieldVisibility =
-                                              !newPassword1TextFieldVisibility,
+                                          () => _model
+                                                  .newPassword1TextFieldVisibility =
+                                              !_model
+                                                  .newPassword1TextFieldVisibility,
                                         ),
                                         focusNode:
                                             FocusNode(skipTraversal: true),
                                         child: Icon(
-                                          newPassword1TextFieldVisibility
+                                          _model.newPassword1TextFieldVisibility
                                               ? Icons.visibility_outlined
                                               : Icons.visibility_off_outlined,
                                           color: Color(0xFF757575),
-                                          size: 22,
+                                          size: 22.0,
                                         ),
                                       ),
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
+                                    validator: _model
+                                        .newPassword1TextFieldControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Confirm Password',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                     ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
+                                      0.0, 0.0, 0.0, 8.0),
                                   child: TextFormField(
-                                    controller: newPassword2TextFieldController,
+                                    controller:
+                                        _model.newPassword2TextFieldController,
                                     autofocus: true,
                                     obscureText:
-                                        !newPassword2TextFieldVisibility,
+                                        !_model.newPassword2TextFieldVisibility,
                                     decoration: InputDecoration(
                                       labelStyle: FlutterFlowTheme.of(context)
-                                          .subtitle2,
+                                          .titleSmall,
                                       hintStyle: FlutterFlowTheme.of(context)
-                                          .bodyText2,
+                                          .bodySmall,
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       errorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       focusedErrorBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
                                           color: Color(0x00000000),
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius:
+                                            BorderRadius.circular(12.0),
                                       ),
                                       filled: true,
                                       fillColor: FlutterFlowTheme.of(context)
                                           .textFieldBackground,
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
-                                              16, 0, 16, 0),
+                                              16.0, 0.0, 16.0, 0.0),
                                       suffixIcon: InkWell(
                                         onTap: () => setState(
-                                          () => newPassword2TextFieldVisibility =
-                                              !newPassword2TextFieldVisibility,
+                                          () => _model
+                                                  .newPassword2TextFieldVisibility =
+                                              !_model
+                                                  .newPassword2TextFieldVisibility,
                                         ),
                                         focusNode:
                                             FocusNode(skipTraversal: true),
                                         child: Icon(
-                                          newPassword2TextFieldVisibility
+                                          _model.newPassword2TextFieldVisibility
                                               ? Icons.visibility_outlined
                                               : Icons.visibility_off_outlined,
                                           color: Color(0xFF757575),
-                                          size: 22,
+                                          size: 22.0,
                                         ),
                                       ),
                                     ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
+                                    validator: _model
+                                        .newPassword2TextFieldControllerValidator
+                                        .asValidator(context),
                                   ),
                                 ),
                               ],
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 32),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 16.0, 0.0, 32.0),
                               child: Stack(
                                 children: [
                                   Container(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
                                     decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
@@ -905,15 +959,15 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                           Color(0xFFF95A82),
                                           Color(0xFFEA3C7D)
                                         ],
-                                        stops: [0, 0.6, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
+                                        stops: [0.0, 0.6, 1.0],
+                                        begin: AlignmentDirectional(0.0, -1.0),
+                                        end: AlignmentDirectional(0, 1.0),
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(-1, 0),
+                                    alignment: AlignmentDirectional(-1.0, 0.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         await showDialog(
@@ -940,22 +994,28 @@ class _ForgotPasswordViewWidgetState extends State<ForgotPasswordViewWidget> {
                                       text: 'Submit',
                                       options: FFButtonOptions(
                                         width: double.infinity,
-                                        height: 48,
+                                        height: 48.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
                                         color: Colors.transparent,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                             ),
-                                        elevation: 0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
-                                          width: 1,
+                                          width: 1.0,
                                         ),
-                                        borderRadius: BorderRadius.circular(8),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
                                       ),
                                     ),
                                   ),

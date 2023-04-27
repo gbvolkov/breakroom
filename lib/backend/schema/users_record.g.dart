@@ -743,44 +743,53 @@ class _$UsersRecord extends UsersRecord {
 
   @override
   int get hashCode {
-    return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, email.hashCode), displayName.hashCode), photoUrl.hashCode), uid.hashCode), createdTime.hashCode), phoneNumber.hashCode), geoposition.hashCode), firstName.hashCode), lastName.hashCode), birthDay.hashCode), industry.hashCode), occupation.hashCode), bio.hashCode), gender.hashCode), genderPreference.hashCode), intention.hashCode), childfreeStatus.hashCode), religion.hashCode), education.hashCode), bodyType.hashCode), interests.hashCode), lookingFor.hashCode), height.hashCode), weight.hashCode), workoutStatus.hashCode),
-                                                                                drinkingStatus.hashCode),
-                                                                            smokingStatus.hashCode),
-                                                                        spiritualStatus.hashCode),
-                                                                    photos.hashCode),
-                                                                touched.hashCode),
-                                                            filter.hashCode),
-                                                        liked.hashCode),
-                                                    disliked.hashCode),
-                                                isComplete.hashCode),
-                                            notiffReadTS.hashCode),
-                                        isPremium.hashCode),
-                                    likesCount.hashCode),
-                                lastLikeTime.hashCode),
-                            blocked.hashCode),
-                        notiffAll.hashCode),
-                    notiffLikes.hashCode),
-                nofittMatches.hashCode),
-            notiffMsgs.hashCode),
-        ffRef.hashCode));
+    var _$hash = 0;
+    _$hash = $jc(_$hash, email.hashCode);
+    _$hash = $jc(_$hash, displayName.hashCode);
+    _$hash = $jc(_$hash, photoUrl.hashCode);
+    _$hash = $jc(_$hash, uid.hashCode);
+    _$hash = $jc(_$hash, createdTime.hashCode);
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, geoposition.hashCode);
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, lastName.hashCode);
+    _$hash = $jc(_$hash, birthDay.hashCode);
+    _$hash = $jc(_$hash, industry.hashCode);
+    _$hash = $jc(_$hash, occupation.hashCode);
+    _$hash = $jc(_$hash, bio.hashCode);
+    _$hash = $jc(_$hash, gender.hashCode);
+    _$hash = $jc(_$hash, genderPreference.hashCode);
+    _$hash = $jc(_$hash, intention.hashCode);
+    _$hash = $jc(_$hash, childfreeStatus.hashCode);
+    _$hash = $jc(_$hash, religion.hashCode);
+    _$hash = $jc(_$hash, education.hashCode);
+    _$hash = $jc(_$hash, bodyType.hashCode);
+    _$hash = $jc(_$hash, interests.hashCode);
+    _$hash = $jc(_$hash, lookingFor.hashCode);
+    _$hash = $jc(_$hash, height.hashCode);
+    _$hash = $jc(_$hash, weight.hashCode);
+    _$hash = $jc(_$hash, workoutStatus.hashCode);
+    _$hash = $jc(_$hash, drinkingStatus.hashCode);
+    _$hash = $jc(_$hash, smokingStatus.hashCode);
+    _$hash = $jc(_$hash, spiritualStatus.hashCode);
+    _$hash = $jc(_$hash, photos.hashCode);
+    _$hash = $jc(_$hash, touched.hashCode);
+    _$hash = $jc(_$hash, filter.hashCode);
+    _$hash = $jc(_$hash, liked.hashCode);
+    _$hash = $jc(_$hash, disliked.hashCode);
+    _$hash = $jc(_$hash, isComplete.hashCode);
+    _$hash = $jc(_$hash, notiffReadTS.hashCode);
+    _$hash = $jc(_$hash, isPremium.hashCode);
+    _$hash = $jc(_$hash, likesCount.hashCode);
+    _$hash = $jc(_$hash, lastLikeTime.hashCode);
+    _$hash = $jc(_$hash, blocked.hashCode);
+    _$hash = $jc(_$hash, notiffAll.hashCode);
+    _$hash = $jc(_$hash, notiffLikes.hashCode);
+    _$hash = $jc(_$hash, nofittMatches.hashCode);
+    _$hash = $jc(_$hash, notiffMsgs.hashCode);
+    _$hash = $jc(_$hash, ffRef.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
   }
 
   @override
@@ -1182,4 +1191,4 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas
+// ignore_for_file: deprecated_member_use_from_same_package,type=lint

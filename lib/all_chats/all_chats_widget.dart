@@ -1,14 +1,14 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../components/empty_companions_list_widget_widget.dart';
-import '../components/empty_list_widget_widget.dart';
-import '../components/menu_report_user_widget.dart';
-import '../components/report_user_dialog_widget.dart';
-import '../flutter_flow/chat/index.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/empty_companions_list_widget_widget.dart';
+import '/components/empty_list_widget_widget.dart';
+import '/components/menu_report_user_widget.dart';
+import '/components/report_user_dialog_widget.dart';
+import '/flutter_flow/chat/index.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
@@ -17,6 +17,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'all_chats_model.dart';
+export 'all_chats_model.dart';
 
 class AllChatsWidget extends StatefulWidget {
   const AllChatsWidget({Key? key}) : super(key: key);
@@ -26,24 +28,24 @@ class AllChatsWidget extends StatefulWidget {
 }
 
 class _AllChatsWidgetState extends State<AllChatsWidget> {
-  ComplaintsRecord? reportDoc;
-  String? choice;
-  String? report;
-  ComplaintsRecord? reportDocRecent;
-  String? choiceRecent;
-  String? reportRecent;
-  TextEditingController? txtSearchController;
+  late AllChatsModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    txtSearchController = TextEditingController();
+    _model = createModel(context, () => AllChatsModel());
+
+    _model.txtSearchController ??= TextEditingController();
   }
 
   @override
   void dispose() {
-    txtSearchController?.dispose();
+    _model.dispose();
+
+    _unfocusNode.dispose();
     super.dispose();
   }
 
@@ -51,45 +53,45 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Text(
-          'Chats',
-          style: FlutterFlowTheme.of(context).bodyText1.override(
-                fontFamily: 'Roboto',
-                color: Colors.black,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        actions: [
-          Visibility(
-            visible: false,
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30,
-              borderWidth: 1,
-              buttonSize: 60,
-              icon: Icon(
-                Icons.person_add_alt,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 30,
-              ),
-              onPressed: () async {
-                context.pushNamed('InviteUser');
-              },
-            ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          title: Text(
+            'Chats',
+            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                  fontFamily: 'Roboto',
+                  color: Colors.black,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-        ],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          actions: [
+            Visibility(
+              visible: false,
+              child: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 60.0,
+                icon: Icon(
+                  Icons.person_add_alt,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 30.0,
+                ),
+                onPressed: () async {
+                  context.pushNamed('InviteUser');
+                },
+              ),
+            ),
+          ],
+          centerTitle: true,
+          elevation: 0.0,
+        ),
+        body: SafeArea(
           child: StreamBuilder<UsersRecord>(
             stream: UsersRecord.getDocument(currentUserReference!),
             builder: (context, snapshot) {
@@ -97,10 +99,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
               if (!snapshot.hasData) {
                 return Center(
                   child: SizedBox(
-                    width: 50,
-                    height: 50,
+                    width: 50.0,
+                    height: 50.0,
                     child: CircularProgressIndicator(
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                      color: FlutterFlowTheme.of(context).primary,
                     ),
                   ),
                 );
@@ -110,45 +112,46 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                     child: TextFormField(
-                      controller: txtSearchController,
+                      controller: _model.txtSearchController,
                       onChanged: (_) => EasyDebounce.debounce(
-                        'txtSearchController',
+                        '_model.txtSearchController',
                         Duration(milliseconds: 2000),
                         () => setState(() {}),
                       ),
                       obscureText: false,
                       decoration: InputDecoration(
                         hintText: 'Search',
-                        hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                        hintStyle: FlutterFlowTheme.of(context).bodySmall,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: Color(0x00000000),
-                            width: 1,
+                            width: 1.0,
                           ),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.0),
                         ),
                         filled: true,
                         fillColor:
@@ -156,23 +159,25 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         prefixIcon: Icon(
                           Icons.search,
                           color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 18,
+                          size: 18.0,
                         ),
-                        suffixIcon: txtSearchController!.text.isNotEmpty
+                        suffixIcon: _model.txtSearchController!.text.isNotEmpty
                             ? InkWell(
                                 onTap: () async {
-                                  txtSearchController?.clear();
+                                  _model.txtSearchController?.clear();
                                   setState(() {});
                                 },
                                 child: Icon(
                                   Icons.clear,
                                   color: Color(0xFF757575),
-                                  size: 22,
+                                  size: 22.0,
                                 ),
                               )
                             : null,
                       ),
-                      style: FlutterFlowTheme.of(context).subtitle2,
+                      style: FlutterFlowTheme.of(context).titleSmall,
+                      validator: _model.txtSearchControllerValidator
+                          .asValidator(context),
                     ),
                   ),
                   Expanded(
@@ -187,11 +192,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 50,
-                              height: 50,
+                              width: 50.0,
+                              height: 50.0,
                               child: CircularProgressIndicator(
-                                color:
-                                    FlutterFlowTheme.of(context).primaryColor,
+                                color: FlutterFlowTheme.of(context).primary,
                               ),
                             ),
                           );
@@ -203,22 +207,22 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              if (txtSearchController!.text != null &&
-                                  txtSearchController!.text != '')
+                              if (_model.txtSearchController.text != null &&
+                                  _model.txtSearchController.text != '')
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 16),
+                                      0.0, 0.0, 0.0, 16.0),
                                   child: Container(
                                     width: double.infinity,
-                                    height: 120,
+                                    height: 120.0,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .secondaryBackground,
-                                      borderRadius: BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(16.0),
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 0, 8, 0),
+                                          16.0, 0.0, 8.0, 0.0),
                                       child: Builder(
                                         builder: (context) {
                                           final companions =
@@ -226,7 +230,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                   .where((e) =>
                                                       functions.chekChatRecord(
                                                           e,
-                                                          txtSearchController!
+                                                          _model
+                                                              .txtSearchController
                                                               .text,
                                                           currentUserUid))
                                                   .toList();
@@ -246,7 +251,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                   companions[companionsIndex];
                                               return Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 8, 0),
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 8.0, 0.0),
                                                 child:
                                                     StreamBuilder<UsersRecord>(
                                                   stream: UsersRecord.getDocument(
@@ -259,13 +265,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     if (!snapshot.hasData) {
                                                       return Center(
                                                         child: SizedBox(
-                                                          width: 50,
-                                                          height: 50,
+                                                          width: 50.0,
+                                                          height: 50.0,
                                                           child:
                                                               CircularProgressIndicator(
                                                             color: FlutterFlowTheme
                                                                     .of(context)
-                                                                .primaryColor,
+                                                                .primary,
                                                           ),
                                                         ),
                                                       );
@@ -273,17 +279,26 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     final contCompanionUsersRecord =
                                                         snapshot.data!;
                                                     return InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
                                                       onTap: () async {
                                                         if (!FFAppState()
                                                             .recentChats
                                                             .contains(
                                                                 companionsItem
                                                                     .reference)) {
-                                                          setState(() {
-                                                            setState(() => FFAppState()
+                                                          FFAppState()
+                                                              .update(() {
+                                                            FFAppState()
                                                                 .addToRecentChats(
                                                                     companionsItem
-                                                                        .reference));
+                                                                        .reference);
                                                           });
                                                         }
                                                         if (!contCompanionUsersRecord
@@ -375,8 +390,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                         }
                                                       },
                                                       child: Container(
-                                                        width: 100,
-                                                        height: 120,
+                                                        width: 100.0,
+                                                        height: 120.0,
                                                         decoration:
                                                             BoxDecoration(
                                                           shape: BoxShape
@@ -384,19 +399,19 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                         ),
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                0, 0),
+                                                                0.0, 0.0),
                                                         child: Align(
                                                           alignment:
                                                               AlignmentDirectional(
-                                                                  0, 0),
+                                                                  0.0, 0.0),
                                                           child: Padding(
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        8,
-                                                                        0,
-                                                                        0),
+                                                                        0.0,
+                                                                        8.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Column(
                                                               mainAxisSize:
                                                                   MainAxisSize
@@ -425,13 +440,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                         child:
                                                                             SizedBox(
                                                                           width:
-                                                                              50,
+                                                                              50.0,
                                                                           height:
-                                                                              50,
+                                                                              50.0,
                                                                           child:
                                                                               CircularProgressIndicator(
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                           ),
                                                                         ),
                                                                       );
@@ -441,9 +456,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                         snapshot
                                                                             .data!;
                                                                     return Container(
-                                                                      width: 80,
+                                                                      width:
+                                                                          80.0,
                                                                       height:
-                                                                          80,
+                                                                          80.0,
                                                                       decoration:
                                                                           BoxDecoration(
                                                                         shape: BoxShape
@@ -452,28 +468,28 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                       child:
                                                                           Container(
                                                                         width:
-                                                                            80,
+                                                                            80.0,
                                                                         height:
-                                                                            80,
+                                                                            80.0,
                                                                         child:
                                                                             Stack(
                                                                           children: [
                                                                             ClipOval(
                                                                               child: Container(
-                                                                                width: 80,
-                                                                                height: 80,
+                                                                                width: 80.0,
+                                                                                height: 80.0,
                                                                                 decoration: BoxDecoration(
                                                                                   shape: BoxShape.circle,
                                                                                 ),
                                                                                 child: ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(90),
+                                                                                  borderRadius: BorderRadius.circular(90.0),
                                                                                   child: CachedNetworkImage(
                                                                                     imageUrl: valueOrDefault<String>(
                                                                                       contCompanionUsersRecord.photoUrl,
                                                                                       'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                                                     ),
-                                                                                    width: 80,
-                                                                                    height: 80,
+                                                                                    width: 80.0,
+                                                                                    height: 80.0,
                                                                                     fit: BoxFit.contain,
                                                                                   ),
                                                                                 ),
@@ -484,18 +500,18 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                               Align(
                                                                                 alignment: AlignmentDirectional(0.7, -0.9),
                                                                                 child: Container(
-                                                                                  width: 32,
-                                                                                  height: 16,
+                                                                                  width: 32.0,
+                                                                                  height: 16.0,
                                                                                   decoration: BoxDecoration(
                                                                                     color: FlutterFlowTheme.of(context).alternate,
-                                                                                    borderRadius: BorderRadius.circular(16),
+                                                                                    borderRadius: BorderRadius.circular(16.0),
                                                                                   ),
                                                                                   child: Text(
                                                                                     contMessagesChatMessagesRecordList.length >= 99 ? '99+' : contMessagesChatMessagesRecordList.length.toString(),
                                                                                     textAlign: TextAlign.center,
-                                                                                    style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                                    style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: 'Roboto',
-                                                                                          color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                          color: FlutterFlowTheme.of(context).primary,
                                                                                         ),
                                                                                   ),
                                                                                 ),
@@ -509,10 +525,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                 Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          8,
-                                                                          0,
-                                                                          0),
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
                                                                   child: Text(
                                                                     contCompanionUsersRecord
                                                                         .displayName!,
@@ -521,12 +537,12 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                             .center,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .bodyText1
+                                                                        .bodyMedium
                                                                         .override(
                                                                           fontFamily:
                                                                               'Roboto',
                                                                           fontSize:
-                                                                              16,
+                                                                              16.0,
                                                                           fontWeight:
                                                                               FontWeight.w500,
                                                                         ),
@@ -548,8 +564,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                     ),
                                   ),
                                 ),
-                              if (txtSearchController!.text == null ||
-                                  txtSearchController!.text == '')
+                              if (_model.txtSearchController.text == null ||
+                                  _model.txtSearchController.text == '')
                                 Expanded(
                                   child: Container(
                                     width: double.infinity,
@@ -559,7 +575,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 2, 0, 0),
+                                          0.0, 2.0, 0.0, 0.0),
                                       child: Builder(
                                         builder: (context) {
                                           final chats =
@@ -592,13 +608,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                   if (!snapshot.hasData) {
                                                     return Center(
                                                       child: SizedBox(
-                                                        width: 50,
-                                                        height: 50,
+                                                        width: 50.0,
+                                                        height: 50.0,
                                                         child:
                                                             CircularProgressIndicator(
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primaryColor,
+                                                              .primary,
                                                         ),
                                                       ),
                                                     );
@@ -609,7 +625,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                     children: [
                                                       Container(
                                                         width: double.infinity,
-                                                        height: 80,
+                                                        height: 80.0,
                                                         decoration:
                                                             BoxDecoration(),
                                                         child: StreamBuilder<
@@ -693,7 +709,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
-                                                                fontSize: 14,
+                                                                fontSize: 14.0,
                                                               ),
                                                               dateTextStyle:
                                                                   GoogleFonts
@@ -705,7 +721,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
-                                                                fontSize: 14,
+                                                                fontSize: 14.0,
                                                               ),
                                                               previewTextStyle:
                                                                   GoogleFonts
@@ -717,19 +733,19 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .normal,
-                                                                fontSize: 14,
+                                                                fontSize: 14.0,
                                                               ),
                                                               contentPadding:
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          3,
-                                                                          3,
-                                                                          3,
-                                                                          3),
+                                                                          3.0,
+                                                                          3.0,
+                                                                          3.0,
+                                                                          3.0),
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
-                                                                          0),
+                                                                          0.0),
                                                             );
                                                           },
                                                         ),
@@ -749,20 +765,20 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                         Container(
                                                           width:
                                                               double.infinity,
-                                                          height: 80,
+                                                          height: 80.0,
                                                           decoration:
                                                               BoxDecoration(),
                                                           child: Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    -0.84, 0),
+                                                                    -0.84, 0.0),
                                                             child: Icon(
                                                               Icons
                                                                   .lock_outline_rounded,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
                                                                   .alternate,
-                                                              size: 24,
+                                                              size: 24.0,
                                                             ),
                                                           ),
                                                         ),
@@ -775,7 +791,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                         Container(
                                                           width:
                                                               double.infinity,
-                                                          height: 80,
+                                                          height: 80.0,
                                                           decoration:
                                                               BoxDecoration(
                                                             color: Color(
@@ -784,14 +800,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                           child: Align(
                                                             alignment:
                                                                 AlignmentDirectional(
-                                                                    -0.84, 0),
+                                                                    -0.84, 0.0),
                                                             child: Icon(
                                                               Icons
                                                                   .speaker_notes_off_outlined,
                                                               color: FlutterFlowTheme
                                                                       .of(context)
                                                                   .alternate,
-                                                              size: 24,
+                                                              size: 24.0,
                                                             ),
                                                           ),
                                                         ),
@@ -808,13 +824,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                               .hasData) {
                                                             return Center(
                                                               child: SizedBox(
-                                                                width: 50,
-                                                                height: 50,
+                                                                width: 50.0,
+                                                                height: 50.0,
                                                                 child:
                                                                     CircularProgressIndicator(
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryColor,
+                                                                      .primary,
                                                                 ),
                                                               ),
                                                             );
@@ -824,7 +840,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                           return Container(
                                                             width:
                                                                 double.infinity,
-                                                            height: 80,
+                                                            height: 80.0,
                                                             decoration:
                                                                 BoxDecoration(),
                                                             child: StreamBuilder<
@@ -841,13 +857,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                   return Center(
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 50,
+                                                                      width:
+                                                                          50.0,
                                                                       height:
-                                                                          50,
+                                                                          50.0,
                                                                       child:
                                                                           CircularProgressIndicator(
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                                   );
@@ -856,6 +873,16 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                     snapshot
                                                                         .data!;
                                                                 return InkWell(
+                                                                  splashColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  focusColor: Colors
+                                                                      .transparent,
+                                                                  hoverColor: Colors
+                                                                      .transparent,
+                                                                  highlightColor:
+                                                                      Colors
+                                                                          .transparent,
                                                                   onTap:
                                                                       () async {
                                                                     final chatsUpdateData =
@@ -952,46 +979,157 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                       Container(
                                                                     width: double
                                                                         .infinity,
-                                                                    height: 80,
+                                                                    height:
+                                                                        80.0,
                                                                     decoration:
                                                                         BoxDecoration(),
                                                                     child:
                                                                         Slidable(
-                                                                      actionPane:
-                                                                          const SlidableScrollActionPane(),
-                                                                      secondaryActions: [
-                                                                        IconSlideAction(
-                                                                          caption:
-                                                                              '...',
-                                                                          color:
-                                                                              Colors.blue,
-                                                                          icon:
-                                                                              FontAwesomeIcons.ban,
-                                                                          onTap:
-                                                                              () async {
-                                                                            await showModalBottomSheet(
-                                                                              isScrollControlled: true,
-                                                                              backgroundColor: Colors.transparent,
-                                                                              context: context,
-                                                                              builder: (context) {
-                                                                                return Padding(
-                                                                                  padding: MediaQuery.of(context).viewInsets,
-                                                                                  child: MenuReportUserWidget(
-                                                                                    isBlocked: colCurrentUserUsersRecord.blocked!.toList().contains(stkCompanionUsersRecord.uid),
-                                                                                  ),
-                                                                                );
-                                                                              },
-                                                                            ).then((value) =>
-                                                                                setState(() => choice = value));
+                                                                      endActionPane:
+                                                                          ActionPane(
+                                                                        motion:
+                                                                            const ScrollMotion(),
+                                                                        extentRatio:
+                                                                            0.5,
+                                                                        children: [
+                                                                          SlidableAction(
+                                                                            label:
+                                                                                '...',
+                                                                            backgroundColor:
+                                                                                Colors.blue,
+                                                                            icon:
+                                                                                FontAwesomeIcons.ban,
+                                                                            onPressed:
+                                                                                (_) async {
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                barrierColor: Color(0x00000000),
+                                                                                context: context,
+                                                                                builder: (bottomSheetContext) {
+                                                                                  return GestureDetector(
+                                                                                    onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                                    child: Padding(
+                                                                                      padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                      child: MenuReportUserWidget(
+                                                                                        isBlocked: colCurrentUserUsersRecord.blocked!.toList().contains(stkCompanionUsersRecord.uid),
+                                                                                      ),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              ).then((value) => setState(() => _model.choice = value));
 
-                                                                            if (choice ==
-                                                                                'unmatch') {
+                                                                              if (_model.choice == 'unmatch') {
+                                                                                var confirmDialogResponse = await showDialog<bool>(
+                                                                                      context: context,
+                                                                                      builder: (alertDialogContext) {
+                                                                                        return AlertDialog(
+                                                                                          title: Text('Confirm unmatch'),
+                                                                                          content: Text('Are you sure you want to unmatch ${stkCompanionUsersRecord.displayName}?'),
+                                                                                          actions: [
+                                                                                            TextButton(
+                                                                                              onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                              child: Text('Cancel'),
+                                                                                            ),
+                                                                                            TextButton(
+                                                                                              onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                              child: Text('Confirm'),
+                                                                                            ),
+                                                                                          ],
+                                                                                        );
+                                                                                      },
+                                                                                    ) ??
+                                                                                    false;
+                                                                                if (confirmDialogResponse) {
+                                                                                  final usersUpdateData1 = {
+                                                                                    'liked': FieldValue.arrayRemove([
+                                                                                      stkCompanionUsersRecord.uid
+                                                                                    ]),
+                                                                                  };
+                                                                                  await currentUserReference!.update(usersUpdateData1);
+                                                                                }
+                                                                              } else {
+                                                                                if (_model.choice == 'report') {
+                                                                                  await showModalBottomSheet(
+                                                                                    isScrollControlled: true,
+                                                                                    backgroundColor: Colors.transparent,
+                                                                                    barrierColor: Color(0x00000000),
+                                                                                    context: context,
+                                                                                    builder: (bottomSheetContext) {
+                                                                                      return GestureDetector(
+                                                                                        onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                                        child: Padding(
+                                                                                          padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                          child: ReportUserDialogWidget(),
+                                                                                        ),
+                                                                                      );
+                                                                                    },
+                                                                                  ).then((value) => setState(() => _model.report = value));
+
+                                                                                  if (_model.report != null && _model.report != '') {
+                                                                                    final complaintsCreateData = createComplaintsRecordData(
+                                                                                      reporter: currentUserReference,
+                                                                                      referredUser: stkCompanionUsersRecord.reference,
+                                                                                      report: _model.report,
+                                                                                      complaintTS: getCurrentTimestamp,
+                                                                                    );
+                                                                                    var complaintsRecordReference = ComplaintsRecord.collection.doc();
+                                                                                    await complaintsRecordReference.set(complaintsCreateData);
+                                                                                    _model.reportDoc = ComplaintsRecord.getDocumentFromData(complaintsCreateData, complaintsRecordReference);
+                                                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                                                      SnackBar(
+                                                                                        content: Text(
+                                                                                          'Your report has been sent. Our support service will get back soon.',
+                                                                                          style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                                fontFamily: 'Roboto',
+                                                                                                color: FlutterFlowTheme.of(context).primary,
+                                                                                                fontSize: 18.0,
+                                                                                              ),
+                                                                                        ),
+                                                                                        duration: Duration(milliseconds: 4000),
+                                                                                        backgroundColor: FlutterFlowTheme.of(context).alternate,
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                } else {
+                                                                                  if (_model.choice == 'block') {
+                                                                                    final usersUpdateData2 = {
+                                                                                      'blocked': FieldValue.arrayUnion([
+                                                                                        stkCompanionUsersRecord.uid
+                                                                                      ]),
+                                                                                    };
+                                                                                    await currentUserReference!.update(usersUpdateData2);
+                                                                                  } else {
+                                                                                    if (_model.choice == 'unblock') {
+                                                                                      final usersUpdateData3 = {
+                                                                                        'blocked': FieldValue.arrayRemove([
+                                                                                          stkCompanionUsersRecord.uid
+                                                                                        ]),
+                                                                                      };
+                                                                                      await currentUserReference!.update(usersUpdateData3);
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+
+                                                                              setState(() {});
+                                                                            },
+                                                                          ),
+                                                                          SlidableAction(
+                                                                            label:
+                                                                                'Delete',
+                                                                            backgroundColor:
+                                                                                FlutterFlowTheme.of(context).systemError,
+                                                                            icon:
+                                                                                Icons.delete_forever_outlined,
+                                                                            onPressed:
+                                                                                (_) async {
                                                                               var confirmDialogResponse = await showDialog<bool>(
                                                                                     context: context,
                                                                                     builder: (alertDialogContext) {
                                                                                       return AlertDialog(
-                                                                                        title: Text('Confirm unmatch'),
-                                                                                        content: Text('Are you sure you want to unmatch ${stkCompanionUsersRecord.displayName}?'),
+                                                                                        title: Text('Delete chat'),
+                                                                                        content: Text('The chat will be removed completely. Please confirm'),
                                                                                         actions: [
                                                                                           TextButton(
                                                                                             onPressed: () => Navigator.pop(alertDialogContext, false),
@@ -1007,111 +1145,12 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                                   ) ??
                                                                                   false;
                                                                               if (confirmDialogResponse) {
-                                                                                final usersUpdateData = {
-                                                                                  'liked': FieldValue.arrayRemove([
-                                                                                    stkCompanionUsersRecord.uid
-                                                                                  ]),
-                                                                                };
-                                                                                await currentUserReference!.update(usersUpdateData);
+                                                                                await chatsItem.reference.delete();
                                                                               }
-                                                                            } else {
-                                                                              if (choice == 'report') {
-                                                                                await showModalBottomSheet(
-                                                                                  isScrollControlled: true,
-                                                                                  backgroundColor: Colors.transparent,
-                                                                                  context: context,
-                                                                                  builder: (context) {
-                                                                                    return Padding(
-                                                                                      padding: MediaQuery.of(context).viewInsets,
-                                                                                      child: ReportUserDialogWidget(),
-                                                                                    );
-                                                                                  },
-                                                                                ).then((value) => setState(() => report = value));
-
-                                                                                if (report != null && report != '') {
-                                                                                  final complaintsCreateData = createComplaintsRecordData(
-                                                                                    reporter: currentUserReference,
-                                                                                    referredUser: stkCompanionUsersRecord.reference,
-                                                                                    report: report,
-                                                                                    complaintTS: getCurrentTimestamp,
-                                                                                  );
-                                                                                  var complaintsRecordReference = ComplaintsRecord.collection.doc();
-                                                                                  await complaintsRecordReference.set(complaintsCreateData);
-                                                                                  reportDoc = ComplaintsRecord.getDocumentFromData(complaintsCreateData, complaintsRecordReference);
-                                                                                  ScaffoldMessenger.of(context).showSnackBar(
-                                                                                    SnackBar(
-                                                                                      content: Text(
-                                                                                        'Your report has been sent. Our support service will get back soon.',
-                                                                                        style: FlutterFlowTheme.of(context).bodyText2.override(
-                                                                                              fontFamily: 'Roboto',
-                                                                                              color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                              fontSize: 18,
-                                                                                            ),
-                                                                                      ),
-                                                                                      duration: Duration(milliseconds: 4000),
-                                                                                      backgroundColor: FlutterFlowTheme.of(context).alternate,
-                                                                                    ),
-                                                                                  );
-                                                                                }
-                                                                              } else {
-                                                                                if (choice == 'block') {
-                                                                                  final usersUpdateData = {
-                                                                                    'blocked': FieldValue.arrayUnion([
-                                                                                      stkCompanionUsersRecord.uid
-                                                                                    ]),
-                                                                                  };
-                                                                                  await currentUserReference!.update(usersUpdateData);
-                                                                                } else {
-                                                                                  if (choice == 'unblock') {
-                                                                                    final usersUpdateData = {
-                                                                                      'blocked': FieldValue.arrayRemove([
-                                                                                        stkCompanionUsersRecord.uid
-                                                                                      ]),
-                                                                                    };
-                                                                                    await currentUserReference!.update(usersUpdateData);
-                                                                                  }
-                                                                                }
-                                                                              }
-                                                                            }
-
-                                                                            setState(() {});
-                                                                          },
-                                                                        ),
-                                                                        IconSlideAction(
-                                                                          caption:
-                                                                              'Delete',
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).systemError,
-                                                                          icon:
-                                                                              Icons.delete_forever_outlined,
-                                                                          onTap:
-                                                                              () async {
-                                                                            var confirmDialogResponse = await showDialog<bool>(
-                                                                                  context: context,
-                                                                                  builder: (alertDialogContext) {
-                                                                                    return AlertDialog(
-                                                                                      title: Text('Delete chat'),
-                                                                                      content: Text('The chat will be removed completely. Please confirm'),
-                                                                                      actions: [
-                                                                                        TextButton(
-                                                                                          onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                          child: Text('Cancel'),
-                                                                                        ),
-                                                                                        TextButton(
-                                                                                          onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                          child: Text('Confirm'),
-                                                                                        ),
-                                                                                      ],
-                                                                                    );
-                                                                                  },
-                                                                                ) ??
-                                                                                false;
-                                                                            if (confirmDialogResponse) {
-                                                                              await chatsItem.reference.delete();
-                                                                            }
-                                                                          },
-                                                                        ),
-                                                                      ],
+                                                                            },
+                                                                          ),
+                                                                        ],
+                                                                      ),
                                                                       child:
                                                                           ListTile(
                                                                         tileColor:
@@ -1138,8 +1177,8 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                     ),
                                   ),
                                 ),
-                              if (txtSearchController!.text != null &&
-                                  txtSearchController!.text != '')
+                              if (_model.txtSearchController.text != null &&
+                                  _model.txtSearchController.text != '')
                                 Expanded(
                                   child: Container(
                                     width: double.infinity,
@@ -1153,7 +1192,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  16, 0, 16, 0),
+                                                  16.0, 0.0, 16.0, 0.0),
                                           child: Row(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -1163,24 +1202,29 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                 'Recent search',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
-                                                          fontSize: 16,
+                                                          fontSize: 16.0,
                                                           fontWeight:
                                                               FontWeight.w600,
                                                         ),
                                               ),
                                               InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
                                                 onTap: () async {
-                                                  setState(() {
+                                                  FFAppState().update(() {
                                                     FFAppState().recentChats =
                                                         [];
                                                   });
                                                 },
                                                 child: Container(
-                                                  width: 48,
-                                                  height: 24,
+                                                  width: 48.0,
+                                                  height: 24.0,
                                                   decoration: BoxDecoration(
                                                     color: FlutterFlowTheme.of(
                                                             context)
@@ -1188,13 +1232,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                   ),
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1, 0),
+                                                          1.0, 0.0),
                                                   child: Text(
                                                     'Clear',
                                                     textAlign: TextAlign.end,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyText1
+                                                        .bodyMedium
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           color: FlutterFlowTheme
@@ -1213,7 +1257,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                             decoration: BoxDecoration(),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 2, 0, 0),
+                                                  .fromSTEB(0.0, 2.0, 0.0, 0.0),
                                               child: Builder(
                                                 builder: (context) {
                                                   final chatsRefs = FFAppState()
@@ -1244,13 +1288,13 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                               .hasData) {
                                                             return Center(
                                                               child: SizedBox(
-                                                                width: 50,
-                                                                height: 50,
+                                                                width: 50.0,
+                                                                height: 50.0,
                                                                 child:
                                                                     CircularProgressIndicator(
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryColor,
+                                                                      .primary,
                                                                 ),
                                                               ),
                                                             );
@@ -1278,13 +1322,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                   return Center(
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 50,
+                                                                      width:
+                                                                          50.0,
                                                                       height:
-                                                                          50,
+                                                                          50.0,
                                                                       child:
                                                                           CircularProgressIndicator(
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
+                                                                            .primary,
                                                                       ),
                                                                     ),
                                                                   );
@@ -1298,7 +1343,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                       width: double
                                                                           .infinity,
                                                                       height:
-                                                                          80,
+                                                                          80.0,
                                                                       decoration:
                                                                           BoxDecoration(),
                                                                       child: StreamBuilder<
@@ -1348,29 +1393,29 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                               'Roboto',
                                                                               color: FlutterFlowTheme.of(context).primaryText,
                                                                               fontWeight: FontWeight.bold,
-                                                                              fontSize: 14,
+                                                                              fontSize: 14.0,
                                                                             ),
                                                                             dateTextStyle:
                                                                                 GoogleFonts.getFont(
                                                                               'Roboto',
                                                                               color: FlutterFlowTheme.of(context).secondaryText,
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontSize: 14,
+                                                                              fontSize: 14.0,
                                                                             ),
                                                                             previewTextStyle:
                                                                                 GoogleFonts.getFont(
                                                                               'Roboto',
                                                                               color: FlutterFlowTheme.of(context).primaryText,
                                                                               fontWeight: FontWeight.normal,
-                                                                              fontSize: 14,
+                                                                              fontSize: 14.0,
                                                                             ),
                                                                             contentPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                                3,
-                                                                                3,
-                                                                                3,
-                                                                                3),
+                                                                                3.0,
+                                                                                3.0,
+                                                                                3.0,
+                                                                                3.0),
                                                                             borderRadius:
-                                                                                BorderRadius.circular(0),
+                                                                                BorderRadius.circular(0.0),
                                                                           );
                                                                         },
                                                                       ),
@@ -1388,21 +1433,21 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            80,
+                                                                            80.0,
                                                                         decoration:
                                                                             BoxDecoration(),
                                                                         child:
                                                                             Align(
                                                                           alignment: AlignmentDirectional(
                                                                               -0.84,
-                                                                              0),
+                                                                              0.0),
                                                                           child:
                                                                               Icon(
                                                                             Icons.lock_outline_rounded,
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             size:
-                                                                                24,
+                                                                                24.0,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1415,7 +1460,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                         width: double
                                                                             .infinity,
                                                                         height:
-                                                                            80,
+                                                                            80.0,
                                                                         decoration:
                                                                             BoxDecoration(
                                                                           color:
@@ -1425,14 +1470,14 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                             Align(
                                                                           alignment: AlignmentDirectional(
                                                                               -0.84,
-                                                                              0),
+                                                                              0.0),
                                                                           child:
                                                                               Icon(
                                                                             Icons.speaker_notes_off_outlined,
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             size:
-                                                                                24,
+                                                                                24.0,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1450,10 +1495,10 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                           return Center(
                                                                             child:
                                                                                 SizedBox(
-                                                                              width: 50,
-                                                                              height: 50,
+                                                                              width: 50.0,
+                                                                              height: 50.0,
                                                                               child: CircularProgressIndicator(
-                                                                                color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                color: FlutterFlowTheme.of(context).primary,
                                                                               ),
                                                                             ),
                                                                           );
@@ -1464,7 +1509,7 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                           width:
                                                                               double.infinity,
                                                                           height:
-                                                                              80,
+                                                                              80.0,
                                                                           decoration:
                                                                               BoxDecoration(),
                                                                           child:
@@ -1477,16 +1522,20 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                               if (!snapshot.hasData) {
                                                                                 return Center(
                                                                                   child: SizedBox(
-                                                                                    width: 50,
-                                                                                    height: 50,
+                                                                                    width: 50.0,
+                                                                                    height: 50.0,
                                                                                     child: CircularProgressIndicator(
-                                                                                      color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                      color: FlutterFlowTheme.of(context).primary,
                                                                                     ),
                                                                                   ),
                                                                                 );
                                                                               }
                                                                               final contUserBUsersRecord = snapshot.data!;
                                                                               return InkWell(
+                                                                                splashColor: Colors.transparent,
+                                                                                focusColor: Colors.transparent,
+                                                                                hoverColor: Colors.transparent,
+                                                                                highlightColor: Colors.transparent,
                                                                                 onTap: () async {
                                                                                   final chatsUpdateData = createChatsRecordData(
                                                                                     userNameA: contuserAUsersRecord.displayName,
@@ -1546,37 +1595,143 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                                 },
                                                                                 child: Container(
                                                                                   width: double.infinity,
-                                                                                  height: 80,
+                                                                                  height: 80.0,
                                                                                   decoration: BoxDecoration(),
                                                                                   child: Slidable(
-                                                                                    actionPane: const SlidableScrollActionPane(),
-                                                                                    secondaryActions: [
-                                                                                      IconSlideAction(
-                                                                                        caption: '...',
-                                                                                        color: Colors.blue,
-                                                                                        icon: FontAwesomeIcons.ban,
-                                                                                        onTap: () async {
-                                                                                          await showModalBottomSheet(
-                                                                                            isScrollControlled: true,
-                                                                                            backgroundColor: Colors.transparent,
-                                                                                            context: context,
-                                                                                            builder: (context) {
-                                                                                              return Padding(
-                                                                                                padding: MediaQuery.of(context).viewInsets,
-                                                                                                child: MenuReportUserWidget(
-                                                                                                  isBlocked: colCurrentUserUsersRecord.blocked!.toList().contains(stkCompanionUsersRecord.uid),
-                                                                                                ),
-                                                                                              );
-                                                                                            },
-                                                                                          ).then((value) => setState(() => choiceRecent = value));
+                                                                                    endActionPane: ActionPane(
+                                                                                      motion: const ScrollMotion(),
+                                                                                      extentRatio: 0.5,
+                                                                                      children: [
+                                                                                        SlidableAction(
+                                                                                          label: '...',
+                                                                                          backgroundColor: Colors.blue,
+                                                                                          icon: FontAwesomeIcons.ban,
+                                                                                          onPressed: (_) async {
+                                                                                            await showModalBottomSheet(
+                                                                                              isScrollControlled: true,
+                                                                                              backgroundColor: Colors.transparent,
+                                                                                              barrierColor: Color(0x00000000),
+                                                                                              context: context,
+                                                                                              builder: (bottomSheetContext) {
+                                                                                                return GestureDetector(
+                                                                                                  onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                                                  child: Padding(
+                                                                                                    padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                                    child: MenuReportUserWidget(
+                                                                                                      isBlocked: colCurrentUserUsersRecord.blocked!.toList().contains(stkCompanionUsersRecord.uid),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                );
+                                                                                              },
+                                                                                            ).then((value) => setState(() => _model.choiceRecent = value));
 
-                                                                                          if (choiceRecent == 'unmatch') {
+                                                                                            if (_model.choiceRecent == 'unmatch') {
+                                                                                              var confirmDialogResponse = await showDialog<bool>(
+                                                                                                    context: context,
+                                                                                                    builder: (alertDialogContext) {
+                                                                                                      return AlertDialog(
+                                                                                                        title: Text('Confirm unmatch'),
+                                                                                                        content: Text('Are you sure you want to unmatch ${stkCompanionUsersRecord.displayName}?'),
+                                                                                                        actions: [
+                                                                                                          TextButton(
+                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                                            child: Text('Cancel'),
+                                                                                                          ),
+                                                                                                          TextButton(
+                                                                                                            onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                                            child: Text('Confirm'),
+                                                                                                          ),
+                                                                                                        ],
+                                                                                                      );
+                                                                                                    },
+                                                                                                  ) ??
+                                                                                                  false;
+                                                                                              if (confirmDialogResponse) {
+                                                                                                final usersUpdateData1 = {
+                                                                                                  'liked': FieldValue.arrayRemove([
+                                                                                                    stkCompanionUsersRecord.uid
+                                                                                                  ]),
+                                                                                                };
+                                                                                                await currentUserReference!.update(usersUpdateData1);
+                                                                                              }
+                                                                                            } else {
+                                                                                              if (_model.choiceRecent == 'report') {
+                                                                                                await showModalBottomSheet(
+                                                                                                  isScrollControlled: true,
+                                                                                                  backgroundColor: Colors.transparent,
+                                                                                                  barrierColor: Color(0x00000000),
+                                                                                                  context: context,
+                                                                                                  builder: (bottomSheetContext) {
+                                                                                                    return GestureDetector(
+                                                                                                      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+                                                                                                      child: Padding(
+                                                                                                        padding: MediaQuery.of(bottomSheetContext).viewInsets,
+                                                                                                        child: ReportUserDialogWidget(),
+                                                                                                      ),
+                                                                                                    );
+                                                                                                  },
+                                                                                                ).then((value) => setState(() => _model.reportRecent = value));
+
+                                                                                                if (_model.reportRecent != null && _model.reportRecent != '') {
+                                                                                                  final complaintsCreateData = createComplaintsRecordData(
+                                                                                                    reporter: currentUserReference,
+                                                                                                    referredUser: stkCompanionUsersRecord.reference,
+                                                                                                    report: _model.reportRecent,
+                                                                                                    complaintTS: getCurrentTimestamp,
+                                                                                                  );
+                                                                                                  var complaintsRecordReference = ComplaintsRecord.collection.doc();
+                                                                                                  await complaintsRecordReference.set(complaintsCreateData);
+                                                                                                  _model.reportDocRecent = ComplaintsRecord.getDocumentFromData(complaintsCreateData, complaintsRecordReference);
+                                                                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                                                                    SnackBar(
+                                                                                                      content: Text(
+                                                                                                        'Your report has been sent. Our support service will get back soon.',
+                                                                                                        style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                                                              fontFamily: 'Roboto',
+                                                                                                              color: FlutterFlowTheme.of(context).primary,
+                                                                                                              fontSize: 18.0,
+                                                                                                            ),
+                                                                                                      ),
+                                                                                                      duration: Duration(milliseconds: 4000),
+                                                                                                      backgroundColor: FlutterFlowTheme.of(context).alternate,
+                                                                                                    ),
+                                                                                                  );
+                                                                                                }
+                                                                                              } else {
+                                                                                                if (_model.choiceRecent == 'block') {
+                                                                                                  final usersUpdateData2 = {
+                                                                                                    'blocked': FieldValue.arrayUnion([
+                                                                                                      stkCompanionUsersRecord.uid
+                                                                                                    ]),
+                                                                                                  };
+                                                                                                  await currentUserReference!.update(usersUpdateData2);
+                                                                                                } else {
+                                                                                                  if (_model.choiceRecent == 'unblock') {
+                                                                                                    final usersUpdateData3 = {
+                                                                                                      'blocked': FieldValue.arrayRemove([
+                                                                                                        stkCompanionUsersRecord.uid
+                                                                                                      ]),
+                                                                                                    };
+                                                                                                    await currentUserReference!.update(usersUpdateData3);
+                                                                                                  }
+                                                                                                }
+                                                                                              }
+                                                                                            }
+
+                                                                                            setState(() {});
+                                                                                          },
+                                                                                        ),
+                                                                                        SlidableAction(
+                                                                                          label: 'Delete',
+                                                                                          backgroundColor: FlutterFlowTheme.of(context).systemError,
+                                                                                          icon: Icons.delete_forever_outlined,
+                                                                                          onPressed: (_) async {
                                                                                             var confirmDialogResponse = await showDialog<bool>(
                                                                                                   context: context,
                                                                                                   builder: (alertDialogContext) {
                                                                                                     return AlertDialog(
-                                                                                                      title: Text('Confirm unmatch'),
-                                                                                                      content: Text('Are you sure you want to unmatch ${stkCompanionUsersRecord.displayName}?'),
+                                                                                                      title: Text('Delete chat'),
+                                                                                                      content: Text('The chat will be removed completely. Please confirm'),
                                                                                                       actions: [
                                                                                                         TextButton(
                                                                                                           onPressed: () => Navigator.pop(alertDialogContext, false),
@@ -1592,110 +1747,15 @@ class _AllChatsWidgetState extends State<AllChatsWidget> {
                                                                                                 ) ??
                                                                                                 false;
                                                                                             if (confirmDialogResponse) {
-                                                                                              final usersUpdateData = {
-                                                                                                'liked': FieldValue.arrayRemove([
-                                                                                                  stkCompanionUsersRecord.uid
-                                                                                                ]),
-                                                                                              };
-                                                                                              await currentUserReference!.update(usersUpdateData);
+                                                                                              await chatsRefsItem.delete();
+                                                                                              FFAppState().update(() {
+                                                                                                FFAppState().removeFromRecentChats(chatsRefsItem);
+                                                                                              });
                                                                                             }
-                                                                                          } else {
-                                                                                            if (choiceRecent == 'report') {
-                                                                                              await showModalBottomSheet(
-                                                                                                isScrollControlled: true,
-                                                                                                backgroundColor: Colors.transparent,
-                                                                                                context: context,
-                                                                                                builder: (context) {
-                                                                                                  return Padding(
-                                                                                                    padding: MediaQuery.of(context).viewInsets,
-                                                                                                    child: ReportUserDialogWidget(),
-                                                                                                  );
-                                                                                                },
-                                                                                              ).then((value) => setState(() => reportRecent = value));
-
-                                                                                              if (reportRecent != null && reportRecent != '') {
-                                                                                                final complaintsCreateData = createComplaintsRecordData(
-                                                                                                  reporter: currentUserReference,
-                                                                                                  referredUser: stkCompanionUsersRecord.reference,
-                                                                                                  report: reportRecent,
-                                                                                                  complaintTS: getCurrentTimestamp,
-                                                                                                );
-                                                                                                var complaintsRecordReference = ComplaintsRecord.collection.doc();
-                                                                                                await complaintsRecordReference.set(complaintsCreateData);
-                                                                                                reportDocRecent = ComplaintsRecord.getDocumentFromData(complaintsCreateData, complaintsRecordReference);
-                                                                                                ScaffoldMessenger.of(context).showSnackBar(
-                                                                                                  SnackBar(
-                                                                                                    content: Text(
-                                                                                                      'Your report has been sent. Our support service will get back soon.',
-                                                                                                      style: FlutterFlowTheme.of(context).bodyText2.override(
-                                                                                                            fontFamily: 'Roboto',
-                                                                                                            color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                                            fontSize: 18,
-                                                                                                          ),
-                                                                                                    ),
-                                                                                                    duration: Duration(milliseconds: 4000),
-                                                                                                    backgroundColor: FlutterFlowTheme.of(context).alternate,
-                                                                                                  ),
-                                                                                                );
-                                                                                              }
-                                                                                            } else {
-                                                                                              if (choiceRecent == 'block') {
-                                                                                                final usersUpdateData = {
-                                                                                                  'blocked': FieldValue.arrayUnion([
-                                                                                                    stkCompanionUsersRecord.uid
-                                                                                                  ]),
-                                                                                                };
-                                                                                                await currentUserReference!.update(usersUpdateData);
-                                                                                              } else {
-                                                                                                if (choiceRecent == 'unblock') {
-                                                                                                  final usersUpdateData = {
-                                                                                                    'blocked': FieldValue.arrayRemove([
-                                                                                                      stkCompanionUsersRecord.uid
-                                                                                                    ]),
-                                                                                                  };
-                                                                                                  await currentUserReference!.update(usersUpdateData);
-                                                                                                }
-                                                                                              }
-                                                                                            }
-                                                                                          }
-
-                                                                                          setState(() {});
-                                                                                        },
-                                                                                      ),
-                                                                                      IconSlideAction(
-                                                                                        caption: 'Delete',
-                                                                                        color: FlutterFlowTheme.of(context).systemError,
-                                                                                        icon: Icons.delete_forever_outlined,
-                                                                                        onTap: () async {
-                                                                                          var confirmDialogResponse = await showDialog<bool>(
-                                                                                                context: context,
-                                                                                                builder: (alertDialogContext) {
-                                                                                                  return AlertDialog(
-                                                                                                    title: Text('Delete chat'),
-                                                                                                    content: Text('The chat will be removed completely. Please confirm'),
-                                                                                                    actions: [
-                                                                                                      TextButton(
-                                                                                                        onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                                        child: Text('Cancel'),
-                                                                                                      ),
-                                                                                                      TextButton(
-                                                                                                        onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                                        child: Text('Confirm'),
-                                                                                                      ),
-                                                                                                    ],
-                                                                                                  );
-                                                                                                },
-                                                                                              ) ??
-                                                                                              false;
-                                                                                          if (confirmDialogResponse) {
-                                                                                            await chatsRefsItem.delete();
-                                                                                            setState(() {
-                                                                                              setState(() => FFAppState().removeFromRecentChats(chatsRefsItem));
-                                                                                            });
-                                                                                          }
-                                                                                        },
-                                                                                      ),
-                                                                                    ],
+                                                                                          },
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                     child: ListTile(
                                                                                       tileColor: Color(0xFFF5F5F5),
                                                                                       dense: false,

@@ -1,19 +1,22 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_choice_chips.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../custom_code/widgets/index.dart' as custom_widgets;
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/permissions_util.dart';
-import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_choice_chips.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/custom_code/widgets/index.dart' as custom_widgets;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/permissions_util.dart';
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'filters_view_model.dart';
+export 'filters_view_model.dart';
 
 class FiltersViewWidget extends StatefulWidget {
   const FiltersViewWidget({
@@ -28,72 +31,84 @@ class FiltersViewWidget extends StatefulWidget {
 }
 
 class _FiltersViewWidgetState extends State<FiltersViewWidget> {
-  LatLng? currentUserLocationValue;
+  late FiltersViewModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  PageController? pageViewController;
-  String? ccInterestedInValue;
-  bool? switchListTileValue;
-  double? sliderDistanceValue;
-  String? address;
+  final _unfocusNode = FocusNode();
+  LatLng? currentUserLocationValue;
+  int get pageViewCurrentIndex => _model.pageViewController != null &&
+          _model.pageViewController!.hasClients &&
+          _model.pageViewController!.page != null
+      ? _model.pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => FiltersViewModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              if (pageViewCurrentIndex == 0) {
+                context.pop();
+              } else {
+                FFAppState().update(() {
+                  FFAppState().filterName = 'Filter';
+                });
+                await _model.pageViewController?.previousPage(
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.ease,
+                );
+              }
+            },
           ),
-          onPressed: () async {
-            if ((pageViewController?.page?.round() ?? 0) == 0) {
-              context.pop();
-            } else {
-              setState(() {
-                FFAppState().filterName = 'Filter';
-              });
-              await pageViewController?.previousPage(
-                duration: Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            }
-          },
+          title: Text(
+            FFAppState().filterName,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Roboto',
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  fontSize: 22.0,
+                ),
+          ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        title: Text(
-          FFAppState().filterName,
-          style: FlutterFlowTheme.of(context).title2.override(
-                fontFamily: 'Roboto',
-                color: FlutterFlowTheme.of(context).primaryText,
-                fontSize: 22,
-              ),
-        ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
             child: StreamBuilder<UsersRecord>(
               stream: UsersRecord.getDocument(widget.user!.reference),
               builder: (context, snapshot) {
@@ -101,10 +116,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 50,
-                      height: 50,
+                      width: 50.0,
+                      height: 50.0,
                       child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                     ),
                   );
@@ -115,13 +130,14 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 16.0),
                         child: Container(
                           width: double.infinity,
-                          height: MediaQuery.of(context).size.height * 1,
+                          height: MediaQuery.of(context).size.height * 1.0,
                           child: PageView(
                             physics: const NeverScrollableScrollPhysics(),
-                            controller: pageViewController ??=
+                            controller: _model.pageViewController ??=
                                 PageController(initialPage: 0),
                             scrollDirection: Axis.horizontal,
                             children: [
@@ -131,11 +147,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                 children: [
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'I\'m interested in',
                                       style: FlutterFlowTheme.of(context)
-                                          .title3
+                                          .headlineSmall
                                           .override(
                                             fontFamily: 'Roboto',
                                             fontWeight: FontWeight.bold,
@@ -144,61 +160,64 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
+                                        0.0, 0.0, 0.0, 16.0),
                                     child: FlutterFlowChoiceChips(
-                                      initiallySelected: [
-                                        FFAppState().fltrGender
-                                      ],
                                       options: FFAppState()
                                           .interestedInList
                                           .map((label) => ChipData(label))
                                           .toList(),
-                                      onChanged: (val) => setState(() =>
-                                          ccInterestedInValue = val?.first),
+                                      onChanged: (val) => setState(() => _model
+                                          .ccInterestedInValue = val?.first),
                                       selectedChipStyle: ChipStyle(
                                         backgroundColor:
                                             FlutterFlowTheme.of(context)
                                                 .alternate,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .primaryColor,
+                                                      .primary,
                                               fontWeight: FontWeight.w300,
                                             ),
                                         iconColor: Colors.white,
-                                        iconSize: 18,
-                                        elevation: 0,
+                                        iconSize: 18.0,
+                                        elevation: 0.0,
                                       ),
                                       unselectedChipStyle: ChipStyle(
                                         backgroundColor:
                                             FlutterFlowTheme.of(context)
                                                 .secondaryBackground,
                                         textStyle: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Roboto',
                                               fontWeight: FontWeight.w300,
                                             ),
                                         iconColor: Color(0xFF323B45),
-                                        iconSize: 18,
-                                        elevation: 0,
+                                        iconSize: 18.0,
+                                        elevation: 0.0,
                                       ),
-                                      chipSpacing: 4,
+                                      chipSpacing: 4.0,
                                       multiselect: false,
-                                      initialized: ccInterestedInValue != null,
+                                      initialized:
+                                          _model.ccInterestedInValue != null,
                                       alignment: WrapAlignment.spaceEvenly,
+                                      controller: _model
+                                              .ccInterestedInValueController ??=
+                                          FormFieldController<List<String>>(
+                                        [FFAppState().fltrGender],
+                                      ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
+                                        0.0, 0.0, 0.0, 8.0),
                                     child: Text(
                                       'Age',
                                       style: FlutterFlowTheme.of(context)
-                                          .title3
+                                          .headlineSmall
                                           .override(
                                             fontFamily: 'Roboto',
                                             fontWeight: FontWeight.bold,
@@ -210,22 +229,24 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 16),
+                                            0.0, 0.0, 0.0, 16.0),
                                         child: Stack(
                                           children: [
                                             Container(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 150,
+                                                      .size
+                                                      .width *
+                                                  1.0,
+                                              height: 150.0,
                                               decoration: BoxDecoration(
                                                 color: Color(0xFFF5F5F5),
                                                 borderRadius:
-                                                    BorderRadius.circular(16),
+                                                    BorderRadius.circular(16.0),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(16, 16, 16, 0),
+                                                    .fromSTEB(
+                                                        16.0, 16.0, 16.0, 0.0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -239,8 +260,11 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                         Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      0, 0, 8),
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      8.0),
                                                           child: Text(
                                                             'Between ${formatNumber(
                                                               FFAppState()
@@ -261,7 +285,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                             )}',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .subtitle1,
+                                                                .titleMedium,
                                                           ),
                                                         ),
                                                       ],
@@ -269,16 +293,18 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                     Container(
                                                       width:
                                                           MediaQuery.of(context)
-                                                              .size
-                                                              .width,
-                                                      height: 50,
+                                                                  .size
+                                                                  .width *
+                                                              1.0,
+                                                      height: 50.0,
                                                       child: custom_widgets
                                                           .CustomRangeSlider(
                                                         width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
-                                                        height: 50,
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            1.0,
+                                                        height: 50.0,
                                                         minValue: 18,
                                                         maxValue: 100,
                                                         rangeStart: FFAppState()
@@ -295,7 +321,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                                 .secondaryText,
                                                         onValueChanged:
                                                             () async {
-                                                          setState(() {
+                                                          FFAppState()
+                                                              .update(() {
                                                             FFAppState()
                                                                     .fltrAgeMin =
                                                                 FFAppState()
@@ -320,18 +347,19 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                             'See people 2 years either\nside if I run out',
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .bodyText1,
+                                                                .bodyMedium,
                                                           ),
                                                           Expanded(
                                                             child:
                                                                 SwitchListTile(
-                                                              value: switchListTileValue ??=
+                                                              value: _model
+                                                                      .switchListTileValue ??=
                                                                   FFAppState()
                                                                       .fltrAgeRangeExt,
                                                               onChanged:
                                                                   (newValue) async {
                                                                 setState(() =>
-                                                                    switchListTileValue =
+                                                                    _model.switchListTileValue =
                                                                         newValue!);
                                                               },
                                                               tileColor: Color(
@@ -358,24 +386,27 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 16),
+                                            0.0, 0.0, 0.0, 16.0),
                                         child: Stack(
-                                          alignment: AlignmentDirectional(0, 0),
+                                          alignment:
+                                              AlignmentDirectional(0.0, 0.0),
                                           children: [
                                             Align(
-                                              alignment:
-                                                  AlignmentDirectional(-1, 0),
+                                              alignment: AlignmentDirectional(
+                                                  -1.0, 0.0),
                                               child: Container(
                                                 width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 90,
+                                                        .size
+                                                        .width *
+                                                    1.0,
+                                                height: 90.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryBackground,
                                                   borderRadius:
-                                                      BorderRadius.circular(16),
+                                                      BorderRadius.circular(
+                                                          16.0),
                                                 ),
                                               ),
                                             ),
@@ -384,7 +415,8 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               children: [
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
-                                                      .fromSTEB(8, 8, 8, 8),
+                                                      .fromSTEB(
+                                                          8.0, 8.0, 8.0, 8.0),
                                                   child: Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
@@ -400,11 +432,12 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .subtitle1,
+                                                                .titleMedium,
                                                       ),
                                                       Text(
                                                         formatNumber(
-                                                          sliderDistanceValue,
+                                                          _model
+                                                              .sliderDistanceValue,
                                                           formatType:
                                                               FormatType.custom,
                                                           format: '###',
@@ -414,7 +447,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                         style:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyText1
+                                                                .bodyMedium
                                                                 .override(
                                                                   fontFamily:
                                                                       'Roboto',
@@ -433,18 +466,20 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           .alternate,
                                                   inactiveColor:
                                                       Color(0xFFC0C0C0),
-                                                  min: 0,
-                                                  max: 100,
-                                                  value: sliderDistanceValue ??=
+                                                  min: 0.0,
+                                                  max: 100.0,
+                                                  value: _model
+                                                          .sliderDistanceValue ??=
                                                       FFAppState().fltrDistance,
                                                   onChanged: (newValue) async {
-                                                    setState(() =>
-                                                        sliderDistanceValue =
-                                                            newValue);
-                                                    setState(() {
+                                                    setState(() => _model
+                                                            .sliderDistanceValue =
+                                                        newValue);
+                                                    FFAppState().update(() {
                                                       FFAppState()
                                                               .fltrDistance =
-                                                          sliderDistanceValue!;
+                                                          _model
+                                                              .sliderDistanceValue!;
                                                     });
                                                   },
                                                 ),
@@ -456,10 +491,10 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ],
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                    alignment: AlignmentDirectional(0.0, 0.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 16, 0, 0),
+                                          0.0, 16.0, 0.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
                                           if (columnUsersRecord.isPremium! ||
@@ -468,11 +503,12 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               revenue_cat.activeEntitlementIds
                                                   .contains(FFAppState()
                                                       .entAdvFilter)) {
-                                            setState(() {
+                                            FFAppState().update(() {
                                               FFAppState().filterName =
                                                   'Advanced filters';
                                             });
-                                            await pageViewController?.nextPage(
+                                            await _model.pageViewController
+                                                ?.nextPage(
                                               duration:
                                                   Duration(milliseconds: 300),
                                               curve: Curves.ease,
@@ -494,25 +530,31 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         },
                                         text: 'Advanced filters',
                                         options: FFButtonOptions(
-                                          width: 170,
-                                          height: 40,
+                                          width: 170.0,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle1
+                                              .titleMedium
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
                                               ),
-                                          elevation: 0,
+                                          elevation: 0.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),
@@ -531,29 +573,31 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         CrossAxisAlignment.stretch,
                                     children: [
                                       Stack(
-                                        alignment: AlignmentDirectional(0, 0),
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
                                         children: [
                                           Align(
                                             alignment:
-                                                AlignmentDirectional(-1, 0),
+                                                AlignmentDirectional(-1.0, 0.0),
                                             child: Container(
                                               width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              height: 60,
+                                                      .size
+                                                      .width *
+                                                  1.0,
+                                              height: 60.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryBackground,
                                                 borderRadius:
-                                                    BorderRadius.circular(16),
+                                                    BorderRadius.circular(16.0),
                                               ),
                                             ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 8, 0),
+                                                    8.0, 0.0, 8.0, 0.0),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
@@ -566,14 +610,14 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                   'Location',
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .subtitle1,
+                                                      .titleMedium,
                                                 ),
                                                 Container(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
                                                       0.5,
-                                                  height: 70,
+                                                  height: 70.0,
                                                   decoration: BoxDecoration(),
                                                   child: Row(
                                                     mainAxisSize:
@@ -586,7 +630,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           maxLines: 2,
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
@@ -599,15 +643,15 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       FlutterFlowIconButton(
                                                         borderColor:
                                                             Colors.transparent,
-                                                        borderRadius: 30,
-                                                        buttonSize: 32,
+                                                        borderRadius: 30.0,
+                                                        buttonSize: 32.0,
                                                         icon: Icon(
                                                           Icons
                                                               .chevron_right_rounded,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
                                                               .primaryText,
-                                                          size: 20,
+                                                          size: 20.0,
                                                         ),
                                                         onPressed: () async {
                                                           context.pushNamed(
@@ -656,8 +700,13 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 0, 8),
+                                                  .fromSTEB(0.0, 0.0, 0.0, 8.0),
                                               child: InkWell(
+                                                splashColor: Colors.transparent,
+                                                focusColor: Colors.transparent,
+                                                hoverColor: Colors.transparent,
+                                                highlightColor:
+                                                    Colors.transparent,
                                                 onTap: () async {
                                                   currentUserLocationValue =
                                                       await getCurrentUserLocation(
@@ -667,19 +716,19 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           locationPermission)) &&
                                                       functions.isLocationSet(
                                                           currentUserLocationValue)) {
-                                                    setState(() {
+                                                    FFAppState().update(() {
                                                       FFAppState().tmpLocation =
                                                           currentUserLocationValue;
                                                     });
                                                   } else {
-                                                    setState(() {
+                                                    FFAppState().update(() {
                                                       FFAppState().tmpLocation =
                                                           widget.user!
                                                               .geoposition;
                                                     });
                                                   }
 
-                                                  address = await actions
+                                                  _model.address = await actions
                                                       .getAddressFromLocation(
                                                     FFAppState().tmpLocation!,
                                                   );
@@ -692,7 +741,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                                 title: Text(
                                                                     'Please, confirm your location.'),
                                                                 content: Text(
-                                                                    'Your location will be set to ${address}'),
+                                                                    'Your location will be set to ${_model.address}'),
                                                                 actions: [
                                                                   TextButton(
                                                                     onPressed: () =>
@@ -716,41 +765,41 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           ) ??
                                                           false;
                                                   if (confirmDialogResponse) {
-                                                    setState(() {
+                                                    FFAppState().update(() {
                                                       FFAppState()
                                                               .fltrLocation =
                                                           FFAppState()
                                                               .tmpLocation;
                                                       FFAppState().fltrAddress =
-                                                          address!;
+                                                          _model.address!;
                                                     });
                                                   }
 
                                                   setState(() {});
                                                 },
                                                 child: Container(
-                                                  width: 100,
-                                                  height: 40,
+                                                  width: 100.0,
+                                                  height: 40.0,
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            8),
+                                                            8.0),
                                                   ),
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          1, -1),
+                                                          1.0, -1.0),
                                                   child: Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 4, 0),
+                                                            .fromSTEB(0.0, 0.0,
+                                                                4.0, 0.0),
                                                     child: Text(
                                                       'Reset location',
                                                       textAlign: TextAlign.end,
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .bodyText1
+                                                              .bodyMedium
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
@@ -767,14 +816,19 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                         ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 16),
+                                            0.0, 0.0, 0.0, 16.0),
                                         child: Stack(
                                           alignment:
-                                              AlignmentDirectional(0, -1),
+                                              AlignmentDirectional(0.0, -1.0),
                                           children: [
                                             InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
                                               onTap: () async {
-                                                setState(() {
+                                                FFAppState().update(() {
                                                   FFAppState()
                                                           .advancedFilterName =
                                                       'Advanced2';
@@ -795,29 +849,31 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                               },
                                               child: Container(
                                                 width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                height: 100,
+                                                        .size
+                                                        .width *
+                                                    1.0,
+                                                height: 100.0,
                                                 decoration: BoxDecoration(
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .secondaryBackground,
                                                   borderRadius:
-                                                      BorderRadius.circular(16),
+                                                      BorderRadius.circular(
+                                                          16.0),
                                                 ),
                                               ),
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 8, 8, 0),
+                                                  .fromSTEB(8.0, 8.0, 8.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 0, 8),
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 8.0),
                                                     child: Row(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -832,7 +888,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                           'Industry',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
-                                                              .subtitle1,
+                                                              .titleMedium,
                                                         ),
                                                         Row(
                                                           mainAxisSize:
@@ -841,19 +897,21 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                             FlutterFlowIconButton(
                                                               borderColor: Colors
                                                                   .transparent,
-                                                              borderRadius: 30,
-                                                              buttonSize: 32,
+                                                              borderRadius:
+                                                                  30.0,
+                                                              buttonSize: 32.0,
                                                               icon: Icon(
                                                                 Icons
                                                                     .chevron_right_rounded,
                                                                 color: FlutterFlowTheme.of(
                                                                         context)
                                                                     .primaryText,
-                                                                size: 20,
+                                                                size: 20.0,
                                                               ),
                                                               onPressed:
                                                                   () async {
-                                                                setState(() {
+                                                                FFAppState()
+                                                                    .update(() {
                                                                   FFAppState()
                                                                           .advancedFilterName =
                                                                       'Advanced2';
@@ -883,7 +941,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -1, 0),
+                                                            -1.0, 0.0),
                                                     child: Text(
                                                       functions.stringifyList(
                                                           FFAppState()
@@ -893,7 +951,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                                       maxLines: 3,
                                                       style: FlutterFlowTheme
                                                               .of(context)
-                                                          .bodyText1
+                                                          .bodyMedium
                                                           .override(
                                                             fontFamily:
                                                                 'Roboto',
@@ -918,12 +976,13 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                       child: Stack(
                         children: [
                           Container(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
@@ -931,30 +990,31 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                   Color(0xFFF95A82),
                                   Color(0xFFEA3C7D)
                                 ],
-                                stops: [0, 0.6, 1],
-                                begin: AlignmentDirectional(0, -1),
-                                end: AlignmentDirectional(0, 1),
+                                stops: [0.0, 0.6, 1.0],
+                                begin: AlignmentDirectional(0.0, -1.0),
+                                end: AlignmentDirectional(0, 1.0),
                               ),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                           Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 16.0),
                             child: FFButtonWidget(
                               onPressed: () async {
-                                setState(() {
+                                FFAppState().update(() {
                                   FFAppState().fltrGender =
-                                      ccInterestedInValue!;
+                                      _model.ccInterestedInValue!;
                                 });
                                 if (widget.user!.isPremium! ||
                                     !getRemoteConfigBool('check_premium') ||
                                     revenue_cat.activeEntitlementIds.contains(
                                         FFAppState().entResetLocation)) {
-                                  final usersUpdateData = createUsersRecordData(
+                                  final usersUpdateData1 =
+                                      createUsersRecordData(
                                     filter: createFilterStruct(
                                       ageRangeExt: false,
-                                      distance: sliderDistanceValue,
+                                      distance: _model.sliderDistanceValue,
                                       location: FFAppState().fltrLocation,
                                       address: FFAppState().fltrAddress,
                                       ageRange: createIntRangeStruct(
@@ -973,12 +1033,13 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ),
                                   );
                                   await currentUserReference!
-                                      .update(usersUpdateData);
+                                      .update(usersUpdateData1);
                                 } else {
-                                  final usersUpdateData = createUsersRecordData(
+                                  final usersUpdateData2 =
+                                      createUsersRecordData(
                                     filter: createFilterStruct(
                                       ageRangeExt: false,
-                                      distance: sliderDistanceValue,
+                                      distance: _model.sliderDistanceValue,
                                       location: FFAppState().fltrLocation,
                                       address: FFAppState().fltrAddress,
                                       ageRange: createIntRangeStruct(
@@ -997,7 +1058,7 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                                     ),
                                   );
                                   await currentUserReference!
-                                      .update(usersUpdateData);
+                                      .update(usersUpdateData2);
                                 }
 
                                 if (Navigator.of(context).canPop()) {
@@ -1008,21 +1069,25 @@ class _FiltersViewWidgetState extends State<FiltersViewWidget> {
                               text: 'Save',
                               options: FFButtonOptions(
                                 width: double.infinity,
-                                height: 48,
+                                height: 48.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
                                 color: Colors.transparent,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle1
+                                    .titleMedium
                                     .override(
                                       fontFamily: 'Roboto',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                     ),
-                                elevation: 0,
+                                elevation: 0.0,
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
-                                  width: 1,
+                                  width: 1.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                           ),

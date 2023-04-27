@@ -1,14 +1,16 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/custom_functions.dart' as functions;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'edit_basics_view_model.dart';
+export 'edit_basics_view_model.dart';
 
 class EditBasicsViewWidget extends StatefulWidget {
   const EditBasicsViewWidget({Key? key}) : super(key: key);
@@ -18,50 +20,68 @@ class EditBasicsViewWidget extends StatefulWidget {
 }
 
 class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
+  late EditBasicsViewModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => EditBasicsViewModel());
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).primaryText,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width * 1.0,
                       height: MediaQuery.of(context).size.height * 0.7,
                       decoration: BoxDecoration(
                         color: Colors.transparent,
@@ -71,20 +91,21 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 32.0),
                                 child: SelectionArea(
                                     child: Text(
                                   'Lifestyle',
-                                  style: FlutterFlowTheme.of(context).title1,
+                                  style:
+                                      FlutterFlowTheme.of(context).displaySmall,
                                 )),
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -93,17 +114,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgLookingFor.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Looking for',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -117,12 +138,16 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
+                                        40.0, 0.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed('EditLookingForView');
 
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus;
                                         });
@@ -133,6 +158,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
                                             onTap: () async {
                                               context.pushNamed(
                                                   'EditLookingForView');
@@ -145,26 +174,26 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                                   2),
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle1,
+                                                      .titleMedium,
                                             ),
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 32,
+                                            borderRadius: 30.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 32.0,
                                             icon: Icon(
                                               Icons.chevron_right_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 16,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               context.pushNamed(
                                                   'EditLookingForView');
 
-                                              setState(() {
+                                              FFAppState().update(() {
                                                 FFAppState().usrWorkoutStatus =
                                                     FFAppState()
                                                         .usrWorkoutStatus;
@@ -179,10 +208,10 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 16.0),
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -194,18 +223,18 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           children: [
                                             Image.asset(
                                               'assets/images/imgHowTall.png',
-                                              width: 28,
-                                              height: 28,
+                                              width: 28.0,
+                                              height: 28.0,
                                               fit: BoxFit.cover,
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
+                                                  .fromSTEB(8.0, 0.0, 0.0, 0.0),
                                               child: Text(
                                                 'How tall are you?',
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .subtitle2
+                                                        .titleSmall
                                                         .override(
                                                           fontFamily: 'Roboto',
                                                           color: FlutterFlowTheme
@@ -220,12 +249,16 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          40, 0, 0, 0),
+                                          40.0, 0.0, 0.0, 0.0),
                                       child: InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
                                         onTap: () async {
                                           context.pushNamed('EditHeightView');
 
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().usrWorkoutStatus =
                                                 FFAppState().usrWorkoutStatus;
                                           });
@@ -239,25 +272,25 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                               FFAppState().usrHeight.toString(),
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle1,
+                                                      .titleMedium,
                                             ),
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
-                                              borderWidth: 1,
-                                              buttonSize: 32,
+                                              borderRadius: 30.0,
+                                              borderWidth: 1.0,
+                                              buttonSize: 32.0,
                                               icon: Icon(
                                                 Icons.chevron_right_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 16,
+                                                size: 16.0,
                                               ),
                                               onPressed: () async {
                                                 context.pushNamed(
                                                     'EditHeightView');
 
-                                                setState(() {
+                                                FFAppState().update(() {
                                                   FFAppState()
                                                           .usrWorkoutStatus =
                                                       FFAppState()
@@ -274,8 +307,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -284,17 +317,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgDrinking.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Do you drink?',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -307,12 +340,16 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
+                                        40.0, 0.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed('EditDrinkPrefsView');
 
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus;
                                         });
@@ -325,25 +362,25 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           Text(
                                             FFAppState().usrDrinkingStatus,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .titleMedium,
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 32,
+                                            borderRadius: 30.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 32.0,
                                             icon: Icon(
                                               Icons.chevron_right_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 16,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               context.pushNamed(
                                                   'EditDrinkPrefsView');
 
-                                              setState(() {
+                                              FFAppState().update(() {
                                                 FFAppState().usrWorkoutStatus =
                                                     FFAppState()
                                                         .usrWorkoutStatus;
@@ -358,8 +395,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -368,17 +405,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgSmoking.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Do you smoke?',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -390,10 +427,14 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     ],
                                   ),
                                   InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       context.pushNamed('EditSmokingPrefsView');
 
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().usrWorkoutStatus =
                                             FFAppState().usrWorkoutStatus;
                                       });
@@ -406,29 +447,29 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  40, 0, 0, 0),
+                                                  40.0, 0.0, 0.0, 0.0),
                                           child: Text(
                                             FFAppState().usrSmokingStatus,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .titleMedium,
                                           ),
                                         ),
                                         FlutterFlowIconButton(
                                           borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
+                                          borderRadius: 30.0,
+                                          borderWidth: 1.0,
+                                          buttonSize: 32.0,
                                           icon: Icon(
                                             Icons.chevron_right_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 16,
+                                            size: 16.0,
                                           ),
                                           onPressed: () async {
                                             context.pushNamed(
                                                 'EditSmokingPrefsView');
 
-                                            setState(() {
+                                            FFAppState().update(() {
                                               FFAppState().usrWorkoutStatus =
                                                   FFAppState().usrWorkoutStatus;
                                             });
@@ -441,8 +482,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -451,17 +492,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgSpiritual.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Are you spiritual?',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -474,13 +515,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
+                                        40.0, 0.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed(
                                             'EditSpiritualStatusView');
 
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus;
                                         });
@@ -493,25 +538,25 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           Text(
                                             FFAppState().usrSpiritualStatus,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .titleMedium,
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 32,
+                                            borderRadius: 30.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 32.0,
                                             icon: Icon(
                                               Icons.chevron_right_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 16,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               context.pushNamed(
                                                   'EditSpiritualStatusView');
 
-                                              setState(() {
+                                              FFAppState().update(() {
                                                 FFAppState().usrWorkoutStatus =
                                                     FFAppState()
                                                         .usrWorkoutStatus;
@@ -526,8 +571,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -536,17 +581,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgSport.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Do you work out?',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -559,13 +604,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
+                                        40.0, 0.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context
                                             .pushNamed('EditWorkoutPrefsView');
 
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus;
                                         });
@@ -578,25 +627,25 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           Text(
                                             FFAppState().usrWorkoutStatus,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .titleMedium,
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 32,
+                                            borderRadius: 30.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 32.0,
                                             icon: Icon(
                                               Icons.chevron_right_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 16,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               context.pushNamed(
                                                   'EditWorkoutPrefsView');
 
-                                              setState(() {
+                                              FFAppState().update(() {
                                                 FFAppState().usrWorkoutStatus =
                                                     FFAppState()
                                                         .usrWorkoutStatus;
@@ -611,8 +660,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -621,17 +670,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgChildren.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Children',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -644,13 +693,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
+                                        40.0, 0.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context
                                             .pushNamed('EditChildrenPrefsView');
 
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus;
                                         });
@@ -663,25 +716,25 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           Text(
                                             FFAppState().usrChildfreeStatus,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .titleMedium,
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 32,
+                                            borderRadius: 30.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 32.0,
                                             icon: Icon(
                                               Icons.chevron_right_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 16,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               context.pushNamed(
                                                   'EditChildrenPrefsView');
 
-                                              setState(() {
+                                              FFAppState().update(() {
                                                 FFAppState().usrWorkoutStatus =
                                                     FFAppState()
                                                         .usrWorkoutStatus;
@@ -696,8 +749,8 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 16.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
@@ -706,17 +759,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                     children: [
                                       Image.asset(
                                         'assets/images/imgEducation.png',
-                                        width: 28,
-                                        height: 28,
+                                        width: 28.0,
+                                        height: 28.0,
                                         fit: BoxFit.cover,
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8, 0, 0, 0),
+                                            8.0, 0.0, 0.0, 0.0),
                                         child: Text(
                                           'Education',
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
@@ -729,12 +782,16 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        40, 0, 0, 0),
+                                        40.0, 0.0, 0.0, 0.0),
                                     child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed('EditEducationView');
 
-                                        setState(() {
+                                        FFAppState().update(() {
                                           FFAppState().usrWorkoutStatus =
                                               FFAppState().usrWorkoutStatus;
                                         });
@@ -747,25 +804,25 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                           Text(
                                             FFAppState().usrEducation,
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1,
+                                                .titleMedium,
                                           ),
                                           FlutterFlowIconButton(
                                             borderColor: Colors.transparent,
-                                            borderRadius: 30,
-                                            borderWidth: 1,
-                                            buttonSize: 32,
+                                            borderRadius: 30.0,
+                                            borderWidth: 1.0,
+                                            buttonSize: 32.0,
                                             icon: Icon(
                                               Icons.chevron_right_rounded,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
-                                              size: 16,
+                                              size: 16.0,
                                             ),
                                             onPressed: () async {
                                               context.pushNamed(
                                                   'EditEducationView');
 
-                                              setState(() {
+                                              FFAppState().update(() {
                                                 FFAppState().usrWorkoutStatus =
                                                     FFAppState()
                                                         .usrWorkoutStatus;
@@ -787,17 +844,17 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                   children: [
                                     Image.asset(
                                       'assets/images/imgBodyType.png',
-                                      width: 28,
-                                      height: 28,
+                                      width: 28.0,
+                                      height: 28.0,
                                       fit: BoxFit.cover,
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          8, 0, 0, 0),
+                                          8.0, 0.0, 0.0, 0.0),
                                       child: Text(
                                         'Body type',
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle2
+                                            .titleSmall
                                             .override(
                                               fontFamily: 'Roboto',
                                               color:
@@ -810,12 +867,16 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      40, 0, 0, 0),
+                                      40.0, 0.0, 0.0, 0.0),
                                   child: InkWell(
+                                    splashColor: Colors.transparent,
+                                    focusColor: Colors.transparent,
+                                    hoverColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       context.pushNamed('EditBodyTypeView');
 
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().usrWorkoutStatus =
                                             FFAppState().usrWorkoutStatus;
                                       });
@@ -828,24 +889,24 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                                         Text(
                                           FFAppState().usrBodyType,
                                           style: FlutterFlowTheme.of(context)
-                                              .subtitle1,
+                                              .titleMedium,
                                         ),
                                         FlutterFlowIconButton(
                                           borderColor: Colors.transparent,
-                                          borderRadius: 30,
-                                          borderWidth: 1,
-                                          buttonSize: 32,
+                                          borderRadius: 30.0,
+                                          borderWidth: 1.0,
+                                          buttonSize: 32.0,
                                           icon: Icon(
                                             Icons.chevron_right_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
-                                            size: 16,
+                                            size: 16.0,
                                           ),
                                           onPressed: () async {
                                             context
                                                 .pushNamed('EditBodyTypeView');
 
-                                            setState(() {
+                                            FFAppState().update(() {
                                               FFAppState().usrWorkoutStatus =
                                                   FFAppState().usrWorkoutStatus;
                                             });
@@ -864,12 +925,12 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                   child: Stack(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -877,15 +938,15 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                               Color(0xFFF95A82),
                               Color(0xFFEA3C7D)
                             ],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                            stops: [0.0, 0.6, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             final usersUpdateData = {
@@ -924,21 +985,24 @@ class _EditBasicsViewWidgetState extends State<EditBasicsViewWidget> {
                           text: 'Save',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
                             color: Colors.transparent,
                             textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
-                            elevation: 0,
+                            elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 0,
+                              width: 0.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),

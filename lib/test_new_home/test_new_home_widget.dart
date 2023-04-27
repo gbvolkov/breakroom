@@ -1,19 +1,19 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../backend/push_notifications/push_notifications_util.dart';
-import '../components/empty_candidates_list_widget_widget.dart';
-import '../components/gender_icon_widget.dart';
-import '../components/notifications_bell_widget.dart';
-import '../flutter_flow/chat/index.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_swipeable_stack.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/permissions_util.dart';
-import '../flutter_flow/random_data_util.dart' as random_data;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
+import '/components/empty_candidates_list_widget_widget.dart';
+import '/components/gender_icon_widget.dart';
+import '/components/notifications_bell_widget.dart';
+import '/flutter_flow/chat/index.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_swipeable_stack.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/permissions_util.dart';
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +21,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:swipeable_card_stack/swipeable_card_stack.dart';
+import 'test_new_home_model.dart';
+export 'test_new_home_model.dart';
 
 class TestNewHomeWidget extends StatefulWidget {
   const TestNewHomeWidget({Key? key}) : super(key: key);
@@ -30,69 +32,69 @@ class TestNewHomeWidget extends StatefulWidget {
 }
 
 class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
-  ChatsRecord? groupChat;
-  int? clikesState;
-  late SwipeableCardSectionController swipeableStackController;
-  String? uid;
-  LatLng? currentUserLocationValue;
+  late TestNewHomeModel _model;
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  UsersRecord? userDoc;
+  final _unfocusNode = FocusNode();
+  LatLng? currentUserLocationValue;
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => TestNewHomeModel());
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       currentUserLocationValue =
           await getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0));
-      userDoc = await actions.getUserDocument(
+      _model.userDoc = await actions.getUserDocument(
         currentUserReference!,
       );
-      if (userDoc != null) {
-        if (userDoc!.isComplete!) {
-          setState(() {
-            FFAppState().tmpIntention = userDoc!.intention!;
+      if (_model.userDoc != null) {
+        if (_model.userDoc!.isComplete!) {
+          FFAppState().update(() {
+            FFAppState().tmpIntention = _model.userDoc!.intention!;
           });
           if (!(await getPermissionStatus(locationPermission)) ||
-              !functions.isLocationSet(userDoc!.geoposition)) {
+              !functions.isLocationSet(_model.userDoc!.geoposition)) {
             context.pushNamed('SetYourLocationView');
           }
 
           final usersUpdateData = createUsersRecordData(
             geoposition: functions.getUserLocation(
-                userDoc!.geoposition, currentUserLocationValue),
+                _model.userDoc!.geoposition, currentUserLocationValue),
           );
           await currentUserReference!.update(usersUpdateData);
           if (!FFAppState().whoViewedIntro.contains(currentUserUid)) {
-            setState(() {
-              setState(() => FFAppState().addToWhoViewedIntro(currentUserUid));
+            FFAppState().update(() {
+              FFAppState().addToWhoViewedIntro(currentUserUid);
             });
 
             context.goNamed('IntroductionView');
           }
         } else {
           await actions.initializeUserDataState(
-            userDoc!.bodyType,
-            userDoc!.childfreeStatus,
-            userDoc!.drinkingStatus,
-            userDoc!.education,
-            userDoc!.gender,
-            userDoc!.genderPreference,
-            userDoc!.height,
-            userDoc!.weight,
-            userDoc!.intention,
-            userDoc!.lookingFor!.toList().toList(),
-            userDoc!.religion,
-            userDoc!.smokingStatus,
-            userDoc!.spiritualStatus,
-            userDoc!.workoutStatus,
-            userDoc!.firstName,
-            userDoc!.lastName,
-            userDoc!.birthDay,
-            userDoc!.bio,
-            userDoc!.industry,
-            userDoc!.occupation,
-            userDoc!.interests!.toList().toList(),
+            _model.userDoc!.bodyType,
+            _model.userDoc!.childfreeStatus,
+            _model.userDoc!.drinkingStatus,
+            _model.userDoc!.education,
+            _model.userDoc!.gender,
+            _model.userDoc!.genderPreference,
+            _model.userDoc!.height,
+            _model.userDoc!.weight,
+            _model.userDoc!.intention,
+            _model.userDoc!.lookingFor!.toList().toList(),
+            _model.userDoc!.religion,
+            _model.userDoc!.smokingStatus,
+            _model.userDoc!.spiritualStatus,
+            _model.userDoc!.workoutStatus,
+            _model.userDoc!.firstName,
+            _model.userDoc!.lastName,
+            _model.userDoc!.birthDay,
+            _model.userDoc!.bio,
+            _model.userDoc!.industry,
+            _model.userDoc!.occupation,
+            _model.userDoc!.interests!.toList().toList(),
           );
 
           context.goNamed('CreateProfileView');
@@ -104,7 +106,14 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
 
     getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
         .then((loc) => setState(() => currentUserLocationValue = loc));
-    swipeableStackController = SwipeableCardSectionController();
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -115,24 +124,24 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
         color: FlutterFlowTheme.of(context).primaryBackground,
         child: Center(
           child: SizedBox(
-            width: 50,
-            height: 50,
+            width: 50.0,
+            height: 50.0,
             child: CircularProgressIndicator(
-              color: FlutterFlowTheme.of(context).primaryColor,
+              color: FlutterFlowTheme.of(context).primary,
             ),
           ),
         ),
       );
     }
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
             child: FutureBuilder<UsersRecord>(
               future: UsersRecord.getDocumentOnce(currentUserReference!),
               builder: (context, snapshot) {
@@ -140,10 +149,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 50,
-                      height: 50,
+                      width: 50.0,
+                      height: 50.0,
                       child: CircularProgressIndicator(
-                        color: FlutterFlowTheme.of(context).primaryColor,
+                        color: FlutterFlowTheme.of(context).primary,
                       ),
                     ),
                   );
@@ -153,28 +162,43 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'TESTRoom',
-                            style: FlutterFlowTheme.of(context).title1.override(
+                            style: FlutterFlowTheme.of(context)
+                                .displaySmall
+                                .override(
                                   fontFamily: 'Roboto',
-                                  fontSize: 38,
+                                  fontSize: 38.0,
                                 ),
                           ),
                           if (columnUsersRecord.isPremium ?? true)
                             InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
                               onTap: () async {
                                 context.goNamed('NotificationsView');
                               },
-                              child: NotificationsBellWidget(
-                                notiffTS: columnUsersRecord.notiffReadTS,
+                              child: wrapWithModel(
+                                model: _model.notificationsBellModel,
+                                updateCallback: () => setState(() {}),
+                                child: NotificationsBellWidget(
+                                  notiffTS: columnUsersRecord.notiffReadTS,
+                                ),
                               ),
                             ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               currentUserLocationValue =
                                   await getCurrentUserLocation(
@@ -199,8 +223,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                             },
                             child: Image.asset(
                               'assets/images/imgFilter.png',
-                              width: 25,
-                              height: 25,
+                              width: 25.0,
+                              height: 25.0,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -208,17 +232,18 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
                       child: Stack(
                         children: [
                           if (FFAppState().tmpIntention == 'Dating')
                             Container(
                               width: double.infinity,
-                              height: 40,
+                              height: 40.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -228,13 +253,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                   Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
-                                    height: 34,
+                                    height: 34.0,
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          4, 0, 0, 0),
+                                          4.0, 0.0, 0.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () {
                                           print('btnDating pressed ...');
@@ -243,24 +268,30 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         options: FFButtonOptions(
                                           width: double.infinity,
                                           height: double.infinity,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
                                               .primaryBtnText,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
                                               ),
-                                          elevation: 0,
+                                          elevation: 0.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 0,
+                                            width: 0.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),
@@ -268,16 +299,16 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                   Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
-                                    height: 34,
+                                    height: 34.0,
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 4, 0),
+                                          0.0, 0.0, 4.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().tmpIntention =
                                                 'Social';
                                           });
@@ -297,24 +328,30 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         text: 'Social',
                                         options: FFButtonOptions(
                                           width: double.infinity,
-                                          height: 40,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: Colors.transparent,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
                                               ),
-                                          elevation: 0,
+                                          elevation: 0.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 0,
+                                            width: 0.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),
@@ -325,11 +362,11 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                           if (FFAppState().tmpIntention == 'Social')
                             Container(
                               width: double.infinity,
-                              height: 40,
+                              height: 40.0,
                               decoration: BoxDecoration(
                                 color: FlutterFlowTheme.of(context)
                                     .secondaryBackground,
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -339,16 +376,16 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                   Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
-                                    height: 34,
+                                    height: 34.0,
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          4, 0, 0, 0),
+                                          4.0, 0.0, 0.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          setState(() {
+                                          FFAppState().update(() {
                                             FFAppState().tmpIntention =
                                                 'Dating';
                                           });
@@ -369,23 +406,29 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         options: FFButtonOptions(
                                           width: double.infinity,
                                           height: double.infinity,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: Colors.transparent,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
                                               ),
-                                          elevation: 0,
+                                          elevation: 0.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 0,
+                                            width: 0.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),
@@ -393,13 +436,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                   Container(
                                     width: MediaQuery.of(context).size.width *
                                         0.45,
-                                    height: 34,
+                                    height: 34.0,
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
                                     ),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 4, 0),
+                                          0.0, 0.0, 4.0, 0.0),
                                       child: FFButtonWidget(
                                         onPressed: () {
                                           print('btnSocial pressed ...');
@@ -407,25 +450,31 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         text: 'Social',
                                         options: FFButtonOptions(
                                           width: double.infinity,
-                                          height: 40,
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                           textStyle: FlutterFlowTheme.of(
                                                   context)
-                                              .subtitle2
+                                              .titleSmall
                                               .override(
                                                 fontFamily: 'Roboto',
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
                                               ),
-                                          elevation: 0,
+                                          elevation: 0.0,
                                           borderSide: BorderSide(
                                             color: Colors.transparent,
-                                            width: 0,
+                                            width: 0.0,
                                           ),
                                           borderRadius:
-                                              BorderRadius.circular(8),
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                     ),
@@ -489,11 +538,11 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                               if (!snapshot.hasData) {
                                 return Center(
                                   child: SizedBox(
-                                    width: 50,
-                                    height: 50,
+                                    width: 50.0,
+                                    height: 50.0,
                                     child: CircularProgressIndicator(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
                                     ),
                                   ),
                                 );
@@ -549,15 +598,14 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         };
                                         await currentUserReference!
                                             .update(usersUpdateData);
-                                        setState(() {
-                                          setState(() => FFAppState()
-                                              .addToDislikedUsers(
-                                                  matchedUsers[index]!.uid!));
+                                        FFAppState().update(() {
+                                          FFAppState().addToDislikedUsers(
+                                              matchedUsers[index]!.uid!);
                                         });
                                       },
                                       onRightSwipe: (index) async {
                                         var _shouldSetState = false;
-                                        clikesState =
+                                        _model.clikesState =
                                             await actions.canProcessLikeAction(
                                           columnUsersRecord.likesCount,
                                           columnUsersRecord.lastLikeTime,
@@ -565,16 +613,16 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           getRemoteConfigBool('check_premium'),
                                         );
                                         _shouldSetState = true;
-                                        if (clikesState == 0) {
+                                        if (_model.clikesState == 0) {
                                           context.pushNamed('GetPremiumView');
 
                                           if (_shouldSetState) setState(() {});
                                           return;
                                         } else {
-                                          if (clikesState == -1) {
+                                          if (_model.clikesState == -1) {
                                             // addToLikedList
 
-                                            final usersUpdateData = {
+                                            final usersUpdateData1 = {
                                               ...createUsersRecordData(
                                                 likesCount: 1,
                                                 lastLikeTime:
@@ -586,11 +634,11 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   [matchedUsers[index]!.uid]),
                                             };
                                             await currentUserReference!
-                                                .update(usersUpdateData);
+                                                .update(usersUpdateData1);
                                           } else {
                                             // addToLikedList
 
-                                            final usersUpdateData = {
+                                            final usersUpdateData2 = {
                                               'liked': FieldValue.arrayUnion(
                                                   [matchedUsers[index]!.uid]),
                                               'touched': FieldValue.arrayUnion(
@@ -599,7 +647,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   FieldValue.increment(1),
                                             };
                                             await currentUserReference!
-                                                .update(usersUpdateData);
+                                                .update(usersUpdateData2);
                                           }
                                         }
 
@@ -607,7 +655,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             .liked!
                                             .toList()
                                             .contains(columnUsersRecord.uid)) {
-                                          groupChat = await FFChatManager
+                                          _model.groupChat = await FFChatManager
                                               .instance
                                               .createChat(
                                             [matchedUsers[index]!.reference],
@@ -638,7 +686,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             },
                                           );
 
-                                          final notificationsCreateData =
+                                          final notificationsCreateData1 =
                                               createNotificationsRecordData(
                                             receiver:
                                                 matchedUsers[index]!.reference,
@@ -658,7 +706,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await NotificationsRecord.collection
                                               .doc()
-                                              .set(notificationsCreateData);
+                                              .set(notificationsCreateData1);
 
                                           context.pushNamed(
                                             'NewMatchView',
@@ -702,7 +750,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             },
                                           );
 
-                                          final notificationsCreateData =
+                                          final notificationsCreateData2 =
                                               createNotificationsRecordData(
                                             receiver:
                                                 matchedUsers[index]!.reference,
@@ -722,7 +770,7 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                           );
                                           await NotificationsRecord.collection
                                               .doc()
-                                              .set(notificationsCreateData);
+                                              .set(notificationsCreateData2);
                                         }
 
                                         if (_shouldSetState) setState(() {});
@@ -746,13 +794,13 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                             if (!snapshot.hasData) {
                                               return Center(
                                                 child: SizedBox(
-                                                  width: 50,
-                                                  height: 50,
+                                                  width: 50.0,
+                                                  height: 50.0,
                                                   child:
                                                       CircularProgressIndicator(
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primaryColor,
+                                                        .primary,
                                                   ),
                                                 ),
                                               );
@@ -763,22 +811,22 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                               clipBehavior:
                                                   Clip.antiAliasWithSaveLayer,
                                               color: Colors.transparent,
-                                              elevation: 0,
+                                              elevation: 0.0,
                                               shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(24),
+                                                    BorderRadius.circular(24.0),
                                               ),
                                               child: Stack(
                                                 children: [
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                0, 0, 0, 64),
+                                                            .fromSTEB(0.0, 0.0,
+                                                                0.0, 64.0),
                                                     child: ClipRRect(
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              24),
+                                                              24.0),
                                                       child: CachedNetworkImage(
                                                         imageUrl:
                                                             valueOrDefault<
@@ -793,9 +841,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                           'https://firebasestorage.googleapis.com/v0/b/breakroom-7465c.appspot.com/o/Logo.png?alt=media&token=aa7ebe1a-8303-4ac2-b764-923a54ca2d76',
                                                         ),
                                                         width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            1.0,
                                                         height: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -808,13 +857,24 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0, -1),
+                                                            0.0, -1.0),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 0, 0, 64),
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  64.0),
                                                       child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           context.pushNamed(
                                                             'HomeDetailsView',
@@ -845,9 +905,10 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                         },
                                                         child: Container(
                                                           width: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width,
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              1.0,
                                                           height: MediaQuery.of(
                                                                       context)
                                                                   .size
@@ -863,18 +924,19 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                 Color(
                                                                     0xB1000000)
                                                               ],
-                                                              stops: [0, 1],
+                                                              stops: [0.0, 1.0],
                                                               begin:
                                                                   AlignmentDirectional(
-                                                                      0, -1),
+                                                                      0.0,
+                                                                      -1.0),
                                                               end:
                                                                   AlignmentDirectional(
-                                                                      0, 1),
+                                                                      0, 1.0),
                                                             ),
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        16),
+                                                                        16.0),
                                                           ),
                                                         ),
                                                       ),
@@ -883,12 +945,15 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            0, 0.08),
+                                                            0.0, 0.08),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  0, 16, 0, 0),
+                                                                  0.0,
+                                                                  16.0,
+                                                                  0.0,
+                                                                  0.0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -903,40 +968,40 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        16,
-                                                                        0,
-                                                                        0,
-                                                                        0),
+                                                                        16.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
                                                             child: Container(
-                                                              width: 90,
-                                                              height: 35,
+                                                              width: 90.0,
+                                                              height: 35.0,
                                                               child: Stack(
                                                                 children: [
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            0,
-                                                                            0),
+                                                                            0.0,
+                                                                            0.0),
                                                                     child:
                                                                         Container(
                                                                       width:
-                                                                          100,
+                                                                          100.0,
                                                                       height:
-                                                                          100,
+                                                                          100.0,
                                                                       decoration:
                                                                           BoxDecoration(
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
+                                                                            .primary,
                                                                         borderRadius:
-                                                                            BorderRadius.circular(32),
+                                                                            BorderRadius.circular(32.0),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            0,
-                                                                            0),
+                                                                            0.0,
+                                                                            0.0),
                                                                     child: Row(
                                                                       mainAxisSize:
                                                                           MainAxisSize
@@ -951,21 +1016,21 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                           color:
                                                                               FlutterFlowTheme.of(context).alternate,
                                                                           size:
-                                                                              24,
+                                                                              24.0,
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              4,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                              4.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
                                                                           child:
                                                                               Text(
                                                                             '${valueOrDefault<String>(
                                                                               functions.geoDistance(cardUsersRecord.geoposition, functions.getUserLocation(columnUsersRecord.geoposition, currentUserLocationValue)).toString(),
                                                                               '?',
                                                                             )} miles',
-                                                                            style: FlutterFlowTheme.of(context).bodyText2.override(
+                                                                            style: FlutterFlowTheme.of(context).bodySmall.override(
                                                                                   fontFamily: 'Roboto',
                                                                                   color: FlutterFlowTheme.of(context).primaryText,
                                                                                 ),
@@ -982,40 +1047,40 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                             padding:
                                                                 EdgeInsetsDirectional
                                                                     .fromSTEB(
-                                                                        0,
-                                                                        0,
-                                                                        16,
-                                                                        0),
+                                                                        0.0,
+                                                                        0.0,
+                                                                        16.0,
+                                                                        0.0),
                                                             child: Container(
-                                                              width: 90,
-                                                              height: 35,
+                                                              width: 90.0,
+                                                              height: 35.0,
                                                               child: Stack(
                                                                 children: [
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            0,
-                                                                            0),
+                                                                            0.0,
+                                                                            0.0),
                                                                     child:
                                                                         Container(
                                                                       width:
-                                                                          100,
+                                                                          100.0,
                                                                       height:
-                                                                          100,
+                                                                          100.0,
                                                                       decoration:
                                                                           BoxDecoration(
                                                                         color: FlutterFlowTheme.of(context)
                                                                             .secondaryText,
                                                                         borderRadius:
-                                                                            BorderRadius.circular(32),
+                                                                            BorderRadius.circular(32.0),
                                                                       ),
                                                                     ),
                                                                   ),
                                                                   Align(
                                                                     alignment:
                                                                         AlignmentDirectional(
-                                                                            0,
-                                                                            0),
+                                                                            0.0,
+                                                                            0.0),
                                                                     child: Row(
                                                                       mainAxisSize:
                                                                           MainAxisSize
@@ -1028,22 +1093,22 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                           Icons
                                                                               .photo_camera_outlined,
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).primaryColor,
+                                                                              FlutterFlowTheme.of(context).primary,
                                                                           size:
-                                                                              24,
+                                                                              24.0,
                                                                         ),
                                                                         Padding(
                                                                           padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              4,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                                                              4.0,
+                                                                              0.0,
+                                                                              0.0,
+                                                                              0.0),
                                                                           child:
                                                                               Text(
                                                                             cardUsersRecord.photos!.toList().length.toString(),
-                                                                            style: FlutterFlowTheme.of(context).bodyText2.override(
+                                                                            style: FlutterFlowTheme.of(context).bodySmall.override(
                                                                                   fontFamily: 'Roboto',
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
+                                                                                  color: FlutterFlowTheme.of(context).primary,
                                                                                 ),
                                                                           ),
                                                                         ),
@@ -1061,17 +1126,21 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                   Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -1, 0.45),
+                                                            -1.0, 0.45),
                                                     child: Padding(
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  8, 0, 8, 0),
+                                                                  8.0,
+                                                                  0.0,
+                                                                  8.0,
+                                                                  0.0),
                                                       child: Container(
                                                         width: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .width,
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            1.0,
                                                         height: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -1085,8 +1154,11 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                         child: Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
-                                                                  .fromSTEB(4,
-                                                                      0, 0, 0),
+                                                                  .fromSTEB(
+                                                                      4.0,
+                                                                      0.0,
+                                                                      0.0,
+                                                                      0.0),
                                                           child: Column(
                                                             mainAxisSize:
                                                                 MainAxisSize
@@ -1098,14 +1170,15 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                               Align(
                                                                 alignment:
                                                                     AlignmentDirectional(
-                                                                        0, -1),
+                                                                        0.0,
+                                                                        -1.0),
                                                                 child: Padding(
                                                                   padding: EdgeInsetsDirectional
                                                                       .fromSTEB(
-                                                                          0,
-                                                                          4,
-                                                                          0,
-                                                                          8),
+                                                                          0.0,
+                                                                          4.0,
+                                                                          0.0,
+                                                                          8.0),
                                                                   child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
@@ -1119,30 +1192,30 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                     children: [
                                                                       Container(
                                                                         width:
-                                                                            80,
+                                                                            80.0,
                                                                         height:
-                                                                            25,
+                                                                            25.0,
                                                                         child:
                                                                             Stack(
                                                                           children: [
                                                                             Align(
-                                                                              alignment: AlignmentDirectional(0, 0),
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
                                                                               child: Container(
-                                                                                width: 100,
-                                                                                height: 100,
+                                                                                width: 100.0,
+                                                                                height: 100.0,
                                                                                 decoration: BoxDecoration(
-                                                                                  color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                  borderRadius: BorderRadius.circular(32),
+                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  borderRadius: BorderRadius.circular(32.0),
                                                                                 ),
                                                                               ),
                                                                             ),
                                                                             Align(
-                                                                              alignment: AlignmentDirectional(0, 0),
+                                                                              alignment: AlignmentDirectional(0.0, 0.0),
                                                                               child: Padding(
-                                                                                padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                                                                                padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
                                                                                 child: Text(
                                                                                   cardUsersRecord.intention!,
-                                                                                  style: FlutterFlowTheme.of(context).bodyText2.override(
+                                                                                  style: FlutterFlowTheme.of(context).bodySmall.override(
                                                                                         fontFamily: 'Roboto',
                                                                                         color: FlutterFlowTheme.of(context).alternate,
                                                                                       ),
@@ -1157,23 +1230,25 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                             BoxDecoration(),
                                                                         child:
                                                                             GenderIconWidget(
+                                                                          key: Key(
+                                                                              'Keyc1k_${matchedUsersIndex}_of_${matchedUsers.length}'),
                                                                           gender:
                                                                               cardUsersRecord.gender,
                                                                           maleIcon:
                                                                               Icon(
                                                                             FFIcons.kmale,
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                             size:
-                                                                                24,
+                                                                                24.0,
                                                                           ),
                                                                           femaleIcon:
                                                                               Icon(
                                                                             FFIcons.kfemale,
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).primaryColor,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                             size:
-                                                                                24,
+                                                                                24.0,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1185,20 +1260,20 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                 padding:
                                                                     EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            6),
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            6.0),
                                                                 child: Text(
                                                                   '${cardUsersRecord.firstName}, ${functions.getAge(cardUsersRecord.birthDay).toString()}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .title2
+                                                                      .headlineMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Roboto',
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
+                                                                            .primary,
                                                                         fontWeight:
                                                                             FontWeight.bold,
                                                                       ),
@@ -1208,20 +1283,20 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                 padding:
                                                                     EdgeInsetsDirectional
                                                                         .fromSTEB(
-                                                                            0,
-                                                                            0,
-                                                                            0,
-                                                                            8),
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            8.0),
                                                                 child: Text(
                                                                   '${cardUsersRecord.industry}, ${cardUsersRecord.occupation}',
                                                                   style: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .subtitle1
+                                                                      .titleMedium
                                                                       .override(
                                                                         fontFamily:
                                                                             'Roboto',
                                                                         color: FlutterFlowTheme.of(context)
-                                                                            .primaryColor,
+                                                                            .primary,
                                                                         fontWeight:
                                                                             FontWeight.w300,
                                                                       ),
@@ -1238,15 +1313,15 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                                                 maxLines: 3,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyText2
+                                                                    .bodySmall
                                                                     .override(
                                                                       fontFamily:
                                                                           'Roboto',
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .primaryColor,
+                                                                          .primary,
                                                                       fontSize:
-                                                                          12,
+                                                                          12.0,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w300,
@@ -1265,7 +1340,8 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                                         );
                                       },
                                       itemCount: matchedUsers.length,
-                                      controller: swipeableStackController,
+                                      controller:
+                                          _model.swipeableStackController,
                                       enableSwipeUp: false,
                                       enableSwipeDown: true,
                                     );
@@ -1282,30 +1358,32 @@ class _TestNewHomeWidgetState extends State<TestNewHomeWidget> {
                               alignment: AlignmentDirectional(0.88, 0.72),
                               child: FlutterFlowIconButton(
                                 borderColor: Colors.transparent,
-                                borderRadius: 20,
-                                borderWidth: 1,
-                                buttonSize: 40,
+                                borderRadius: 20.0,
+                                borderWidth: 1.0,
+                                buttonSize: 40.0,
                                 fillColor: FlutterFlowTheme.of(context)
                                     .primaryBackground,
                                 icon: Icon(
                                   Icons.settings_backup_restore,
                                   color: FlutterFlowTheme.of(context).alternate,
-                                  size: 20,
+                                  size: 20.0,
                                 ),
                                 onPressed: () async {
-                                  uid = await actions.getLastString(
+                                  _model.uid = await actions.getLastString(
                                     FFAppState().dislikedUsers.toList(),
                                   );
 
                                   final usersUpdateData = {
-                                    'disliked': FieldValue.arrayRemove([uid]),
-                                    'touched': FieldValue.arrayRemove([uid]),
+                                    'disliked':
+                                        FieldValue.arrayRemove([_model.uid]),
+                                    'touched':
+                                        FieldValue.arrayRemove([_model.uid]),
                                   };
                                   await columnUsersRecord.reference
                                       .update(usersUpdateData);
-                                  setState(() {
-                                    setState(() => FFAppState()
-                                        .removeFromDislikedUsers(uid!));
+                                  FFAppState().update(() {
+                                    FFAppState()
+                                        .removeFromDislikedUsers(_model.uid!);
                                   });
                                   if (Navigator.of(context).canPop()) {
                                     context.pop();

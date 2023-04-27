@@ -1,8 +1,10 @@
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'interaction_type_icon_widget_model.dart';
+export 'interaction_type_icon_widget_model.dart';
 
 class InteractionTypeIconWidgetWidget extends StatefulWidget {
   const InteractionTypeIconWidgetWidget({
@@ -19,6 +21,27 @@ class InteractionTypeIconWidgetWidget extends StatefulWidget {
 
 class _InteractionTypeIconWidgetWidgetState
     extends State<InteractionTypeIconWidgetWidget> {
+  late InteractionTypeIconWidgetModel _model;
+
+  @override
+  void setState(VoidCallback callback) {
+    super.setState(callback);
+    _model.onUpdate();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => InteractionTypeIconWidgetModel());
+  }
+
+  @override
+  void dispose() {
+    _model.maybeDispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
@@ -28,8 +51,8 @@ class _InteractionTypeIconWidgetWidgetState
       children: [
         if (widget.type == 'like')
           Container(
-            width: 48,
-            height: 48,
+            width: 48.0,
+            height: 48.0,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -40,8 +63,8 @@ class _InteractionTypeIconWidgetWidgetState
           ),
         if (widget.type == 'match')
           Container(
-            width: 48,
-            height: 48,
+            width: 48.0,
+            height: 48.0,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -52,8 +75,8 @@ class _InteractionTypeIconWidgetWidgetState
           ),
         if ((widget.type != 'like') && (widget.type != 'match'))
           Container(
-            width: 48,
-            height: 48,
+            width: 48.0,
+            height: 48.0,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
               shape: BoxShape.circle,

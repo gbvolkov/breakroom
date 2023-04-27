@@ -1,22 +1,24 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../backend/firebase_storage/storage.dart';
-import '../components/gender_icon_widget.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/upload_media.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/custom_functions.dart' as functions;
-import '../flutter_flow/permissions_util.dart';
-import '../flutter_flow/revenue_cat_util.dart' as revenue_cat;
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
+import '/components/gender_icon_widget.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
+import '/flutter_flow/permissions_util.dart';
+import '/flutter_flow/revenue_cat_util.dart' as revenue_cat;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'profile_view_model.dart';
+export 'profile_view_model.dart';
 
 class ProfileViewWidget extends StatefulWidget {
   const ProfileViewWidget({Key? key}) : super(key: key);
@@ -26,89 +28,96 @@ class ProfileViewWidget extends StatefulWidget {
 }
 
 class _ProfileViewWidgetState extends State<ProfileViewWidget> {
-  bool isMediaUploading1 = false;
-  String uploadedFileUrl1 = '';
+  late ProfileViewModel _model;
 
-  String? address;
-  bool isMediaUploading2 = false;
-  String uploadedFileUrl2 = '';
-
-  List<PhotoStruct>? clearedPhotos;
-  LatLng? currentUserLocationValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  String? userAddress;
-  UsersRecord? userDoc;
+  final _unfocusNode = FocusNode();
+  LatLng? currentUserLocationValue;
 
   @override
   void initState() {
     super.initState();
+    _model = createModel(context, () => ProfileViewModel());
+
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      userDoc = await actions.getUserDocument(
+      _model.userDoc = await actions.getUserDocument(
         currentUserReference!,
       );
-      userAddress = await actions.getAddressFromLocation(
-        userDoc!.geoposition!,
+      _model.userAddress = await actions.getAddressFromLocation(
+        _model.userDoc!.geoposition!,
       );
-      setState(() {
-        FFAppState().usrAddress = userAddress!;
+      FFAppState().update(() {
+        FFAppState().usrAddress = _model.userAddress!;
         FFAppState().blnImageDeleteMode = false;
       });
-      setState(() {
+      FFAppState().update(() {
         FFAppState().markedElements = [];
       });
     });
   }
 
   @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0.2, 0),
-          child: Text(
-            'Profile',
-            textAlign: TextAlign.center,
-            style: FlutterFlowTheme.of(context).title3.override(
-                  fontFamily: 'Roboto',
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-            child: InkWell(
-              onTap: () async {
-                context.pushNamed('SettingsView');
-              },
-              child: Image.asset(
-                'assets/images/ic_settings.png',
-                width: 30,
-                height: 30,
-                fit: BoxFit.scaleDown,
-              ),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          title: Align(
+            alignment: AlignmentDirectional(0.2, 0.0),
+            child: Text(
+              'Profile',
+              textAlign: TextAlign.center,
+              style: FlutterFlowTheme.of(context).headlineSmall.override(
+                    fontFamily: 'Roboto',
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ),
-        ],
-        centerTitle: false,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          actions: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
+              child: InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed('SettingsView');
+                },
+                child: Image.asset(
+                  'assets/images/ic_settings.png',
+                  width: 30.0,
+                  height: 30.0,
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
+            ),
+          ],
+          centerTitle: false,
+          elevation: 0.0,
+        ),
+        body: SafeArea(
           child: Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 10, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 10.0, 0.0),
               child: StreamBuilder<UsersRecord>(
                 stream: UsersRecord.getDocument(currentUserReference!),
                 builder: (context, snapshot) {
@@ -116,10 +125,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: SizedBox(
-                        width: 50,
-                        height: 50,
+                        width: 50.0,
+                        height: 50.0,
                         child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                         ),
                       ),
                     );
@@ -131,9 +140,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 32.0),
                           child: Container(
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery.of(context).size.width * 1.0,
                             height: MediaQuery.of(context).size.height * 0.65,
                             decoration: BoxDecoration(
                               color: FlutterFlowTheme.of(context)
@@ -148,13 +158,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Align(
-                                        alignment: AlignmentDirectional(0, 0),
+                                        alignment:
+                                            AlignmentDirectional(0.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  24, 0, 24, 0),
+                                                  24.0, 0.0, 24.0, 0.0),
                                           child: Container(
-                                            width: 105,
+                                            width: 105.0,
                                             child: Stack(
                                               alignment: AlignmentDirectional(
                                                   0.050000000000000044,
@@ -163,13 +174,13 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 FlutterFlowIconButton(
                                                   borderColor:
                                                       Colors.transparent,
-                                                  borderRadius: 30,
-                                                  borderWidth: 1,
-                                                  buttonSize: 60,
+                                                  borderRadius: 30.0,
+                                                  borderWidth: 1.0,
+                                                  buttonSize: 60.0,
                                                   icon: Icon(
                                                     Icons.camera_alt,
                                                     color: Color(0x7F050A41),
-                                                    size: 30,
+                                                    size: 30.0,
                                                   ),
                                                   onPressed: () {
                                                     print(
@@ -179,8 +190,16 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          -24.58, -1),
+                                                          -24.58, -1.0),
                                                   child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
                                                     onTap: () async {
                                                       final selectedMedia =
                                                           await selectMediaWithSourceBottomSheet(
@@ -203,9 +222,11 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                               validateFileFormat(
                                                                   m.storagePath,
                                                                   context))) {
-                                                        setState(() =>
-                                                            isMediaUploading1 =
-                                                                true);
+                                                        setState(() => _model
+                                                                .isDataUploading1 =
+                                                            true);
+                                                        var selectedUploadedFiles =
+                                                            <FFUploadedFile>[];
                                                         var downloadUrls =
                                                             <String>[];
                                                         try {
@@ -214,6 +235,27 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                             'Uploading file...',
                                                             showLoading: true,
                                                           );
+                                                          selectedUploadedFiles =
+                                                              selectedMedia
+                                                                  .map((m) =>
+                                                                      FFUploadedFile(
+                                                                        name: m
+                                                                            .storagePath
+                                                                            .split('/')
+                                                                            .last,
+                                                                        bytes: m
+                                                                            .bytes,
+                                                                        height: m
+                                                                            .dimensions
+                                                                            ?.height,
+                                                                        width: m
+                                                                            .dimensions
+                                                                            ?.width,
+                                                                        blurHash:
+                                                                            m.blurHash,
+                                                                      ))
+                                                                  .toList();
+
                                                           downloadUrls =
                                                               (await Future
                                                                       .wait(
@@ -233,17 +275,25 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           ScaffoldMessenger.of(
                                                                   context)
                                                               .hideCurrentSnackBar();
-                                                          isMediaUploading1 =
+                                                          _model.isDataUploading1 =
                                                               false;
                                                         }
-                                                        if (downloadUrls
-                                                                .length ==
-                                                            selectedMedia
-                                                                .length) {
-                                                          setState(() =>
-                                                              uploadedFileUrl1 =
-                                                                  downloadUrls
-                                                                      .first);
+                                                        if (selectedUploadedFiles
+                                                                    .length ==
+                                                                selectedMedia
+                                                                    .length &&
+                                                            downloadUrls
+                                                                    .length ==
+                                                                selectedMedia
+                                                                    .length) {
+                                                          setState(() {
+                                                            _model.uploadedLocalFile1 =
+                                                                selectedUploadedFiles
+                                                                    .first;
+                                                            _model.uploadedFileUrl1 =
+                                                                downloadUrls
+                                                                    .first;
+                                                          });
                                                           showUploadMessage(
                                                               context,
                                                               'Success!');
@@ -251,19 +301,19 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           setState(() {});
                                                           showUploadMessage(
                                                               context,
-                                                              'Failed to upload media');
+                                                              'Failed to upload data');
                                                           return;
                                                         }
                                                       }
 
-                                                      if (uploadedFileUrl1 !=
+                                                      if (_model.uploadedFileUrl1 !=
                                                               null &&
-                                                          uploadedFileUrl1 !=
+                                                          _model.uploadedFileUrl1 !=
                                                               '') {
                                                         final usersUpdateData =
                                                             createUsersRecordData(
-                                                          photoUrl:
-                                                              uploadedFileUrl1,
+                                                          photoUrl: _model
+                                                              .uploadedFileUrl1,
                                                         );
                                                         await currentUserReference!
                                                             .update(
@@ -271,8 +321,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       }
                                                     },
                                                     child: Container(
-                                                      width: 105,
-                                                      height: 105,
+                                                      width: 105.0,
+                                                      height: 105.0,
                                                       clipBehavior:
                                                           Clip.antiAlias,
                                                       decoration: BoxDecoration(
@@ -294,12 +344,15 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 Align(
                                                   alignment:
                                                       AlignmentDirectional(
-                                                          0, -1),
+                                                          0.0, -1.0),
                                                   child: Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 100, 0, 0),
+                                                                0.0,
+                                                                100.0,
+                                                                0.0,
+                                                                0.0),
                                                     child: FFButtonWidget(
                                                       onPressed: () {
                                                         print(
@@ -308,8 +361,22 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       text: columnUsersRecord
                                                           .intention!,
                                                       options: FFButtonOptions(
-                                                        width: 80,
-                                                        height: 32,
+                                                        width: 80.0,
+                                                        height: 32.0,
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        iconPadding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -317,7 +384,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         textStyle:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .subtitle2
+                                                                .titleSmall
                                                                 .override(
                                                                   fontFamily:
                                                                       'Roboto',
@@ -328,15 +395,15 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                       FontWeight
                                                                           .normal,
                                                                 ),
-                                                        elevation: 0,
+                                                        elevation: 0.0,
                                                         borderSide: BorderSide(
                                                           color: Colors
                                                               .transparent,
-                                                          width: 1,
+                                                          width: 1.0,
                                                         ),
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(8),
+                                                                .circular(8.0),
                                                       ),
                                                     ),
                                                   ),
@@ -348,7 +415,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(0, -0.05),
+                                            AlignmentDirectional(0.0, -0.05),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
@@ -360,27 +427,34 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               columnUsersRecord.displayName!,
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .title1,
+                                                      .displaySmall,
                                             ),
                                             Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                GenderIconWidget(
-                                                  gender:
-                                                      columnUsersRecord.gender,
-                                                  maleIcon: Icon(
-                                                    FFIcons.kmale,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 20,
-                                                  ),
-                                                  femaleIcon: Icon(
-                                                    FFIcons.kfemale,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 20,
+                                                wrapWithModel(
+                                                  model: _model.genderIconModel,
+                                                  updateCallback: () =>
+                                                      setState(() {}),
+                                                  child: GenderIconWidget(
+                                                    gender: columnUsersRecord
+                                                        .gender,
+                                                    maleIcon: Icon(
+                                                      FFIcons.kmale,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 20.0,
+                                                    ),
+                                                    femaleIcon: Icon(
+                                                      FFIcons.kfemale,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 20.0,
+                                                    ),
                                                   ),
                                                 ),
                                                 Text(
@@ -390,7 +464,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                   ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
-                                                      .bodyText2
+                                                      .bodySmall
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         fontWeight:
@@ -401,7 +475,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 10, 0, 0),
+                                                  .fromSTEB(
+                                                      0.0, 10.0, 0.0, 0.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
                                                   await actions
@@ -495,7 +570,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                   context.pushNamed(
                                                       'EditProfileView');
 
-                                                  setState(() {
+                                                  FFAppState().update(() {
                                                     FFAppState().usrFirstName =
                                                         FFAppState()
                                                             .usrFirstName;
@@ -503,28 +578,36 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                 },
                                                 text: 'Edit profile',
                                                 options: FFButtonOptions(
-                                                  width: 130,
-                                                  height: 40,
+                                                  width: 130.0,
+                                                  height: 40.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .alternate,
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
-                                                      .subtitle2
+                                                      .titleSmall
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .primaryColor,
+                                                                .primary,
                                                       ),
-                                                  elevation: 0,
+                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
-                                                    width: 1,
+                                                    width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                             ),
@@ -537,15 +620,16 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 8),
+                                                  0.0, 0.0, 0.0, 8.0),
                                           child: Text(
                                             'Bio',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1
+                                                .titleMedium
                                                 .override(
                                                   fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.bold,
@@ -555,30 +639,30 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 16),
+                                            0.0, 0.0, 0.0, 16.0),
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Expanded(
                                               child: Align(
-                                                alignment:
-                                                    AlignmentDirectional(-1, 0),
+                                                alignment: AlignmentDirectional(
+                                                    -1.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
-                                                  height: 60,
+                                                  height: 60.0,
                                                   decoration: BoxDecoration(
                                                     color: Colors.transparent,
                                                   ),
                                                   child: Align(
                                                     alignment:
                                                         AlignmentDirectional(
-                                                            -1, -1),
+                                                            -1.0, -1.0),
                                                     child: Text(
                                                       columnUsersRecord.bio!,
                                                       maxLines: 3,
                                                       style: FlutterFlowTheme
                                                               .of(context)
-                                                          .bodyText2
+                                                          .bodySmall
                                                           .override(
                                                             fontFamily:
                                                                 'Roboto',
@@ -594,15 +678,16 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 8),
+                                                  0.0, 0.0, 0.0, 8.0),
                                           child: Text(
                                             'About me',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1
+                                                .titleMedium
                                                 .override(
                                                   fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.bold,
@@ -611,14 +696,15 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 16),
+                                                  0.0, 0.0, 0.0, 16.0),
                                           child: Wrap(
-                                            spacing: 8,
-                                            runSpacing: 8,
+                                            spacing: 8.0,
+                                            runSpacing: 8.0,
                                             alignment: WrapAlignment.start,
                                             crossAxisAlignment:
                                                 WrapCrossAlignment.start,
@@ -636,16 +722,23 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     '${columnUsersRecord.height?.toString()} in',
                                                 icon: Icon(
                                                   Icons.height,
-                                                  size: 16,
+                                                  size: 16.0,
                                                 ),
                                                 options: FFButtonOptions(
-                                                  height: 32,
+                                                  height: 32.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .backgroundGrey,
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
-                                                      .subtitle2
+                                                      .titleSmall
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
@@ -655,13 +748,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
-                                                  elevation: 0,
+                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
-                                                    width: 1,
+                                                    width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                               FFButtonWidget(
@@ -672,16 +766,23 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     .drinkingStatus!,
                                                 icon: Icon(
                                                   Icons.wine_bar_outlined,
-                                                  size: 16,
+                                                  size: 16.0,
                                                 ),
                                                 options: FFButtonOptions(
-                                                  height: 32,
+                                                  height: 32.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .backgroundGrey,
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
-                                                      .subtitle2
+                                                      .titleSmall
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
@@ -691,13 +792,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
-                                                  elevation: 0,
+                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
-                                                    width: 1,
+                                                    width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                               FFButtonWidget(
@@ -708,16 +810,23 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     .smokingStatus!,
                                                 icon: Icon(
                                                   Icons.smoking_rooms,
-                                                  size: 16,
+                                                  size: 16.0,
                                                 ),
                                                 options: FFButtonOptions(
-                                                  height: 32,
+                                                  height: 32.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .backgroundGrey,
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
-                                                      .subtitle2
+                                                      .titleSmall
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
@@ -727,13 +836,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
-                                                  elevation: 0,
+                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
-                                                    width: 1,
+                                                    width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                               FFButtonWidget(
@@ -747,16 +857,23 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     1),
                                                 icon: Icon(
                                                   Icons.search_outlined,
-                                                  size: 16,
+                                                  size: 16.0,
                                                 ),
                                                 options: FFButtonOptions(
-                                                  height: 32,
+                                                  height: 32.0,
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 0.0, 0.0, 0.0),
+                                                  iconPadding:
+                                                      EdgeInsetsDirectional
+                                                          .fromSTEB(0.0, 0.0,
+                                                              0.0, 0.0),
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .backgroundGrey,
                                                   textStyle: FlutterFlowTheme
                                                           .of(context)
-                                                      .subtitle2
+                                                      .titleSmall
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
@@ -766,13 +883,14 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         fontWeight:
                                                             FontWeight.normal,
                                                       ),
-                                                  elevation: 0,
+                                                  elevation: 0.0,
                                                   borderSide: BorderSide(
                                                     color: Colors.transparent,
-                                                    width: 1,
+                                                    width: 1.0,
                                                   ),
                                                   borderRadius:
-                                                      BorderRadius.circular(8),
+                                                      BorderRadius.circular(
+                                                          8.0),
                                                 ),
                                               ),
                                             ],
@@ -780,15 +898,16 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 8),
+                                                  0.0, 0.0, 0.0, 8.0),
                                           child: Text(
                                             'Interests',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1
+                                                .titleMedium
                                                 .override(
                                                   fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.bold,
@@ -797,19 +916,20 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         ),
                                       ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 16),
+                                                  0.0, 0.0, 0.0, 16.0),
                                           child: Builder(
                                             builder: (context) {
                                               final interests =
                                                   columnUsersRecord.interests!
                                                       .toList();
                                               return Wrap(
-                                                spacing: 8,
-                                                runSpacing: 8,
+                                                spacing: 8.0,
+                                                runSpacing: 8.0,
                                                 alignment: WrapAlignment.start,
                                                 crossAxisAlignment:
                                                     WrapCrossAlignment.start,
@@ -831,7 +951,21 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     },
                                                     text: interestsItem,
                                                     options: FFButtonOptions(
-                                                      height: 32,
+                                                      height: 32.0,
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -839,7 +973,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       textStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .subtitle2
+                                                              .titleSmall
                                                               .override(
                                                                 fontFamily:
                                                                     'Roboto',
@@ -850,15 +984,15 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                     FontWeight
                                                                         .normal,
                                                               ),
-                                                      elevation: 0,
+                                                      elevation: 0.0,
                                                       borderSide: BorderSide(
                                                         color:
                                                             Colors.transparent,
-                                                        width: 1,
+                                                        width: 1.0,
                                                       ),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8),
+                                                              8.0),
                                                     ),
                                                   );
                                                 }),
@@ -889,19 +1023,19 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               ),
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .bodyText2,
+                                                      .bodySmall,
                                             )),
                                             FlutterFlowIconButton(
                                               borderColor: Colors.transparent,
-                                              borderRadius: 30,
-                                              borderWidth: 1,
-                                              buttonSize: 60,
+                                              borderRadius: 30.0,
+                                              borderWidth: 1.0,
+                                              buttonSize: 60.0,
                                               icon: Icon(
                                                 Icons.edit_location_rounded,
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .alternate,
-                                                size: 30,
+                                                size: 30.0,
                                               ),
                                               onPressed: () async {
                                                 currentUserLocationValue =
@@ -912,7 +1046,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         locationPermission)) &&
                                                     functions.isLocationSet(
                                                         currentUserLocationValue)) {
-                                                  address = await actions
+                                                  _model.address = await actions
                                                       .getAddressFromLocation(
                                                     currentUserLocationValue!,
                                                   );
@@ -925,7 +1059,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                 title: Text(
                                                                     'Please, confirm your location.'),
                                                                 content: Text(
-                                                                    'Your location will be set to ${address}'),
+                                                                    'Your location will be set to ${_model.address}'),
                                                                 actions: [
                                                                   TextButton(
                                                                     onPressed: () =>
@@ -957,9 +1091,9 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                     await currentUserReference!
                                                         .update(
                                                             usersUpdateData);
-                                                    setState(() {
+                                                    FFAppState().update(() {
                                                       FFAppState().usrAddress =
-                                                          address!;
+                                                          _model.address!;
                                                     });
                                                   }
                                                 }
@@ -970,15 +1104,16 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           ],
                                         ),
                                       Align(
-                                        alignment: AlignmentDirectional(-1, 0),
+                                        alignment:
+                                            AlignmentDirectional(-1.0, 0.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 0, 4),
+                                                  0.0, 0.0, 0.0, 4.0),
                                           child: Text(
                                             'Photos',
                                             style: FlutterFlowTheme.of(context)
-                                                .subtitle1
+                                                .titleMedium
                                                 .override(
                                                   fontFamily: 'Roboto',
                                                   fontWeight: FontWeight.bold,
@@ -996,8 +1131,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 3,
-                                              crossAxisSpacing: 6,
-                                              mainAxisSpacing: 6,
+                                              crossAxisSpacing: 6.0,
+                                              mainAxisSpacing: 6.0,
                                               childAspectRatio: 0.8,
                                             ),
                                             primary: false,
@@ -1009,15 +1144,23 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                               final userPhotosItem =
                                                   userPhotos[userPhotosIndex];
                                               return Container(
-                                                width: 100,
-                                                height: 130,
+                                                width: 100.0,
+                                                height: 130.0,
                                                 child: Stack(
                                                   children: [
                                                     Align(
                                                       alignment:
                                                           AlignmentDirectional(
-                                                              -1, 1),
+                                                              -1.0, 1.0),
                                                       child: InkWell(
+                                                        splashColor:
+                                                            Colors.transparent,
+                                                        focusColor:
+                                                            Colors.transparent,
+                                                        hoverColor:
+                                                            Colors.transparent,
+                                                        highlightColor:
+                                                            Colors.transparent,
                                                         onTap: () async {
                                                           context.pushNamed(
                                                             'PhotoExpandView',
@@ -1042,7 +1185,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                           );
                                                         },
                                                         onLongPress: () async {
-                                                          setState(() {
+                                                          FFAppState()
+                                                              .update(() {
                                                             FFAppState()
                                                                     .blnImageDeleteMode =
                                                                 true;
@@ -1050,8 +1194,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                         },
                                                         child: Image.network(
                                                           userPhotosItem.image!,
-                                                          width: 100,
-                                                          height: 130,
+                                                          width: 100.0,
+                                                          height: 130.0,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
@@ -1061,37 +1205,45 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                1, -1),
+                                                                1.0, -1.0),
                                                         child: InkWell(
+                                                          splashColor: Colors
+                                                              .transparent,
+                                                          focusColor: Colors
+                                                              .transparent,
+                                                          hoverColor: Colors
+                                                              .transparent,
+                                                          highlightColor: Colors
+                                                              .transparent,
                                                           onTap: () async {
                                                             if (FFAppState()
                                                                 .markedElements
                                                                 .contains(
                                                                     userPhotosIndex)) {
-                                                              setState(() {
-                                                                setState(() =>
-                                                                    FFAppState()
-                                                                        .removeFromMarkedElements(
-                                                                            userPhotosIndex));
+                                                              FFAppState()
+                                                                  .update(() {
+                                                                FFAppState()
+                                                                    .removeFromMarkedElements(
+                                                                        userPhotosIndex);
                                                               });
                                                             } else {
-                                                              setState(() {
-                                                                setState(() =>
-                                                                    FFAppState()
-                                                                        .addToMarkedElements(
-                                                                            userPhotosIndex));
+                                                              FFAppState()
+                                                                  .update(() {
+                                                                FFAppState()
+                                                                    .addToMarkedElements(
+                                                                        userPhotosIndex);
                                                               });
                                                             }
                                                           },
                                                           child: Material(
                                                             color: Colors
                                                                 .transparent,
-                                                            elevation: 0,
+                                                            elevation: 0.0,
                                                             shape:
                                                                 const CircleBorder(),
                                                             child: Container(
-                                                              width: 20,
-                                                              height: 20,
+                                                              width: 20.0,
+                                                              height: 20.0,
                                                               decoration:
                                                                   BoxDecoration(
                                                                 color: FlutterFlowTheme.of(
@@ -1109,8 +1261,8 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                                                   Icons.check,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .primaryColor,
-                                                                  size: 14,
+                                                                      .primary,
+                                                                  size: 14.0,
                                                                 ),
                                                               ),
                                                             ),
@@ -1137,7 +1289,7 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                           children: [
                             Container(
                               width: double.infinity,
-                              height: 48,
+                              height: 48.0,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
@@ -1145,18 +1297,18 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     Color(0xFFF95A82),
                                     Color(0xFFEA3C7D)
                                   ],
-                                  stops: [0, 0.6, 1],
-                                  begin: AlignmentDirectional(0, -1),
-                                  end: AlignmentDirectional(0, 1),
+                                  stops: [0.0, 0.6, 1.0],
+                                  begin: AlignmentDirectional(0.0, -1.0),
+                                  end: AlignmentDirectional(0, 1.0),
                                 ),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                             Align(
-                              alignment: AlignmentDirectional(-1, 0),
+                              alignment: AlignmentDirectional(-1.0, 0.0),
                               child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     final selectedMedia =
@@ -1168,7 +1320,10 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                         selectedMedia.every((m) =>
                                             validateFileFormat(
                                                 m.storagePath, context))) {
-                                      setState(() => isMediaUploading2 = true);
+                                      setState(
+                                          () => _model.isDataUploading2 = true);
+                                      var selectedUploadedFiles =
+                                          <FFUploadedFile>[];
                                       var downloadUrls = <String>[];
                                       try {
                                         showUploadMessage(
@@ -1176,6 +1331,18 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                           'Uploading file...',
                                           showLoading: true,
                                         );
+                                        selectedUploadedFiles = selectedMedia
+                                            .map((m) => FFUploadedFile(
+                                                  name: m.storagePath
+                                                      .split('/')
+                                                      .last,
+                                                  bytes: m.bytes,
+                                                  height: m.dimensions?.height,
+                                                  width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
+                                                ))
+                                            .toList();
+
                                         downloadUrls = (await Future.wait(
                                           selectedMedia.map(
                                             (m) async => await uploadData(
@@ -1188,28 +1355,34 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       } finally {
                                         ScaffoldMessenger.of(context)
                                             .hideCurrentSnackBar();
-                                        isMediaUploading2 = false;
+                                        _model.isDataUploading2 = false;
                                       }
-                                      if (downloadUrls.length ==
-                                          selectedMedia.length) {
-                                        setState(() => uploadedFileUrl2 =
-                                            downloadUrls.first);
+                                      if (selectedUploadedFiles.length ==
+                                              selectedMedia.length &&
+                                          downloadUrls.length ==
+                                              selectedMedia.length) {
+                                        setState(() {
+                                          _model.uploadedLocalFile2 =
+                                              selectedUploadedFiles.first;
+                                          _model.uploadedFileUrl2 =
+                                              downloadUrls.first;
+                                        });
                                         showUploadMessage(context, 'Success!');
                                       } else {
                                         setState(() {});
                                         showUploadMessage(
-                                            context, 'Failed to upload media');
+                                            context, 'Failed to upload data');
                                         return;
                                       }
                                     }
 
-                                    if (uploadedFileUrl2 != null &&
-                                        uploadedFileUrl2 != '') {
+                                    if (_model.uploadedFileUrl2 != null &&
+                                        _model.uploadedFileUrl2 != '') {
                                       final usersUpdateData = {
                                         'photos': FieldValue.arrayUnion([
                                           getPhotoFirestoreData(
                                             createPhotoStruct(
-                                              image: uploadedFileUrl2,
+                                              image: _model.uploadedFileUrl2,
                                               clearUnsetFields: false,
                                             ),
                                             true,
@@ -1223,25 +1396,29 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                   text: 'Add photo',
                                   icon: Icon(
                                     Icons.add_circle,
-                                    size: 15,
+                                    size: 15.0,
                                   ),
                                   options: FFButtonOptions(
                                     width: double.infinity,
-                                    height: 48,
+                                    height: 48.0,
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
+                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 0.0),
                                     color: Colors.transparent,
                                     textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle1
+                                        .titleMedium
                                         .override(
                                           fontFamily: 'Roboto',
                                           color: FlutterFlowTheme.of(context)
-                                              .primaryColor,
+                                              .primary,
                                         ),
-                                    elevation: 0,
+                                    elevation: 0.0,
                                     borderSide: BorderSide(
                                       color: Colors.transparent,
-                                      width: 0,
+                                      width: 0.0,
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
+                                    borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
                               ),
@@ -1250,23 +1427,24 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                         ),
                       if (FFAppState().blnImageDeleteMode)
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 16.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.45,
-                                height: 48,
+                                height: 48.0,
                                 decoration: BoxDecoration(
                                   color: Colors.transparent,
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().markedElements = [];
                                         FFAppState().blnImageDeleteMode = false;
                                       });
@@ -1275,28 +1453,33 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: double.infinity,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       color: Colors.transparent,
                                       textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
+                                          .titleMedium
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
                                                 .primaryText,
                                           ),
-                                      elevation: 0,
+                                      elevation: 0.0,
                                       borderSide: BorderSide(
                                         color: FlutterFlowTheme.of(context)
                                             .alternate,
-                                        width: 2,
+                                        width: 2.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                 ),
                               ),
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.45,
-                                height: 48,
+                                height: 48.0,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
@@ -1304,17 +1487,17 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                       Color(0xFFF95A82),
                                       Color(0xFFEA3C7D)
                                     ],
-                                    stops: [0, 0.6, 1],
-                                    begin: AlignmentDirectional(0, -1),
-                                    end: AlignmentDirectional(0, 1),
+                                    stops: [0.0, 0.6, 1.0],
+                                    begin: AlignmentDirectional(0.0, -1.0),
+                                    end: AlignmentDirectional(0, 1.0),
                                   ),
-                                  borderRadius: BorderRadius.circular(8),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      clearedPhotos =
+                                      _model.clearedPhotos =
                                           await actions.clearPhotosList(
                                         columnUsersRecord.photos!.toList(),
                                         FFAppState().markedElements.toList(),
@@ -1322,12 +1505,12 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
 
                                       final usersUpdateData = {
                                         'photos': getPhotoListFirestoreData(
-                                          clearedPhotos,
+                                          _model.clearedPhotos,
                                         ),
                                       };
                                       await columnUsersRecord.reference
                                           .update(usersUpdateData);
-                                      setState(() {
+                                      FFAppState().update(() {
                                         FFAppState().markedElements = [];
                                         FFAppState().blnImageDeleteMode = false;
                                       });
@@ -1338,20 +1521,25 @@ class _ProfileViewWidgetState extends State<ProfileViewWidget> {
                                     options: FFButtonOptions(
                                       width: double.infinity,
                                       height: double.infinity,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 0.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
                                       color: Colors.transparent,
                                       textStyle: FlutterFlowTheme.of(context)
-                                          .subtitle1
+                                          .titleMedium
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
-                                                .primaryColor,
+                                                .primary,
                                           ),
-                                      elevation: 0,
+                                      elevation: 0.0,
                                       borderSide: BorderSide(
                                         color: Colors.transparent,
-                                        width: 0,
+                                        width: 0.0,
                                       ),
-                                      borderRadius: BorderRadius.circular(8),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
                                 ),

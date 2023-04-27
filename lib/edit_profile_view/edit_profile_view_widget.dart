@@ -1,18 +1,19 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../backend/firebase_storage/storage.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
-import '../flutter_flow/upload_media.dart';
-import '../custom_code/actions/index.dart' as actions;
-import '../flutter_flow/custom_functions.dart' as functions;
-import 'package:styled_divider/styled_divider.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/backend/firebase_storage/storage.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/upload_data.dart';
+import '/custom_code/actions/index.dart' as actions;
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'edit_profile_view_model.dart';
+export 'edit_profile_view_model.dart';
 
 class EditProfileViewWidget extends StatefulWidget {
   const EditProfileViewWidget({Key? key}) : super(key: key);
@@ -22,57 +23,69 @@ class EditProfileViewWidget extends StatefulWidget {
 }
 
 class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
-  bool isMediaUploading = false;
-  String uploadedFileUrl = '';
+  late EditProfileViewModel _model;
 
-  DateTime? userBDay1;
-  DateTime? userBDay;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _model = createModel(context, () => EditProfileViewModel());
+  }
+
+  @override
+  void dispose() {
+    _model.dispose();
+
+    _unfocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).primaryColor,
-        automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30,
-          borderWidth: 1,
-          buttonSize: 60,
-          icon: Icon(
-            Icons.chevron_left,
-            color: FlutterFlowTheme.of(context).alternate,
-            size: 30,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primary,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.chevron_left,
+              color: FlutterFlowTheme.of(context).alternate,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
           ),
-          onPressed: () async {
-            context.pop();
-          },
-        ),
-        title: Visibility(
-          visible: FFAppState().profileContainerName != 'Basics',
-          child: Text(
-            'Edit profile',
-            style: FlutterFlowTheme.of(context).title2.override(
-                  fontFamily: 'Roboto',
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  fontSize: 22,
-                ),
+          title: Visibility(
+            visible: FFAppState().profileContainerName != 'Basics',
+            child: Text(
+              'Edit profile',
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Roboto',
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    fontSize: 22.0,
+                  ),
+            ),
           ),
+          actions: [],
+          centerTitle: true,
+          elevation: 0.0,
         ),
-        actions: [],
-        centerTitle: true,
-        elevation: 0,
-      ),
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+        body: SafeArea(
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,11 +101,11 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(0, -1),
+                            alignment: AlignmentDirectional(0.0, -1.0),
                             child: AuthUserStreamWidget(
-                              child: Container(
-                                width: 105,
-                                height: 105,
+                              builder: (context) => Container(
+                                width: 105.0,
+                                height: 105.0,
                                 clipBehavior: Clip.antiAlias,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -108,7 +121,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(0, 0),
+                            alignment: AlignmentDirectional(0.0, 0.0),
                             child: FFButtonWidget(
                               onPressed: () async {
                                 final selectedMedia =
@@ -120,7 +133,9 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     selectedMedia.every((m) =>
                                         validateFileFormat(
                                             m.storagePath, context))) {
-                                  setState(() => isMediaUploading = true);
+                                  setState(() => _model.isDataUploading = true);
+                                  var selectedUploadedFiles =
+                                      <FFUploadedFile>[];
                                   var downloadUrls = <String>[];
                                   try {
                                     showUploadMessage(
@@ -128,6 +143,17 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                       'Uploading file...',
                                       showLoading: true,
                                     );
+                                    selectedUploadedFiles = selectedMedia
+                                        .map((m) => FFUploadedFile(
+                                              name:
+                                                  m.storagePath.split('/').last,
+                                              bytes: m.bytes,
+                                              height: m.dimensions?.height,
+                                              width: m.dimensions?.width,
+                                              blurHash: m.blurHash,
+                                            ))
+                                        .toList();
+
                                     downloadUrls = (await Future.wait(
                                       selectedMedia.map(
                                         (m) async => await uploadData(
@@ -140,25 +166,31 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   } finally {
                                     ScaffoldMessenger.of(context)
                                         .hideCurrentSnackBar();
-                                    isMediaUploading = false;
+                                    _model.isDataUploading = false;
                                   }
-                                  if (downloadUrls.length ==
-                                      selectedMedia.length) {
-                                    setState(() =>
-                                        uploadedFileUrl = downloadUrls.first);
+                                  if (selectedUploadedFiles.length ==
+                                          selectedMedia.length &&
+                                      downloadUrls.length ==
+                                          selectedMedia.length) {
+                                    setState(() {
+                                      _model.uploadedLocalFile =
+                                          selectedUploadedFiles.first;
+                                      _model.uploadedFileUrl =
+                                          downloadUrls.first;
+                                    });
                                     showUploadMessage(context, 'Success!');
                                   } else {
                                     setState(() {});
                                     showUploadMessage(
-                                        context, 'Failed to upload media');
+                                        context, 'Failed to upload data');
                                     return;
                                   }
                                 }
 
-                                if (uploadedFileUrl != null &&
-                                    uploadedFileUrl != '') {
+                                if (_model.uploadedFileUrl != null &&
+                                    _model.uploadedFileUrl != '') {
                                   final usersUpdateData = createUsersRecordData(
-                                    photoUrl: uploadedFileUrl,
+                                    photoUrl: _model.uploadedFileUrl,
                                   );
                                   await currentUserReference!
                                       .update(usersUpdateData);
@@ -166,31 +198,35 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               },
                               text: 'Change profile photo',
                               options: FFButtonOptions(
-                                width: 210,
-                                height: 40,
+                                width: 210.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
                                 color: Colors.transparent,
                                 textStyle: FlutterFlowTheme.of(context)
-                                    .subtitle1
+                                    .titleMedium
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
                                     ),
-                                elevation: 0,
+                                elevation: 0.0,
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
-                                  width: 0,
+                                  width: 0.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Text(
                               'Name',
                               style: FlutterFlowTheme.of(context)
-                                  .subtitle2
+                                  .titleSmall
                                   .override(
                                     fontFamily: 'Roboto',
                                     color: FlutterFlowTheme.of(context)
@@ -199,10 +235,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditNameView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -215,12 +255,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.8,
-                                    height: 42,
+                                    height: 42.0,
                                     decoration: BoxDecoration(
                                       color: Colors.transparent,
                                     ),
                                     child: Align(
-                                      alignment: AlignmentDirectional(-1, 0),
+                                      alignment:
+                                          AlignmentDirectional(-1.0, 0.0),
                                       child: SelectionArea(
                                           child: Text(
                                         '${FFAppState().usrFirstName} ${FFAppState().usrLastName}'
@@ -229,25 +270,25 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           replacement: '…',
                                         ),
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle1,
+                                            .titleMedium,
                                       )),
                                     ),
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditNameView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -257,18 +298,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Bio',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -278,10 +319,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditBioView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -293,12 +338,12 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.8,
-                                  height: 62,
+                                  height: 62.0,
                                   decoration: BoxDecoration(
                                     color: Colors.transparent,
                                   ),
                                   child: Align(
-                                    alignment: AlignmentDirectional(-1, -1),
+                                    alignment: AlignmentDirectional(-1.0, -1.0),
                                     child: Text(
                                       FFAppState().usrBio.maybeHandleOverflow(
                                             maxChars: 100,
@@ -306,24 +351,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           ),
                                       maxLines: 3,
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle1,
+                                          .titleMedium,
                                     ),
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditBioView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -333,18 +378,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Industry',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -354,10 +399,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditIndustryView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -367,7 +416,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     FFAppState()
                                         .usrIndustry
@@ -375,24 +424,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           maxChars: 35,
                                           replacement: '…',
                                         ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditIndustryView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -402,18 +451,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Occupation',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle1
+                                    .titleMedium
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -423,10 +472,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditOccupationView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -436,7 +489,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     FFAppState()
                                         .usrOccupation
@@ -444,24 +497,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           maxChars: 35,
                                           replacement: '…',
                                         ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditOccupationView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -471,18 +524,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Date of birth',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -492,17 +545,21 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
-                              userBDay1 = await actions.vvShowDatePicker(
+                              _model.userBDay1 = await actions.vvShowDatePicker(
                                 context,
                                 FFAppState().usrBDay,
                                 'Birthday',
                                 'Enter your birthday',
                                 'Birthday',
                               );
-                              if (userBDay1 != null) {
-                                setState(() {
-                                  FFAppState().usrBDay = userBDay1;
+                              if (_model.userBDay1 != null) {
+                                FFAppState().update(() {
+                                  FFAppState().usrBDay = _model.userBDay1;
                                 });
                               }
 
@@ -513,34 +570,35 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     dateTimeFormat('yMd', FFAppState().usrBDay),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
-                                    userBDay = await actions.vvShowDatePicker(
+                                    _model.userBDay =
+                                        await actions.vvShowDatePicker(
                                       context,
                                       FFAppState().usrBDay,
                                       'Birthday',
                                       'Enter your birthday',
                                       'Birthday',
                                     );
-                                    if (userBDay != null) {
-                                      setState(() {
-                                        FFAppState().usrBDay = userBDay;
+                                    if (_model.userBDay != null) {
+                                      FFAppState().update(() {
+                                        FFAppState().usrBDay = _model.userBDay;
                                       });
                                     }
 
@@ -551,18 +609,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Gender',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -572,10 +630,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditGenderView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -585,27 +647,27 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     FFAppState().usrGender,
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditGenderView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -615,18 +677,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Preferences',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -636,10 +698,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditGenderPrefsView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -649,7 +715,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     FFAppState()
                                         .usrGenderPreference
@@ -657,24 +723,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           maxChars: 35,
                                           replacement: '…',
                                         ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditGenderPrefsView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -684,18 +750,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1, 0),
+                            alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 8.0, 0.0, 0.0),
                               child: Text(
                                 'Status',
                                 style: FlutterFlowTheme.of(context)
-                                    .subtitle2
+                                    .titleSmall
                                     .override(
                                       fontFamily: 'Roboto',
                                       color: FlutterFlowTheme.of(context)
@@ -705,10 +771,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditStatusView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -718,7 +788,7 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Text(
                                     FFAppState()
                                         .usrIntention
@@ -726,24 +796,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           maxChars: 35,
                                           replacement: '…',
                                         ),
-                                    style:
-                                        FlutterFlowTheme.of(context).subtitle1,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium,
                                   ),
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditStatusView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -753,14 +823,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ),
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditInterestsView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -770,14 +844,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 4),
+                                        0.0, 8.0, 0.0, 4.0),
                                     child: Text(
                                       'Interests',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2
+                                          .titleSmall
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
@@ -788,18 +862,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditInterestsView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -817,12 +891,16 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                     final interests =
                                         FFAppState().usrInterests.toList();
                                     return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
                                       onTap: () async {
                                         context.pushNamed('EditInterestsView');
                                       },
                                       child: Wrap(
-                                        spacing: 8,
-                                        runSpacing: 8,
+                                        spacing: 8.0,
+                                        runSpacing: 8.0,
                                         alignment: WrapAlignment.start,
                                         crossAxisAlignment:
                                             WrapCrossAlignment.start,
@@ -842,11 +920,15 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                             },
                                             text: interestsItem,
                                             options: FFButtonOptions(
-                                              height: 32,
+                                              height: 32.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
                                               color: Colors.transparent,
                                               textStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .subtitle1
+                                                      .titleMedium
                                                       .override(
                                                         fontFamily: 'Roboto',
                                                         color:
@@ -854,13 +936,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                                                     context)
                                                                 .alternate,
                                                       ),
-                                              elevation: 0,
+                                              elevation: 0.0,
                                               borderSide: BorderSide(
                                                 color: Colors.transparent,
-                                                width: 0,
+                                                width: 0.0,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(8),
+                                                  BorderRadius.circular(8.0),
                                             ),
                                           );
                                         }),
@@ -872,14 +954,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             ],
                           ),
                           Divider(
-                            thickness: 1,
+                            thickness: 1.0,
                             color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                           InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
                             onTap: () async {
                               context.pushNamed('EditBasicsView');
 
-                              setState(() {
+                              FFAppState().update(() {
                                 FFAppState().usrFirstName =
                                     FFAppState().usrFirstName;
                               });
@@ -889,14 +975,14 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 8, 0, 4),
+                                        0.0, 8.0, 0.0, 4.0),
                                     child: Text(
                                       'Basics',
                                       style: FlutterFlowTheme.of(context)
-                                          .subtitle2
+                                          .titleSmall
                                           .override(
                                             fontFamily: 'Roboto',
                                             color: FlutterFlowTheme.of(context)
@@ -907,18 +993,18 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                 ),
                                 FlutterFlowIconButton(
                                   borderColor: Colors.transparent,
-                                  borderRadius: 30,
-                                  buttonSize: 32,
+                                  borderRadius: 30.0,
+                                  buttonSize: 32.0,
                                   icon: Icon(
                                     Icons.chevron_right_rounded,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    size: 16,
+                                    size: 16.0,
                                   ),
                                   onPressed: () async {
                                     context.pushNamed('EditBasicsView');
 
-                                    setState(() {
+                                    FFAppState().update(() {
                                       FFAppState().usrFirstName =
                                           FFAppState().usrFirstName;
                                     });
@@ -932,13 +1018,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                             children: [
                               Expanded(
                                 child: Align(
-                                  alignment: AlignmentDirectional(-1, 0),
+                                  alignment: AlignmentDirectional(-1.0, 0.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 16),
+                                        0.0, 0.0, 0.0, 16.0),
                                     child: Wrap(
-                                      spacing: 8,
-                                      runSpacing: 8,
+                                      spacing: 8.0,
+                                      runSpacing: 8.0,
                                       alignment: WrapAlignment.start,
                                       crossAxisAlignment:
                                           WrapCrossAlignment.start,
@@ -955,15 +1041,21 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                               '${FFAppState().usrHeight.toString()} in',
                                           icon: Icon(
                                             Icons.height,
-                                            size: 16,
+                                            size: 16.0,
                                           ),
                                           options: FFButtonOptions(
-                                            height: 32,
+                                            height: 32.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .backgroundGrey,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1
+                                                    .titleMedium
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
@@ -971,13 +1063,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
-                                            elevation: 0,
+                                            elevation: 0.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 1.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                         FFButtonWidget(
@@ -987,15 +1079,21 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           text: FFAppState().usrDrinkingStatus,
                                           icon: Icon(
                                             Icons.wine_bar_outlined,
-                                            size: 16,
+                                            size: 16.0,
                                           ),
                                           options: FFButtonOptions(
-                                            height: 32,
+                                            height: 32.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .backgroundGrey,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1
+                                                    .titleMedium
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
@@ -1003,13 +1101,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
-                                            elevation: 0,
+                                            elevation: 0.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 1.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                         FFButtonWidget(
@@ -1019,15 +1117,21 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                           text: FFAppState().usrSmokingStatus,
                                           icon: Icon(
                                             Icons.smoking_rooms,
-                                            size: 16,
+                                            size: 16.0,
                                           ),
                                           options: FFButtonOptions(
-                                            height: 32,
+                                            height: 32.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .backgroundGrey,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1
+                                                    .titleMedium
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
@@ -1035,13 +1139,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
-                                            elevation: 0,
+                                            elevation: 0.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 1.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                         FFButtonWidget(
@@ -1055,15 +1159,21 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                               1),
                                           icon: Icon(
                                             Icons.search_outlined,
-                                            size: 16,
+                                            size: 16.0,
                                           ),
                                           options: FFButtonOptions(
-                                            height: 32,
+                                            height: 32.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
                                             color: FlutterFlowTheme.of(context)
                                                 .backgroundGrey,
                                             textStyle:
                                                 FlutterFlowTheme.of(context)
-                                                    .subtitle1
+                                                    .titleMedium
                                                     .override(
                                                       fontFamily: 'Roboto',
                                                       color:
@@ -1071,13 +1181,13 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                                                                   context)
                                                               .alternate,
                                                     ),
-                                            elevation: 0,
+                                            elevation: 0.0,
                                             borderSide: BorderSide(
                                               color: Colors.transparent,
-                                              width: 1,
+                                              width: 1.0,
                                             ),
                                             borderRadius:
-                                                BorderRadius.circular(8),
+                                                BorderRadius.circular(8.0),
                                           ),
                                         ),
                                       ],
@@ -1093,12 +1203,12 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 32.0),
                   child: Stack(
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 48,
+                        height: 48.0,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             colors: [
@@ -1106,15 +1216,15 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                               Color(0xFFF95A82),
                               Color(0xFFEA3C7D)
                             ],
-                            stops: [0, 0.6, 1],
-                            begin: AlignmentDirectional(0, -1),
-                            end: AlignmentDirectional(0, 1),
+                            stops: [0.0, 0.6, 1.0],
+                            begin: AlignmentDirectional(0.0, -1.0),
+                            end: AlignmentDirectional(0, 1.0),
                           ),
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(-1, 0),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: FFButtonWidget(
                           onPressed: () async {
                             final usersUpdateData = {
@@ -1153,21 +1263,24 @@ class _EditProfileViewWidgetState extends State<EditProfileViewWidget> {
                           text: 'Save',
                           options: FFButtonOptions(
                             width: double.infinity,
-                            height: 48,
+                            height: 48.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
                             color: Colors.transparent,
                             textStyle: FlutterFlowTheme.of(context)
-                                .subtitle1
+                                .titleMedium
                                 .override(
                                   fontFamily: 'Roboto',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryColor,
+                                  color: FlutterFlowTheme.of(context).primary,
                                 ),
-                            elevation: 0,
+                            elevation: 0.0,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 0,
+                              width: 0.0,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                       ),

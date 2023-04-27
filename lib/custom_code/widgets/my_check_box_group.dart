@@ -1,10 +1,10 @@
 // Automatic FlutterFlow imports
-import '../../backend/backend.dart';
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_util.dart';
+import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 import 'index.dart'; // Imports other custom widgets
-import '../actions/index.dart'; // Imports custom actions
-import '../../flutter_flow/custom_functions.dart'; // Imports custom functions
+import '/custom_code/actions/index.dart'; // Imports custom actions
+import '/flutter_flow/custom_functions.dart'; // Imports custom functions
 import 'package:flutter/material.dart';
 // Begin custom widget code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
@@ -47,7 +47,9 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
   void initState() {
     //String selValue = widget.defaultSelected ?? "";
     defaultValue = widget.defaultSelected ?? [];
-    FFAppState().mcbSelectedValues = defaultValue;
+    setState(
+      () => FFAppState().mcbSelectedValues = defaultValue,
+    );
     super.initState();
   }
 
@@ -71,10 +73,8 @@ class _MyCheckBoxGroupState extends State<MyCheckBoxGroup> {
       buttonLables: widget.buttonLabels ?? ['Option'],
       buttonValuesList: widget.buttonValues ?? ['Option'],
       checkBoxButtonValues: (List values) {
-        setState(() => {
-              FFAppState().mcbSelectedValues =
-                  values.map((e) => e.toString()).toList(),
-            });
+        setState(() => FFAppState().mcbSelectedValues =
+            values.map((e) => e.toString()).toList());
         widget.onValue();
       },
       defaultSelected: widget.defaultSelected,

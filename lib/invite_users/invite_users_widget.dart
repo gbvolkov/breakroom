@@ -1,14 +1,16 @@
-import '../auth/auth_util.dart';
-import '../backend/backend.dart';
-import '../chat/chat_widget.dart';
-import '../flutter_flow/chat/index.dart';
-import '../flutter_flow/flutter_flow_icon_button.dart';
-import '../flutter_flow/flutter_flow_theme.dart';
-import '../flutter_flow/flutter_flow_util.dart';
-import '../flutter_flow/flutter_flow_widgets.dart';
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/chat/chat_widget.dart';
+import '/flutter_flow/chat/index.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'invite_users_model.dart';
+export 'invite_users_model.dart';
 
 class InviteUsersWidget extends StatefulWidget {
   const InviteUsersWidget({Key? key}) : super(key: key);
@@ -18,26 +20,22 @@ class InviteUsersWidget extends StatefulWidget {
 }
 
 class _InviteUsersWidgetState extends State<InviteUsersWidget> {
-  Map<UsersRecord, bool> checkboxListTileValueMap = {};
-  List<UsersRecord> get checkboxListTileCheckedItems =>
-      checkboxListTileValueMap.entries
-          .where((e) => e.value)
-          .map((e) => e.key)
-          .toList();
+  late InviteUsersModel _model;
 
-  TextEditingController? textController;
-  ChatsRecord? groupChat;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    _model = createModel(context, () => InviteUsersModel());
+
+    _model.textController ??= TextEditingController();
   }
 
   @override
   void dispose() {
-    textController?.dispose();
+    _model.dispose();
+
     super.dispose();
   }
 
@@ -53,12 +51,12 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
-          borderRadius: 30,
-          buttonSize: 24,
+          borderRadius: 30.0,
+          buttonSize: 24.0,
           icon: Icon(
             Icons.arrow_back_rounded,
             color: Color(0xFF95A1AC),
-            size: 24,
+            size: 24.0,
           ),
           onPressed: () async {
             context.pop();
@@ -70,19 +68,19 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
           children: [
             Text(
               'Create Group Chat',
-              style: FlutterFlowTheme.of(context).subtitle1.override(
+              style: FlutterFlowTheme.of(context).titleMedium.override(
                     fontFamily: 'Roboto',
                     color: Color(0xFF95A1AC),
-                    fontSize: 18,
+                    fontSize: 18.0,
                     fontWeight: FontWeight.w500,
                   ),
             ),
             Text(
               'Select the friends to add to chat.',
-              style: FlutterFlowTheme.of(context).bodyText2.override(
+              style: FlutterFlowTheme.of(context).bodySmall.override(
                     fontFamily: 'Roboto',
                     color: Color(0xFF1A1F24),
-                    fontSize: 14,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.normal,
                   ),
             ),
@@ -90,7 +88,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
         ),
         actions: [],
         centerTitle: false,
-        elevation: 0,
+        elevation: 0.0,
       ),
       body: SafeArea(
         child: Column(
@@ -98,33 +96,33 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
           children: [
             Container(
               width: double.infinity,
-              height: 50,
+              height: 50.0,
               decoration: BoxDecoration(
                 color: Color(0xFFDBE2E7),
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 3,
+                    blurRadius: 3.0,
                     color: Color(0x33000000),
-                    offset: Offset(0, 2),
+                    offset: Offset(0.0, 2.0),
                   )
                 ],
-                borderRadius: BorderRadius.circular(0),
+                borderRadius: BorderRadius.circular(0.0),
               ),
-              alignment: AlignmentDirectional(0, 0),
+              alignment: AlignmentDirectional(0.0, 0.0),
               child: TextFormField(
-                controller: textController,
+                controller: _model.textController,
                 obscureText: false,
                 decoration: InputDecoration(
-                  hintStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                  hintStyle: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily: 'Lexend Deca',
                         color: Color(0xFF95A1AC),
-                        fontSize: 14,
+                        fontSize: 14.0,
                         fontWeight: FontWeight.normal,
                       ),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00000000),
-                      width: 1,
+                      width: 1.0,
                     ),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(4.0),
@@ -134,7 +132,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                   focusedBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00000000),
-                      width: 1,
+                      width: 1.0,
                     ),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(4.0),
@@ -144,7 +142,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                   errorBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00000000),
-                      width: 1,
+                      width: 1.0,
                     ),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(4.0),
@@ -154,24 +152,26 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                   focusedErrorBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Color(0x00000000),
-                      width: 1,
+                      width: 1.0,
                     ),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(4.0),
                       topRight: Radius.circular(4.0),
                     ),
                   ),
-                  contentPadding: EdgeInsetsDirectional.fromSTEB(24, 14, 0, 0),
+                  contentPadding:
+                      EdgeInsetsDirectional.fromSTEB(24.0, 14.0, 0.0, 0.0),
                   prefixIcon: Icon(
                     Icons.search_outlined,
                     color: Color(0xFF95A1AC),
-                    size: 24,
+                    size: 24.0,
                   ),
                 ),
-                style: FlutterFlowTheme.of(context).bodyText1.override(
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
                       fontFamily: 'Roboto',
                       color: FlutterFlowTheme.of(context).primaryText,
                     ),
+                validator: _model.textControllerValidator.asValidator(context),
               ),
             ),
             Expanded(
@@ -184,10 +184,10 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                   if (!snapshot.hasData) {
                     return Center(
                       child: SizedBox(
-                        width: 50,
-                        height: 50,
+                        width: 50.0,
+                        height: 50.0,
                         child: CircularProgressIndicator(
-                          color: FlutterFlowTheme.of(context).primaryColor,
+                          color: FlutterFlowTheme.of(context).primary,
                         ),
                       ),
                     );
@@ -204,23 +204,25 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                       final listViewUsersRecord =
                           listViewUsersRecordList[listViewIndex];
                       return Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 2),
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
                         child: Container(
                           width: double.infinity,
-                          height: 70,
+                          height: 70.0,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 0,
+                                blurRadius: 0.0,
                                 color: Color(0xFFDBE2E7),
-                                offset: Offset(0, 2),
+                                offset: Offset(0.0, 2.0),
                               )
                             ],
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(0.0),
                           ),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0.0, 0.0, 0.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
@@ -228,14 +230,14 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   color: FlutterFlowTheme.of(context).alternate,
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        2, 2, 2, 2),
+                                        2.0, 2.0, 2.0, 2.0),
                                     child: Container(
-                                      width: 50,
-                                      height: 50,
+                                      width: 50.0,
+                                      height: 50.0,
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
@@ -252,33 +254,34 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        2, 0, 0, 0),
+                                        2.0, 0.0, 0.0, 0.0),
                                     child: CheckboxListTile(
-                                      value: checkboxListTileValueMap[
+                                      value: _model.checkboxListTileValueMap[
                                           listViewUsersRecord] ??= false,
                                       onChanged: (newValue) async {
-                                        setState(() => checkboxListTileValueMap[
+                                        setState(() => _model
+                                                .checkboxListTileValueMap[
                                             listViewUsersRecord] = newValue!);
                                       },
                                       title: Text(
                                         listViewUsersRecord.displayName!,
                                         style: FlutterFlowTheme.of(context)
-                                            .subtitle1
+                                            .titleMedium
                                             .override(
                                               fontFamily: 'Roboto',
                                               color: Color(0xFF95A1AC),
-                                              fontSize: 18,
+                                              fontSize: 18.0,
                                               fontWeight: FontWeight.w500,
                                             ),
                                       ),
                                       subtitle: Text(
                                         listViewUsersRecord.email!,
                                         style: FlutterFlowTheme.of(context)
-                                            .bodyText2
+                                            .bodySmall
                                             .override(
                                               fontFamily: 'Roboto',
                                               color: Color(0xFF1A1F24),
-                                              fontSize: 14,
+                                              fontSize: 14.0,
                                               fontWeight: FontWeight.normal,
                                             ),
                                       ),
@@ -303,29 +306,29 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
             ),
             Container(
               width: double.infinity,
-              height: 100,
+              height: 100.0,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).alternate,
                 boxShadow: [
                   BoxShadow(
-                    blurRadius: 4,
+                    blurRadius: 4.0,
                     color: Color(0x3314181B),
-                    offset: Offset(0, -2),
+                    offset: Offset(0.0, -2.0),
                   )
                 ],
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(0),
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+                  bottomLeft: Radius.circular(0.0),
+                  bottomRight: Radius.circular(0.0),
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
                 ),
               ),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 34),
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 34.0),
                 child: FFButtonWidget(
                   onPressed: () async {
-                    groupChat = await FFChatManager.instance.createChat(
-                      checkboxListTileCheckedItems
+                    _model.groupChat = await FFChatManager.instance.createChat(
+                      _model.checkboxListTileCheckedItems
                           .map((e) => e.reference)
                           .toList(),
                     );
@@ -333,7 +336,7 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                       'Chat',
                       queryParams: {
                         'chatRef': serializeParam(
-                          groupChat?.reference,
+                          _model.groupChat?.reference,
                           ParamType.DocumentReference,
                         ),
                       }.withoutNulls,
@@ -343,18 +346,23 @@ class _InviteUsersWidgetState extends State<InviteUsersWidget> {
                   },
                   text: 'Create Chat',
                   options: FFButtonOptions(
-                    width: 130,
-                    height: 40,
+                    width: 130.0,
+                    height: 40.0,
+                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                    iconPadding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     color: FlutterFlowTheme.of(context).alternate,
-                    textStyle: FlutterFlowTheme.of(context).title3.override(
-                          fontFamily: 'Roboto',
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                        ),
+                    textStyle:
+                        FlutterFlowTheme.of(context).headlineSmall.override(
+                              fontFamily: 'Roboto',
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w500,
+                            ),
+                    elevation: 2.0,
                     borderSide: BorderSide(
                       color: Colors.transparent,
-                      width: 1,
+                      width: 1.0,
                     ),
                   ),
                 ),
