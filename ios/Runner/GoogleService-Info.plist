@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>207242520990-o4jq0loot320mdo3ajg5saen7qcgr8dt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.207242520990-o4jq0loot320mdo3ajg5saen7qcgr8dt</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>207242520990-59hlqtd74m6rfqnrk7mjdvk04h6m8uti.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCGa189ibbYv_GlfmMckfYlsHOEc5RRDSE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>207242520990</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.boji.meetingapp</string>
+	<key>PROJECT_ID</key>
+	<string>breakroom-7465c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>breakroom-7465c.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:207242520990:ios:842194c4b9a8ab0bf90e8f</string>
+</dict>
+</plist>

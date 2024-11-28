@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "207242520990",
+    "project_id": "breakroom-7465c",
+    "storage_bucket": "breakroom-7465c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207242520990:android:753cd393b86290c0f90e8f",
+        "android_client_info": {
+          "package_name": "com.boji.meetingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207242520990-59hlqtd74m6rfqnrk7mjdvk04h6m8uti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boji.meetingapp",
+            "certificate_hash": "fa14b4b7601a347cb1e466d225a1cdda6e3c8ebb"
+          }
+        },
+        {
+          "client_id": "207242520990-80ig46ms20bv2l0vijp7coll1n4nli5q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.boji.meetingapp",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "207242520990-q08hcd70f50qcp3dbb2f36oljid0pnno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3BF3LlQ_jm7HkDSIni9pGeTF-98gV7iA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207242520990-q08hcd70f50qcp3dbb2f36oljid0pnno.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "207242520990-6uq9i72rqmao02lprl81grl3biqb216j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.boji.breakroom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
